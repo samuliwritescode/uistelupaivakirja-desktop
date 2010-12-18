@@ -12,9 +12,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    uistelu.cpp
+    trip.cpp
 
 HEADERS  += mainwindow.h \
-    uistelu.h
+    trip.h
 
-FORMS    += mainwindow.ui uistelu.ui
+FORMS    += mainwindow.ui trip.ui
+
+RESOURCES += \
+    resources.qrc

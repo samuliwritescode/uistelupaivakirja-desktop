@@ -1,8 +1,8 @@
 #include <QDebug>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "uistelu.h"
-#include "ui_uistelu.h"
+#include "trip.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,7 +19,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
     qDebug() << "Clicked new";
-    Uistelu uistelu;
+    Trip uistelu;
     uistelu.show();
     uistelu.exec();
     qDebug() << "finished";
