@@ -9,18 +9,21 @@ Trip::Trip(QWidget *parent) :
     ui->m_place->insertItem(0, "Ristinselkä");
     ui->m_place->insertItem(0, "Murtoselkä");
     ui->m_place->insertItem(0, "Vanhanselkä");
+    ui->scrollAreaWidgetContents->setLayout(ui->gridLayout);
 
-    for(int loop=0; loop < 50; loop++)
+    for(int loop=0; loop < 10; loop++)
     {
-        ui->scrollAreaWidgetContents->setLayout(ui->gridLayout);
+        QLabel* draggable = new QLabel("keijjo");
 
-        QLineEdit* hauki = new QLineEdit("hauki");
-
-
-        ui->gridLayout->addWidget(hauki, loop, 0);
+        QComboBox* kalat = new QComboBox();
+        kalat->insertItem(0, "hauki");
+        kalat->insertItem(0, "ahven");
+        draggable->setAcceptDrops(true);
+        ui->gridLayout->addWidget(kalat, loop, 0);
         ui->gridLayout->addWidget(new QLineEdit("6kg"), loop, 1);
         ui->gridLayout->addWidget(new QLineEdit("85cm"), loop, 2);
         ui->gridLayout->addWidget(new QLineEdit("hk varma"), loop, 3);
+        ui->gridLayout->addWidget(draggable, loop, 4);
     }
 }
 
