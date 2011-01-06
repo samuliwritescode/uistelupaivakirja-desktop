@@ -15,7 +15,7 @@ Trip::Trip(QWidget *parent) :
 
     for(int loop=0; loop < 10; loop++)
     {
-        LureItem* draggable = new LureItem("keijjo");
+        LureItem* draggable = new LureItem("HK varma");
 
         QComboBox* kalat = new QComboBox();
         kalat->insertItem(0, "hauki");
@@ -24,8 +24,7 @@ Trip::Trip(QWidget *parent) :
         ui->gridLayout->addWidget(kalat, loop, 0);
         ui->gridLayout->addWidget(new QLineEdit("6kg"), loop, 1);
         ui->gridLayout->addWidget(new QLineEdit("85cm"), loop, 2);
-        ui->gridLayout->addWidget(new QLineEdit("hk varma"), loop, 3);
-        ui->gridLayout->addWidget(draggable, loop, 4);
+        ui->gridLayout->addWidget(draggable, loop, 3);
     }
 
     Lures* lures = new Lures(this);
