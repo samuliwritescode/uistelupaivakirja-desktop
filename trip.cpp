@@ -1,5 +1,6 @@
 #include "trip.h"
 #include "ui_trip.h"
+#include "lures.h"
 
 Trip::Trip(QWidget *parent) :
     QDialog(parent),
@@ -25,6 +26,9 @@ Trip::Trip(QWidget *parent) :
         ui->gridLayout->addWidget(new QLineEdit("hk varma"), loop, 3);
         ui->gridLayout->addWidget(draggable, loop, 4);
     }
+
+    Lures* lures = new Lures(this);
+    lures->show();
 }
 
 Trip::~Trip()
