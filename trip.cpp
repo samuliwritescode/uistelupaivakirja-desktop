@@ -1,6 +1,7 @@
 #include "trip.h"
 #include "ui_trip.h"
 #include "lures.h"
+#include "lureitem.h"
 
 Trip::Trip(QWidget *parent) :
     QDialog(parent),
@@ -14,7 +15,7 @@ Trip::Trip(QWidget *parent) :
 
     for(int loop=0; loop < 10; loop++)
     {
-        QLabel* draggable = new QLabel("keijjo");
+        LureItem* draggable = new LureItem("keijjo");
 
         QComboBox* kalat = new QComboBox();
         kalat->insertItem(0, "hauki");

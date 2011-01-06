@@ -13,11 +13,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     trip.cpp \
-    lures.cpp
+    lures.cpp \
+    lureitem.cpp
 
 HEADERS  += mainwindow.h \
     trip.h \
-    lures.h
+    lures.h \
+    lureitem.h
 
 FORMS    += mainwindow.ui trip.ui \
     lures.ui
