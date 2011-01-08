@@ -26,9 +26,6 @@ Trip::Trip(QWidget *parent) :
         ui->gridLayout->addWidget(new QLineEdit("85cm"), loop, 2);
         ui->gridLayout->addWidget(draggable, loop, 3);
     }
-
-    Lures* lures = new Lures(this);
-    lures->show();
 }
 
 Trip::~Trip()

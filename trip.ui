@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>711</width>
-    <height>647</height>
+    <width>849</width>
+    <height>673</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -123,17 +123,17 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>517</width>
+            <width>455</width>
             <height>76</height>
            </rect>
           </property>
           <widget class="QWidget" name="gridLayoutWidget">
            <property name="geometry">
             <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>521</width>
-             <height>81</height>
+             <x>140</x>
+             <y>10</y>
+             <width>101</width>
+             <height>61</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout">
@@ -211,7 +211,21 @@
           <widget class="QLineEdit" name="lineEdit"/>
          </item>
          <item>
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>C -</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QLineEdit" name="lineEdit_2"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>C</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -283,14 +297,73 @@
        </item>
       </layout>
      </item>
+    </layout>
+   </item>
+   <item row="0" column="6">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
-      <widget class="QDialogButtonBox" name="buttonBox">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QDialogButtonBox" name="buttonBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="standardButtons">
+          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QDockWidget" name="dockWidget">
+       <property name="enabled">
+        <bool>true</bool>
        </property>
-       <property name="standardButtons">
-        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>104</width>
+         <height>236</height>
+        </size>
+       </property>
+       <property name="floating">
+        <bool>false</bool>
+       </property>
+       <property name="features">
+        <set>QDockWidget::DockWidgetMovable</set>
+       </property>
+       <property name="windowTitle">
+        <string>Vieheet</string>
+       </property>
+       <widget class="QWidget" name="dockWidgetContents">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLineEdit" name="lineEdit_3"/>
+           </item>
+           <item>
+            <widget class="QListWidget" name="listWidget"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </item>
     </layout>
