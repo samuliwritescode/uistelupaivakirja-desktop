@@ -17,7 +17,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+
+void MainWindow::on_newTripBtn_clicked()
 {
     qDebug() << "Clicked new";
     Trip uistelu;
@@ -26,7 +27,7 @@ void MainWindow::on_pushButton_clicked()
     qDebug() << "finished";
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_luresBtn_clicked()
 {
     qDebug() << "Clicked new";
     Lures lures;

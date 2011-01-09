@@ -26,6 +26,15 @@ Trip::Trip(QWidget *parent) :
         ui->gridLayout->addWidget(new QLineEdit("85cm"), loop, 2);
         ui->gridLayout->addWidget(draggable, loop, 3);
     }
+
+    ui->lureList->setIconSize(QSize(100,50));
+    for(int loop=0; loop < 100; loop++)
+    {
+        QListWidgetItem* item = new QListWidgetItem("HK varma taimen 9 cm venäjän lippu"+QString::number(loop));
+        item->setFlags(Qt::ItemIsDragEnabled | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+        item->setIcon(QIcon(":/msnlogo.jpg"));
+        ui->lureList->addItem(item);
+    }
 }
 
 Trip::~Trip()

@@ -6,31 +6,122 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>423</width>
-    <height>286</height>
+    <width>485</width>
+    <height>268</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Uistelupäiväkirja</string>
+  </property>
+  <property name="locale">
+   <locale language="Finnish" country="Finland"/>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QCommandLinkButton" name="newTripBtn">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string>Uusi reissu</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/msnlogo.jpg</normaloff>:/msnlogo.jpg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>70</width>
+        <height>70</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCommandLinkButton" name="luresBtn">
+      <property name="text">
+       <string>Vieheet</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/msnlogo.jpg</normaloff>:/msnlogo.jpg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>70</width>
+        <height>70</height>
+       </size>
       </property>
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="contextMenuPolicy">
-       <enum>Qt::DefaultContextMenu</enum>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="2">
+     <widget class="QCommandLinkButton" name="statisticsBtn">
       <property name="text">
-       <string>Vieheet</string>
+       <string>Tilastot</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/msnlogo.jpg</normaloff>:/msnlogo.jpg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>70</width>
+        <height>70</height>
+       </size>
       </property>
      </widget>
+    </item>
+    <item row="0" column="1">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="1">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>
@@ -39,10 +130,25 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>423</width>
+     <width>485</width>
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuUistelu">
+    <property name="title">
+     <string>Uistelu</string>
+    </property>
+    <addaction name="actionUusi_reissu"/>
+   </widget>
+   <widget class="QMenu" name="menuApua">
+    <property name="title">
+     <string>Apua</string>
+    </property>
+    <addaction name="actionTietoa_ohjelmasta"/>
+    <addaction name="actionOhjeet"/>
+   </widget>
+   <addaction name="menuUistelu"/>
+   <addaction name="menuApua"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -53,8 +159,25 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionUusi_reissu">
+   <property name="text">
+    <string>Uusi reissu</string>
+   </property>
+  </action>
+  <action name="actionTietoa_ohjelmasta">
+   <property name="text">
+    <string>Tietoa ohjelmasta</string>
+   </property>
+  </action>
+  <action name="actionOhjeet">
+   <property name="text">
+    <string>Ohjeet</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -123,7 +123,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>455</width>
+            <width>399</width>
             <height>76</height>
            </rect>
           </property>
@@ -325,45 +325,40 @@
       </layout>
      </item>
      <item>
-      <widget class="QDockWidget" name="dockWidget">
-       <property name="enabled">
-        <bool>true</bool>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="locale">
+        <locale language="Finnish" country="Finland"/>
        </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>104</width>
-         <height>236</height>
-        </size>
-       </property>
-       <property name="floating">
-        <bool>false</bool>
-       </property>
-       <property name="features">
-        <set>QDockWidget::DockWidgetMovable</set>
-       </property>
-       <property name="windowTitle">
+       <property name="title">
         <string>Vieheet</string>
        </property>
-       <widget class="QWidget" name="dockWidgetContents">
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <widget class="QLineEdit" name="lineEdit_3"/>
-           </item>
-           <item>
-            <widget class="QListWidget" name="listWidget"/>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <property name="margin">
+         <number>5</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QLineEdit" name="lineEdit_3"/>
+          </item>
+          <item>
+           <widget class="QListWidget" name="lureList">
+            <property name="dragDropMode">
+             <enum>QAbstractItemView::DragOnly</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+       <zorder></zorder>
+       <zorder></zorder>
       </widget>
      </item>
     </layout>
