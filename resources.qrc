@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>msnlogo.jpg</file>
+        <file>IMG_0764.JPG</file>
+        <file>IMG_0200.JPG</file>
     </qresource>
 </RCC>

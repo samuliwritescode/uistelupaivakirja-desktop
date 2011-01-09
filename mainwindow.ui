@@ -44,6 +44,12 @@
       <property name="currentIndex">
        <number>1</number>
       </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
       <property name="usesScrollButtons">
        <bool>false</bool>
       </property>
@@ -135,6 +141,10 @@
        </widget>
       </widget>
       <widget class="QWidget" name="tripsTab">
+       <attribute name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/IMG_0764.JPG</normaloff>:/IMG_0764.JPG</iconset>
+       </attribute>
        <attribute name="title">
         <string>Reissut</string>
        </attribute>
@@ -265,7 +275,7 @@
                <x>0</x>
                <y>0</y>
                <width>464</width>
-               <height>198</height>
+               <height>171</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
@@ -532,15 +542,16 @@
        </layout>
       </widget>
       <widget class="QWidget" name="luresTab">
+       <attribute name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/IMG_0200.JPG</normaloff>:/IMG_0200.JPG</iconset>
+       </attribute>
        <attribute name="title">
         <string>Vieheet</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_30">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_13">
-          <item>
-           <widget class="QListWidget" name="listWidget_5"/>
-          </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_27">
             <item>
@@ -558,6 +569,9 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QListWidget" name="listWidget_5"/>
           </item>
          </layout>
         </item>
