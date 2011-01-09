@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->m_place->insertItem(0, "Murtoselkä");
     ui->m_place->insertItem(0, "Vanhanselkä");
 
-    for(int loop=0; loop < 5; loop++)
+    for(int loop=0; loop < 10; loop++)
     {
         LureItem* draggable = new LureItem("HK varma");
         LureItem* poi = new LureItem("12:22 hauki 13.3-1");
@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->catchGrid->addWidget(poi, loop, 6);
     }
 
-    ui->lureList->setIconSize(QSize(100,50));
+    //ui->lureList->setIconSize(QSize(100,50));
     for(int loop=0; loop < 100; loop++)
     {
         QListWidgetItem* item = new QListWidgetItem("HK varma taimen 9 cm venäjän lippu"+QString::number(loop));

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>800</height>
+    <width>1028</width>
+    <height>851</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -177,22 +177,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QCalendarWidget" name="m_date">
-            <property name="locale">
-             <locale language="Finnish" country="Finland"/>
-            </property>
-            <property name="firstDayOfWeek">
-             <enum>Qt::Monday</enum>
-            </property>
-            <property name="gridVisible">
-             <bool>false</bool>
-            </property>
-            <property name="selectionMode">
-             <enum>QCalendarWidget::SingleSelection</enum>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_35">
             <property name="text">
@@ -284,8 +268,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>464</width>
-               <height>171</height>
+               <width>586</width>
+               <height>270</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
@@ -439,7 +423,7 @@
           <item row="9" column="0">
            <widget class="QLabel" name="label_43">
             <property name="text">
-             <string>Muut</string>
+             <string>Muuta</string>
             </property>
            </widget>
           </item>
@@ -466,8 +450,43 @@
             </property>
            </widget>
           </item>
+          <item row="0" column="1">
+           <widget class="QDateEdit" name="dateEdit">
+            <property name="wrapping">
+             <bool>false</bool>
+            </property>
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+            <property name="readOnly">
+             <bool>false</bool>
+            </property>
+            <property name="currentSection">
+             <enum>QDateTimeEdit::DaySection</enum>
+            </property>
+            <property name="displayFormat">
+             <string>d.M.yyyy</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
           <item row="10" column="1">
-           <layout class="QGridLayout" name="filesLayout_4"/>
+           <widget class="QListWidget" name="listWidget_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -483,6 +502,49 @@
            <number>0</number>
           </property>
           <item>
+           <widget class="QGroupBox" name="groupBox_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="title">
+             <string>Reissut</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <item>
+                <widget class="QToolButton" name="toolButton_5">
+                 <property name="text">
+                  <string>Uusi</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="toolButton_7">
+                 <property name="text">
+                  <string>Tallenna</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="toolButton_6">
+                 <property name="text">
+                  <string>Poista</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QListWidget" name="listWidget_2"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
            <widget class="QDockWidget" name="lureDock">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -492,8 +554,8 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>150</width>
-              <height>160</height>
+              <width>218</width>
+              <height>195</height>
              </size>
             </property>
             <property name="features">
@@ -505,7 +567,29 @@
             <widget class="QWidget" name="dockWidgetContents_7">
              <layout class="QVBoxLayout" name="verticalLayout_11">
               <item>
-               <widget class="QLineEdit" name="searchLure"/>
+               <widget class="QLineEdit" name="searchLure">
+                <property name="text">
+                 <string>Etsi...</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="QCheckBox" name="checkBox">
+                  <property name="text">
+                   <string>Vain ottipelit</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="checkBox_2">
+                  <property name="text">
+                   <string>Muu ehto</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
               <item>
                <widget class="QListWidget" name="lureList">
@@ -703,39 +787,6 @@
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>900</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuUistelu">
-    <property name="title">
-     <string>Uistelu</string>
-    </property>
-    <addaction name="actionUusi_reissu"/>
-   </widget>
-   <widget class="QMenu" name="menuApua">
-    <property name="title">
-     <string>Apua</string>
-    </property>
-    <addaction name="actionTietoa_ohjelmasta"/>
-    <addaction name="actionOhjeet"/>
-   </widget>
-   <addaction name="menuUistelu"/>
-   <addaction name="menuApua"/>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionUusi_reissu">
