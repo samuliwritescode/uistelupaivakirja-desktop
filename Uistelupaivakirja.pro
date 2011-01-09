@@ -12,17 +12,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    trip.cpp \
-    lures.cpp \
     lureitem.cpp
 
 HEADERS  += mainwindow.h \
-    trip.h \
-    lures.h \
     lureitem.h
 
-FORMS    += mainwindow.ui trip.ui \
-    lures.ui
+FORMS    += mainwindow.ui
 
 RESOURCES += \
     resources.qrc

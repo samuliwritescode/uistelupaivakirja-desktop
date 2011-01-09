@@ -19,8 +19,6 @@ private:
     Ui::MainWindow *ui;
 
 private slots:
-    void on_luresBtn_clicked();
-    void on_newTripBtn_clicked();
 };
 
 #endif // MAINWINDOW_H
