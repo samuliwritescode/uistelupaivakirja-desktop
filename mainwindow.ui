@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Uistelupäiväkirja</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/msnlogo.jpg</normaloff>:/msnlogo.jpg</iconset>
+  </property>
   <property name="locale">
    <locale language="Finnish" country="Finland"/>
   </property>
@@ -50,6 +54,9 @@
         <height>64</height>
        </size>
       </property>
+      <property name="elideMode">
+       <enum>Qt::ElideRight</enum>
+      </property>
       <property name="usesScrollButtons">
        <bool>false</bool>
       </property>
@@ -59,10 +66,13 @@
       <property name="tabsClosable">
        <bool>false</bool>
       </property>
+      <property name="movable">
+       <bool>false</bool>
+      </property>
       <widget class="QWidget" name="mainTab">
        <attribute name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/msnlogo.jpg</normaloff>:/msnlogo.jpg</iconset>
+         <normaloff>:/kyrmy.jpg</normaloff>:/kyrmy.jpg</iconset>
        </attribute>
        <attribute name="title">
         <string>Pääsivu</string>
@@ -633,6 +643,57 @@
               <widget class="QLineEdit" name="lineEdit_16"/>
              </item>
             </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="placesTab">
+       <attribute name="title">
+        <string>Kalapaikat</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QToolButton" name="toolButton_3">
+              <property name="text">
+               <string>Uusi</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="toolButton_4">
+              <property name="text">
+               <string>Poista</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QListWidget" name="listWidget"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>Paikan tiedot</string>
+          </property>
+          <layout class="QFormLayout" name="formLayout_3">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Nimi</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="lineEdit"/>
            </item>
           </layout>
          </widget>
