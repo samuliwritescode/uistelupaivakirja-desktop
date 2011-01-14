@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1041</width>
-    <height>886</height>
+    <width>1045</width>
+    <height>908</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -237,20 +237,6 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_37">
-            <property name="text">
-             <string>Paikka</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QComboBox" name="m_place">
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
           <item row="6" column="0">
            <widget class="QLabel" name="label_38">
             <property name="text">
@@ -293,14 +279,67 @@
           <item row="7" column="0">
            <widget class="QLabel" name="label_39">
             <property name="text">
-             <string>Lämpötila</string>
+             <string>Vedenlämpö</string>
             </property>
            </widget>
           </item>
           <item row="7" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_22">
             <item>
-             <widget class="QLineEdit" name="lineEdit_10"/>
+             <widget class="QLineEdit" name="lineEdit_10">
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string>C</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::MinimumExpanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>80</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>Ilma</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_4">
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="label_40">
@@ -310,10 +349,17 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_11"/>
+             <widget class="QLineEdit" name="lineEdit_11">
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_41">
+             <widget class="QLabel" name="label_4">
               <property name="text">
                <string>C</string>
               </property>
@@ -461,7 +507,14 @@
                   <widget class="QComboBox" name="comboBox"/>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_2"/>
+                  <widget class="QLineEdit" name="lineEdit_2">
+                   <property name="inputMask">
+                    <string/>
+                   </property>
+                   <property name="placeholderText">
+                    <string>paino</string>
+                   </property>
+                  </widget>
                  </item>
                  <item>
                   <widget class="QLabel" name="label_2">
@@ -471,7 +524,11 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_3"/>
+                  <widget class="QLineEdit" name="lineEdit_3">
+                   <property name="placeholderText">
+                    <string>pituus</string>
+                   </property>
+                  </widget>
                  </item>
                  <item>
                   <widget class="QLabel" name="label_3">
@@ -481,17 +538,11 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_4"/>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_4">
-                   <property name="text">
-                    <string>C</string>
+                  <widget class="QLineEdit" name="lineEdit_5">
+                   <property name="placeholderText">
+                    <string>ottisyvyys</string>
                    </property>
                   </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_5"/>
                  </item>
                  <item>
                   <widget class="QLabel" name="label_5">
@@ -550,6 +601,9 @@
                    <property name="acceptDrops">
                     <bool>true</bool>
                    </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 0, 0)</string>
+                   </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
@@ -560,11 +614,17 @@
                  </item>
                  <item>
                   <widget class="QLabel" name="label_7">
+                   <property name="autoFillBackground">
+                    <bool>false</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 0, 0)</string>
+                   </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
                    <property name="text">
-                    <string/>
+                    <string>Uistin</string>
                    </property>
                   </widget>
                  </item>
@@ -595,6 +655,20 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_37">
+            <property name="text">
+             <string>Paikka</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="m_place">
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -677,6 +751,9 @@
               <item>
                <widget class="QLineEdit" name="searchLure">
                 <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
                  <string>Etsi...</string>
                 </property>
                </widget>
@@ -755,24 +832,6 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_13">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_27">
-            <item>
-             <widget class="QToolButton" name="toolButton">
-              <property name="text">
-               <string>Uusi viehe</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_2">
-              <property name="text">
-               <string>Poista valittu viehe</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
            <widget class="QListWidget" name="listWidget_5"/>
           </item>
          </layout>
@@ -848,6 +907,20 @@
                </property>
               </widget>
              </item>
+             <item row="6" column="0">
+              <widget class="QToolButton" name="toolButton">
+               <property name="text">
+                <string>Uusi viehe</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QToolButton" name="toolButton_2">
+               <property name="text">
+                <string>Poista viehe</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
           </layout>
@@ -863,24 +936,6 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QToolButton" name="toolButton_3">
-              <property name="text">
-               <string>Uusi</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_4">
-              <property name="text">
-               <string>Poista</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
            <widget class="QListWidget" name="listWidget"/>
           </item>
          </layout>
@@ -891,6 +946,9 @@
            <string>Paikan tiedot</string>
           </property>
           <layout class="QFormLayout" name="formLayout_3">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+           </property>
            <item row="0" column="0">
             <widget class="QLabel" name="label">
              <property name="text">
@@ -900,6 +958,54 @@
            </item>
            <item row="0" column="1">
             <widget class="QLineEdit" name="lineEdit"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_11">
+             <property name="text">
+              <string>Paikkakunta</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="lineEdit_6"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_12">
+             <property name="text">
+              <string>Muuta</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QTextEdit" name="textEdit"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QToolButton" name="toolButton_3">
+             <property name="text">
+              <string>Uusi</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QToolButton" name="toolButton_4">
+             <property name="text">
+              <string>Poista</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QCheckBox" name="checkBox_5">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_13">
+             <property name="text">
+              <string>Ei näy listassa</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
