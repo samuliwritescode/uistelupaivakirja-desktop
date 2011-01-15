@@ -12,10 +12,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    lureitem.cpp
+    lureitem.cpp \
+    trollingmodel.cpp \
+    trollingcontroller.cpp
 
 HEADERS  += mainwindow.h \
-    lureitem.h
+    lureitem.h \
+    trollingmodel.h \
+    trollingcontroller.h
 
 FORMS    += mainwindow.ui
 

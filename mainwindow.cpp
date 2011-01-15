@@ -10,10 +10,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->setupUi(this);
-    ui->m_place->insertItem(0, "Ristinselkä");
-    ui->m_place->insertItem(0, "Murtoselkä");
-    ui->m_place->insertItem(0, "Vanhanselkä");
+    m_controller = new TrollingController();
+
+    ui->place->insertItem(0, "Ristinselkä");
+    ui->place->insertItem(0, "Murtoselkä");
+    ui->place->insertItem(0, "Vanhanselkä");
+
+    ui->specie->insertItem(0, "Hauki");
+    ui->specie->insertItem(0, "Ahven");
+    ui->specie->insertItem(0, "Kuha");
+
 
     for(int loop=0; loop < 10; loop++)
     {
@@ -46,5 +52,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete m_controller;
 }
 

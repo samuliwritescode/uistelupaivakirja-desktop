@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "trollingcontroller.h"
 
 namespace Ui {
     class MainWindow;
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    TrollingController* m_controller;
 
 private slots:
 };
