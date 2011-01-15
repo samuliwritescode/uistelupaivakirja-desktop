@@ -296,7 +296,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QComboBox" name="specie"/>
+                  <widget class="QComboBox" name="species"/>
                  </item>
                  <item>
                   <widget class="QLineEdit" name="weight">

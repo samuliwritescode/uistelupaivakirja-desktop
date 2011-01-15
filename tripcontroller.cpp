@@ -1,15 +1,20 @@
 #include <QDebug>
+#include "singletons.h"
 #include "tripcontroller.h"
+#include "trollingmodel.h"
 
 TripController::TripController(QObject *parent) :
-    QObject(parent)
+        QObject(parent),
+        m_trip(NULL)
 {
+    m_trip = Singletons::model()->getTrip();
 }
 
 
 void TripController::setDate(const QDate& date)
 {
-    qDebug() << "date was set to" << date;
+    if(m_trip)
+        m_trip->setDate(date);
 }
 
 void TripController::addTime(int start, int end)
@@ -27,10 +32,8 @@ void TripController::setPlace(const QString& place)
     qDebug() << "set place" << place;
 }
 
-QStringList TripController::getPlaces()
+void TripController::saveTrip()
 {
-    QStringList list;
-    list.append("Ristinselkä");
-    list.append("Vanhanselkä");
-    return list;
+    int newId = Singletons::model()->commit(m_trip);
+    m_trip = Singletons::model()->getTrip(newId);
 }
