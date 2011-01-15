@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "trollingcontroller.h"
+#include "tripcontroller.h"
 
 namespace Ui {
     class MainWindow;
@@ -18,9 +18,19 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    TrollingController* m_controller;
+    TripController* m_controller;
 
 private slots:
+
+private slots:
+    void on_place_currentIndexChanged(QString );
+    void on_time23_4_clicked(bool checked);
+    void on_time18_23_clicked(bool checked);
+    void on_time14_18_clicked(bool checked);
+    void on_time11_14_clicked(bool checked);
+    void on_time9_11_clicked(bool checked);
+    void on_time4_9_clicked(bool checked);
+    void on_dateEdit_dateChanged(QDate date);
 };
 
 #endif // MAINWINDOW_H

@@ -10,11 +10,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_controller = new TrollingController();
+    m_controller = new TripController();
 
-    ui->place->insertItem(0, "Ristinselkä");
-    ui->place->insertItem(0, "Murtoselkä");
-    ui->place->insertItem(0, "Vanhanselkä");
+    ui->dateEdit->setDate(QDate::currentDate());
+    ui->place->insertItems(0, m_controller->getPlaces());
 
     ui->specie->insertItem(0, "Hauki");
     ui->specie->insertItem(0, "Ahven");
@@ -55,3 +54,42 @@ MainWindow::~MainWindow()
     delete m_controller;
 }
 
+void MainWindow::on_dateEdit_dateChanged(QDate date)
+{
+     m_controller->setDate(ui->dateEdit->date());
+}
+
+void MainWindow::on_time4_9_clicked(bool checked)
+{
+    checked?m_controller->addTime(4, 9):m_controller->removeTime(4,9);
+}
+
+void MainWindow::on_time9_11_clicked(bool checked)
+{
+    checked?m_controller->addTime(9, 11):m_controller->removeTime(4,9);
+}
+
+void MainWindow::on_time11_14_clicked(bool checked)
+{
+    checked?m_controller->addTime(11, 14):m_controller->removeTime(4,9);
+}
+
+void MainWindow::on_time14_18_clicked(bool checked)
+{
+    checked?m_controller->addTime(14, 18):m_controller->removeTime(4,9);
+}
+
+void MainWindow::on_time18_23_clicked(bool checked)
+{
+    checked?m_controller->addTime(18, 23):m_controller->removeTime(4,9);
+}
+
+void MainWindow::on_time23_4_clicked(bool checked)
+{
+    checked?m_controller->addTime(23, 4):m_controller->removeTime(4,9);
+}
+
+void MainWindow::on_place_currentIndexChanged(QString place)
+{
+    m_controller->setPlace(place);
+}

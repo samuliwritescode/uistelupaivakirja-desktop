@@ -14,12 +14,12 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     lureitem.cpp \
     trollingmodel.cpp \
-    trollingcontroller.cpp
+    tripcontroller.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
     trollingmodel.h \
-    trollingcontroller.h
+    tripcontroller.h
 
 FORMS    += mainwindow.ui
 
