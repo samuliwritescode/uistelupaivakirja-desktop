@@ -96,3 +96,8 @@ void MainWindow::on_trip_save_clicked()
 {
     Singletons::tripController()->saveTrip();
 }
+
+void MainWindow::on_water_temp_textChanged(QString temp)
+{
+    Singletons::tripController()->setWaterTemp(temp);
+}

@@ -15,6 +15,7 @@ public:
 signals:
 
 public slots:
+    void setWaterTemp(const QString& temp);
     void setDate(const QDate& date);
     void setPlace(const QString& place);
     void addTime(int, int);

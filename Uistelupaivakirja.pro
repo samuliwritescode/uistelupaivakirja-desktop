@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui xml
 
 TARGET = Uistelupaivakirja
 TEMPLATE = app
@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     lure.cpp \
     site.cpp \
     species.cpp \
-    singletons.cpp
+    singletons.cpp \
+    dblayer.cpp \
+    xmlwriter.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -35,7 +37,9 @@ HEADERS  += mainwindow.h \
     lure.h \
     site.h \
     species.h \
-    singletons.h
+    singletons.h \
+    dblayer.h \
+    xmlwriter.h
 
 FORMS    += mainwindow.ui
 

@@ -37,3 +37,10 @@ void TripController::saveTrip()
     int newId = Singletons::model()->commit(m_trip);
     m_trip = Singletons::model()->getTrip(newId);
 }
+
+
+void TripController::setWaterTemp(const QString& temp)
+{
+    if(m_trip)
+        m_trip->setWaterTemp(temp.toDouble());
+}

@@ -24,6 +24,7 @@ private:
 private slots:
 
 private slots:
+    void on_water_temp_textChanged(QString );
     void on_trip_save_clicked();
     void on_place_currentIndexChanged(QString );
     void on_time23_4_clicked(bool checked);

@@ -3,22 +3,22 @@
 TrollingModel::TrollingModel(QObject *parent) :
     QObject(parent)
 {
+    m_DBLayer = new DBLayer("/Users/cape/Code/Database");
+}
+
+TrollingModel::~TrollingModel()
+{
+    delete m_DBLayer;
 }
 
 Trip* TrollingModel::getTrip(int id)
 {
-    if(id < 0)
+    if(id < 0 )
         return new Trip();
 
-    return NULL;
-}
-
-Fish* TrollingModel::getFish(int id)
-{
-    if(id < 0)
-        return new Fish();
-
-    return NULL;
+    Trip* trip = new Trip();
+    m_DBLayer->loadObject(id, trip);
+    return trip;
 }
 
 Lure* TrollingModel::getLure(int id)
@@ -50,5 +50,6 @@ int TrollingModel::commit(TrollingObject* object)
     if(object == NULL)
        return -2;
 
-   // m_xmlWriter.write("object.xml", object);
+    m_DBLayer->storeObject(object);
+    return object->getId();
 }
