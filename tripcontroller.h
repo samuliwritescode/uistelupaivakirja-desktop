@@ -18,6 +18,7 @@ public slots:
     void setWaterTemp(const QString& temp);
     void setDate(const QDate& date);
     void setPlace(const QString& place);
+    void setDescription(const QString& desc);
     void addTime(int, int);
     void removeTime(int,int);
     void saveTrip();

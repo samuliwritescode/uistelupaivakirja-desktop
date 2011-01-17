@@ -101,3 +101,8 @@ void MainWindow::on_water_temp_textChanged(QString temp)
 {
     Singletons::tripController()->setWaterTemp(temp);
 }
+
+void MainWindow::on_misc_textChanged()
+{
+    Singletons::tripController()->setDescription(ui->misc->toPlainText());
+}

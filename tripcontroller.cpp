@@ -44,3 +44,9 @@ void TripController::setWaterTemp(const QString& temp)
     if(m_trip)
         m_trip->setWaterTemp(temp.toDouble());
 }
+
+void TripController::setDescription(const QString& desc)
+{
+    if(m_trip)
+        m_trip->setDescription(desc);
+}

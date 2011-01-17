@@ -12,6 +12,7 @@ public:
     void setWaterTemp(double temp);
     double getWaterTemp();
     void setDate(const QDate& date);
+    void setDescription(const QString& desc);
     QDate getDate();
     Fish* getFish(int id = -1);
 };

@@ -33,3 +33,9 @@ double Trip::getWaterTemp()
 {
     return m_properties["watertemp"].toDouble();
 }
+
+
+void Trip::setDescription(const QString& desc)
+{
+    m_properties["description"] = desc;
+}
