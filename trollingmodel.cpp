@@ -1,9 +1,10 @@
+#include <QDir>
 #include "trollingmodel.h"
 
 TrollingModel::TrollingModel(QObject *parent) :
     QObject(parent)
 {
-    m_DBLayer = new DBLayer("/Users/cape/Code/Database");
+    m_DBLayer = new DBLayer(QDir::homePath()+"/uistelu/database");
 }
 
 TrollingModel::~TrollingModel()
