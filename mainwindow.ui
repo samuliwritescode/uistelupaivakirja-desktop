@@ -485,6 +485,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QCheckBox" name="weather_fog">
+              <property name="text">
+               <string>sumua</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item row="5" column="0">

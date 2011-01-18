@@ -7,12 +7,22 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_tripController(NULL)
 {
+    m_tripController = Singletons::tripController();
     ui->setupUi(this);
+    ui->water_temp->setValidator(new QIntValidator(this));
+    ui->air_temp_start->setValidator(new QIntValidator(this));
+    ui->air_temp_end->setValidator(new QIntValidator(this));
+    ui->weight->setValidator(new QIntValidator(this));
+    ui->length->setValidator(new QIntValidator(this));
+    ui->spotdepth->setValidator(new QIntValidator(this));
 
     ui->dateEdit->setDate(QDate::currentDate());
     ui->place->insertItems(0, Singletons::placeController()->getPlaces());
+
+
 
     ui->species->insertItem(0, "Hauki");
     ui->species->insertItem(0, "Ahven");
@@ -54,55 +64,160 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_dateEdit_dateChanged(QDate date)
 {
-    Singletons::tripController()->setDate(ui->dateEdit->date());
+    m_tripController->dateEvent(eTripDate, ui->dateEdit->date());
 }
 
 void MainWindow::on_time4_9_clicked(bool checked)
 {
-    checked?Singletons::tripController()->addTime(4, 9):Singletons::tripController()->removeTime(4,9);
+    m_tripController->booleanEvent(eTime49, checked);
 }
 
 void MainWindow::on_time9_11_clicked(bool checked)
 {
-    checked?Singletons::tripController()->addTime(9, 11):Singletons::tripController()->removeTime(4,9);
+    m_tripController->booleanEvent(eTime911, checked);
 }
 
 void MainWindow::on_time11_14_clicked(bool checked)
 {
-    checked?Singletons::tripController()->addTime(11, 14):Singletons::tripController()->removeTime(4,9);
+    m_tripController->booleanEvent(eTime1114, checked);
 }
 
 void MainWindow::on_time14_18_clicked(bool checked)
 {
-    checked?Singletons::tripController()->addTime(14, 18):Singletons::tripController()->removeTime(4,9);
+    m_tripController->booleanEvent(eTime1418, checked);
 }
 
 void MainWindow::on_time18_23_clicked(bool checked)
 {
-    checked?Singletons::tripController()->addTime(18, 23):Singletons::tripController()->removeTime(4,9);
+    m_tripController->booleanEvent(eTime1823, checked);
 }
 
 void MainWindow::on_time23_4_clicked(bool checked)
 {
-    checked?Singletons::tripController()->addTime(23, 4):Singletons::tripController()->removeTime(4,9);
+    m_tripController->booleanEvent(eTime2304, checked);
 }
 
 void MainWindow::on_place_currentIndexChanged(QString place)
 {
-    Singletons::tripController()->setPlace(place);
+    m_tripController->textEvent(ePlaceText, place);
 }
 
 void MainWindow::on_trip_save_clicked()
 {
-    Singletons::tripController()->saveTrip();
+    m_tripController->buttonEvent(eSaveTrip);
 }
 
 void MainWindow::on_water_temp_textChanged(QString temp)
 {
-    Singletons::tripController()->setWaterTemp(temp);
+    m_tripController->textEvent(eWaterTemp, temp);
 }
 
 void MainWindow::on_misc_textChanged()
 {
-    Singletons::tripController()->setDescription(ui->misc->toPlainText());
+    m_tripController->textEvent(eMiscText, ui->misc->toPlainText());
+}
+
+void MainWindow::on_weather_clear_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWeatherClear, checked);
+}
+
+void MainWindow::on_weather_halfclear_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWeatherHalfClear, checked);
+}
+
+void MainWindow::on_weather_overcast_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWeatherOvercast, checked);
+}
+
+void MainWindow::on_weather_rain_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWeatherRain, checked);
+}
+
+void MainWindow::on_weather_fog_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWeatherFog, checked);
+}
+
+void MainWindow::on_wind_calm_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWindCalm, checked);
+}
+
+void MainWindow::on_wind_faint_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWindFaint, checked);
+}
+
+void MainWindow::on_wind_moderate_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWindModerate, checked);
+}
+
+void MainWindow::on_wind_brisk_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWindBrisk, checked);
+}
+
+void MainWindow::on_wind_hard_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWindHard, checked);
+}
+
+void MainWindow::on_species_currentIndexChanged(int index)
+{
+    m_tripController->intEvent(eSpecies, index);
+}
+
+void MainWindow::on_weight_textChanged(QString weight)
+{
+    m_tripController->textEvent(eWeight, weight);
+}
+
+void MainWindow::on_length_textChanged(QString length)
+{
+    m_tripController->textEvent(eLength, length);
+}
+
+void MainWindow::on_spotdepth_textChanged(QString depth)
+{
+    m_tripController->textEvent(eSpotDepth, depth);
+}
+
+void MainWindow::on_undersize_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eUnderSize, checked);
+}
+
+void MainWindow::on_new_fish_clicked()
+{
+    m_tripController->buttonEvent(eNewFish);
+}
+
+void MainWindow::on_del_fish_clicked()
+{
+    m_tripController->buttonEvent(eDeleteFish);
+}
+
+void MainWindow::on_air_temp_start_textChanged(QString temp)
+{
+    m_tripController->textEvent(eStartTemp, temp);
+}
+
+void MainWindow::on_air_temp_end_textChanged(QString temp)
+{
+    m_tripController->textEvent(eEndTemp, temp);
+}
+
+void MainWindow::on_trip_delete_clicked()
+{
+    m_tripController->buttonEvent(eDeleteTrip);
+}
+
+void MainWindow::on_trip_new_clicked()
+{
+    m_tripController->buttonEvent(eNewTrip);
 }
