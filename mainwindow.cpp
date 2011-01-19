@@ -12,12 +12,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     m_tripController = Singletons::tripController();
     ui->setupUi(this);
-    ui->water_temp->setValidator(new QIntValidator(this));
-    ui->air_temp_start->setValidator(new QIntValidator(this));
-    ui->air_temp_end->setValidator(new QIntValidator(this));
-    ui->weight->setValidator(new QIntValidator(this));
-    ui->length->setValidator(new QIntValidator(this));
-    ui->spotdepth->setValidator(new QIntValidator(this));
+    ui->water_temp->setValidator(new QDoubleValidator(this));
+    ui->air_temp_start->setValidator(new QDoubleValidator(this));
+    ui->air_temp_end->setValidator(new QDoubleValidator(this));
+    ui->weight->setValidator(new QDoubleValidator(this));
+    ui->length->setValidator(new QDoubleValidator(this));
+    ui->spotdepth->setValidator(new QDoubleValidator(this));
 
     ui->dateEdit->setDate(QDate::currentDate());
     ui->place->insertItems(0, Singletons::placeController()->getPlaces());
