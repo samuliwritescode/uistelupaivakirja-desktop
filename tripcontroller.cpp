@@ -45,6 +45,8 @@ void TripController::booleanEvent(EUISource source, bool value)
     case eUnderSize: break;
     default: qCritical() << "Unknown boolean event. Cant handle this!" << source;
     }
+
+    sendNotificationToObservers();
 }
 
 void TripController::intEvent(EUISource source, int value)

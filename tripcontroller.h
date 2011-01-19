@@ -25,6 +25,8 @@ public:
     virtual void textEvent(EUISource source, const QString& value);
     virtual void intEvent(EUISource source, int value);
 
+protected:
+
 private:
     Trip* m_trip;
 

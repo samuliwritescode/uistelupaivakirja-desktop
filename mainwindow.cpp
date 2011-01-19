@@ -55,11 +55,18 @@ MainWindow::MainWindow(QWidget *parent) :
         item->setIcon(QIcon(":/msnlogo.jpg"));
         ui->lureList->addItem(item);
     }
+
+    connect(m_tripController, SIGNAL(observerNotification()), this, SLOT(observerEvent()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::observerEvent()
+{
+    qDebug() << "observer event";
 }
 
 void MainWindow::on_dateEdit_dateChanged(QDate date)

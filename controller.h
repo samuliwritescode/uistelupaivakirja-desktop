@@ -28,11 +28,13 @@ public:
     virtual void intEvent(EUISource source, int value) = 0;
 
 signals:
+    void observerNotification();
 
 public slots:
 
 protected:
-    //This is abstract class
+    virtual void sendNotificationToObservers();
+    //This is an abstract class
      explicit Controller(QObject *parent = 0);
 
 };

@@ -23,6 +23,7 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void observerEvent();
 
 private slots:
     void on_trip_new_clicked();
