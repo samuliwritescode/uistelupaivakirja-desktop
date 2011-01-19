@@ -4,7 +4,7 @@
 #include "trollingmodel.h"
 
 TripController::TripController(QObject *parent) :
-        QObject(parent),
+        Controller(parent),
         m_trip(NULL)
 {
     m_trip = Singletons::model()->getTrip();
