@@ -10,6 +10,39 @@ TripController::TripController(QObject *parent) :
     m_trip = Singletons::model()->getTrip();
 }
 
+QDate TripController::getDateValue(EUISource source)
+{
+    if(!m_trip)
+    {
+        qCritical() << "Impossible to handle boolean event. No trip!";
+        return QDate::currentDate();
+    }
+
+    switch(source)
+    {
+    case eTripDate: return m_trip->getDate(); break;
+    }
+}
+
+bool TripController::getBooleanValue(EUISource source)
+{
+    if(!m_trip)
+    {
+        qCritical() << "Impossible to handle boolean event. No trip!";
+        return false;
+    }
+
+    static bool bPrev = true;
+    if(bPrev)
+        bPrev = false;
+    else
+        bPrev = true;
+    switch(source)
+    {
+    case eTime49: return bPrev; break;
+    }
+}
+
 void TripController::booleanEvent(EUISource source, bool value)
 {
     if(!m_trip)
@@ -60,6 +93,7 @@ void TripController::intEvent(EUISource source, int value)
     switch(source)
     {
     case eSpecies: break;
+    case eMethod: break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
     }
 }
@@ -77,6 +111,7 @@ void TripController::dateEvent(EUISource source, const QDate& value)
     case eTripDate: m_trip->setDate(value); break;
     default:  qCritical() << "Unknown date event. Cant handle this!" << source;
     }
+    sendNotificationToObservers();
 }
 
 void TripController::textEvent(EUISource source, const QString& value)
@@ -99,6 +134,7 @@ void TripController::textEvent(EUISource source, const QString& value)
     case eSpotDepth: break;
     default:  qCritical() << "Unknown text event. Cant handle this!" << source;
     }
+    sendNotificationToObservers();
 }
 
 void TripController::buttonEvent(EUISource source)
@@ -111,5 +147,6 @@ void TripController::buttonEvent(EUISource source)
         } break;
     default:  qCritical() << "Unknown default event. Cant handle this!" << source;
     }
+    sendNotificationToObservers();
 }
 

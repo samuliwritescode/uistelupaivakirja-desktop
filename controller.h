@@ -14,7 +14,7 @@ enum EUISource {eTripDate, eTime49, eTime911,
                 eWeight, eLength, eSpotDepth,
                 eUnderSize, eStartTemp, eEndTemp,
                 eSaveTrip, eDeleteFish, eNewFish,
-                eDeleteTrip, eNewTrip};
+                eDeleteTrip, eNewTrip, eMethod};
 
 class Controller : public QObject
 {
@@ -26,6 +26,9 @@ public:
     virtual void dateEvent(EUISource source, const QDate& value) = 0;
     virtual void textEvent(EUISource source, const QString& value) = 0;
     virtual void intEvent(EUISource source, int value) = 0;
+
+    virtual QDate getDateValue(EUISource source) = 0;
+    virtual bool getBooleanValue(EUISource source) = 0;
 
 signals:
     void observerNotification();

@@ -23,6 +23,7 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_method_currentIndexChanged(int index);
     void observerEvent();
 
 private slots:

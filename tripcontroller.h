@@ -25,6 +25,9 @@ public:
     virtual void textEvent(EUISource source, const QString& value);
     virtual void intEvent(EUISource source, int value);
 
+    virtual QDate getDateValue(EUISource source);
+    virtual bool getBooleanValue(EUISource source);
+
 protected:
 
 private:

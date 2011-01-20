@@ -66,11 +66,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::observerEvent()
 {
+    ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
+    ui->time4_9->setChecked(m_tripController->getBooleanValue(eTime49));
     qDebug() << "observer event";
 }
 
 void MainWindow::on_dateEdit_dateChanged(QDate date)
 {
+    qDebug() << "date was changed";
     m_tripController->dateEvent(eTripDate, ui->dateEdit->date());
 }
 
@@ -227,4 +230,9 @@ void MainWindow::on_trip_delete_clicked()
 void MainWindow::on_trip_new_clicked()
 {
     m_tripController->buttonEvent(eNewTrip);
+}
+
+void MainWindow::on_method_currentIndexChanged(int index)
+{
+    m_tripController->intEvent(eMethod, index);
 }
