@@ -15,6 +15,10 @@ public:
     void setDescription(const QString& desc);
     QDate getDate();
     Fish* getFish(int id = -1);
+    void setTimeMask(int mask, bool value);
+    int getTimeMask();
+
+
 };
 
 #endif // TRIP_H

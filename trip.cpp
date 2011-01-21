@@ -39,3 +39,21 @@ void Trip::setDescription(const QString& desc)
 {
     m_properties["description"] = desc;
 }
+
+
+void Trip::setTimeMask(int mask, bool value)
+{
+    int oldmask = m_properties["timemask"].toInt();
+    int newmask = 0;
+    if(value)
+        newmask = oldmask|mask;
+    else
+        newmask = oldmask^mask;
+    m_properties["timemask"] = newmask;
+
+}
+
+int Trip::getTimeMask()
+{
+    return m_properties["timemask"].toInt();
+}

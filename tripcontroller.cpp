@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <math.h>
 #include "singletons.h"
 #include "tripcontroller.h"
 #include "trollingmodel.h"
@@ -39,7 +40,12 @@ bool TripController::getBooleanValue(EUISource source)
         bPrev = true;
     switch(source)
     {
-    case eTime49: return bPrev; break;
+    case eTime49: return (m_trip->getTimeMask()&1)!=0; break;
+    case eTime911: return (m_trip->getTimeMask()&2)!=0; break;
+    case eTime1114: return (m_trip->getTimeMask()&4)!=0; break;
+    case eTime1418: return (m_trip->getTimeMask()&8)!=0; break;
+    case eTime1823: return (m_trip->getTimeMask()&16)!=0; break;
+    case eTime2304: return (m_trip->getTimeMask()&32)!=0; break;
     }
 }
 
@@ -58,7 +64,7 @@ void TripController::booleanEvent(EUISource source, bool value)
     case eTime1114:
     case eTime1418:
     case eTime1823:
-    case eTime2304: qDebug() << "time" << source-eTime49;
+    case eTime2304: m_trip->setTimeMask(pow(2,source-eTime49),value);
         break;
 
     case eWindCalm:
@@ -66,6 +72,7 @@ void TripController::booleanEvent(EUISource source, bool value)
     case eWindModerate:
     case eWindBrisk:
     case eWindHard: qDebug() << "wind" << source-eWindCalm;
+
         break;
 
     case eWeatherClear:

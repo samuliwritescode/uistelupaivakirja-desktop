@@ -75,7 +75,7 @@
          <normaloff>:/res/mainlogo.png</normaloff>:/res/mainlogo.png</iconset>
        </attribute>
        <attribute name="title">
-        <string>Pääsivu</string>
+        <string>Tilastot</string>
        </attribute>
        <widget class="QCommandLinkButton" name="newTripBtn">
         <property name="geometry">
@@ -144,7 +144,7 @@
          <normaloff>:/res/reissu.png</normaloff>:/res/reissu.png</iconset>
        </attribute>
        <attribute name="title">
-        <string>Reissut</string>
+        <string>Kalareissut</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_24">
         <item>
@@ -696,7 +696,7 @@
              </sizepolicy>
             </property>
             <property name="title">
-             <string>Reissut</string>
+             <string>Kalareissut</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
@@ -973,6 +973,10 @@
        </layout>
       </widget>
       <widget class="QWidget" name="placesTab">
+       <attribute name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/res/kalapaikka.png</normaloff>:/res/kalapaikka.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Kalapaikat</string>
        </attribute>

@@ -9,5 +9,6 @@
         <file>res/tintti.png</file>
         <file>res/reissu.png</file>
         <file>res/mainlogo.png</file>
+        <file>res/kalapaikka.png</file>
     </qresource>
 </RCC>
