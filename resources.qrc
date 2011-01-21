@@ -1,13 +1,13 @@
 <RCC>
     <qresource prefix="/">
-        <file>IMG_0764.JPG</file>
-        <file>IMG_0200.JPG</file>
-        <file>kyrmy.jpg</file>
         <file>res/list-add.png</file>
         <file>res/list-remove.png</file>
         <file>res/document-new.png</file>
         <file>res/document-save.png</file>
         <file>res/edit-clear.png</file>
         <file>res/edit-cut.png</file>
+        <file>res/tintti.png</file>
+        <file>res/reissu.png</file>
+        <file>res/mainlogo.png</file>
     </qresource>
 </RCC>

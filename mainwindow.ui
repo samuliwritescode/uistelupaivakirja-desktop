@@ -26,7 +26,7 @@
    <string>Uistelupäiväkirja</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources.qrc">
+   <iconset>
     <normaloff>:/IMG_0764.JPG</normaloff>:/IMG_0764.JPG</iconset>
   </property>
   <property name="locale">
@@ -72,7 +72,7 @@
       <widget class="QWidget" name="mainTab">
        <attribute name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/kyrmy.jpg</normaloff>:/kyrmy.jpg</iconset>
+         <normaloff>:/res/mainlogo.png</normaloff>:/res/mainlogo.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Pääsivu</string>
@@ -141,7 +141,7 @@
       <widget class="QWidget" name="tripsTab">
        <attribute name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/IMG_0764.JPG</normaloff>:/IMG_0764.JPG</iconset>
+         <normaloff>:/res/reissu.png</normaloff>:/res/reissu.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Reissut</string>
@@ -835,7 +835,7 @@
              <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
             </property>
             <property name="windowTitle">
-             <string>Kartta</string>
+             <string>Reitit</string>
             </property>
             <widget class="QWidget" name="dockWidgetContents">
              <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -867,7 +867,7 @@
       <widget class="QWidget" name="luresTab">
        <attribute name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/IMG_0200.JPG</normaloff>:/IMG_0200.JPG</iconset>
+         <normaloff>:/res/tintti.png</normaloff>:/res/tintti.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Vieheet</string>
