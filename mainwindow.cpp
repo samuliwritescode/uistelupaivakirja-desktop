@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         QListWidgetItem* item = new QListWidgetItem("HK varma taimen 9 cm venäjän lippu"+QString::number(loop));
         item->setFlags(Qt::ItemIsDragEnabled | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-        item->setIcon(QIcon(":/msnlogo.jpg"));
+        //item->setIcon(QIcon(":/msnlogo.jpg"));
         ui->lureList->addItem(item);
     }
 

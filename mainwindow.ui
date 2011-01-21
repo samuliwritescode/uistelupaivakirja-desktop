@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
-    <normaloff>:/msnlogo.jpg</normaloff>:/msnlogo.jpg</iconset>
+    <normaloff>:/IMG_0764.JPG</normaloff>:/IMG_0764.JPG</iconset>
   </property>
   <property name="locale">
    <locale language="Finnish" country="Finland"/>
@@ -92,10 +92,6 @@
         <property name="text">
          <string>Uusi reissu</string>
         </property>
-        <property name="icon">
-         <iconset resource="resources.qrc">
-          <normaloff>:/msnlogo.jpg</normaloff>:/msnlogo.jpg</iconset>
-        </property>
         <property name="iconSize">
          <size>
           <width>70</width>
@@ -115,10 +111,6 @@
         <property name="text">
          <string>Tilastot</string>
         </property>
-        <property name="icon">
-         <iconset resource="resources.qrc">
-          <normaloff>:/msnlogo.jpg</normaloff>:/msnlogo.jpg</iconset>
-        </property>
         <property name="iconSize">
          <size>
           <width>70</width>
@@ -137,10 +129,6 @@
         </property>
         <property name="text">
          <string>Vieheet</string>
-        </property>
-        <property name="icon">
-         <iconset resource="resources.qrc">
-          <normaloff>:/msnlogo.jpg</normaloff>:/msnlogo.jpg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -348,12 +336,15 @@
                  </item>
                  <item>
                   <widget class="QToolButton" name="new_fish">
+                   <property name="toolTip">
+                    <string>Lisää</string>
+                   </property>
                    <property name="text">
                     <string>Uusi</string>
                    </property>
                    <property name="icon">
                     <iconset resource="resources.qrc">
-                     <normaloff>:/msnlogo.jpg</normaloff>:/msnlogo.jpg</iconset>
+                     <normaloff>:/res/list-add.png</normaloff>:/res/list-add.png</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
@@ -432,12 +423,15 @@
                  </item>
                  <item>
                   <widget class="QToolButton" name="del_fish">
+                   <property name="toolTip">
+                    <string>Poista / Tyhjennä kentät</string>
+                   </property>
                    <property name="text">
                     <string>Pois</string>
                    </property>
                    <property name="icon">
                     <iconset resource="resources.qrc">
-                     <normaloff>:/IMG_0200.JPG</normaloff>:/IMG_0200.JPG</iconset>
+                     <normaloff>:/res/list-remove.png</normaloff>:/res/list-remove.png</iconset>
                    </property>
                   </widget>
                  </item>
@@ -708,23 +702,44 @@
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_2">
                <item>
-                <widget class="QToolButton" name="trip_delete">
+                <widget class="QToolButton" name="trip_new">
+                 <property name="toolTip">
+                  <string>Uusi</string>
+                 </property>
                  <property name="text">
-                  <string>Poista</string>
+                  <string>Uusi</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resources.qrc">
+                   <normaloff>:/res/document-new.png</normaloff>:/res/document-new.png</iconset>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QToolButton" name="trip_save">
+                 <property name="toolTip">
+                  <string>Tallenna</string>
+                 </property>
                  <property name="text">
                   <string>Tallenna</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resources.qrc">
+                   <normaloff>:/res/document-save.png</normaloff>:/res/document-save.png</iconset>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QToolButton" name="trip_new">
+                <widget class="QToolButton" name="trip_delete">
+                 <property name="toolTip">
+                  <string>Poista</string>
+                 </property>
                  <property name="text">
-                  <string>Uusi</string>
+                  <string>Poista</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resources.qrc">
+                   <normaloff>:/res/edit-cut.png</normaloff>:/res/edit-cut.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -834,7 +849,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>190</width>
+                   <width>180</width>
                    <height>76</height>
                   </rect>
                  </property>
