@@ -30,13 +30,17 @@ public:
     virtual bool getBooleanValue(EUISource source) = 0;
     virtual int getIntValue(EUISource source) = 0;
 
+    enum ENotificationType {
+        eTripUpdated=6, eTripListUpdated=17
+    };
+
 signals:
-    void observerNotification();
+    void observerNotification(int);
 
 public slots:
 
 protected:
-    virtual void sendNotificationToObservers();
+    virtual void sendNotificationToObservers(ENotificationType type);
     //This is an abstract class
      explicit Controller(QObject *parent = 0);
 

@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "controller.h"
 
 Controller::Controller(QObject *parent) :
@@ -6,7 +7,7 @@ Controller::Controller(QObject *parent) :
 }
 
 
-void Controller::sendNotificationToObservers()
+void Controller::sendNotificationToObservers(ENotificationType type)
 {
-    emit observerNotification();
+    emit observerNotification(static_cast<int>(type));
 }

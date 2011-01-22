@@ -26,7 +26,7 @@ private slots:
     void on_endTime_valueChanged(int value);
     void on_startTime_valueChanged(int value);
     void on_method_currentIndexChanged(int index);
-    void observerEvent();
+    void observerEvent(int type);
 
 private slots:
     void on_trip_new_clicked();

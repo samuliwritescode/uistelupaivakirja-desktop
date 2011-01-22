@@ -39,8 +39,8 @@ int TripController::getIntValue(EUISource source)
 {
     switch(source)
     {
-    case eStartTime: m_trip->getTime().first.hour(); break;
-    case eEndTime: m_trip->getTime().second.hour(); break;
+    case eStartTime: return m_trip->getTime().first.hour(); break;
+    case eEndTime: return m_trip->getTime().second.hour(); break;
     default: qCritical() << "Unknown int event. Cant handle this!" << source; break;
     }
     return 0;
@@ -68,7 +68,7 @@ void TripController::booleanEvent(EUISource source, bool value)
     default: qCritical() << "Unknown boolean event. Cant handle this!" << source << value;
     }
 
-    sendNotificationToObservers();
+    sendNotificationToObservers(Controller::eTripUpdated);
 }
 
 void TripController::intEvent(EUISource source, int value)
@@ -81,7 +81,7 @@ void TripController::intEvent(EUISource source, int value)
     case eMethod: break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
     }
-    sendNotificationToObservers();
+    sendNotificationToObservers(Controller::eTripUpdated);
 }
 
 void TripController::dateEvent(EUISource source, const QDate& value)
@@ -91,7 +91,7 @@ void TripController::dateEvent(EUISource source, const QDate& value)
     case eTripDate: m_trip->setDate(value); break;
     default:  qCritical() << "Unknown date event. Cant handle this!" << source;
     }
-    sendNotificationToObservers();
+    sendNotificationToObservers(Controller::eTripUpdated);
 }
 
 void TripController::textEvent(EUISource source, const QString& value)
@@ -108,7 +108,7 @@ void TripController::textEvent(EUISource source, const QString& value)
     case eSpotDepth: break;
     default:  qCritical() << "Unknown text event. Cant handle this!" << source;
     }
-    sendNotificationToObservers();
+    sendNotificationToObservers(Controller::eTripUpdated);
 }
 
 void TripController::buttonEvent(EUISource source)
@@ -121,6 +121,6 @@ void TripController::buttonEvent(EUISource source)
         } break;
     default:  qCritical() << "Unknown default event. Cant handle this!" << source;
     }
-    sendNotificationToObservers();
+    sendNotificationToObservers(Controller::eTripUpdated);
 }
 

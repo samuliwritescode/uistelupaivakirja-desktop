@@ -5,16 +5,24 @@ TrollingModel::TrollingModel(QObject *parent) :
     QObject(parent)
 {
     m_DBLayer = new DBLayer(QDir::homePath()+"/uistelu/database");
-    QList<int> ids = m_DBLayer->getIds();
-    for(int loop=0; loop < ids.size(); loop++)
+
+    QList<int> tripIds = m_DBLayer->getIds(Trip().getType());
+    foreach(int id, tripIds)
     {
-        qDebug() << "id" << ids[loop];
+        Trip* trip = new Trip();
+        m_DBLayer->loadObject(id, trip);
+        m_trips[id] = trip;
     }
 }
 
 TrollingModel::~TrollingModel()
 {
     delete m_DBLayer;
+    foreach(Trip* trip, m_trips)
+    {
+        delete trip;
+    }
+    m_trips.clear();
 }
 
 Trip* TrollingModel::getTrip(int id)
@@ -22,9 +30,10 @@ Trip* TrollingModel::getTrip(int id)
     if(id < 0 )
         return new Trip();
 
-    Trip* trip = new Trip();
-    m_DBLayer->loadObject(id, trip);
-    return trip;
+    if(m_trips.contains(id))
+        return m_trips[id];
+    else
+        return NULL;
 }
 
 Lure* TrollingModel::getLure(int id)

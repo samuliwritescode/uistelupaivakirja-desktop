@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->lureList->addItem(item);
     }
 
-    connect(m_tripController, SIGNAL(observerNotification()), this, SLOT(observerEvent()));
+    connect(m_tripController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
 }
 
 MainWindow::~MainWindow()
@@ -64,13 +64,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::observerEvent()
+void MainWindow::observerEvent(int type)
 {
-    ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
-    ui->startTimeLabel->setText(QString::number(m_tripController->getIntValue(eStartTime)));
-    ui->endTimeLabel->setText(QString::number(m_tripController->getIntValue(eEndTime)));
+    if(type == Controller::eTripUpdated)
+    {
+        ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
+        ui->startTimeLabel->setText(QString::number(m_tripController->getIntValue(eStartTime)));
+        ui->endTimeLabel->setText(QString::number(m_tripController->getIntValue(eEndTime)));
+    }
+    else if(type == Controller::eTripListUpdated)
+    {
 
-    qDebug() << "observer event";
+    }
 }
 
 void MainWindow::on_dateEdit_dateChanged(QDate date)

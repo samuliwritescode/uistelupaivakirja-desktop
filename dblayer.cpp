@@ -15,18 +15,18 @@ m_storeDir(p_storePath)
 
 bool DBLayer::storeObject(TrollingObject* p_object)
 {
-    XMLWriter writer(m_storeDir.absolutePath()+"/object.xml");
+    XMLWriter writer(m_storeDir.absolutePath()+"/"+p_object->getType()+".xml");
     return writer.write(p_object);
 }
 
 bool DBLayer::loadObject(int id, TrollingObject* p_object)
 {
-    XMLWriter writer(m_storeDir.absolutePath()+"/object.xml");
+    XMLWriter writer(m_storeDir.absolutePath()+"/"+p_object->getType()+".xml");
     return writer.load(p_object, id);
 }
 
 QList<int> DBLayer::getIds(const QString& p_type)
 {
-    XMLWriter writer(m_storeDir.absolutePath()+"/object.xml");
+    XMLWriter writer(m_storeDir.absolutePath()+"/"+p_type+".xml");
     return writer.getIds(p_type);
 }
