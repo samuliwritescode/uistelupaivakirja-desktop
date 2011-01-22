@@ -56,6 +56,8 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->lureList->addItem(item);
     }
 
+    observerEvent(Controller::eTripListUpdated);
+
     connect(m_tripController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
 }
 
@@ -74,7 +76,14 @@ void MainWindow::observerEvent(int type)
     }
     else if(type == Controller::eTripListUpdated)
     {
-
+        ui->trip_list->clear();
+        QMap<QString, int> trips = m_tripController->getTripList();
+        for(QMap<QString, int>::iterator iter = trips.begin(); iter != trips.end(); iter++)
+        {
+            QListWidgetItem* item = new QListWidgetItem(iter.key());
+            //item->setData(0, iter.value());
+            ui->trip_list->insertItem(0, item);
+        }
     }
 }
 

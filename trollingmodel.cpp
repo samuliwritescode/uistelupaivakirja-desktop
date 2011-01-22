@@ -35,6 +35,10 @@ Trip* TrollingModel::getTrip(int id)
     else
         return NULL;
 }
+QMap<int, Trip*> TrollingModel::getTrips()
+{
+    return m_trips;
+}
 
 Lure* TrollingModel::getLure(int id)
 {

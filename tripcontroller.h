@@ -28,6 +28,7 @@ public:
     virtual QDate getDateValue(EUISource source);
     virtual bool getBooleanValue(EUISource source);
     virtual int getIntValue(EUISource source);
+    QMap<QString, int> getTripList();
 
 protected:
 

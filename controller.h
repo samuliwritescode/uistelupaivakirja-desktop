@@ -31,7 +31,7 @@ public:
     virtual int getIntValue(EUISource source) = 0;
 
     enum ENotificationType {
-        eTripUpdated=6, eTripListUpdated=17
+        eTripUpdated, eTripListUpdated
     };
 
 signals:

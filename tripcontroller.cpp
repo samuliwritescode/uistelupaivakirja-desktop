@@ -124,3 +124,24 @@ void TripController::buttonEvent(EUISource source)
     sendNotificationToObservers(Controller::eTripUpdated);
 }
 
+QMap<QString, int> TripController::getTripList()
+{
+    QMap<QString, int> retval;
+    QMap<int, Trip*> trips = Singletons::model()->getTrips();
+
+    for(QMap<int, Trip*>::iterator iter = trips.begin(); iter!=trips.end(); iter++)
+    {
+        Trip* trip = iter.value();
+        QString name = trip->getDate().toString();
+        while(retval.contains(name))
+        {
+            name += "-1";
+        }
+
+        retval[name] = trip->getId();
+        qDebug() << "content" <<trip->getDate().toString() << trip->getId();
+    }
+    return retval;
+}
+
+

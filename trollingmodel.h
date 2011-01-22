@@ -23,6 +23,8 @@ public:
     Species* getSpecies(int id = -1);
     int commit(TrollingObject*);
 
+    QMap<int, Trip*> getTrips();
+
 signals:
 
 public slots:
