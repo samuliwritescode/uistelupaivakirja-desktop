@@ -13,20 +13,8 @@ XMLWriter::XMLWriter(const QString& p_filename):
 
 bool XMLWriter::write(TrollingObject* p_object)
 {
-
-    QFile file(m_filename);
-    if(file.open(QIODevice::ReadOnly))
-    {
-        QString error;
-        int errorLine = 0;
-        int errorColumn = 0;
-
-        if(!m_document.setContent(&file, &error, &errorLine, &errorColumn))
-        {
-            qDebug() << "Cant' read from document" << error << errorLine << " " << errorColumn;
-            return false;
-        }
-    }
+    if(!loadDocument())
+        return false;
 
     QDomElement trollingObject;
     int id = p_object->getId();
@@ -36,6 +24,8 @@ bool XMLWriter::write(TrollingObject* p_object)
 
     p_object->setId(id);
     clearNodeContents(trollingObject);
+
+    trollingObject.setAttribute("type", p_object->getType());
 
     QMapIterator<QString, QVariant> iter(p_object->getProperties());
     while( iter.hasNext() )
@@ -49,7 +39,7 @@ bool XMLWriter::write(TrollingObject* p_object)
         trollingObject.appendChild(property);
     }
 
-    file.close();
+    QFile file(m_filename);
     if(!file.open(QIODevice::WriteOnly))
         return false;
 
@@ -70,25 +60,21 @@ void XMLWriter::clearNodeContents(QDomNode& p_node)
 
 bool XMLWriter::load(TrollingObject* p_object, int p_id)
 {
-    QFile file(m_filename);
-    if(file.open(QIODevice::ReadOnly))
-    {
-        QString error;
-        int errorLine = 0;
-        int errorColumn = 0;
-
-        if(!m_document.setContent(&file, &error, &errorLine, &errorColumn))
-        {
-            qDebug() << "Cant' read from document" << error << errorLine << " " << errorColumn;
-            return false;
-        }
-    }
+    if(!loadDocument())
+        return false;
 
     QDomElement trollingObject;
     int id = p_id;
     if(!getTrollingObjectElement(trollingObject, id) || p_id != id)
     {
         qDebug() << "Cant load object from XML!";
+        return false;
+    }
+
+    QString type = trollingObject.attribute("type");
+    if(p_object->getType() != type)
+    {
+        qCritical() << "Type does not match with loaded object";
         return false;
     }
 
@@ -106,6 +92,7 @@ bool XMLWriter::load(TrollingObject* p_object, int p_id)
     }
     p_object->storeProperties(properties);
     p_object->setId(id);
+    return true;
 }
 
 bool XMLWriter::getTrollingObjectElement(QDomElement& p_element, int& p_id)
@@ -162,5 +149,47 @@ bool XMLWriter::getTrollingObjectElement(QDomElement& p_element, int& p_id)
     root.setAttribute("MaxId", QString::number(maxId));
     p_element = element;
     p_id = maxId;
+    return true;
+}
+
+QList<int> XMLWriter::getIds(const QString& p_type)
+{
+    QList<int> ids;
+    if(!loadDocument())
+        return ids;
+
+    QDomNodeList nodelist = m_document.elementsByTagName("TrollingObject");
+    for(int loop=0; loop < nodelist.size(); loop++)
+    {
+        QDomNode trollingnode = nodelist.at(loop);
+        if(trollingnode.isElement())
+        {
+            QDomElement element = trollingnode.toElement();
+            if(p_type.isNull() || element.attribute("type") == p_type)
+            {
+                ids.append(element.attribute("id").toInt());
+            }
+        }
+    }
+    return ids;
+}
+
+bool XMLWriter::loadDocument()
+{
+    QFile file(m_filename);
+    if(file.open(QIODevice::ReadOnly))
+    {
+        QString error;
+        int errorLine = 0;
+        int errorColumn = 0;
+
+        if(!m_document.setContent(&file, &error, &errorLine, &errorColumn))
+        {
+            qDebug() << "Cant' read from document" << error << errorLine << " " << errorColumn;
+            file.close();
+            return false;
+        }
+    }
+    file.close();
     return true;
 }

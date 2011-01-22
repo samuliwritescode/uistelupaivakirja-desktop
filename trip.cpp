@@ -4,6 +4,7 @@
 Trip::Trip():
     TrollingObject()
 {
+    m_type = "trip";
 }
 
 void Trip::setDate(const QDate& date)
@@ -41,19 +42,36 @@ void Trip::setDescription(const QString& desc)
 }
 
 
-void Trip::setTimeMask(int mask, bool value)
+void Trip::setTime(const QTime& start, const QTime& end)
 {
-    int oldmask = m_properties["timemask"].toInt();
-    int newmask = 0;
-    if(value)
-        newmask = oldmask|mask;
-    else
-        newmask = oldmask^mask;
-    m_properties["timemask"] = newmask;
+    if(!start.isNull())
+        m_properties["time_start"] = start;
 
+    if(!end.isNull())
+        m_properties["time_end"] = end;
 }
 
-int Trip::getTimeMask()
+QPair<QTime, QTime> Trip::getTime()
 {
-    return m_properties["timemask"].toInt();
+    QPair<QTime, QTime> retval;
+    retval.first = m_properties["time_start"].toTime();
+    retval.second = m_properties["time_end"].toTime();
+    return retval;
+}
+
+void Trip::addWindCondition(EWindCondition wind, bool bSet)
+{
+    int mask = m_properties["wind_condition"].toInt();
+    if(bSet)
+        mask = mask|wind;
+    else
+        mask = mask^wind;
+
+    m_properties["wind_condition"] = mask;
+}
+
+bool Trip::isWindCondition(EWindCondition wind)
+{
+   int mask = m_properties["wind_condition"].toInt();
+   return (mask&wind)!=0;
 }

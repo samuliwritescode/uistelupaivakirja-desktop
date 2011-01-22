@@ -13,67 +13,49 @@ TripController::TripController(QObject *parent) :
 
 QDate TripController::getDateValue(EUISource source)
 {
-    if(!m_trip)
-    {
-        qCritical() << "Impossible to handle boolean event. No trip!";
-        return QDate::currentDate();
-    }
-
     switch(source)
     {
     case eTripDate: return m_trip->getDate(); break;
+    default: break;
     }
+    return QDate();
 }
 
 bool TripController::getBooleanValue(EUISource source)
 {
-    if(!m_trip)
-    {
-        qCritical() << "Impossible to handle boolean event. No trip!";
-        return false;
-    }
-
-    static bool bPrev = true;
-    if(bPrev)
-        bPrev = false;
-    else
-        bPrev = true;
     switch(source)
     {
-    case eTime49: return (m_trip->getTimeMask()&1)!=0; break;
-    case eTime911: return (m_trip->getTimeMask()&2)!=0; break;
-    case eTime1114: return (m_trip->getTimeMask()&4)!=0; break;
-    case eTime1418: return (m_trip->getTimeMask()&8)!=0; break;
-    case eTime1823: return (m_trip->getTimeMask()&16)!=0; break;
-    case eTime2304: return (m_trip->getTimeMask()&32)!=0; break;
+    case eWindCalm: m_trip->isWindCondition(Trip::eCalm); break;
+    case eWindFaint: m_trip->isWindCondition(Trip::eFaint); break;
+    case eWindModerate: m_trip->isWindCondition(Trip::eModerate); break;
+    case eWindBrisk: m_trip->isWindCondition(Trip::eBrisk); break;
+    case eWindHard: m_trip->isWindCondition(Trip::eHard); break;
+    default: break;
     }
+    return false;
+}
+
+int TripController::getIntValue(EUISource source)
+{
+    switch(source)
+    {
+    case eStartTime: m_trip->getTime().first.hour(); break;
+    case eEndTime: m_trip->getTime().second.hour(); break;
+    default: qCritical() << "Unknown int event. Cant handle this!" << source; break;
+    }
+    return 0;
 }
 
 void TripController::booleanEvent(EUISource source, bool value)
 {
-    if(!m_trip)
-    {
-        qCritical() << "Impossible to handle boolean event. No trip!";
-        return;
-    }
-
     switch(source)
     {
-    case eTime49:
-    case eTime911:
-    case eTime1114:
-    case eTime1418:
-    case eTime1823:
-    case eTime2304: m_trip->setTimeMask(pow(2,source-eTime49),value);
-        break;
 
-    case eWindCalm:
-    case eWindFaint:
-    case eWindModerate:
-    case eWindBrisk:
-    case eWindHard: qDebug() << "wind" << source-eWindCalm;
-
-        break;
+    case eWindCalm: m_trip->addWindCondition(Trip::eCalm, value); break;
+    case eWindFaint: m_trip->addWindCondition(Trip::eFaint, value); break;
+    case eWindModerate: m_trip->addWindCondition(Trip::eModerate, value); break;
+    case eWindBrisk: m_trip->addWindCondition(Trip::eBrisk, value); break;
+    case eWindHard: m_trip->addWindCondition(Trip::eHard, value); break;
 
     case eWeatherClear:
     case eWeatherHalfClear:
@@ -83,7 +65,7 @@ void TripController::booleanEvent(EUISource source, bool value)
         break;
 
     case eUnderSize: break;
-    default: qCritical() << "Unknown boolean event. Cant handle this!" << source;
+    default: qCritical() << "Unknown boolean event. Cant handle this!" << source << value;
     }
 
     sendNotificationToObservers();
@@ -91,28 +73,19 @@ void TripController::booleanEvent(EUISource source, bool value)
 
 void TripController::intEvent(EUISource source, int value)
 {
-    if(m_trip == NULL)
-    {
-        qCritical() << "Impossible to handle int event. No trip!";
-        return;
-    }
-
     switch(source)
     {
+    case eStartTime: m_trip->setTime(QTime(value,0), QTime()); break;
+    case eEndTime: m_trip->setTime(QTime(), QTime(value,0)); break;
     case eSpecies: break;
     case eMethod: break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
     }
+    sendNotificationToObservers();
 }
 
 void TripController::dateEvent(EUISource source, const QDate& value)
 {
-    if(m_trip == NULL)
-    {
-        qCritical() << "Impossible to handle date event. No trip!";
-        return;
-    }
-
     switch(source)
     {
     case eTripDate: m_trip->setDate(value); break;
@@ -123,12 +96,6 @@ void TripController::dateEvent(EUISource source, const QDate& value)
 
 void TripController::textEvent(EUISource source, const QString& value)
 {
-    if(!m_trip)
-    {
-        qCritical() << "Impossible to handle text event. No trip!";
-        return;
-    }
-
     switch(source)
     {
     case ePlaceText: break;

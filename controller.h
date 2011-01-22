@@ -4,9 +4,8 @@
 #include <QObject>
 #include <QDate>
 
-enum EUISource {eTripDate, eTime49, eTime911,
-                eTime1114, eTime1418, eTime1823,
-                eTime2304, ePlaceText, eWaterTemp,
+enum EUISource {eTripDate, eStartTime, eEndTime,
+                ePlaceText, eWaterTemp,
                 eMiscText, eWeatherClear, eWeatherHalfClear,
                 eWeatherOvercast, eWeatherRain, eWeatherFog,
                 eWindCalm, eWindFaint, eWindModerate,
@@ -29,6 +28,7 @@ public:
 
     virtual QDate getDateValue(EUISource source) = 0;
     virtual bool getBooleanValue(EUISource source) = 0;
+    virtual int getIntValue(EUISource source) = 0;
 
 signals:
     void observerNotification();

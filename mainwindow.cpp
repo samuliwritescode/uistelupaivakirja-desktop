@@ -67,7 +67,9 @@ MainWindow::~MainWindow()
 void MainWindow::observerEvent()
 {
     ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
-    ui->time4_9->setChecked(m_tripController->getBooleanValue(eTime49));
+    ui->startTimeLabel->setText(QString::number(m_tripController->getIntValue(eStartTime)));
+    ui->endTimeLabel->setText(QString::number(m_tripController->getIntValue(eEndTime)));
+
     qDebug() << "observer event";
 }
 
@@ -77,35 +79,6 @@ void MainWindow::on_dateEdit_dateChanged(QDate date)
     m_tripController->dateEvent(eTripDate, ui->dateEdit->date());
 }
 
-void MainWindow::on_time4_9_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eTime49, checked);
-}
-
-void MainWindow::on_time9_11_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eTime911, checked);
-}
-
-void MainWindow::on_time11_14_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eTime1114, checked);
-}
-
-void MainWindow::on_time14_18_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eTime1418, checked);
-}
-
-void MainWindow::on_time18_23_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eTime1823, checked);
-}
-
-void MainWindow::on_time23_4_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eTime2304, checked);
-}
 
 void MainWindow::on_place_currentIndexChanged(QString place)
 {
@@ -235,4 +208,14 @@ void MainWindow::on_trip_new_clicked()
 void MainWindow::on_method_currentIndexChanged(int index)
 {
     m_tripController->intEvent(eMethod, index);
+}
+
+void MainWindow::on_startTime_valueChanged(int value)
+{
+    m_tripController->intEvent(eStartTime, value*3);
+}
+
+void MainWindow::on_endTime_valueChanged(int value)
+{
+    m_tripController->intEvent(eEndTime, value*3);
 }

@@ -5,6 +5,11 @@ TrollingModel::TrollingModel(QObject *parent) :
     QObject(parent)
 {
     m_DBLayer = new DBLayer(QDir::homePath()+"/uistelu/database");
+    QList<int> ids = m_DBLayer->getIds();
+    for(int loop=0; loop < ids.size(); loop++)
+    {
+        qDebug() << "id" << ids[loop];
+    }
 }
 
 TrollingModel::~TrollingModel()

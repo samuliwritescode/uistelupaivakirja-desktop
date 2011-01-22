@@ -23,6 +23,8 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_endTime_valueChanged(int value);
+    void on_startTime_valueChanged(int value);
     void on_method_currentIndexChanged(int index);
     void observerEvent();
 
@@ -52,12 +54,7 @@ private slots:
     void on_water_temp_textChanged(QString );
     void on_trip_save_clicked();
     void on_place_currentIndexChanged(QString );
-    void on_time23_4_clicked(bool checked);
-    void on_time18_23_clicked(bool checked);
-    void on_time14_18_clicked(bool checked);
-    void on_time11_14_clicked(bool checked);
-    void on_time9_11_clicked(bool checked);
-    void on_time4_9_clicked(bool checked);
+
     void on_dateEdit_dateChanged(QDate date);
 };
 
