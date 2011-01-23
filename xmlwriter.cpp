@@ -58,6 +58,28 @@ void XMLWriter::clearNodeContents(QDomNode& p_node)
     }
 }
 
+void XMLWriter::remove(TrollingObject* p_object)
+{
+    if(!loadDocument())
+        return;
+
+    QDomElement trollingObject;
+    int id = p_object->getId();
+
+    if(!getTrollingObjectElement(trollingObject, id))
+        return;
+
+    clearNodeContents(trollingObject);
+    trollingObject.parentNode().removeChild(trollingObject);
+
+    QFile file(m_filename);
+    if(!file.open(QIODevice::WriteOnly))
+        return;
+
+    file.write(m_document.toByteArray());
+    file.close();
+}
+
 bool XMLWriter::load(TrollingObject* p_object, int p_id)
 {
     if(!loadDocument())

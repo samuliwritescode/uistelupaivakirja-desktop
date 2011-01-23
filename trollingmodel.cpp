@@ -86,3 +86,20 @@ int TrollingModel::commit(TrollingObject* object)
     m_DBLayer->storeObject(object);
     return object->getId();
 }
+
+void TrollingModel::remove(TrollingObject* p_object)
+{
+    if(p_object == NULL)
+       return;
+
+    m_DBLayer->removeObject(p_object);
+    for(int loop=0; loop < m_trollingobjects.size(); loop++)
+    {
+        if(m_trollingobjects[loop] == p_object)
+        {
+            m_trollingobjects.removeAt(loop);
+        }
+    }
+
+    delete p_object;
+}

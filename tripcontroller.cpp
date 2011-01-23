@@ -124,6 +124,8 @@ void TripController::buttonEvent(EUISource source)
     {
     case eSaveTrip: Singletons::model()->commit(m_trip); break;
     case eNewTrip: m_trip = Singletons::model()->getTrip(); break;
+    case eDeleteTrip: Singletons::model()->remove(m_trip);
+       m_trip = Singletons::model()->getTrip(); break;
     default:  qCritical() << "Unknown default event. Cant handle this!" << source;
     }
     sendNotificationToObservers(Controller::eTripUpdated);

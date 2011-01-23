@@ -23,6 +23,7 @@ public:
     Site* getSite(int id = -1);
     Species* getSpecies(int id = -1);
     int commit(TrollingObject*);
+    void remove(TrollingObject*);
 
     QMap<int, Trip*> getTrips();
 
