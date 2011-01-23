@@ -24,6 +24,7 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_trip_list_itemClicked(QListWidgetItem* item);
     void on_trip_list_itemActivated(QListWidgetItem* item);
     void on_trip_list_currentRowChanged(int currentRow);
     void on_endTime_valueChanged(int value);

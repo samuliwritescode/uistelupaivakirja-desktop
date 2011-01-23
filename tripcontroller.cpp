@@ -146,6 +146,9 @@ QMap<QString, int> TripController::getTripList()
             name += "-1";
         }
 
+        if(trip->getId() < 0)
+            name = tr("tallentamaton uusi reissu");
+
         retval[name] = trip->getId();
         qDebug() << "content" <<trip->getDate().toString() << trip->getId();
     }

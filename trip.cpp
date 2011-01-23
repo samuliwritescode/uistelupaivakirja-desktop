@@ -21,9 +21,13 @@ QDate Trip::getDate()
 Fish* Trip::getFish(int id)
 {
     if(id < 0)
-        return new Fish();
+    {
+        Fish* fish = new Fish();
+        m_catch.push_back(fish);
+        return fish;
+    }
 
-    return NULL;
+    return m_catch.at(id);
 }
 
 void Trip::setWaterTemp(double temp)

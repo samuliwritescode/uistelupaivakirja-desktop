@@ -10,9 +10,19 @@ void TrollingObject::storeProperties(QMap<QString, QVariant> p_properties)
     m_properties = p_properties;
 }
 
+void TrollingObject::storeList(QList< QMap<QString, QVariant> > p_list)
+{
+    m_list = p_list;
+}
+
 QMap<QString, QVariant> TrollingObject::getProperties()
 {
     return m_properties;
+}
+
+QList< QMap<QString, QVariant> > TrollingObject::getList()
+{
+    return m_list;
 }
 
 int TrollingObject::getId()

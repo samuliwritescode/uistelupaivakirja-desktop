@@ -32,12 +32,29 @@ bool XMLWriter::write(TrollingObject* p_object)
     {
         iter.next();
         QDomElement property = m_document.createElement(iter.key());
-        qDebug() << "Write property:"<<iter.key() << "value:"<<iter.value().toString();
-
         QDomText text = m_document.createTextNode(iter.value().toString());
         property.appendChild(text);
         trollingObject.appendChild(property);
     }
+
+    QList< QMap<QString, QVariant> > list = p_object->getList();
+    QDomElement listelement = m_document.createElement("PropertyList");
+    for(int loop=0; loop < list.size(); loop++)
+    {
+        QDomElement listItem = m_document.createElement("PropertyListItem");
+        QMap<QString, QVariant> subProperty = list.at(loop);
+        QMapIterator<QString, QVariant> iter(subProperty);
+        while( iter.hasNext() )
+        {
+            iter.next();
+            QDomElement property = m_document.createElement(iter.key());
+            QDomText text = m_document.createTextNode(iter.value().toString());
+            property.appendChild(text);
+            listItem.appendChild(property);
+        }
+        listelement.appendChild(listItem);
+    }
+    trollingObject.appendChild(listelement);
 
     QFile file(m_filename);
     if(!file.open(QIODevice::WriteOnly))
@@ -105,11 +122,31 @@ bool XMLWriter::load(TrollingObject* p_object, int p_id)
     for(int loop=0; loop < propertiesnodes.size(); loop++)
     {
         QDomNode node = propertiesnodes.at(loop);
-        if(node.isElement())
+        if(node.isElement() && !node.hasChildNodes())
         {
             QDomElement element = node.toElement();
-            qDebug() << "Read property:" << element.tagName() << "value:" << element.text();
             properties[element.tagName()] = element.text();
+        }
+        else if(node.isElement() && node.hasChildNodes() && node.toElement().tagName() == "PropertyList")
+        {
+            QList< QMap<QString, QVariant> > list;
+            QDomNodeList propertylist = node.childNodes();
+            for(int loop2=0; loop2 < propertylist.size(); loop2++)
+            {
+                QMap<QString, QVariant> propertylistitem;
+                QDomNodeList listitemlist = propertylist.at(loop2).childNodes();
+                for(int loop3=0; loop3 < listitemlist.size(); loop3++)
+                {
+                    QDomNode subnode = listitemlist.at(loop3);
+                    if(subnode.isElement())
+                    {
+                       QDomElement subelement = subnode.toElement();
+                       propertylistitem[subelement.tagName()] = subelement.text();
+                    }
+                }
+                list.push_back(propertylistitem);
+            }
+            p_object->storeList(list);
         }
     }
     p_object->storeProperties(properties);

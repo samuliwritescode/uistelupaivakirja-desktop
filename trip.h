@@ -27,6 +27,9 @@ public:
     void addWeatherCondition(EWeatherCondition weather, bool bSet);
     bool isWeatherCondition(EWeatherCondition weather);
 
+private:
+    QList<Fish*> m_catch;
+
 };
 
 #endif // TRIP_H

@@ -256,3 +256,8 @@ void MainWindow::on_trip_list_itemActivated(QListWidgetItem* item)
 {
     m_tripController->intEvent(eTrip, item->type());
 }
+
+void MainWindow::on_trip_list_itemClicked(QListWidgetItem* item)
+{
+    m_tripController->intEvent(eTrip, item->type());
+}
