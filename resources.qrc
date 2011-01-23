@@ -8,7 +8,7 @@
         <file>res/edit-cut.png</file>
         <file>res/tintti.png</file>
         <file>res/reissu.png</file>
-        <file>res/mainlogo.png</file>
         <file>res/kalapaikka.png</file>
+        <file>res/mainlogo64.png</file>
     </qresource>
 </RCC>

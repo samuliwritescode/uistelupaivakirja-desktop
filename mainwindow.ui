@@ -46,7 +46,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <property name="iconSize">
        <size>
@@ -72,7 +72,7 @@
       <widget class="QWidget" name="mainTab">
        <attribute name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/res/mainlogo.png</normaloff>:/res/mainlogo.png</iconset>
+         <normaloff>:/res/mainlogo64.png</normaloff>:/res/mainlogo64.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Tilastot</string>
