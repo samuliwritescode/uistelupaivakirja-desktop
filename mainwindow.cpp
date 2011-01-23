@@ -19,17 +19,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->length->setValidator(new QDoubleValidator(this));
     ui->spotdepth->setValidator(new QDoubleValidator(this));
 
-    ui->dateEdit->setDate(QDate::currentDate());
-    ui->place->insertItems(0, Singletons::placeController()->getPlaces());
+//    ui->dateEdit->setDate(QDate::currentDate());
+//    ui->place->insertItems(0, Singletons::placeController()->getPlaces());
 
 
 
-    ui->species->insertItem(0, "Hauki");
-    ui->species->insertItem(0, "Ahven");
-    ui->species->insertItem(0, "Kuha");
+  //  ui->species->insertItem(0, "Hauki");
+  //  ui->species->insertItem(0, "Ahven");
+  //  ui->species->insertItem(0, "Kuha");
 
 
-    for(int loop=0; loop < 10; loop++)
+   /* for(int loop=0; loop < 10; loop++)
     {
         LureItem* draggable = new LureItem("HK varma");
         LureItem* poi = new LureItem("12:22 hauki 13.3-1");
@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QComboBox* kalat = new QComboBox();
         kalat->insertItem(0, "hauki");
         kalat->insertItem(0, "ahven");
-        draggable->setAcceptDrops(true);
+        draggable->setAcceptDrops(true);*/
       /*  ui->catchGrid->addWidget(kalat, loop, 0);
         ui->catchGrid->addWidget(new QLineEdit("6kg"), loop, 1);
         ui->catchGrid->addWidget(new QLineEdit("85cm"), loop, 2);
@@ -45,17 +45,18 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->catchGrid->addWidget(new QLineEdit("5m"), loop, 4);
         ui->catchGrid->addWidget(draggable, loop, 5);
         ui->catchGrid->addWidget(poi, loop, 6);*/
-    }
+    //}
 
     //ui->lureList->setIconSize(QSize(100,50));
-    for(int loop=0; loop < 100; loop++)
+   /* for(int loop=0; loop < 100; loop++)
     {
         QListWidgetItem* item = new QListWidgetItem("HK varma taimen 9 cm venäjän lippu"+QString::number(loop));
         item->setFlags(Qt::ItemIsDragEnabled | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
         //item->setIcon(QIcon(":/msnlogo.jpg"));
         ui->lureList->addItem(item);
-    }
+    }*/
 
+    observerEvent(Controller::eTripUpdated);
     observerEvent(Controller::eTripListUpdated);
 
     connect(m_tripController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
@@ -73,6 +74,19 @@ void MainWindow::observerEvent(int type)
         ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
         ui->startTimeLabel->setText(QString::number(m_tripController->getIntValue(eStartTime)));
         ui->endTimeLabel->setText(QString::number(m_tripController->getIntValue(eEndTime)));
+
+        ui->weather_clear->setChecked(m_tripController->getBooleanValue(eWeatherClear));
+        ui->weather_halfclear->setChecked(m_tripController->getBooleanValue(eWeatherHalfClear));
+        ui->weather_overcast->setChecked(m_tripController->getBooleanValue(eWeatherOvercast));
+        ui->weather_rain->setChecked(m_tripController->getBooleanValue(eWeatherRain));
+        ui->weather_fog->setChecked(m_tripController->getBooleanValue(eWeatherFog));
+
+        ui->wind_calm->setChecked(m_tripController->getBooleanValue(eWindCalm));
+        ui->wind_faint->setChecked(m_tripController->getBooleanValue(eWindFaint));
+        ui->wind_moderate->setChecked(m_tripController->getBooleanValue(eWindModerate));
+        ui->wind_brisk->setChecked(m_tripController->getBooleanValue(eWindBrisk));
+        ui->wind_hard->setChecked(m_tripController->getBooleanValue(eWindHard));
+
     }
     else if(type == Controller::eTripListUpdated)
     {
@@ -80,8 +94,7 @@ void MainWindow::observerEvent(int type)
         QMap<QString, int> trips = m_tripController->getTripList();
         for(QMap<QString, int>::iterator iter = trips.begin(); iter != trips.end(); iter++)
         {
-            QListWidgetItem* item = new QListWidgetItem(iter.key());
-            //item->setData(0, iter.value());
+            QListWidgetItem* item = new QListWidgetItem(iter.key(), ui->trip_list, iter.value());
             ui->trip_list->insertItem(0, item);
         }
     }
@@ -232,4 +245,14 @@ void MainWindow::on_startTime_valueChanged(int value)
 void MainWindow::on_endTime_valueChanged(int value)
 {
     m_tripController->intEvent(eEndTime, value*3);
+}
+
+void MainWindow::on_trip_list_currentRowChanged(int currentRow)
+{
+
+}
+
+void MainWindow::on_trip_list_itemActivated(QListWidgetItem* item)
+{
+    m_tripController->intEvent(eTrip, item->type());
 }

@@ -5,6 +5,7 @@ Trip::Trip():
     TrollingObject()
 {
     m_type = "trip";
+    m_properties["date"] = QDate::currentDate();
 }
 
 void Trip::setDate(const QDate& date)
@@ -74,4 +75,21 @@ bool Trip::isWindCondition(EWindCondition wind)
 {
    int mask = m_properties["wind_condition"].toInt();
    return (mask&wind)!=0;
+}
+
+void Trip::addWeatherCondition(EWeatherCondition weather, bool bSet)
+{
+    int mask = m_properties["weather_condition"].toInt();
+    if(bSet)
+        mask = mask|weather;
+    else
+        mask = mask^weather;
+
+    m_properties["weather_condition"] = mask;
+}
+
+bool Trip::isWeatherCondition(EWeatherCondition weather)
+{
+    int mask = m_properties["weather_condition"].toInt();
+    return (mask&weather)!=0;
 }

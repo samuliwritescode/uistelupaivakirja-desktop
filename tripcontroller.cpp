@@ -25,11 +25,17 @@ bool TripController::getBooleanValue(EUISource source)
 {
     switch(source)
     {
-    case eWindCalm: m_trip->isWindCondition(Trip::eCalm); break;
-    case eWindFaint: m_trip->isWindCondition(Trip::eFaint); break;
-    case eWindModerate: m_trip->isWindCondition(Trip::eModerate); break;
-    case eWindBrisk: m_trip->isWindCondition(Trip::eBrisk); break;
-    case eWindHard: m_trip->isWindCondition(Trip::eHard); break;
+    case eWindCalm: return m_trip->isWindCondition(Trip::eCalm); break;
+    case eWindFaint: return m_trip->isWindCondition(Trip::eFaint); break;
+    case eWindModerate: return m_trip->isWindCondition(Trip::eModerate); break;
+    case eWindBrisk: return m_trip->isWindCondition(Trip::eBrisk); break;
+    case eWindHard: return m_trip->isWindCondition(Trip::eHard); break;
+    case eWeatherClear: return m_trip->isWeatherCondition(Trip::eClear); break;
+    case eWeatherHalfClear: return m_trip->isWeatherCondition(Trip::eHalfClear); break;
+    case eWeatherOvercast: return m_trip->isWeatherCondition(Trip::eOvercast); break;
+    case eWeatherRain: return m_trip->isWeatherCondition(Trip::eRain); break;
+    case eWeatherFog: return m_trip->isWeatherCondition(Trip::eFog); break;
+
     default: break;
     }
     return false;
@@ -57,11 +63,11 @@ void TripController::booleanEvent(EUISource source, bool value)
     case eWindBrisk: m_trip->addWindCondition(Trip::eBrisk, value); break;
     case eWindHard: m_trip->addWindCondition(Trip::eHard, value); break;
 
-    case eWeatherClear:
-    case eWeatherHalfClear:
-    case eWeatherOvercast:
-    case eWeatherRain:
-    case eWeatherFog: qDebug() << "weather" << source-eWeatherClear;
+    case eWeatherClear: m_trip->addWeatherCondition(Trip::eClear, value); break;
+    case eWeatherHalfClear: m_trip->addWeatherCondition(Trip::eHalfClear, value); break;
+    case eWeatherOvercast: m_trip->addWeatherCondition(Trip::eOvercast, value); break;
+    case eWeatherRain: m_trip->addWeatherCondition(Trip::eRain, value); break;
+    case eWeatherFog: m_trip->addWeatherCondition(Trip::eFog, value); break;
         break;
 
     case eUnderSize: break;
@@ -77,6 +83,7 @@ void TripController::intEvent(EUISource source, int value)
     {
     case eStartTime: m_trip->setTime(QTime(value,0), QTime()); break;
     case eEndTime: m_trip->setTime(QTime(), QTime(value,0)); break;
+    case eTrip: m_trip = Singletons::model()->getTrip(value); break;
     case eSpecies: break;
     case eMethod: break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
@@ -115,13 +122,12 @@ void TripController::buttonEvent(EUISource source)
 {
     switch(source)
     {
-    case eSaveTrip: {
-        int newId = Singletons::model()->commit(m_trip);
-        m_trip = Singletons::model()->getTrip(newId);
-        } break;
+    case eSaveTrip: Singletons::model()->commit(m_trip); break;
+    case eNewTrip: m_trip = Singletons::model()->getTrip(); break;
     default:  qCritical() << "Unknown default event. Cant handle this!" << source;
     }
     sendNotificationToObservers(Controller::eTripUpdated);
+    sendNotificationToObservers(Controller::eTripListUpdated);
 }
 
 QMap<QString, int> TripController::getTripList()

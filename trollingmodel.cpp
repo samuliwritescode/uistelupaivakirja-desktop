@@ -11,33 +11,47 @@ TrollingModel::TrollingModel(QObject *parent) :
     {
         Trip* trip = new Trip();
         m_DBLayer->loadObject(id, trip);
-        m_trips[id] = trip;
+        m_trollingobjects.push_back( trip );
     }
 }
 
 TrollingModel::~TrollingModel()
 {
     delete m_DBLayer;
-    foreach(Trip* trip, m_trips)
+    foreach(TrollingObject* object, m_trollingobjects)
     {
-        delete trip;
+        delete object;
     }
-    m_trips.clear();
+    m_trollingobjects.clear();
 }
 
 Trip* TrollingModel::getTrip(int id)
 {
     if(id < 0 )
-        return new Trip();
+    {
+        Trip* trip = new Trip();
+        m_trollingobjects.push_back(trip);
+        return trip;
+    }
 
-    if(m_trips.contains(id))
-        return m_trips[id];
+    QMap<int, Trip*> trips = getTrips();
+    if(trips.contains(id))
+        return trips[id];
     else
         return NULL;
 }
 QMap<int, Trip*> TrollingModel::getTrips()
 {
-    return m_trips;
+    QMap<int, Trip*> retval;
+    foreach(TrollingObject* object, m_trollingobjects)
+    {
+        if(object->getType() == "trip")
+        {
+            retval[object->getId()] = reinterpret_cast<Trip*>(object);
+        }
+    }
+
+    return retval;
 }
 
 Lure* TrollingModel::getLure(int id)

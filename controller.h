@@ -5,7 +5,7 @@
 #include <QDate>
 
 enum EUISource {eTripDate, eStartTime, eEndTime,
-                ePlaceText, eWaterTemp,
+                ePlaceText, eWaterTemp, eTrip,
                 eMiscText, eWeatherClear, eWeatherHalfClear,
                 eWeatherOvercast, eWeatherRain, eWeatherFog,
                 eWindCalm, eWindFaint, eWindModerate,

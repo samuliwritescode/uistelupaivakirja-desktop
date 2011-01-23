@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QHash>
 #include "trip.h"
 #include "fish.h"
 #include "lure.h"
@@ -30,7 +31,7 @@ signals:
 public slots:
 
 private:
-    QMap<int, Trip*> m_trips;
+    QList<TrollingObject*> m_trollingobjects;
     DBLayer* m_DBLayer;
 
 };
