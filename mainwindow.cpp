@@ -72,8 +72,20 @@ void MainWindow::observerEvent(int type)
     if(type == Controller::eTripUpdated)
     {
         ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
-        ui->startTimeLabel->setText(QString::number(m_tripController->getIntValue(eStartTime)));
-        ui->endTimeLabel->setText(QString::number(m_tripController->getIntValue(eEndTime)));
+
+        ui->radiostart49->setChecked(m_tripController->getIntValue(eStartTime) == 4);
+        ui->radiostart911->setChecked(m_tripController->getIntValue(eStartTime) == 9);
+        ui->radiostart1114->setChecked(m_tripController->getIntValue(eStartTime) == 11);
+        ui->radiostart1418->setChecked(m_tripController->getIntValue(eStartTime) == 14);
+        ui->radiostart1823->setChecked(m_tripController->getIntValue(eStartTime) == 18);
+        ui->radiostart234->setChecked(m_tripController->getIntValue(eStartTime) == 23);
+
+        ui->radioend49->setChecked(m_tripController->getIntValue(eEndTime) == 9);
+        ui->radioend911->setChecked(m_tripController->getIntValue(eEndTime) == 11);
+        ui->radioend1114->setChecked(m_tripController->getIntValue(eEndTime) == 14);
+        ui->radioend1418->setChecked(m_tripController->getIntValue(eEndTime) == 18);
+        ui->radioend1823->setChecked(m_tripController->getIntValue(eEndTime) == 23);
+        ui->radioend234->setChecked(m_tripController->getIntValue(eEndTime) == 4);
 
         ui->weather_clear->setChecked(m_tripController->getBooleanValue(eWeatherClear));
         ui->weather_halfclear->setChecked(m_tripController->getBooleanValue(eWeatherHalfClear));
@@ -101,8 +113,7 @@ void MainWindow::observerEvent(int type)
 }
 
 void MainWindow::on_dateEdit_dateChanged(QDate date)
-{
-    qDebug() << "date was changed";
+{    
     m_tripController->dateEvent(eTripDate, ui->dateEdit->date());
 }
 
@@ -237,21 +248,6 @@ void MainWindow::on_method_currentIndexChanged(int index)
     m_tripController->intEvent(eMethod, index);
 }
 
-void MainWindow::on_startTime_valueChanged(int value)
-{
-    m_tripController->intEvent(eStartTime, value*3);
-}
-
-void MainWindow::on_endTime_valueChanged(int value)
-{
-    m_tripController->intEvent(eEndTime, value*3);
-}
-
-void MainWindow::on_trip_list_currentRowChanged(int currentRow)
-{
-
-}
-
 void MainWindow::on_trip_list_itemActivated(QListWidgetItem* item)
 {
     m_tripController->intEvent(eTrip, item->type());
@@ -260,4 +256,64 @@ void MainWindow::on_trip_list_itemActivated(QListWidgetItem* item)
 void MainWindow::on_trip_list_itemClicked(QListWidgetItem* item)
 {
     m_tripController->intEvent(eTrip, item->type());
+}
+
+void MainWindow::on_radiostart49_clicked()
+{
+    m_tripController->intEvent(eStartTime, 4);
+}
+
+void MainWindow::on_radiostart911_clicked()
+{
+    m_tripController->intEvent(eStartTime, 9);
+}
+
+void MainWindow::on_radiostart1114_clicked()
+{
+    m_tripController->intEvent(eStartTime, 11);
+}
+
+void MainWindow::on_radiostart1418_clicked()
+{
+    m_tripController->intEvent(eStartTime, 14);
+}
+
+void MainWindow::on_radiostart1823_clicked()
+{
+    m_tripController->intEvent(eStartTime, 18);
+}
+
+void MainWindow::on_radiostart234_clicked()
+{
+    m_tripController->intEvent(eStartTime, 23);
+}
+
+void MainWindow::on_radioend49_clicked()
+{
+    m_tripController->intEvent(eEndTime, 9);
+}
+
+void MainWindow::on_radioend911_clicked()
+{
+    m_tripController->intEvent(eEndTime, 11);
+}
+
+void MainWindow::on_radioend1114_clicked()
+{
+    m_tripController->intEvent(eEndTime, 14);
+}
+
+void MainWindow::on_radioend1418_clicked()
+{
+    m_tripController->intEvent(eEndTime, 18);
+}
+
+void MainWindow::on_radioend1823_clicked()
+{
+    m_tripController->intEvent(eEndTime, 23);
+}
+
+void MainWindow::on_radioend234_clicked()
+{
+    m_tripController->intEvent(eEndTime, 4);
 }

@@ -122,10 +122,11 @@ bool XMLWriter::load(TrollingObject* p_object, int p_id)
     for(int loop=0; loop < propertiesnodes.size(); loop++)
     {
         QDomNode node = propertiesnodes.at(loop);
-        if(node.isElement() && !node.hasChildNodes())
+        if(node.isElement() && node.toElement().tagName() != "PropertyList")
         {
-            QDomElement element = node.toElement();
+            QDomElement element = node.toElement();            
             properties[element.tagName()] = element.text();
+            qDebug() << "tag: " << element.tagName() << "text: " << element.text() << "id:" << id;
         }
         else if(node.isElement() && node.hasChildNodes() && node.toElement().tagName() == "PropertyList")
         {
