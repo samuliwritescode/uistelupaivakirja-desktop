@@ -48,4 +48,5 @@ FORMS    += mainwindow.ui
 RESOURCES += \
     resources.qrc
 
-ICON = res/icon.icns
+macx:ICON = res/icon.icns
+win32:RC_FILE = res/icon.rc
