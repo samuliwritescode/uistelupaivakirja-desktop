@@ -18,7 +18,6 @@ public:
     void setDate(const QDate& date);
     void setDescription(const QString& desc);
     QDate getDate();
-    Fish* getFish(int id = -1);
     void setTime(const QTime& start, const QTime& end);
     QPair<QTime, QTime> getTime();
     void addWindCondition(EWindCondition wind, bool bSet);
@@ -27,8 +26,18 @@ public:
     void addWeatherCondition(EWeatherCondition weather, bool bSet);
     bool isWeatherCondition(EWeatherCondition weather);
 
+    int getFishCount();
+    Fish* getFish(int id = -1);
+    void addFish();
+    void removeFish();
+    void setFish(int);
+
+    virtual QList< QMap<QString, QVariant> > getList();
+    virtual void storeList(QList< QMap<QString, QVariant> > p_list);
+
 private:
     QList<Fish*> m_catch;
+    Fish* m_fish;
 
 };
 

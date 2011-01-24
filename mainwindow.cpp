@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     observerEvent(Controller::eTripUpdated);
     observerEvent(Controller::eTripListUpdated);
+    observerEvent(Controller::eFishListUpdated);
 
     connect(m_tripController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
 }
@@ -99,6 +100,21 @@ void MainWindow::observerEvent(int type)
         ui->wind_brisk->setChecked(m_tripController->getBooleanValue(eWindBrisk));
         ui->wind_hard->setChecked(m_tripController->getBooleanValue(eWindHard));
 
+        if(m_tripController->getDoubleValue(eLength) != 0)
+            ui->length->setText(QString::number(m_tripController->getDoubleValue(eLength)));
+        else
+            ui->length->clear();
+
+        if(m_tripController->getDoubleValue(eWeight) != 0)
+            ui->weight->setText(QString::number(m_tripController->getDoubleValue(eWeight)));
+        else
+            ui->weight->clear();
+
+        if(m_tripController->getDoubleValue(eSpotDepth) != 0)
+            ui->spotdepth->setText(QString::number(m_tripController->getDoubleValue(eSpotDepth)));
+        else
+            ui->spotdepth->clear();
+
     }
     else if(type == Controller::eTripListUpdated)
     {
@@ -108,6 +124,27 @@ void MainWindow::observerEvent(int type)
         {
             QListWidgetItem* item = new QListWidgetItem(iter.key(), ui->trip_list, iter.value());
             ui->trip_list->insertItem(0, item);
+        }
+    }
+    else if (type == Controller::eFishListUpdated)
+    {
+        qDebug() << "update fish list";
+        ui->fish_list->clear();
+        ui->fish_list->clearContents();
+        ui->fish_list->setRowCount(0);
+        QStringList headers;
+        headers << tr("laji") << tr("paino") << tr("pituus") << tr("syvyys");
+        ui->fish_list->setHorizontalHeaderLabels(headers);
+        QList<QMap<QString, QString> > fishes = m_tripController->getFishList();
+        for(int loop=0; loop < fishes.size(); loop++)
+        {
+            QMap<QString, QString> props = fishes.at(loop);
+            ui->fish_list->insertRow(loop);
+            ui->fish_list->setItem(loop, 0, new QTableWidgetItem(props["specie"], loop));
+            ui->fish_list->setItem(loop, 1, new QTableWidgetItem(props["weight"], loop));
+            ui->fish_list->setItem(loop, 2, new QTableWidgetItem(props["length"], loop));
+            ui->fish_list->setItem(loop, 3, new QTableWidgetItem(props["depth"], loop));
+            qDebug() << "weight" << props["weight"].toDouble();
         }
     }
 }
@@ -316,4 +353,10 @@ void MainWindow::on_radioend1823_clicked()
 void MainWindow::on_radioend234_clicked()
 {
     m_tripController->intEvent(eEndTime, 4);
+}
+
+void MainWindow::on_fish_list_itemClicked(QTableWidgetItem* item)
+{
+    qDebug() << "fish clicked"<<item->type();
+    m_tripController->intEvent(eFishList, item->type());
 }

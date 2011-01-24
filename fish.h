@@ -12,20 +12,20 @@ public:
     void setSpecies(Species*);
     void setMethod(EMethod);
     void setWeight(double);
-    void setWidth(double);
+    void setLength(double);
     void setDepth(double);
 
     Species* getSpecies();
     EMethod getMethod();
     double getWeight();
-    double getWidth();
+    double getLength();
     double getDepth();
 
 private:
     Species* m_species;
     EMethod m_method;
     double m_weight;
-    double m_width;
+    double m_length;
     double m_depth;
 
 };

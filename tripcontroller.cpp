@@ -52,6 +52,23 @@ int TripController::getIntValue(EUISource source)
     return 0;
 }
 
+QString TripController::getTextValue(EUISource source)
+{
+
+    return QString();
+}
+
+double TripController::getDoubleValue(EUISource source)
+{
+    switch(source)
+    {
+    case eLength: return m_trip->getFish()->getLength(); break;
+    case eWeight: return m_trip->getFish()->getWeight(); break;
+    case eSpotDepth: return m_trip->getFish()->getDepth(); break;
+    default: qCritical() << "Unknown double event. Cant handle this!" << source; break;
+    }
+}
+
 void TripController::booleanEvent(EUISource source, bool value)
 {
     switch(source)
@@ -83,12 +100,16 @@ void TripController::intEvent(EUISource source, int value)
     {
     case eStartTime: m_trip->setTime(QTime(value,0), QTime()); break;
     case eEndTime: m_trip->setTime(QTime(), QTime(value,0)); break;
-    case eTrip: m_trip = Singletons::model()->getTrip(value); break;
+    case eTrip: m_trip = Singletons::model()->getTrip(value);
+        sendNotificationToObservers(Controller::eFishListUpdated);
+        break;
+    case eFishList: m_trip->setFish(value); break;
     case eSpecies: break;
     case eMethod: break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
     }
-    sendNotificationToObservers(Controller::eTripUpdated);
+    sendNotificationToObservers(Controller::eTripUpdated);    
+    sendNotificationToObservers(Controller::eFishListUpdated);
 }
 
 void TripController::dateEvent(EUISource source, const QDate& value)
@@ -110,9 +131,9 @@ void TripController::textEvent(EUISource source, const QString& value)
     case eWaterTemp: m_trip->setWaterTemp(value.toDouble()); break;
     case eStartTemp: break;
     case eEndTemp: break;
-    case eWeight: break;
-    case eLength: break;
-    case eSpotDepth: break;
+    case eWeight: m_trip->getFish()->setWeight(value.toDouble()); return; break;
+    case eLength: m_trip->getFish()->setLength(value.toDouble()); return; break;
+    case eSpotDepth: m_trip->getFish()->setDepth(value.toDouble()); return; break;
     default:  qCritical() << "Unknown text event. Cant handle this!" << source;
     }
     sendNotificationToObservers(Controller::eTripUpdated);
@@ -126,10 +147,13 @@ void TripController::buttonEvent(EUISource source)
     case eNewTrip: m_trip = Singletons::model()->getTrip(); break;
     case eDeleteTrip: Singletons::model()->remove(m_trip);
        m_trip = Singletons::model()->getTrip(); break;
+    case eNewFish: m_trip->addFish(); break;
+    case eDeleteFish: m_trip->removeFish(); break;
     default:  qCritical() << "Unknown default event. Cant handle this!" << source;
     }
     sendNotificationToObservers(Controller::eTripUpdated);
     sendNotificationToObservers(Controller::eTripListUpdated);
+    sendNotificationToObservers(Controller::eFishListUpdated);
 }
 
 QMap<QString, int> TripController::getTripList()
@@ -149,10 +173,24 @@ QMap<QString, int> TripController::getTripList()
         if(trip->getId() < 0)
             name = tr("tallentamaton uusi reissu");
 
-        retval[name] = trip->getId();
-        qDebug() << "content" <<trip->getDate().toString() << trip->getId();
+        retval[name] = trip->getId();        
     }
     return retval;
 }
 
+QList<QMap<QString, QString> > TripController::getFishList()
+{
+    QList<QMap<QString, QString> > retval;
+    for(int loop=0; loop < m_trip->getFishCount(); loop++)
+    {
+        QMap<QString, QString> props;
+        Fish* fish = m_trip->getFish(loop);
+        props["depth"] = QString::number(fish->getDepth());
+        props["length"] = QString::number(fish->getLength());
+        props["weight"] = QString::number(fish->getWeight());
+        //props["specie"] = fish->getSpecies()->getId();
+        retval.push_back(props);
+    }
+    return retval;
+}
 

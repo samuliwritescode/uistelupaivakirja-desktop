@@ -26,6 +26,7 @@ public:
     void remove(TrollingObject*);
 
     QMap<int, Trip*> getTrips();
+    void initialize();
 
 signals:
 

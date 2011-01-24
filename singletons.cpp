@@ -7,7 +7,10 @@ PlaceController* Singletons::s_placeController = NULL;
 TrollingModel* Singletons::model()
 {
     if(!s_model)
+    {
         s_model = new TrollingModel();
+        s_model->initialize();
+    }
 
     return s_model;
 }

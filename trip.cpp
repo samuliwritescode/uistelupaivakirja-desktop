@@ -1,8 +1,11 @@
 #include <QDebug>
+#include "singletons.h"
+#include "species.h"
 #include "trip.h"
 
 Trip::Trip():
-    TrollingObject()
+    TrollingObject(),
+    m_fish(NULL)
 {
     m_type = "trip";
     m_properties["date"] = QDate::currentDate();
@@ -20,14 +23,92 @@ QDate Trip::getDate()
 
 Fish* Trip::getFish(int id)
 {
+    if(!m_fish)
+    {
+        m_fish = new Fish();
+    }
+
     if(id < 0)
     {
-        Fish* fish = new Fish();
-        m_catch.push_back(fish);
-        return fish;
+        return m_fish;
     }
 
     return m_catch.at(id);
+}
+
+void Trip::setFish(int id)
+{
+   m_fish = m_catch.at(id);
+}
+
+int Trip::getFishCount()
+{
+    return m_catch.size();
+}
+
+void Trip::addFish()
+{
+    if(!m_fish)
+        getFish();
+
+    m_catch.push_back(m_fish);
+    m_fish = NULL;
+}
+
+void Trip::removeFish()
+{
+    for(int loop=0; loop < m_catch.size(); loop++)
+    {
+        if(m_catch[loop] == m_fish)
+        {
+            m_catch.removeAt(loop);
+            delete m_fish;
+            m_fish = NULL;
+        }
+    }
+
+    if(m_fish)
+    {
+        delete m_fish;
+        m_fish = NULL;
+    }
+}
+
+QList< QMap<QString, QVariant> > Trip::getList()
+{
+    QList< QMap<QString, QVariant> > retval;
+    for(int loop=0; loop < m_catch.size(); loop++)
+    {
+        QMap<QString, QVariant> fishprops;
+        Fish* fish = m_catch.at(loop);
+
+        if(fish->getSpecies())
+            fishprops["species"] = fish->getSpecies()->getId();
+
+        fishprops["method"] = fish->getMethod();
+        fishprops["weight"] = fish->getWeight();
+        fishprops["length"] = fish->getLength();
+        fishprops["depth"] = fish->getDepth();
+        retval.push_back(fishprops);
+    }
+    return retval;
+}
+
+void Trip::storeList(QList< QMap<QString, QVariant> > p_list)
+{
+    for(int loop=0; loop < p_list.size(); loop++)
+    {
+        QMap<QString, QVariant> fishprops = p_list.at(loop);
+        Fish* fish = new Fish();
+        fish->setMethod( static_cast<Fish::EMethod>(fishprops["method"].toInt()) );
+        fish->setWeight(fishprops["weight"].toDouble());
+        fish->setLength(fishprops["length"].toDouble());
+        fish->setDepth(fishprops["depth"].toDouble());
+        Species* species = Singletons::model()->getSpecies(fishprops["species"].toInt());
+        if(species)
+            fish->setSpecies(species);
+        m_catch.push_back(fish);
+    }
 }
 
 void Trip::setWaterTemp(double temp)
@@ -97,3 +178,5 @@ bool Trip::isWeatherCondition(EWeatherCondition weather)
     int mask = m_properties["weather_condition"].toInt();
     return (mask&weather)!=0;
 }
+
+

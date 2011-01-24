@@ -4,7 +4,7 @@ Fish::Fish():
         m_species(NULL),
         m_method(eTrolling),
         m_weight(0),
-        m_width(0),
+        m_length(0),
         m_depth(0)
 {
 }
@@ -24,9 +24,9 @@ void Fish::setWeight(double p_weight)
     m_weight = p_weight;
 }
 
-void Fish::setWidth(double p_width)
+void Fish::setLength(double p_length)
 {
-    m_width = p_width;
+    m_length = p_length;
 }
 
 void Fish::setDepth(double p_depth)
@@ -49,9 +49,9 @@ double Fish::getWeight()
     return m_weight;
 }
 
-double Fish::getWidth()
+double Fish::getLength()
 {
-    return m_width;
+    return m_length;
 }
 
 double Fish::getDepth()

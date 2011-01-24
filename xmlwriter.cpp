@@ -98,7 +98,7 @@ void XMLWriter::remove(TrollingObject* p_object)
 }
 
 bool XMLWriter::load(TrollingObject* p_object, int p_id)
-{
+{     
     if(!loadDocument())
         return false;
 
@@ -117,6 +117,7 @@ bool XMLWriter::load(TrollingObject* p_object, int p_id)
         return false;
     }
 
+
     QDomNodeList propertiesnodes = trollingObject.childNodes();
     QMap<QString, QVariant> properties;
     for(int loop=0; loop < propertiesnodes.size(); loop++)
@@ -126,12 +127,12 @@ bool XMLWriter::load(TrollingObject* p_object, int p_id)
         {
             QDomElement element = node.toElement();            
             properties[element.tagName()] = element.text();
-            qDebug() << "tag: " << element.tagName() << "text: " << element.text() << "id:" << id;
+            //qDebug() << "read" << element.tagName();
         }
         else if(node.isElement() && node.hasChildNodes() && node.toElement().tagName() == "PropertyList")
         {
             QList< QMap<QString, QVariant> > list;
-            QDomNodeList propertylist = node.childNodes();
+            QDomNodeList propertylist = node.toElement().elementsByTagName("PropertyListItem");
             for(int loop2=0; loop2 < propertylist.size(); loop2++)
             {
                 QMap<QString, QVariant> propertylistitem;
@@ -143,6 +144,7 @@ bool XMLWriter::load(TrollingObject* p_object, int p_id)
                     {
                        QDomElement subelement = subnode.toElement();
                        propertylistitem[subelement.tagName()] = subelement.text();
+                       //qDebug() << "subread" << subelement.tagName();
                     }
                 }
                 list.push_back(propertylistitem);

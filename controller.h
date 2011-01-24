@@ -13,7 +13,8 @@ enum EUISource {eTripDate, eStartTime, eEndTime,
                 eWeight, eLength, eSpotDepth,
                 eUnderSize, eStartTemp, eEndTemp,
                 eSaveTrip, eDeleteFish, eNewFish,
-                eDeleteTrip, eNewTrip, eMethod};
+                eDeleteTrip, eNewTrip, eMethod,
+                eFishList};
 
 class Controller : public QObject
 {
@@ -29,9 +30,12 @@ public:
     virtual QDate getDateValue(EUISource source) = 0;
     virtual bool getBooleanValue(EUISource source) = 0;
     virtual int getIntValue(EUISource source) = 0;
+    virtual QString getTextValue(EUISource source) = 0;
+    virtual double getDoubleValue(EUISource source) = 0;
 
     enum ENotificationType {
-        eTripUpdated, eTripListUpdated
+        eTripUpdated, eTripListUpdated,
+        eFishListUpdated
     };
 
 signals:

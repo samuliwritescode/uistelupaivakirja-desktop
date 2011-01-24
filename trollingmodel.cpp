@@ -1,8 +1,14 @@
 #include <QDir>
+#include <QDebug>
 #include "trollingmodel.h"
 
 TrollingModel::TrollingModel(QObject *parent) :
     QObject(parent)
+{
+
+}
+
+void TrollingModel::initialize()
 {
     m_DBLayer = new DBLayer(QDir::homePath()+"/uistelu/database");
 

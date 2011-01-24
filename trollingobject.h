@@ -7,10 +7,10 @@
 class TrollingObject
 {
 public:
-    void storeProperties(QMap<QString, QVariant> p_properties);
-    void storeList(QList< QMap<QString, QVariant> > p_list);
-    QMap<QString, QVariant> getProperties();
-    QList< QMap<QString, QVariant> > getList();
+    virtual void storeProperties(QMap<QString, QVariant> p_properties);
+    virtual void storeList(QList< QMap<QString, QVariant> > p_list);
+    virtual QMap<QString, QVariant> getProperties();
+    virtual QList< QMap<QString, QVariant> > getList();
 
     int getId();
     QString getType();
