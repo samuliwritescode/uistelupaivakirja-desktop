@@ -25,7 +25,7 @@ private:
     TripController* m_tripController;
 
 private slots:
-    void on_fish_list_itemClicked(QTableWidgetItem* item);
+    void on_fish_list_itemSelectionChanged();
     void on_radioend234_clicked();
     void on_radioend1823_clicked();
     void on_radioend1418_clicked();

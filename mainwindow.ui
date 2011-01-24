@@ -402,6 +402,9 @@
                  <property name="alternatingRowColors">
                   <bool>true</bool>
                  </property>
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::SingleSelection</enum>
+                 </property>
                  <property name="selectionBehavior">
                   <enum>QAbstractItemView::SelectRows</enum>
                  </property>
@@ -1055,8 +1058,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>276</width>
-                   <height>69</height>
+                   <width>180</width>
+                   <height>76</height>
                   </rect>
                  </property>
                 </widget>
@@ -1293,7 +1296,7 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

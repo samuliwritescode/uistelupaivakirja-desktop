@@ -100,10 +100,14 @@ void TripController::intEvent(EUISource source, int value)
     {
     case eStartTime: m_trip->setTime(QTime(value,0), QTime()); break;
     case eEndTime: m_trip->setTime(QTime(), QTime(value,0)); break;
-    case eTrip: m_trip = Singletons::model()->getTrip(value);
+    case eTrip:
+        m_trip = Singletons::model()->getTrip(value);
+        m_trip->newFish();
         sendNotificationToObservers(Controller::eFishListUpdated);
         break;
-    case eFishList: m_trip->selectFish(value); break;
+    case eFishList: m_trip->selectFish(value);
+        sendNotificationToObservers(Controller::eTripUpdated);
+        return; break;
     case eSpecies: break;
     case eMethod: break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;

@@ -355,8 +355,9 @@ void MainWindow::on_radioend234_clicked()
     m_tripController->intEvent(eEndTime, 4);
 }
 
-void MainWindow::on_fish_list_itemClicked(QTableWidgetItem* item)
+void MainWindow::on_fish_list_itemSelectionChanged()
 {
-    qDebug() << "fish clicked"<<item->type();
-    m_tripController->intEvent(eFishList, item->type());
+    QList<QTableWidgetItem *> selected = ui->fish_list->selectedItems();
+    if(selected.size() > 1)
+        m_tripController->intEvent(eFishList, selected.at(0)->type());
 }
