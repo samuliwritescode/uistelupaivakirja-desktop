@@ -28,12 +28,19 @@ public:
 
     int getFishCount();
     Fish* getFish(int id = -1);
-    void addFish();
-    void removeFish();
-    void setFish(int);
+
+    void selectFish(int);
+    Fish* newFish();
+    void deleteFish(int);
+    void insertFish();
+    int getSelectedFish();
+
 
     virtual QList< QMap<QString, QVariant> > getList();
     virtual void storeList(QList< QMap<QString, QVariant> > p_list);
+
+protected:
+    int indexOfFish(Fish*);
 
 private:
     QList<Fish*> m_catch;

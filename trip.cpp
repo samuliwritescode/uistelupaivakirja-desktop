@@ -36,42 +36,65 @@ Fish* Trip::getFish(int id)
     return m_catch.at(id);
 }
 
-void Trip::setFish(int id)
-{
-   m_fish = m_catch.at(id);
-}
-
 int Trip::getFishCount()
 {
     return m_catch.size();
 }
 
-void Trip::addFish()
+void Trip::selectFish(int id)
 {
-    if(!m_fish)
-        getFish();
-
-    m_catch.push_back(m_fish);
-    m_fish = NULL;
+   m_fish = m_catch.at(id);
 }
 
-void Trip::removeFish()
+Fish* Trip::newFish()
+{
+    if(indexOfFish(m_fish) == -1)
+    {
+        delete m_fish;
+    }
+
+    m_fish = new Fish();
+    return m_fish;
+}
+
+void Trip::insertFish()
+{
+    if(indexOfFish(m_fish) == -1)
+    {
+        m_catch.push_back(m_fish);
+    }
+    newFish();
+}
+
+void Trip::deleteFish(int id)
+{
+    if(indexOfFish(m_fish) == id)
+    {
+        newFish();
+    }
+
+    if(id > -1 && m_catch.size() > id)
+    {
+        delete m_catch.at(id);
+        m_catch.removeAt(id);
+    }
+}
+
+int Trip::getSelectedFish()
+{
+    return indexOfFish(m_fish);
+}
+
+int Trip::indexOfFish(Fish* p_fish)
 {
     for(int loop=0; loop < m_catch.size(); loop++)
     {
-        if(m_catch[loop] == m_fish)
+        if(m_catch.at(loop) == m_fish)
         {
-            m_catch.removeAt(loop);
-            delete m_fish;
-            m_fish = NULL;
+            return loop;
         }
     }
-
-    if(m_fish)
-    {
-        delete m_fish;
-        m_fish = NULL;
-    }
+    return -1;
 }
 
 QList< QMap<QString, QVariant> > Trip::getList()

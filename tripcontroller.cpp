@@ -103,7 +103,7 @@ void TripController::intEvent(EUISource source, int value)
     case eTrip: m_trip = Singletons::model()->getTrip(value);
         sendNotificationToObservers(Controller::eFishListUpdated);
         break;
-    case eFishList: m_trip->setFish(value); break;
+    case eFishList: m_trip->selectFish(value); break;
     case eSpecies: break;
     case eMethod: break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
@@ -147,8 +147,8 @@ void TripController::buttonEvent(EUISource source)
     case eNewTrip: m_trip = Singletons::model()->getTrip(); break;
     case eDeleteTrip: Singletons::model()->remove(m_trip);
        m_trip = Singletons::model()->getTrip(); break;
-    case eNewFish: m_trip->addFish(); break;
-    case eDeleteFish: m_trip->removeFish(); break;
+    case eNewFish: m_trip->insertFish(); break;
+    case eDeleteFish: m_trip->deleteFish(m_trip->getSelectedFish()); break;
     default:  qCritical() << "Unknown default event. Cant handle this!" << source;
     }
     sendNotificationToObservers(Controller::eTripUpdated);
