@@ -680,213 +680,91 @@
              <number>3</number>
             </property>
             <item row="0" column="0">
-             <widget class="QRadioButton" name="radiostart49">
-              <property name="text">
-               <string/>
+             <widget class="QDial" name="startDial">
+              <property name="minimum">
+               <number>0</number>
               </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup</string>
-              </attribute>
+              <property name="maximum">
+               <number>23</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>0</number>
+              </property>
+              <property name="tracking">
+               <bool>true</bool>
+              </property>
+              <property name="wrapping">
+               <bool>true</bool>
+              </property>
+              <property name="notchesVisible">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_6">
-              <property name="text">
-               <string>4-9</string>
+            <item row="0" column="2">
+             <widget class="QDial" name="endDial">
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>23</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>0</number>
+              </property>
+              <property name="sliderPosition">
+               <number>0</number>
+              </property>
+              <property name="wrapping">
+               <bool>true</bool>
+              </property>
+              <property name="notchesVisible">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QRadioButton" name="radiostart911">
-              <property name="text">
-               <string/>
+             <widget class="Line" name="line">
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
               </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QRadioButton" name="radiostart1114">
-              <property name="text">
-               <string/>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
               </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLabel" name="label_7">
-              <property name="text">
-               <string>9-11</string>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QLabel" name="label_14">
+             <widget class="QLabel" name="timeEndLbl">
               <property name="text">
-               <string>11-14</string>
+               <string>0</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
-            <item row="0" column="3">
-             <widget class="QRadioButton" name="radiostart1418">
+            <item row="1" column="0">
+             <widget class="QLabel" name="timeStartLbl">
               <property name="text">
-               <string/>
+               <string>0</string>
               </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="0" column="4">
-             <widget class="QRadioButton" name="radiostart1823">
-              <property name="text">
-               <string/>
-              </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="0" column="5">
-             <widget class="QRadioButton" name="radiostart234">
-              <property name="text">
-               <string/>
-              </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="1" column="3">
-             <widget class="QLabel" name="label_15">
-              <property name="text">
-               <string>14-18</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="4">
-             <widget class="QLabel" name="label_16">
-              <property name="text">
-               <string>18-23</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="5">
-             <widget class="QLabel" name="label_17">
-              <property name="text">
-               <string>23-4</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="6">
-             <widget class="QLabel" name="label_18">
-              <property name="text">
-               <string>-</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="7">
-             <widget class="QRadioButton" name="radioend49">
-              <property name="text">
-               <string/>
-              </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup_2</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="0" column="8">
-             <widget class="QRadioButton" name="radioend911">
-              <property name="text">
-               <string/>
-              </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup_2</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="0" column="9">
-             <widget class="QRadioButton" name="radioend1114">
-              <property name="text">
-               <string/>
-              </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup_2</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="0" column="10">
-             <widget class="QRadioButton" name="radioend1418">
-              <property name="text">
-               <string/>
-              </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup_2</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="0" column="11">
-             <widget class="QRadioButton" name="radioend1823">
-              <property name="text">
-               <string/>
-              </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup_2</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="0" column="12">
-             <widget class="QRadioButton" name="radioend234">
-              <property name="text">
-               <string/>
-              </property>
-              <attribute name="buttonGroup">
-               <string>buttonGroup_2</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="1" column="7">
-             <widget class="QLabel" name="label_19">
-              <property name="text">
-               <string>4-9</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="8">
-             <widget class="QLabel" name="label_20">
-              <property name="text">
-               <string>9-11</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="9">
-             <widget class="QLabel" name="label_21">
-              <property name="text">
-               <string>11-14</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="10">
-             <widget class="QLabel" name="label_22">
-              <property name="text">
-               <string>14-18</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="11">
-             <widget class="QLabel" name="label_23">
-              <property name="text">
-               <string>18-23</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="12">
-             <widget class="QLabel" name="label_24">
-              <property name="text">
-               <string>23-4</string>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>

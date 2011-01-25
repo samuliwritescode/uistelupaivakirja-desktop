@@ -25,19 +25,9 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_endDial_valueChanged(int value);
+    void on_startDial_valueChanged(int value);
     void on_fish_list_itemSelectionChanged();
-    void on_radioend234_clicked();
-    void on_radioend1823_clicked();
-    void on_radioend1418_clicked();
-    void on_radioend1114_clicked();
-    void on_radioend911_clicked();
-    void on_radioend49_clicked();
-    void on_radiostart234_clicked();
-    void on_radiostart1823_clicked();
-    void on_radiostart1418_clicked();
-    void on_radiostart1114_clicked();
-    void on_radiostart911_clicked();
-    void on_radiostart49_clicked();
     void on_trip_list_itemClicked(QListWidgetItem* item);
     void on_trip_list_itemActivated(QListWidgetItem* item);
     void on_method_currentIndexChanged(int index);
