@@ -158,11 +158,13 @@ void TripController::buttonEvent(EUISource source)
     case eNewFish:
         m_trip->insertFish();
         sendNotificationToObservers(Controller::eFishListUpdated);
+        sendNotificationToObservers(Controller::eTripUpdated);
         return;
         break;
     case eDeleteFish:
         m_trip->deleteFish(m_trip->getSelectedFish());
         sendNotificationToObservers(Controller::eFishListUpdated);
+        sendNotificationToObservers(Controller::eTripUpdated);
         return;
         break;
     default:  qCritical() << "Unknown default event. Cant handle this!" << source;

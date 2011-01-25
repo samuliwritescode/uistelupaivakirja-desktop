@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1045</width>
-    <height>908</height>
+    <width>900</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -306,6 +306,9 @@
                      <height>16</height>
                     </size>
                    </property>
+                   <property name="shortcut">
+                    <string>Ins</string>
+                   </property>
                    <property name="checkable">
                     <bool>false</bool>
                    </property>
@@ -386,6 +389,9 @@
                    <property name="icon">
                     <iconset resource="resources.qrc">
                      <normaloff>:/res/list-remove.png</normaloff>:/res/list-remove.png</iconset>
+                   </property>
+                   <property name="shortcut">
+                    <string>Del</string>
                    </property>
                   </widget>
                  </item>
@@ -925,6 +931,9 @@
                   <iconset resource="resources.qrc">
                    <normaloff>:/res/document-new.png</normaloff>:/res/document-new.png</iconset>
                  </property>
+                 <property name="shortcut">
+                  <string>Ctrl+N</string>
+                 </property>
                 </widget>
                </item>
                <item>
@@ -939,6 +948,9 @@
                   <iconset resource="resources.qrc">
                    <normaloff>:/res/document-save.png</normaloff>:/res/document-save.png</iconset>
                  </property>
+                 <property name="shortcut">
+                  <string>Ctrl+S</string>
+                 </property>
                 </widget>
                </item>
                <item>
@@ -952,6 +964,9 @@
                  <property name="icon">
                   <iconset resource="resources.qrc">
                    <normaloff>:/res/edit-cut.png</normaloff>:/res/edit-cut.png</iconset>
+                 </property>
+                 <property name="shortcut">
+                  <string>Ctrl+X</string>
                  </property>
                 </widget>
                </item>
@@ -1061,8 +1076,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>180</width>
-                   <height>76</height>
+                   <width>203</width>
+                   <height>69</height>
                   </rect>
                  </property>
                 </widget>
