@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_tripController(NULL)
 {
     m_tripController = Singletons::tripController();
+    m_lureController = Singletons::lureController();
+
     ui->setupUi(this);
     ui->water_temp->setValidator(new QDoubleValidator(this));
     ui->air_temp_start->setValidator(new QDoubleValidator(this));
@@ -61,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     observerEvent(Controller::eFishListUpdated);
 
     connect(m_tripController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
+    connect(m_lureController, SIGNAL(observerNotification(int)), this, SLOT(observerEventLure(int)));
 }
 
 MainWindow::~MainWindow()
@@ -137,6 +140,11 @@ void MainWindow::observerEvent(int type)
             ui->fish_list->setItem(loop, 3, new QTableWidgetItem(props["depth"], loop));
         }
     }
+}
+
+void MainWindow::observerEventLure(int type)
+{
+    qDebug() << "update lure";
 }
 
 void MainWindow::on_dateEdit_dateChanged(QDate date)
@@ -300,4 +308,44 @@ void MainWindow::on_startDial_valueChanged(int value)
 void MainWindow::on_endDial_valueChanged(int value)
 {
     m_tripController->intEvent(eEndTime, value);
+}
+
+void MainWindow::on_lure_new_clicked()
+{
+    m_lureController->buttonEvent(eLureNew);
+}
+
+void MainWindow::on_lure_delete_clicked()
+{
+    m_lureController->buttonEvent(eLureDelete);
+}
+
+void MainWindow::on_lure_manufacturer_textChanged(QString text)
+{
+    m_lureController->textEvent(eLureMaker, text);
+}
+
+void MainWindow::on_lure_model_textChanged(QString text)
+{
+    m_lureController->textEvent(eLureModel, text);
+}
+
+void MainWindow::on_lure_size_textChanged(QString text)
+{
+    m_lureController->textEvent(eLureSize, text);
+}
+
+void MainWindow::on_lure_color_textChanged(QString text)
+{
+    m_lureController->textEvent(eLureColor, text);
+}
+
+void MainWindow::on_lure_favorite_clicked(bool checked)
+{
+    m_lureController->booleanEvent(eLureFavorite, checked);
+}
+
+void MainWindow::on_lure_list_itemActivated(QListWidgetItem* item)
+{
+    m_tripController->intEvent(eLureList, item->type());
 }

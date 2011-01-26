@@ -6,6 +6,7 @@
 #include <QTableWidgetItem>
 #include "trollingmodel.h"
 #include "tripcontroller.h"
+#include "lurecontroller.h"
 #include "placecontroller.h"
 
 namespace Ui {
@@ -23,8 +24,17 @@ public:
 private:
     Ui::MainWindow *ui;
     TripController* m_tripController;
+    LureController* m_lureController;
 
 private slots:
+    void on_lure_list_itemActivated(QListWidgetItem* item);
+    void on_lure_favorite_clicked(bool checked);
+    void on_lure_color_textChanged(QString );
+    void on_lure_size_textChanged(QString );
+    void on_lure_model_textChanged(QString );
+    void on_lure_manufacturer_textChanged(QString );
+    void on_lure_delete_clicked();
+    void on_lure_new_clicked();
     void on_endDial_valueChanged(int value);
     void on_startDial_valueChanged(int value);
     void on_fish_list_itemSelectionChanged();
@@ -32,6 +42,7 @@ private slots:
     void on_trip_list_itemActivated(QListWidgetItem* item);
     void on_method_currentIndexChanged(int index);
     void observerEvent(int type);
+    void observerEventLure(int type);
 
 private slots:
     void on_trip_new_clicked();

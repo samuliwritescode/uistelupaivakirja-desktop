@@ -14,7 +14,9 @@ enum EUISource {eTripDate, eStartTime, eEndTime,
                 eUnderSize, eStartTemp, eEndTemp,
                 eSaveTrip, eDeleteFish, eNewFish,
                 eDeleteTrip, eNewTrip, eMethod,
-                eFishList};
+                eFishList, eLureMaker, eLureModel,
+                eLureSize, eLureColor, eLureFavorite,
+                eLureNew, eLureDelete, eLureList};
 
 class Controller : public QObject
 {
@@ -35,7 +37,8 @@ public:
 
     enum ENotificationType {
         eTripUpdated, eTripListUpdated,
-        eFishListUpdated
+        eFishListUpdated, eLureListUpdated,
+        eLureUpdated
     };
 
 signals:

@@ -889,7 +889,7 @@
                </layout>
               </item>
               <item>
-               <widget class="QListWidget" name="lureList">
+               <widget class="QListWidget" name="small_lure_list">
                 <property name="dragDropMode">
                  <enum>QAbstractItemView::DragOnly</enum>
                 </property>
@@ -975,7 +975,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_13">
           <item>
-           <widget class="QListWidget" name="listWidget_5"/>
+           <widget class="QListWidget" name="lure_list"/>
           </item>
          </layout>
         </item>
@@ -1185,8 +1185,4 @@
   <include location="resources.qrc"/>
  </resources>
  <connections/>
- <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>
