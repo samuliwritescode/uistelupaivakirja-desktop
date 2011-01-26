@@ -16,7 +16,8 @@ enum EUISource {eTripDate, eStartTime, eEndTime,
                 eDeleteTrip, eNewTrip, eMethod,
                 eFishList, eLureMaker, eLureModel,
                 eLureSize, eLureColor, eLureFavorite,
-                eLureNew, eLureDelete, eLureList};
+                eLureNew, eLureDelete, eLureList,
+                eSelectLure, eLureName};
 
 class Controller : public QObject
 {

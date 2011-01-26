@@ -56,6 +56,9 @@ QString TripController::getTextValue(EUISource source)
 {
     switch(source)
     {
+    case eLureName:
+        if(m_trip->getFish()->getLure())
+            return m_trip->getFish()->getLure()->getMaker(); break;
     case eLength: return QString::number(m_trip->getFish()->getLength()); break;
     case eWeight: return QString::number(m_trip->getFish()->getWeight()); break;
     case eSpotDepth: return QString::number(m_trip->getFish()->getDepth()); break;
@@ -107,6 +110,16 @@ void TripController::intEvent(EUISource source, int value)
         break;
     case eSpecies: break;
     case eMethod: break;
+    case eSelectLure:
+
+        if(Singletons::model()->getLure(value))
+        {
+            m_trip->getFish()->setLure(Singletons::model()->getLure(value));
+        }
+
+        sendNotificationToObservers(Controller::eTripUpdated);
+        return;
+        break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
     }
     sendNotificationToObservers(Controller::eTripUpdated);    

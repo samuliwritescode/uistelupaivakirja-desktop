@@ -8,6 +8,7 @@
 #include "tripcontroller.h"
 #include "lurecontroller.h"
 #include "placecontroller.h"
+#include "lureitem.h"
 
 namespace Ui {
     class MainWindow;
@@ -25,8 +26,11 @@ private:
     Ui::MainWindow *ui;
     TripController* m_tripController;
     LureController* m_lureController;
+    LureItem* m_lureBox;
 
 private slots:
+    void on_lure_list_itemClicked(QListWidgetItem* item);
+    void on_lure_list_itemSelectionChanged();
     void on_lure_list_itemActivated(QListWidgetItem* item);
     void on_lure_favorite_clicked(bool checked);
     void on_lure_color_textChanged(QString );

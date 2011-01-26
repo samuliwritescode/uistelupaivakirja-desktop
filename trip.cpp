@@ -89,7 +89,7 @@ int Trip::indexOfFish(Fish* p_fish)
 {
     for(int loop=0; loop < m_catch.size(); loop++)
     {
-        if(m_catch.at(loop) == m_fish)
+        if(m_catch.at(loop) == p_fish)
         {
             return loop;
         }
@@ -110,6 +110,9 @@ QList< QMap<QString, QVariant> > Trip::getList()
 
         if(fish->getMethod())
             fishprops["method"] = fish->getMethod()->getId();
+
+        if(fish->getLure())
+            fishprops["lure"] = fish->getLure()->getId();
 
         fishprops["weight"] = fish->getWeight();
         fishprops["length"] = fish->getLength();
@@ -135,6 +138,10 @@ void Trip::storeList(QList< QMap<QString, QVariant> > p_list)
         Method* method = Singletons::model()->getMethod(fishprops["method"].toInt());
         if(method)
             fish->setMethod(method);
+
+        Lure* lure = Singletons::model()->getLure(fishprops["lure"].toInt());
+        if(lure)
+            fish->setLure(lure);
 
         m_catch.push_back(fish);
     }

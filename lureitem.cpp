@@ -2,11 +2,16 @@
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QUrl>
+#include <QStandardItemModel>
 #include "lureitem.h"
+#include "singletons.h"
 
 LureItem::LureItem(QLabel *parent) :
     QLabel(parent)
 {
+    setStyleSheet("background-color: rgb(186, 95, 95)");
+    setMinimumSize(100,0);
+    setText(tr("raahaa viehe"));
 }
 
 LureItem::LureItem(const QString& text, QLabel *parent):
@@ -18,7 +23,13 @@ LureItem::LureItem(const QString& text, QLabel *parent):
 
 void LureItem::dragEnterEvent ( QDragEnterEvent * event )
 {
-    qDebug() << "drag enter";
+    qDebug() << "drag enter" << event->mimeData()->formats();
+    if(event->mimeData()->hasFormat("application/x-qabstractitemmodeldatalist"))
+    {
+        event->acceptProposedAction();
+    }
+
+
     if(event->mimeData()->hasUrls())
     {
         qDebug() << "Has file";
@@ -34,6 +45,12 @@ void LureItem::dragEnterEvent ( QDragEnterEvent * event )
 
 void LureItem::dropEvent ( QDropEvent * event )
 {
-    qDebug() << "drop";
-    event->acceptProposedAction();
+    if(event->mimeData()->hasFormat("application/x-qabstractitemmodeldatalist"))
+    {
+        QStandardItemModel model;
+        model.dropMimeData(event->mimeData(), Qt::CopyAction, 0,0, QModelIndex());
+        int lureindex = model.item(0,0)->data().toInt();
+        Singletons::tripController()->intEvent(eSelectLure, lureindex);
+        event->acceptProposedAction();
+    }
 }

@@ -3,6 +3,7 @@
 Fish::Fish():
         m_species(NULL),
         m_method(NULL),
+        m_lure(NULL),
         m_weight(0),
         m_length(0),
         m_depth(0)
@@ -17,6 +18,11 @@ void Fish::setSpecies(Species* p_species)
 void Fish::setMethod(Method* p_method)
 {
     m_method = p_method;
+}
+
+void Fish::setLure(Lure* p_lure)
+{
+    m_lure = p_lure;
 }
 
 void Fish::setWeight(double p_weight)
@@ -37,6 +43,11 @@ void Fish::setDepth(double p_depth)
 Species* Fish::getSpecies()
 {
     return m_species;
+}
+
+Lure* Fish::getLure()
+{
+    return m_lure;
 }
 
 Method* Fish::getMethod()

@@ -492,50 +492,6 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="POI">
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="acceptDrops">
-                  <bool>true</bool>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(186, 95, 95)</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="text">
-                  <string>Reittipiste</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="lure">
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="autoFillBackground">
-                  <bool>false</bool>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(186, 95, 95)</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="text">
-                  <string>Uistin</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QToolButton" name="del_fish">
                  <property name="toolTip">
                   <string>Poista / Tyhjennä kentät</string>
@@ -1148,7 +1104,11 @@ mitattu</string>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_13">
           <item>
-           <widget class="QListWidget" name="lure_list"/>
+           <widget class="QListWidget" name="lure_list">
+            <property name="modelColumn">
+             <number>0</number>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>

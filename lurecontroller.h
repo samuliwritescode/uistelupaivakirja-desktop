@@ -1,6 +1,7 @@
 #ifndef LURECONTROLLER_H
 #define LURECONTROLLER_H
 #include "controller.h"
+#include "lure.h"
 
 class LureController : public Controller
 {
@@ -16,7 +17,12 @@ public:
     virtual QDate getDateValue(EUISource source);
     virtual bool getBooleanValue(EUISource source);
     virtual int getIntValue(EUISource source);
-    virtual QString getTextValue(EUISource source);    
+    virtual QString getTextValue(EUISource source);
+
+    QMap<QString, int> getLureList();
+
+private:
+    Lure* m_lure;
 };
 
 #endif // LURECONTROLLER_H

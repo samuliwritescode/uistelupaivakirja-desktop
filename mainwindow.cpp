@@ -57,9 +57,13 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->lureList->addItem(item);
     }*/
 
+    m_lureBox = new LureItem();
+    m_lureBox->setAcceptDrops(true);
+    ui->horizontalLayout_6->insertWidget(4, m_lureBox);
     observerEvent(Controller::eTripUpdated);
     observerEvent(Controller::eTripListUpdated);
     observerEvent(Controller::eFishListUpdated);
+    observerEventLure(Controller::eLureListUpdated);
 
     connect(m_tripController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
     connect(m_lureController, SIGNAL(observerNotification(int)), this, SLOT(observerEventLure(int)));
@@ -109,6 +113,8 @@ void MainWindow::observerEvent(int type)
         else
             ui->spotdepth->clear();
 
+        m_lureBox->setText(m_tripController->getTextValue(eLureName));
+
     }
     else if(type == Controller::eTripListUpdated)
     {
@@ -143,7 +149,28 @@ void MainWindow::observerEvent(int type)
 
 void MainWindow::observerEventLure(int type)
 {
-    qDebug() << "update lure";
+    if(type == Controller::eLureListUpdated)
+    {
+        ui->lure_list->clear();
+        ui->small_lure_list->clear();
+        QMap<QString, int> lures = m_lureController->getLureList();
+        for(QMap<QString, int>::iterator iter = lures.begin(); iter != lures.end(); iter++)
+        {
+            QListWidgetItem* item = new QListWidgetItem(iter.key(), ui->lure_list, iter.value());
+            ui->lure_list->insertItem(0, item);
+
+            QListWidgetItem* itemSmall = new QListWidgetItem(iter.key(), ui->small_lure_list);
+            itemSmall->setData(Qt::UserRole+1,  iter.value());
+            ui->small_lure_list->insertItem(0, itemSmall);
+        }
+    } else if(type == Controller::eLureUpdated)
+    {
+        ui->lure_manufacturer->setText(m_lureController->getTextValue(eLureMaker));
+        ui->lure_model->setText(m_lureController->getTextValue(eLureModel));
+        ui->lure_size->setText(m_lureController->getTextValue(eLureSize));
+        ui->lure_color->setText(m_lureController->getTextValue(eLureColor));
+        ui->lure_favorite->setChecked(m_lureController->getBooleanValue(eLureFavorite));
+    }
 }
 
 void MainWindow::on_dateEdit_dateChanged(QDate date)
@@ -341,5 +368,17 @@ void MainWindow::on_lure_favorite_clicked(bool checked)
 
 void MainWindow::on_lure_list_itemActivated(QListWidgetItem* item)
 {
-    m_tripController->intEvent(eLureList, item->type());
+    m_lureController->intEvent(eLureList, item->type());
+}
+
+void MainWindow::on_lure_list_itemSelectionChanged()
+{
+    QList<QListWidgetItem*> selected = ui->lure_list->selectedItems();
+    if(selected.size() > 1)
+        m_lureController->intEvent(eLureList, selected.at(0)->type());
+}
+
+void MainWindow::on_lure_list_itemClicked(QListWidgetItem* item)
+{
+    m_lureController->intEvent(eLureList, item->type());
 }

@@ -12,6 +12,14 @@ void TrollingModel::initialize()
 {
     m_DBLayer = new DBLayer(QDir::homePath()+"/uistelu/database");
 
+    QList<int> lureIds = m_DBLayer->getIds(Lure().getType());
+    foreach(int id, lureIds)
+    {
+        Lure* lure = new Lure();
+        m_DBLayer->loadObject(id, lure);
+        m_trollingobjects.push_back( lure );
+    }
+
     QList<int> tripIds = m_DBLayer->getIds(Trip().getType());
     foreach(int id, tripIds)
     {
@@ -40,12 +48,9 @@ Trip* TrollingModel::getTrip(int id)
         return trip;
     }
 
-    QMap<int, Trip*> trips = getTrips();
-    if(trips.contains(id))
-        return trips[id];
-    else
-        return NULL;
+    return reinterpret_cast<Trip*>(getTrollingObject("trip", id));
 }
+
 QMap<int, Trip*> TrollingModel::getTrips()
 {
     QMap<int, Trip*> retval;
@@ -60,12 +65,42 @@ QMap<int, Trip*> TrollingModel::getTrips()
     return retval;
 }
 
+TrollingObject* TrollingModel::getTrollingObject(const QString& type, int id)
+{
+    foreach(TrollingObject* object, m_trollingobjects)
+    {
+        if(object->getType() == type && object->getId() == id)
+        {
+            return object;
+        }
+    }
+    return NULL;
+}
+
 Lure* TrollingModel::getLure(int id)
 {
-    if(id < 0)
-        return new Lure();
+    if(id < 0 )
+    {
+        Lure* lure = new Lure();
+        m_trollingobjects.push_back(lure);
+        return lure;
+    }
 
-    return NULL;
+    return reinterpret_cast<Lure*>(getTrollingObject("lure", id));
+}
+
+QMap<int, Lure*> TrollingModel::getLures()
+{
+    QMap<int, Lure*> retval;
+    foreach(TrollingObject* object, m_trollingobjects)
+    {
+        if(object->getType() == "lure")
+        {
+            retval[object->getId()] = reinterpret_cast<Lure*>(object);
+        }
+    }
+
+    return retval;
 }
 
 Site* TrollingModel::getSite(int id)

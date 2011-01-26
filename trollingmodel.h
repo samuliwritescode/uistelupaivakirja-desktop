@@ -28,6 +28,7 @@ public:
     void remove(TrollingObject*);
 
     QMap<int, Trip*> getTrips();
+    QMap<int, Lure*> getLures();
     void initialize();
 
 signals:
@@ -35,6 +36,7 @@ signals:
 public slots:
 
 private:
+    TrollingObject* getTrollingObject(const QString&, int);
     QList<TrollingObject*> m_trollingobjects;
     DBLayer* m_DBLayer;
 
