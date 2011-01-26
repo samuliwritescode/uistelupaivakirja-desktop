@@ -84,6 +84,14 @@ Species* TrollingModel::getSpecies(int id)
     return NULL;
 }
 
+Method* TrollingModel::getMethod(int id)
+{
+    if(id < 0)
+        return new Method();
+
+    return NULL;
+}
+
 int TrollingModel::commit(TrollingObject* object)
 {   
     if(object == NULL)

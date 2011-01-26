@@ -9,6 +9,7 @@
 #include "lure.h"
 #include "site.h"
 #include "species.h"
+#include "method.h"
 #include "trollingobject.h"
 #include "dblayer.h"
 
@@ -21,6 +22,7 @@ public:
     Trip* getTrip(int id = -1);
     Lure* getLure(int id = -1);
     Site* getSite(int id = -1);
+    Method* getMethod(int id = -1);
     Species* getSpecies(int id = -1);
     int commit(TrollingObject*);
     void remove(TrollingObject*);

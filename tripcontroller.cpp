@@ -67,6 +67,7 @@ double TripController::getDoubleValue(EUISource source)
     case eSpotDepth: return m_trip->getFish()->getDepth(); break;
     default: qCritical() << "Unknown double event. Cant handle this!" << source; break;
     }
+    return -1;
 }
 
 void TripController::booleanEvent(EUISource source, bool value)

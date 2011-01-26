@@ -2,7 +2,7 @@
 
 Fish::Fish():
         m_species(NULL),
-        m_method(eTrolling),
+        m_method(NULL),
         m_weight(0),
         m_length(0),
         m_depth(0)
@@ -14,7 +14,7 @@ void Fish::setSpecies(Species* p_species)
     m_species = p_species;
 }
 
-void Fish::setMethod(EMethod p_method)
+void Fish::setMethod(Method* p_method)
 {
     m_method = p_method;
 }
@@ -39,7 +39,7 @@ Species* Fish::getSpecies()
     return m_species;
 }
 
-Fish::EMethod Fish::getMethod()
+Method* Fish::getMethod()
 {
     return m_method;
 }

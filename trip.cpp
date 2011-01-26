@@ -108,7 +108,9 @@ QList< QMap<QString, QVariant> > Trip::getList()
         if(fish->getSpecies())
             fishprops["species"] = fish->getSpecies()->getId();
 
-        fishprops["method"] = fish->getMethod();
+        if(fish->getMethod())
+            fishprops["method"] = fish->getMethod()->getId();
+
         fishprops["weight"] = fish->getWeight();
         fishprops["length"] = fish->getLength();
         fishprops["depth"] = fish->getDepth();
@@ -122,14 +124,18 @@ void Trip::storeList(QList< QMap<QString, QVariant> > p_list)
     for(int loop=0; loop < p_list.size(); loop++)
     {
         QMap<QString, QVariant> fishprops = p_list.at(loop);
-        Fish* fish = new Fish();
-        fish->setMethod( static_cast<Fish::EMethod>(fishprops["method"].toInt()) );
+        Fish* fish = new Fish();        
         fish->setWeight(fishprops["weight"].toDouble());
         fish->setLength(fishprops["length"].toDouble());
         fish->setDepth(fishprops["depth"].toDouble());
         Species* species = Singletons::model()->getSpecies(fishprops["species"].toInt());
         if(species)
             fish->setSpecies(species);
+
+        Method* method = Singletons::model()->getMethod(fishprops["method"].toInt());
+        if(method)
+            fish->setMethod(method);
+
         m_catch.push_back(fish);
     }
 }

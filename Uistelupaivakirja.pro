@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     singletons.cpp \
     dblayer.cpp \
     xmlwriter.cpp \
-    controller.cpp
+    controller.cpp \
+    method.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -41,7 +42,8 @@ HEADERS  += mainwindow.h \
     singletons.h \
     dblayer.h \
     xmlwriter.h \
-    controller.h
+    controller.h \
+    method.h
 
 FORMS    += mainwindow.ui
 

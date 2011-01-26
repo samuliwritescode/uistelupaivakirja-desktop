@@ -120,7 +120,6 @@ void MainWindow::observerEvent(int type)
     }
     else if (type == Controller::eFishListUpdated)
     {
-        qDebug() << "update fish list";
         ui->fish_list->clear();
         ui->fish_list->clearContents();
         ui->fish_list->setRowCount(0);
@@ -136,7 +135,6 @@ void MainWindow::observerEvent(int type)
             ui->fish_list->setItem(loop, 1, new QTableWidgetItem(props["weight"], loop));
             ui->fish_list->setItem(loop, 2, new QTableWidgetItem(props["length"], loop));
             ui->fish_list->setItem(loop, 3, new QTableWidgetItem(props["depth"], loop));
-            qDebug() << "weight" << props["weight"].toDouble();
         }
     }
 }
