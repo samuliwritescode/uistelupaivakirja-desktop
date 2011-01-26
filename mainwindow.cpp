@@ -15,8 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
     ui->water_temp->setValidator(new QDoubleValidator(this));
-    ui->air_temp_start->setValidator(new QDoubleValidator(this));
-    ui->air_temp_end->setValidator(new QDoubleValidator(this));
+    ui->air_temp->setValidator(new QDoubleValidator(this));
     ui->weight->setValidator(new QDoubleValidator(this));
     ui->length->setValidator(new QDoubleValidator(this));
     ui->spotdepth->setValidator(new QDoubleValidator(this));
@@ -258,14 +257,9 @@ void MainWindow::on_del_fish_clicked()
     m_tripController->buttonEvent(eDeleteFish);
 }
 
-void MainWindow::on_air_temp_start_textChanged(QString temp)
+void MainWindow::on_air_temp_textChanged(QString temp)
 {
     m_tripController->textEvent(eStartTemp, temp);
-}
-
-void MainWindow::on_air_temp_end_textChanged(QString temp)
-{
-    m_tripController->textEvent(eEndTemp, temp);
 }
 
 void MainWindow::on_trip_delete_clicked()

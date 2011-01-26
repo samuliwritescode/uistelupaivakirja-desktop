@@ -47,8 +47,7 @@ private slots:
 private slots:
     void on_trip_new_clicked();
     void on_trip_delete_clicked();
-    void on_air_temp_end_textChanged(QString );
-    void on_air_temp_start_textChanged(QString );
+    void on_air_temp_textChanged(QString );
     void on_del_fish_clicked();
     void on_new_fish_clicked();
     void on_undersize_clicked(bool checked);
