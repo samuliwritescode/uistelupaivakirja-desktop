@@ -528,7 +528,38 @@
              <item>
               <widget class="QComboBox" name="method">
                <property name="editable">
-                <bool>false</bool>
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="trolling_speed">
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>km/h</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="release_length">
+               <property name="whatsThis">
+                <string>vapautuspituus</string>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>m</string>
                </property>
               </widget>
              </item>
