@@ -95,18 +95,18 @@ void MainWindow::observerEvent(int type)
         ui->wind_brisk->setChecked(m_tripController->getBooleanValue(eWindBrisk));
         ui->wind_hard->setChecked(m_tripController->getBooleanValue(eWindHard));
 
-        if(m_tripController->getDoubleValue(eLength) != 0)
-            ui->length->setText(QString::number(m_tripController->getDoubleValue(eLength)));
+        if(m_tripController->getTextValue(eLength) != QString())
+            ui->length->setText(m_tripController->getTextValue(eLength));
         else
             ui->length->clear();
 
-        if(m_tripController->getDoubleValue(eWeight) != 0)
-            ui->weight->setText(QString::number(m_tripController->getDoubleValue(eWeight)));
+        if(m_tripController->getTextValue(eWeight) != QString())
+            ui->weight->setText(m_tripController->getTextValue(eWeight));
         else
             ui->weight->clear();
 
-        if(m_tripController->getDoubleValue(eSpotDepth) != 0)
-            ui->spotdepth->setText(QString::number(m_tripController->getDoubleValue(eSpotDepth)));
+        if(m_tripController->getTextValue(eSpotDepth) != QString())
+            ui->spotdepth->setText(m_tripController->getTextValue(eSpotDepth));
         else
             ui->spotdepth->clear();
 

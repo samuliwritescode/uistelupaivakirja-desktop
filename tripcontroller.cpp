@@ -54,20 +54,14 @@ int TripController::getIntValue(EUISource source)
 
 QString TripController::getTextValue(EUISource source)
 {
-
-    return QString();
-}
-
-double TripController::getDoubleValue(EUISource source)
-{
     switch(source)
     {
-    case eLength: return m_trip->getFish()->getLength(); break;
-    case eWeight: return m_trip->getFish()->getWeight(); break;
-    case eSpotDepth: return m_trip->getFish()->getDepth(); break;
+    case eLength: return QString::number(m_trip->getFish()->getLength()); break;
+    case eWeight: return QString::number(m_trip->getFish()->getWeight()); break;
+    case eSpotDepth: return QString::number(m_trip->getFish()->getDepth()); break;
     default: qCritical() << "Unknown double event. Cant handle this!" << source; break;
     }
-    return -1;
+    return QString();
 }
 
 void TripController::booleanEvent(EUISource source, bool value)

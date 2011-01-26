@@ -73,8 +73,3 @@ QString LureController::getTextValue(EUISource source)
 {
     return QString();
 }
-
-double LureController::getDoubleValue(EUISource source)
-{
-    return 0;
-}

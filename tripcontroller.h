@@ -28,8 +28,7 @@ public:
     virtual QDate getDateValue(EUISource source);
     virtual bool getBooleanValue(EUISource source);
     virtual int getIntValue(EUISource source);
-    virtual QString getTextValue(EUISource source);
-    virtual double getDoubleValue(EUISource source);
+    virtual QString getTextValue(EUISource source);    
     QMap<QString, int> getTripList();
     QList<QMap<QString, QString> > getFishList();
 

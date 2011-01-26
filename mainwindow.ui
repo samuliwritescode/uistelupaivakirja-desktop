@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>959</width>
+    <width>866</width>
     <height>776</height>
    </rect>
   </property>
@@ -614,6 +614,13 @@
           <item row="4" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_22">
             <item>
+             <widget class="QLabel" name="label_14">
+              <property name="text">
+               <string>Vesi</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QLineEdit" name="water_temp">
               <property name="maximumSize">
                <size>
@@ -625,7 +632,7 @@
                <string/>
               </property>
               <property name="placeholderText">
-               <string>vedenlämpö</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -754,6 +761,16 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string>Suunta</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QDial" name="dial">
               <property name="maximumSize">
                <size>
@@ -777,15 +794,109 @@
             </item>
             <item>
              <widget class="QLabel" name="label_6">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="text">
-               <string>etelästä</string>
+               <string>ei
+mitattu</string>
               </property>
              </widget>
             </item>
            </layout>
           </item>
           <item row="6" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_9"/>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <widget class="QRadioButton" name="radioButton">
+              <property name="text">
+               <string>matala</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_2">
+              <property name="text">
+               <string>melko
+matala</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_3">
+              <property name="text">
+               <string>keski</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_4">
+              <property name="text">
+               <string>melko
+korkea</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_5">
+              <property name="text">
+               <string>korkea</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Muutos</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDial" name="dial_2">
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <number>8</number>
+              </property>
+              <property name="pageStep">
+               <number>2</number>
+              </property>
+              <property name="wrapping">
+               <bool>true</bool>
+              </property>
+              <property name="notchTarget">
+               <double>9.699999999999999</double>
+              </property>
+              <property name="notchesVisible">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_16">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>ei
+mitattu</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item row="7" column="0">
            <widget class="QLabel" name="label_43">
@@ -1018,7 +1129,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>289</width>
+                   <width>186</width>
                    <height>69</height>
                   </rect>
                  </property>

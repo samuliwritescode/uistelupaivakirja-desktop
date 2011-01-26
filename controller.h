@@ -32,8 +32,7 @@ public:
     virtual QDate getDateValue(EUISource source) = 0;
     virtual bool getBooleanValue(EUISource source) = 0;
     virtual int getIntValue(EUISource source) = 0;
-    virtual QString getTextValue(EUISource source) = 0;
-    virtual double getDoubleValue(EUISource source) = 0;
+    virtual QString getTextValue(EUISource source) = 0;    
 
     enum ENotificationType {
         eTripUpdated, eTripListUpdated,
