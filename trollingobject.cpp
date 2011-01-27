@@ -16,9 +16,9 @@ void TrollingObject::storeProperties(QHash<QString, QVariant> p_properties)
     m_properties = p_properties;
 }
 
-void TrollingObject::constructItem(const TrollingObjectItem&)
+void TrollingObject::constructItems(const TrollingObjectItemList&)
 {
-    qWarning() << "NULL implementation of TrollingObject::constructItem()";
+    qWarning() << "NULL implementation of TrollingObject::constructItems()";
 }
 
 TrollingObjectItemList TrollingObject::serializeItems()
@@ -29,10 +29,7 @@ TrollingObjectItemList TrollingObject::serializeItems()
 
 void TrollingObject::storeList(TrollingObjectItemList p_list)
 {
-    foreach(TrollingObjectItem item, p_list)
-    {
-        constructItem(item);
-    }
+    constructItems(p_list);
 }
 
 QHash<QString, QVariant> TrollingObject::getProperties()

@@ -97,25 +97,29 @@ int Trip::indexOfFish(Fish* p_fish)
     return -1;
 }
 
-void Trip::constructItem(const TrollingObjectItem& p_item)
+void Trip::constructItems(const TrollingObjectItemList& p_items)
 {
-    Fish* fish = new Fish();
-    fish->setWeight(p_item["weight"].toDouble());
-    fish->setLength(p_item["length"].toDouble());
-    fish->setDepth(p_item["depth"].toDouble());
-    Species* species = Singletons::model()->getSpecies(p_item["species"].toInt());
-    if(species)
-        fish->setSpecies(species);
+    m_catch.clear();
+    foreach(TrollingObjectItem item, p_items)
+    {
+        Fish* fish = new Fish();
+        fish->setWeight(item["weight"].toDouble());
+        fish->setLength(item["length"].toDouble());
+        fish->setDepth(item["depth"].toDouble());
+        Species* species = Singletons::model()->getSpecies(item["species"].toInt());
+        if(species)
+            fish->setSpecies(species);
 
-    Method* method = Singletons::model()->getMethod(p_item["method"].toInt());
-    if(method)
-        fish->setMethod(method);
+        Method* method = Singletons::model()->getMethod(item["method"].toInt());
+        if(method)
+            fish->setMethod(method);
 
-    Lure* lure = Singletons::model()->getLure(p_item["lure"].toInt());
-    if(lure)
-        fish->setLure(lure);
+        Lure* lure = Singletons::model()->getLure(item["lure"].toInt());
+        if(lure)
+            fish->setLure(lure);
 
-    m_catch.push_back(fish);
+        m_catch.push_back(fish);
+    }
 }
 
 TrollingObjectItemList Trip::serializeItems()

@@ -38,7 +38,7 @@ public:
 protected:
     int indexOfFish(Fish*);
 
-    virtual void constructItem(const TrollingObjectItem&);
+    virtual void constructItems(const TrollingObjectItemList&);
     virtual TrollingObjectItemList serializeItems();
 
 private:
