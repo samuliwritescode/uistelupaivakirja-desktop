@@ -7,18 +7,18 @@ Trip::Trip():
     TrollingObject(),
     m_fish(NULL)
 {
-    m_type = "trip";
-    m_properties["date"] = QDate::currentDate();
+    setType("trip");
+    set("date",QDate::currentDate());
 }
 
 void Trip::setDate(const QDate& date)
 {
-    m_properties["date"] = date;
+    set("date", date);
 }
 
 QDate Trip::getDate()
 {
-    return m_properties["date"].toDate();
+    return get("date").toDate();
 }
 
 Fish* Trip::getFish(int id)
@@ -149,69 +149,69 @@ void Trip::storeList(QList< QMap<QString, QVariant> > p_list)
 
 void Trip::setWaterTemp(double temp)
 {
-    m_properties["watertemp"] = temp;
+    set("watertemp", temp);
 }
 
 double Trip::getWaterTemp()
 {
-    return m_properties["watertemp"].toDouble();
+    return get("watertemp").toDouble();
 }
 
 
 void Trip::setDescription(const QString& desc)
 {
-    m_properties["description"] = desc;
+    set("description", desc);
 }
 
 
 void Trip::setTime(const QTime& start, const QTime& end)
 {
     if(!start.isNull())
-        m_properties["time_start"] = start;
+        set("time_start", start);
 
     if(!end.isNull())
-        m_properties["time_end"] = end;
+        set("time_end", end);
 }
 
 QPair<QTime, QTime> Trip::getTime()
 {
     QPair<QTime, QTime> retval;
-    retval.first = m_properties["time_start"].toTime();
-    retval.second = m_properties["time_end"].toTime();
+    retval.first = get("time_start").toTime();
+    retval.second = get("time_end").toTime();
     return retval;
 }
 
 void Trip::addWindCondition(EWindCondition wind, bool bSet)
 {
-    int mask = m_properties["wind_condition"].toInt();
+    int mask = get("wind_condition").toInt();
     if(bSet)
         mask = mask|wind;
     else
         mask = mask^wind;
 
-    m_properties["wind_condition"] = mask;
+    set("wind_condition", mask);
 }
 
 bool Trip::isWindCondition(EWindCondition wind)
 {
-   int mask = m_properties["wind_condition"].toInt();
+   int mask = get("wind_condition").toInt();
    return (mask&wind)!=0;
 }
 
 void Trip::addWeatherCondition(EWeatherCondition weather, bool bSet)
 {
-    int mask = m_properties["weather_condition"].toInt();
+    int mask = get("weather_condition").toInt();
     if(bSet)
         mask = mask|weather;
     else
         mask = mask^weather;
 
-    m_properties["weather_condition"] = mask;
+    set("weather_condition", mask);
 }
 
 bool Trip::isWeatherCondition(EWeatherCondition weather)
 {
-    int mask = m_properties["weather_condition"].toInt();
+    int mask = get("weather_condition").toInt();
     return (mask&weather)!=0;
 }
 

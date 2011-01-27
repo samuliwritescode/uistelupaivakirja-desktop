@@ -7,50 +7,50 @@ Lure::Lure()
 
 void Lure::setMaker(const QString& p_value)
 {
-    m_properties["maker"] = p_value;
+    set("maker", p_value);
 }
 
 void Lure::setModel(const QString& p_value)
 {
-    m_properties["model"] = p_value;
+    set("model", p_value);
 }
 
 void Lure::setSize(const QString& p_value)
 {
-    m_properties["size"] = p_value;
+    set("size", p_value);
 }
 
 void Lure::setColor(const QString& p_value)
 {
-    m_properties["color"] = p_value;
+    set("color", p_value);
 }
 
 void Lure::setFavorite(bool p_value)
 {
-    m_properties["favorite"] = p_value;
+    set("favorite", p_value);
 }
 
 QString Lure::getMaker()
 {
-    return m_properties["maker"].toString();
+    return get("maker").toString();
 }
 
 QString Lure::getModel()
 {
-    return m_properties["model"].toString();
+    return get("model").toString();
 }
 
 QString Lure::getSize()
 {
-    return m_properties["size"].toString();
+    return get("size").toString();
 }
 
 QString Lure::getColor()
 {
-    return m_properties["color"].toString();
+    return get("color").toString();
 }
 
 bool Lure::getFavorite()
 {
-    return m_properties["favorite"].toBool();
+    return get("favorite").toBool();
 }

@@ -44,3 +44,16 @@ void TrollingObject::setId(int p_id)
 {
     m_id = p_id;
 }
+
+void TrollingObject::set(const QString& p_property, QVariant p_value)
+{
+    m_properties[p_property] = p_value;
+}
+
+QVariant TrollingObject::get(const QString& p_property)
+{
+    if(m_properties.contains(p_property))
+        return m_properties[p_property];
+    else
+        return QVariant();
+}

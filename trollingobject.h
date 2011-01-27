@@ -12,13 +12,19 @@ public:
     virtual QHash<QString, QVariant> getProperties();
     virtual QList< QMap<QString, QVariant> > getList();
 
+
     int getId();
     QString getType();
     void setType(const QString& p_type);
     void setId(int p_id);
 
-protected:
+protected:    
+    void set(const QString&, QVariant);
+    QVariant get(const QString&);
+
     TrollingObject();
+
+private:
     int m_id;
     QString m_type;
     QHash<QString, QVariant> m_properties;
