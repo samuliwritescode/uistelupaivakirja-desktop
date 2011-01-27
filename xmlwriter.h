@@ -2,6 +2,7 @@
 #define XMLWRITER_H
 #include <QDomElement>
 #include "trollingobject.h"
+class TrollingObject;
 
 class XMLWriter
 {

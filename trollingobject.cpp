@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "trollingobject.h"
 
 TrollingObject::TrollingObject():
@@ -5,14 +6,33 @@ TrollingObject::TrollingObject():
 {
 }
 
+TrollingObject::~TrollingObject()
+{
+
+}
+
 void TrollingObject::storeProperties(QHash<QString, QVariant> p_properties)
 {
     m_properties = p_properties;
 }
 
-void TrollingObject::storeList(QList< QMap<QString, QVariant> > p_list)
+void TrollingObject::constructItem(const TrollingObjectItem&)
 {
-    m_list = p_list;
+    qWarning() << "NULL implementation of TrollingObject::constructItem()";
+}
+
+TrollingObjectItemList TrollingObject::serializeItems()
+{
+    qWarning() << "NULL implementation of TrollingObject::serializeItems()";
+    return TrollingObjectItemList();
+}
+
+void TrollingObject::storeList(TrollingObjectItemList p_list)
+{
+    foreach(TrollingObjectItem item, p_list)
+    {
+        constructItem(item);
+    }
 }
 
 QHash<QString, QVariant> TrollingObject::getProperties()
@@ -20,9 +40,9 @@ QHash<QString, QVariant> TrollingObject::getProperties()
     return m_properties;
 }
 
-QList< QMap<QString, QVariant> > TrollingObject::getList()
+TrollingObjectItemList TrollingObject::getList()
 {
-    return m_list;
+    return serializeItems();
 }
 
 int TrollingObject::getId()
@@ -56,4 +76,14 @@ QVariant TrollingObject::get(const QString& p_property)
         return m_properties[p_property];
     else
         return QVariant();
+}
+
+QStringList TrollingObject::getKeys()
+{
+    QStringList retval;
+    for(QHash<QString, QVariant>::Iterator iter = m_properties.begin(); iter != m_properties.end(); iter++)
+    {
+        retval << iter.key();
+    }
+    return retval;
 }

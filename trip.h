@@ -35,12 +35,11 @@ public:
     void insertFish();
     int getSelectedFish();
 
-
-    virtual QList< QMap<QString, QVariant> > getList();
-    virtual void storeList(QList< QMap<QString, QVariant> > p_list);
-
 protected:
     int indexOfFish(Fish*);
+
+    virtual void constructItem(const TrollingObjectItem&);
+    virtual TrollingObjectItemList serializeItems();
 
 private:
     QList<Fish*> m_catch;

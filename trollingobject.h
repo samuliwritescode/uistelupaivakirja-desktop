@@ -2,33 +2,44 @@
 #define TROLLINGOBJECT_H
 #include <QHash>
 #include <QString>
+#include <QStringList>
 #include <QVariant>
+#include "xmlwriter.h"
+
+typedef QHash<QString, QVariant> TrollingObjectItem;
+typedef QList<TrollingObjectItem> TrollingObjectItemList;
 
 class TrollingObject
 {
+    friend class XMLWriter;
 public:
-    virtual void storeProperties(QHash<QString, QVariant> p_properties);
-    virtual void storeList(QList< QMap<QString, QVariant> > p_list);
-    virtual QHash<QString, QVariant> getProperties();
-    virtual QList< QMap<QString, QVariant> > getList();
-
-
     int getId();
     QString getType();
-    void setType(const QString& p_type);
-    void setId(int p_id);
+    virtual ~TrollingObject();
 
 protected:    
+    void setType(const QString& p_type);
     void set(const QString&, QVariant);
     QVariant get(const QString&);
+    QStringList getKeys();
+
+    virtual void constructItem(const TrollingObjectItem&);
+    virtual TrollingObjectItemList serializeItems();
 
     TrollingObject();
 
 private:
+    //XMLWriter will call these
+    void storeProperties(QHash<QString, QVariant> p_properties);
+    void storeList(TrollingObjectItemList p_list);
+    QHash<QString, QVariant> getProperties();
+    TrollingObjectItemList getList();
+    void setId(int p_id);
+
     int m_id;
     QString m_type;
     QHash<QString, QVariant> m_properties;
-    QList< QMap<QString, QVariant> > m_list;
+    //TrollingObjectItemList m_list;
 };
 
 #endif // TROLLINGOBJECT_H

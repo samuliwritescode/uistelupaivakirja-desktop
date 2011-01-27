@@ -97,12 +97,33 @@ int Trip::indexOfFish(Fish* p_fish)
     return -1;
 }
 
-QList< QMap<QString, QVariant> > Trip::getList()
+void Trip::constructItem(const TrollingObjectItem& p_item)
 {
-    QList< QMap<QString, QVariant> > retval;
+    Fish* fish = new Fish();
+    fish->setWeight(p_item["weight"].toDouble());
+    fish->setLength(p_item["length"].toDouble());
+    fish->setDepth(p_item["depth"].toDouble());
+    Species* species = Singletons::model()->getSpecies(p_item["species"].toInt());
+    if(species)
+        fish->setSpecies(species);
+
+    Method* method = Singletons::model()->getMethod(p_item["method"].toInt());
+    if(method)
+        fish->setMethod(method);
+
+    Lure* lure = Singletons::model()->getLure(p_item["lure"].toInt());
+    if(lure)
+        fish->setLure(lure);
+
+    m_catch.push_back(fish);
+}
+
+TrollingObjectItemList Trip::serializeItems()
+{
+    TrollingObjectItemList retval;
     for(int loop=0; loop < m_catch.size(); loop++)
     {
-        QMap<QString, QVariant> fishprops;
+        TrollingObjectItem fishprops;
         Fish* fish = m_catch.at(loop);
 
         if(fish->getSpecies())
@@ -120,31 +141,6 @@ QList< QMap<QString, QVariant> > Trip::getList()
         retval.push_back(fishprops);
     }
     return retval;
-}
-
-void Trip::storeList(QList< QMap<QString, QVariant> > p_list)
-{
-    for(int loop=0; loop < p_list.size(); loop++)
-    {
-        QMap<QString, QVariant> fishprops = p_list.at(loop);
-        Fish* fish = new Fish();        
-        fish->setWeight(fishprops["weight"].toDouble());
-        fish->setLength(fishprops["length"].toDouble());
-        fish->setDepth(fishprops["depth"].toDouble());
-        Species* species = Singletons::model()->getSpecies(fishprops["species"].toInt());
-        if(species)
-            fish->setSpecies(species);
-
-        Method* method = Singletons::model()->getMethod(fishprops["method"].toInt());
-        if(method)
-            fish->setMethod(method);
-
-        Lure* lure = Singletons::model()->getLure(fishprops["lure"].toInt());
-        if(lure)
-            fish->setLure(lure);
-
-        m_catch.push_back(fish);
-    }
 }
 
 void Trip::setWaterTemp(double temp)
