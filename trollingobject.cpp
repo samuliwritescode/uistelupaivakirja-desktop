@@ -5,7 +5,7 @@ TrollingObject::TrollingObject():
 {
 }
 
-void TrollingObject::storeProperties(QMap<QString, QVariant> p_properties)
+void TrollingObject::storeProperties(QHash<QString, QVariant> p_properties)
 {
     m_properties = p_properties;
 }
@@ -15,7 +15,7 @@ void TrollingObject::storeList(QList< QMap<QString, QVariant> > p_list)
     m_list = p_list;
 }
 
-QMap<QString, QVariant> TrollingObject::getProperties()
+QHash<QString, QVariant> TrollingObject::getProperties()
 {
     return m_properties;
 }

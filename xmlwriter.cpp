@@ -27,7 +27,7 @@ bool XMLWriter::write(TrollingObject* p_object)
 
     trollingObject.setAttribute("type", p_object->getType());
 
-    QMapIterator<QString, QVariant> iter(p_object->getProperties());
+    QHashIterator<QString, QVariant> iter(p_object->getProperties());
     while( iter.hasNext() )
     {
         iter.next();
@@ -119,7 +119,7 @@ bool XMLWriter::load(TrollingObject* p_object, int p_id)
 
 
     QDomNodeList propertiesnodes = trollingObject.childNodes();
-    QMap<QString, QVariant> properties;
+    QHash<QString, QVariant> properties;
     for(int loop=0; loop < propertiesnodes.size(); loop++)
     {
         QDomNode node = propertiesnodes.at(loop);
