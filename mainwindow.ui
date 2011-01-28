@@ -857,106 +857,43 @@
               <number>1</number>
              </property>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_21">
-               <item>
-                <widget class="QLineEdit" name="air_temp">
-                 <property name="maximumSize">
-                  <size>
-                   <width>50</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="placeholderText">
-                  <string>ilma</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_40">
-                 <property name="text">
-                  <string>C</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="water_temp">
-                 <property name="maximumSize">
-                  <size>
-                   <width>50</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="placeholderText">
-                  <string>vesi</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_10">
-                 <property name="text">
-                  <string>C</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
+              <layout class="QGridLayout" name="gridLayout_4">
+               <item row="0" column="0">
                 <widget class="QCheckBox" name="weather_clear">
                  <property name="text">
                   <string>selkeää</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="0" column="1">
                 <widget class="QCheckBox" name="weather_halfclear">
                  <property name="text">
                   <string>puolipilvistä</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="0" column="2">
                 <widget class="QCheckBox" name="weather_overcast">
                  <property name="text">
                   <string>pilvistä</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="0" column="3">
                 <widget class="QCheckBox" name="weather_rain">
                  <property name="text">
                   <string>sadetta</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="0" column="4">
                 <widget class="QCheckBox" name="weather_fog">
                  <property name="text">
                   <string>sumua</string>
                  </property>
                 </widget>
                </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_23">
-               <item>
+               <item row="1" column="0">
                 <widget class="QCheckBox" name="wind_calm">
                  <property name="text">
                   <string>tyyni
@@ -964,7 +901,7 @@
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="1" column="1">
                 <widget class="QCheckBox" name="wind_faint">
                  <property name="text">
                   <string>heikko
@@ -972,7 +909,7 @@
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="1" column="2">
                 <widget class="QCheckBox" name="wind_moderate">
                  <property name="text">
                   <string>kohtalainen
@@ -980,7 +917,7 @@
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="1" column="3">
                 <widget class="QCheckBox" name="wind_brisk">
                  <property name="text">
                   <string>navakka
@@ -988,7 +925,7 @@
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="1" column="4">
                 <widget class="QCheckBox" name="wind_hard">
                  <property name="text">
                   <string>kova
@@ -996,77 +933,14 @@
                  </property>
                 </widget>
                </item>
-               <item>
-                <spacer name="horizontalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_19">
-                 <property name="text">
-                  <string>Suunta</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QDial" name="wind_direction">
-                 <property name="maximumSize">
-                  <size>
-                   <width>40</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                 <property name="maximum">
-                  <number>8</number>
-                 </property>
-                 <property name="pageStep">
-                  <number>2</number>
-                 </property>
-                 <property name="wrapping">
-                  <bool>true</bool>
-                 </property>
-                 <property name="notchesVisible">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_6">
-                 <property name="minimumSize">
-                  <size>
-                   <width>80</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>ei
-mitattu</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_9">
-               <item>
+               <item row="2" column="0">
                 <widget class="QCheckBox" name="pressure_low">
                  <property name="text">
                   <string>matala</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="2" column="1">
                 <widget class="QCheckBox" name="pressure_mildlow">
                  <property name="text">
                   <string>melko
@@ -1074,14 +948,14 @@ matala</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="2" column="2">
                 <widget class="QCheckBox" name="pressure_normal">
                  <property name="text">
                   <string>keski</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="2" column="3">
                 <widget class="QCheckBox" name="pressure_mildhigh">
                  <property name="text">
                   <string>melko
@@ -1089,74 +963,200 @@ korkea</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="2" column="4">
                 <widget class="QCheckBox" name="pressure_high">
                  <property name="text">
                   <string>korkea</string>
                  </property>
                 </widget>
                </item>
-               <item>
-                <spacer name="horizontalSpacer_3">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
+               <item row="0" column="5">
+                <layout class="QHBoxLayout" name="horizontalLayout_19">
+                 <item>
+                  <spacer name="horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>1</width>
+                     <height>1</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_28">
+                   <property name="text">
+                    <string>Ilma</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="air_temp">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="placeholderText">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_40">
+                   <property name="text">
+                    <string>C</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_29">
+                   <property name="text">
+                    <string>Vesi</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="water_temp">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="placeholderText">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_10">
+                   <property name="text">
+                    <string>C</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
-               <item>
-                <widget class="QLabel" name="label_18">
-                 <property name="text">
-                  <string>Muutos</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QDial" name="pressure_change">
-                 <property name="maximumSize">
-                  <size>
-                   <width>40</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                 <property name="maximum">
-                  <number>8</number>
-                 </property>
-                 <property name="pageStep">
-                  <number>2</number>
-                 </property>
-                 <property name="wrapping">
-                  <bool>true</bool>
-                 </property>
-                 <property name="notchTarget">
-                  <double>9.699999999999999</double>
-                 </property>
-                 <property name="notchesVisible">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_16">
-                 <property name="minimumSize">
-                  <size>
-                   <width>80</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>ei
+               <item row="1" column="5">
+                <layout class="QHBoxLayout" name="horizontalLayout_20">
+                 <item>
+                  <spacer name="horizontalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>1</width>
+                     <height>1</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_19">
+                   <property name="text">
+                    <string>Suunta</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDial" name="wind_direction">
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximum">
+                    <number>8</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>2</number>
+                   </property>
+                   <property name="wrapping">
+                    <bool>true</bool>
+                   </property>
+                   <property name="notchesVisible">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_6">
+                   <property name="text">
+                    <string>ei
 mitattu</string>
-                 </property>
-                </widget>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="5">
+                <layout class="QHBoxLayout" name="horizontalLayout_22">
+                 <item>
+                  <spacer name="horizontalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>1</width>
+                     <height>1</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_18">
+                   <property name="text">
+                    <string>Muutos</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDial" name="pressure_change">
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximum">
+                    <number>8</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>2</number>
+                   </property>
+                   <property name="wrapping">
+                    <bool>true</bool>
+                   </property>
+                   <property name="notchTarget">
+                    <double>9.699999999999999</double>
+                   </property>
+                   <property name="notchesVisible">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_16">
+                   <property name="text">
+                    <string>ei
+mitattu</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -1419,7 +1419,7 @@ mitattu</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>341</width>
+                   <width>338</width>
                    <height>76</height>
                   </rect>
                  </property>
