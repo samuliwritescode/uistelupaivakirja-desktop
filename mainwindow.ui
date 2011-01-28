@@ -1215,6 +1215,13 @@ mitattu</string>
               </layout>
              </item>
              <item>
+              <widget class="QLabel" name="label_28">
+               <property name="text">
+                <string>Vapaa kuvaus</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QTextEdit" name="misc">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
@@ -1432,8 +1439,8 @@ mitattu</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>372</width>
-                   <height>71</height>
+                   <width>452</width>
+                   <height>69</height>
                   </rect>
                  </property>
                 </widget>
