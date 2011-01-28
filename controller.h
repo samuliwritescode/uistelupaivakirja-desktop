@@ -17,7 +17,11 @@ enum EUISource {eTripDate, eStartTime, eEndTime,
                 eFishList, eLureMaker, eLureModel,
                 eLureSize, eLureColor, eLureFavorite,
                 eLureNew, eLureDelete, eLureList,
-                eSelectLure, eLureName};
+                eSelectLure, eLureName, eTotalDepth,
+                eTrollingSpeed, eLineWeight, eReleaseWidth,
+                eTime, ePressureLow, ePressureMildLow,
+                ePressureNormal, ePressureMildHigh,
+                ePressureHigh, eGroup, eCatchNRelease};
 
 class Controller : public QObject
 {
@@ -27,10 +31,12 @@ public:
     virtual void buttonEvent(EUISource source) = 0;
     virtual void booleanEvent(EUISource source, bool value) = 0;
     virtual void dateEvent(EUISource source, const QDate& value) = 0;
+    virtual void timeEvent(EUISource source, const QTime& value) = 0;
     virtual void textEvent(EUISource source, const QString& value) = 0;
     virtual void intEvent(EUISource source, int value) = 0;
 
     virtual QDate getDateValue(EUISource source) = 0;
+    virtual QTime getTimeValue(EUISource source) = 0;
     virtual bool getBooleanValue(EUISource source) = 0;
     virtual int getIntValue(EUISource source) = 0;
     virtual QString getTextValue(EUISource source) = 0;    

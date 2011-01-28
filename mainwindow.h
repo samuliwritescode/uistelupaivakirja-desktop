@@ -30,6 +30,19 @@ private:
     LureItem* m_POIBox;
 
 private slots:
+    void on_catchrelease_clicked(bool checked);
+    void on_group_clicked(bool checked);
+    void on_pressure_high_clicked(bool checked);
+    void on_pressure_mildhigh_clicked(bool checked);
+    void on_pressure_normal_clicked(bool checked);
+    void on_pressure_mildlow_clicked(bool checked);
+    void on_pressure_low_clicked(bool checked);
+    void on_species_textChanged(QString );
+    void on_timeEdit_timeChanged(QTime date);
+    void on_release_width_textChanged(QString );
+    void on_line_weight_textChanged(QString );
+    void on_trolling_speed_textChanged(QString );
+    void on_totaldepth_textChanged(QString );
     void on_lure_list_itemClicked(QListWidgetItem* item);
     void on_lure_list_itemSelectionChanged();
     void on_lure_list_itemActivated(QListWidgetItem* item);

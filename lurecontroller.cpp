@@ -39,6 +39,11 @@ void LureController::dateEvent(EUISource source, const QDate& value)
 
 }
 
+void LureController::timeEvent(EUISource source, const QTime& value)
+{
+
+}
+
 void LureController::textEvent(EUISource source, const QString& value)
 {
     if(!m_lure) return;
@@ -69,6 +74,11 @@ void LureController::intEvent(EUISource source, int value)
 QDate LureController::getDateValue(EUISource source)
 {
     return QDate();
+}
+
+QTime LureController::getTimeValue(EUISource source)
+{
+    return QTime();
 }
 
 bool LureController::getBooleanValue(EUISource source)

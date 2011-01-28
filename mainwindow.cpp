@@ -387,3 +387,68 @@ void MainWindow::on_lure_list_itemClicked(QListWidgetItem* item)
 {
     m_lureController->intEvent(eLureList, item->type());
 }
+
+void MainWindow::on_totaldepth_textChanged(QString value)
+{
+    m_tripController->textEvent(eTotalDepth, value);
+}
+
+void MainWindow::on_trolling_speed_textChanged(QString value)
+{
+    m_tripController->textEvent(eTrollingSpeed, value);
+}
+
+void MainWindow::on_line_weight_textChanged(QString value)
+{
+    m_tripController->textEvent(eLineWeight, value);
+}
+
+void MainWindow::on_release_width_textChanged(QString value)
+{
+    m_tripController->textEvent(eReleaseWidth, value);
+}
+
+void MainWindow::on_timeEdit_timeChanged(QTime date)
+{
+    m_tripController->timeEvent(eTime, date);
+}
+
+void MainWindow::on_species_textChanged(QString value)
+{
+    m_tripController->textEvent(eSpecies, value);
+}
+
+void MainWindow::on_pressure_low_clicked(bool checked)
+{
+    m_tripController->booleanEvent(ePressureLow, checked);
+}
+
+void MainWindow::on_pressure_mildlow_clicked(bool checked)
+{
+   m_tripController->booleanEvent(ePressureMildLow, checked);
+}
+
+void MainWindow::on_pressure_normal_clicked(bool checked)
+{
+    m_tripController->booleanEvent(ePressureNormal, checked);
+}
+
+void MainWindow::on_pressure_mildhigh_clicked(bool checked)
+{
+    m_tripController->booleanEvent(ePressureMildHigh, checked);
+}
+
+void MainWindow::on_pressure_high_clicked(bool checked)
+{
+    m_tripController->booleanEvent(ePressureHigh, checked);
+}
+
+void MainWindow::on_group_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eGroup, checked);
+}
+
+void MainWindow::on_catchrelease_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eCatchNRelease, checked);
+}

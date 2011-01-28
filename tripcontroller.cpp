@@ -67,6 +67,11 @@ QString TripController::getTextValue(EUISource source)
     return QString();
 }
 
+QTime TripController::getTimeValue(EUISource source)
+{
+    return QTime();
+}
+
 void TripController::booleanEvent(EUISource source, bool value)
 {
     switch(source)
@@ -134,6 +139,11 @@ void TripController::dateEvent(EUISource source, const QDate& value)
     default:  qCritical() << "Unknown date event. Cant handle this!" << source;
     }
     sendNotificationToObservers(Controller::eTripUpdated);
+}
+
+void TripController::timeEvent(EUISource source, const QTime& value)
+{
+
 }
 
 void TripController::textEvent(EUISource source, const QString& value)
