@@ -156,7 +156,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <property name="spacing">
-           <number>21</number>
+           <number>12</number>
           </property>
           <property name="sizeConstraint">
            <enum>QLayout::SetNoConstraint</enum>
@@ -331,6 +331,9 @@
                <property name="columnCount">
                 <number>6</number>
                </property>
+               <attribute name="horizontalHeaderStretchLastSection">
+                <bool>true</bool>
+               </attribute>
                <attribute name="verticalHeaderDefaultSectionSize">
                 <number>20</number>
                </attribute>
@@ -368,6 +371,13 @@
                <property name="rightMargin">
                 <number>0</number>
                </property>
+               <item>
+                <widget class="QLabel" name="label_17">
+                 <property name="text">
+                  <string>Laji</string>
+                 </property>
+                </widget>
+               </item>
                <item>
                 <widget class="QComboBox" name="species">
                  <property name="editable">
@@ -465,6 +475,23 @@
                 <number>0</number>
                </property>
                <item>
+                <widget class="QLabel" name="label_20">
+                 <property name="text">
+                  <string>Saaja</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboBox">
+                 <property name="whatsThis">
+                  <string>Saaja</string>
+                 </property>
+                 <property name="editable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QLineEdit" name="spotdepth">
                  <property name="placeholderText">
                   <string>ottisyvyys</string>
@@ -479,23 +506,6 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="water_temp">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="placeholderText">
-                  <string>vedenlämpö</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_10">
-                 <property name="text">
-                  <string>C</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QToolButton" name="del_fish">
                  <property name="toolTip">
                   <string>Poista / Tyhjennä kentät</string>
@@ -506,6 +516,12 @@
                  <property name="icon">
                   <iconset resource="resources.qrc">
                    <normaloff>:/res/list-remove.png</normaloff>:/res/list-remove.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
                  </property>
                  <property name="shortcut">
                   <string>Del</string>
@@ -530,9 +546,42 @@
               <number>1</number>
              </property>
              <item>
+              <widget class="QLabel" name="label_15">
+               <property name="text">
+                <string>Tapa</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QComboBox" name="method">
                <property name="editable">
                 <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Vetonopeus</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -546,7 +595,17 @@
              <item>
               <widget class="QLabel" name="label_4">
                <property name="text">
-                <string>km/h</string>
+                <string>km/h </string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_14">
+               <property name="text">
+                <string>Vapautuspituus</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -608,6 +667,29 @@
                 </widget>
                </item>
                <item>
+                <widget class="QLineEdit" name="water_temp">
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>vesi</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_10">
+                 <property name="text">
+                  <string>C</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <spacer name="horizontalSpacer">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -660,7 +742,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_23">
                <item>
-                <widget class="QRadioButton" name="wind_calm">
+                <widget class="QCheckBox" name="wind_calm">
                  <property name="text">
                   <string>tyyni
 0-0.2m/s</string>
@@ -668,7 +750,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="wind_faint">
+                <widget class="QCheckBox" name="wind_faint">
                  <property name="text">
                   <string>heikko
 0-3m/s</string>
@@ -676,7 +758,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="wind_moderate">
+                <widget class="QCheckBox" name="wind_moderate">
                  <property name="text">
                   <string>kohtalainen
 4-7m/s</string>
@@ -684,7 +766,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="wind_brisk">
+                <widget class="QCheckBox" name="wind_brisk">
                  <property name="text">
                   <string>navakka
 8-13m/s</string>
@@ -692,7 +774,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="wind_hard">
+                <widget class="QCheckBox" name="wind_hard">
                  <property name="text">
                   <string>kova
 14-20m/s</string>
@@ -763,14 +845,14 @@ mitattu</string>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_9">
                <item>
-                <widget class="QRadioButton" name="pressure_low">
+                <widget class="QCheckBox" name="pressure_low">
                  <property name="text">
                   <string>matala</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="pressure_mildlow">
+                <widget class="QCheckBox" name="pressure_mildlow">
                  <property name="text">
                   <string>melko
 matala</string>
@@ -778,14 +860,14 @@ matala</string>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="pressure_normal">
+                <widget class="QCheckBox" name="pressure_normal">
                  <property name="text">
                   <string>keski</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="pressure_mildhigh">
+                <widget class="QCheckBox" name="pressure_mildhigh">
                  <property name="text">
                   <string>melko
 korkea</string>
@@ -793,7 +875,7 @@ korkea</string>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="pressure_high">
+                <widget class="QCheckBox" name="pressure_high">
                  <property name="text">
                   <string>korkea</string>
                  </property>
@@ -869,7 +951,7 @@ mitattu</string>
           <item>
            <widget class="QGroupBox" name="groupBox_6">
             <property name="title">
-             <string>Muut tiedot ja mediatiedostot</string>
+             <string>Mediatiedostot ja muut tiedot</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_7">
              <property name="spacing">
@@ -879,23 +961,49 @@ mitattu</string>
               <number>1</number>
              </property>
              <item>
-              <widget class="QTextEdit" name="misc">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>100</height>
-                </size>
-               </property>
-              </widget>
+              <layout class="QHBoxLayout" name="horizontalLayout_10">
+               <item>
+                <widget class="QListWidget" name="fileslist">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTableWidget" name="tableWidget">
+                 <property name="maximumSize">
+                  <size>
+                   <width>300</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                 <property name="rowCount">
+                  <number>1</number>
+                 </property>
+                 <property name="columnCount">
+                  <number>2</number>
+                 </property>
+                 <attribute name="horizontalHeaderStretchLastSection">
+                  <bool>true</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderVisible">
+                  <bool>false</bool>
+                 </attribute>
+                 <row/>
+                 <column/>
+                 <column/>
+                </widget>
+               </item>
+              </layout>
              </item>
              <item>
-              <widget class="QListWidget" name="fileslist">
+              <widget class="QTextEdit" name="misc">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
                  <horstretch>0</horstretch>
@@ -1112,7 +1220,7 @@ mitattu</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>377</width>
+                   <width>372</width>
                    <height>71</height>
                   </rect>
                  </property>
