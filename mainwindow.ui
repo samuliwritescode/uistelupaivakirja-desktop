@@ -204,6 +204,12 @@
                  </item>
                  <item>
                   <widget class="QComboBox" name="place">
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="autoFillBackground">
                     <bool>false</bool>
                    </property>
@@ -351,7 +357,7 @@
           <item>
            <widget class="QGroupBox" name="groupBox_7">
             <property name="title">
-             <string>Kalan tiedot</string>
+             <string>Tapahtuman tiedot</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
              <property name="spacing">
@@ -457,9 +463,9 @@
                <item row="1" column="1">
                 <layout class="QHBoxLayout" name="horizontalLayout_15">
                  <item>
-                  <widget class="QCheckBox" name="undersize">
+                  <widget class="QCheckBox" name="checkBox_2">
                    <property name="text">
-                    <string>alamit</string>
+                    <string>könttä</string>
                    </property>
                   </widget>
                  </item>
@@ -799,10 +805,34 @@
                <item row="3" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_18"/>
                </item>
-               <item row="2" column="1">
+               <item row="3" column="1">
                 <widget class="QCheckBox" name="checkBox">
                  <property name="text">
-                  <string>vapaut.</string>
+                  <string>CR</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QCheckBox" name="undersize">
+                 <property name="text">
+                  <string>alamit</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="6">
+                <widget class="QToolButton" name="clear_fish">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resources.qrc">
+                   <normaloff>:/res/edit-clear.png</normaloff>:/res/edit-clear.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
                  </property>
                 </widget>
                </item>
