@@ -1,23 +1,8 @@
 #include "fish.h"
 
 Fish::Fish():
-        m_species(NULL),
-        m_method(NULL),
-        m_lure(NULL),
-        m_weight(0),
-        m_length(0),
-        m_depth(0)
+        m_lure(NULL)
 {
-}
-
-void Fish::setSpecies(Species* p_species)
-{
-    m_species = p_species;
-}
-
-void Fish::setMethod(Method* p_method)
-{
-    m_method = p_method;
 }
 
 void Fish::setLure(Lure* p_lure)
@@ -25,47 +10,53 @@ void Fish::setLure(Lure* p_lure)
     m_lure = p_lure;
 }
 
-void Fish::setWeight(double p_weight)
-{
-    m_weight = p_weight;
-}
-
-void Fish::setLength(double p_length)
-{
-    m_length = p_length;
-}
-
-void Fish::setDepth(double p_depth)
-{
-    m_depth = p_depth;
-}
-
-Species* Fish::getSpecies()
-{
-    return m_species;
-}
 
 Lure* Fish::getLure()
 {
     return m_lure;
 }
 
-Method* Fish::getMethod()
+void Fish::setProperty(const QString& p_prop, double p_value)
 {
-    return m_method;
+    m_properties[p_prop] = p_value;
 }
 
-double Fish::getWeight()
+void Fish::setProperty(const QString& p_prop, QString p_value)
 {
-    return m_weight;
+     m_properties[p_prop] = p_value;
 }
 
-double Fish::getLength()
+void Fish::setProperty(const QString& p_prop, int p_value)
 {
-    return m_length;
+     m_properties[p_prop] = p_value;
 }
 
-double Fish::getDepth()
+QVariant Fish::getProperty(const QString& p_prop)
 {
-    return m_depth;
+    return m_properties[p_prop];
+}
+
+bool Fish::isProperty(const QString& p_prop, QVariant p_compareTo)
+{
+    return m_properties[p_prop] == p_compareTo;
+}
+
+double Fish::getPropertyDouble(const QString& p_prop)
+{
+    return m_properties[p_prop].toDouble();
+}
+
+void Fish::setProperty(const QString& p_prop, bool p_value)
+{
+    m_properties[p_prop] = p_value;
+}
+
+void Fish::setProperty(const QString& p_prop, QVariant p_value)
+{
+     m_properties[p_prop] = p_value;
+}
+
+QList<QString> Fish::getPropertyNames()
+{
+    return m_properties.keys();
 }

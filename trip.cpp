@@ -21,6 +21,23 @@ QDate Trip::getDate()
     return get("date").toDate();
 }
 
+void Trip::setTime(const QTime& start, const QTime& end)
+{
+    if(!start.isNull())
+        set("time_start", start);
+
+    if(!end.isNull())
+        set("time_end", end);
+}
+
+QPair<QTime, QTime> Trip::getTime()
+{
+    QPair<QTime, QTime> retval;
+    retval.first = get("time_start").toTime();
+    retval.second = get("time_end").toTime();
+    return retval;
+}
+
 Fish* Trip::getFish(int id)
 {
     if(!m_fish)
@@ -103,16 +120,11 @@ void Trip::constructItems(const TrollingObjectItemList& p_items)
     foreach(TrollingObjectItem item, p_items)
     {
         Fish* fish = new Fish();
-        fish->setWeight(item["weight"].toDouble());
-        fish->setLength(item["length"].toDouble());
-        fish->setDepth(item["depth"].toDouble());
-        Species* species = Singletons::model()->getSpecies(item["species"].toInt());
-        if(species)
-            fish->setSpecies(species);
 
-        Method* method = Singletons::model()->getMethod(item["method"].toInt());
-        if(method)
-            fish->setMethod(method);
+        for(QHash<QString, QVariant>::iterator iter = item.begin(); iter != item.end(); iter++)
+        {
+            fish->setProperty(iter.key(), iter.value());
+        }
 
         Lure* lure = Singletons::model()->getLure(item["lure"].toInt());
         if(lure)
@@ -130,22 +142,25 @@ TrollingObjectItemList Trip::serializeItems()
         TrollingObjectItem fishprops;
         Fish* fish = m_catch.at(loop);
 
-        if(fish->getSpecies())
-            fishprops["species"] = fish->getSpecies()->getId();
-
-        if(fish->getMethod())
-            fishprops["method"] = fish->getMethod()->getId();
-
         if(fish->getLure())
             fishprops["lure"] = fish->getLure()->getId();
 
-        fishprops["weight"] = fish->getWeight();
-        fishprops["length"] = fish->getLength();
-        fishprops["depth"] = fish->getDepth();
+        QList<QString> propnames = fish->getPropertyNames();
+        foreach(QString propname, propnames)
+        {
+            fishprops[propname] = fish->getProperty(propname);
+        }
+
         retval.push_back(fishprops);
     }
     return retval;
 }
+
+
+
+
+
+/*
 
 void Trip::setWaterTemp(double temp)
 {
@@ -164,22 +179,7 @@ void Trip::setDescription(const QString& desc)
 }
 
 
-void Trip::setTime(const QTime& start, const QTime& end)
-{
-    if(!start.isNull())
-        set("time_start", start);
 
-    if(!end.isNull())
-        set("time_end", end);
-}
-
-QPair<QTime, QTime> Trip::getTime()
-{
-    QPair<QTime, QTime> retval;
-    retval.first = get("time_start").toTime();
-    retval.second = get("time_end").toTime();
-    return retval;
-}
 
 void Trip::addWindCondition(EWindCondition wind, bool bSet)
 {
@@ -214,5 +214,5 @@ bool Trip::isWeatherCondition(EWeatherCondition weather)
     int mask = get("weather_condition").toInt();
     return (mask&weather)!=0;
 }
-
+*/
 

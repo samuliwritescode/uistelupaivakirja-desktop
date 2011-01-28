@@ -11,7 +11,7 @@ enum EUISource {eTripDate, eStartTime, eEndTime,
                 eWindCalm, eWindFaint, eWindModerate,
                 eWindBrisk, eWindHard, eSpecies,
                 eWeight, eLength, eSpotDepth,
-                eUnderSize, eStartTemp, eEndTemp,
+                eUnderSize, eAirTemp,
                 eSaveTrip, eDeleteFish, eNewFish,
                 eDeleteTrip, eNewTrip, eMethod,
                 eFishList, eLureMaker, eLureModel,
@@ -21,7 +21,8 @@ enum EUISource {eTripDate, eStartTime, eEndTime,
                 eTrollingSpeed, eLineWeight, eReleaseWidth,
                 eTime, ePressureLow, ePressureMildLow,
                 ePressureNormal, ePressureMildHigh,
-                ePressureHigh, eGroup, eCatchNRelease};
+                ePressureHigh, eGroup, eCatchNRelease,
+                eWindDirection, ePressureChange};
 
 class Controller : public QObject
 {
@@ -39,7 +40,7 @@ public:
     virtual QTime getTimeValue(EUISource source) = 0;
     virtual bool getBooleanValue(EUISource source) = 0;
     virtual int getIntValue(EUISource source) = 0;
-    virtual QString getTextValue(EUISource source) = 0;    
+    virtual QString getTextValue(EUISource source) = 0;
 
     enum ENotificationType {
         eTripUpdated, eTripListUpdated,

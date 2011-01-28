@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include "lureitem.h"
 #include "singletons.h"
+#include "fish.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -19,6 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->weight->setValidator(new QDoubleValidator(this));
     ui->length->setValidator(new QDoubleValidator(this));
     ui->spotdepth->setValidator(new QDoubleValidator(this));
+    ui->totaldepth->setValidator(new QDoubleValidator(this));
+    ui->trolling_speed->setValidator(new QDoubleValidator(this));
+    ui->line_weight->setValidator(new QDoubleValidator(this));
+    ui->release_width->setValidator(new QDoubleValidator(this));
 
 //    ui->dateEdit->setDate(QDate::currentDate());
 //    ui->place->insertItems(0, Singletons::placeController()->getPlaces());
@@ -103,20 +108,34 @@ void MainWindow::observerEvent(int type)
         ui->wind_brisk->setChecked(m_tripController->getBooleanValue(eWindBrisk));
         ui->wind_hard->setChecked(m_tripController->getBooleanValue(eWindHard));
 
-        if(m_tripController->getTextValue(eLength) != QString())
-            ui->length->setText(m_tripController->getTextValue(eLength));
-        else
-            ui->length->clear();
+        ui->pressure_low->setChecked(m_tripController->getBooleanValue(ePressureLow));
+        ui->pressure_mildlow->setChecked(m_tripController->getBooleanValue(ePressureMildLow));
+        ui->pressure_normal->setChecked(m_tripController->getBooleanValue(ePressureNormal));
+        ui->pressure_mildhigh->setChecked(m_tripController->getBooleanValue(ePressureMildHigh));
+        ui->pressure_high->setChecked(m_tripController->getBooleanValue(ePressureHigh));
 
-        if(m_tripController->getTextValue(eWeight) != QString())
-            ui->weight->setText(m_tripController->getTextValue(eWeight));
-        else
-            ui->weight->clear();
+        ui->length->setText(m_tripController->getTextValue(eLength));
+        ui->weight->setText(m_tripController->getTextValue(eWeight));
+        ui->spotdepth->setText(m_tripController->getTextValue(eSpotDepth));
+        ui->totaldepth->setText(m_tripController->getTextValue(eTotalDepth));
+        ui->trolling_speed->setText(m_tripController->getTextValue(eTrollingSpeed));
+        ui->line_weight->setText(m_tripController->getTextValue(eLineWeight));
+        ui->release_width->setText(m_tripController->getTextValue(eReleaseWidth));
+        ui->air_temp->setText(m_tripController->getTextValue(eAirTemp));
+        ui->water_temp->setText(m_tripController->getTextValue(eWaterTemp));
 
-        if(m_tripController->getTextValue(eSpotDepth) != QString())
-            ui->spotdepth->setText(m_tripController->getTextValue(eSpotDepth));
-        else
-            ui->spotdepth->clear();
+        ui->group->setChecked(m_tripController->getBooleanValue(eGroup));
+        ui->undersize->setChecked(m_tripController->getBooleanValue(eUnderSize));
+        ui->catchrelease->setChecked(m_tripController->getBooleanValue(eCatchNRelease));
+
+        ui->wind_direction->setValue(m_tripController->getIntValue(eWindDirection));
+        ui->pressure_change->setValue(m_tripController->getIntValue(ePressureChange));
+
+        ui->timeEdit->setTime(m_tripController->getTimeValue(eTime));
+
+        if(ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
+            ui->misc->setText(m_tripController->getTextValue(eMiscText));
+
 
         m_lureBox->setText(m_tripController->getTextValue(eLureName));
 
@@ -144,10 +163,10 @@ void MainWindow::observerEvent(int type)
         {
             QMap<QString, QString> props = fishes.at(loop);
             ui->fish_list->insertRow(loop);
-            ui->fish_list->setItem(loop, 0, new QTableWidgetItem(props["specie"], loop));
-            ui->fish_list->setItem(loop, 1, new QTableWidgetItem(props["weight"], loop));
-            ui->fish_list->setItem(loop, 2, new QTableWidgetItem(props["length"], loop));
-            ui->fish_list->setItem(loop, 3, new QTableWidgetItem(props["depth"], loop));
+            ui->fish_list->setItem(loop, 0, new QTableWidgetItem(props[FISH_SPECIES], loop));
+            ui->fish_list->setItem(loop, 1, new QTableWidgetItem(props[FISH_WEIGHT], loop));
+            ui->fish_list->setItem(loop, 2, new QTableWidgetItem(props[FISH_LENGTH], loop));
+            ui->fish_list->setItem(loop, 3, new QTableWidgetItem(props[FISH_SPOT_DEPTH], loop));
         }
     }
 }
@@ -291,7 +310,7 @@ void MainWindow::on_del_fish_clicked()
 
 void MainWindow::on_air_temp_textChanged(QString temp)
 {
-    m_tripController->textEvent(eStartTemp, temp);
+    m_tripController->textEvent(eAirTemp, temp);
 }
 
 void MainWindow::on_trip_delete_clicked()
@@ -451,4 +470,14 @@ void MainWindow::on_group_clicked(bool checked)
 void MainWindow::on_catchrelease_clicked(bool checked)
 {
     m_tripController->booleanEvent(eCatchNRelease, checked);
+}
+
+void MainWindow::on_wind_direction_valueChanged(int value)
+{
+    m_tripController->intEvent(eWindDirection, value);
+}
+
+void MainWindow::on_pressure_change_valueChanged(int value)
+{
+    m_tripController->intEvent(ePressureChange, value);
 }

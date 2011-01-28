@@ -30,6 +30,8 @@ private:
     LureItem* m_POIBox;
 
 private slots:
+    void on_pressure_change_valueChanged(int value);
+    void on_wind_direction_valueChanged(int value);
     void on_catchrelease_clicked(bool checked);
     void on_group_clicked(bool checked);
     void on_pressure_high_clicked(bool checked);

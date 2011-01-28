@@ -1101,7 +1101,7 @@ korkea</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="label_6">
+                  <widget class="QLabel" name="wind_direction_label">
                    <property name="text">
                     <string>ei
 mitattu</string>
@@ -1161,7 +1161,7 @@ mitattu</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="label_16">
+                  <widget class="QLabel" name="pressure_change_label">
                    <property name="text">
                     <string>ei
 mitattu</string>
