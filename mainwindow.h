@@ -27,6 +27,7 @@ private:
     TripController* m_tripController;
     LureController* m_lureController;
     LureItem* m_lureBox;
+    LureItem* m_POIBox;
 
 private slots:
     void on_lure_list_itemClicked(QListWidgetItem* item);

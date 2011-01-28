@@ -59,7 +59,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_lureBox = new LureItem();
     m_lureBox->setAcceptDrops(true);
-    ui->horizontalLayout_6->insertWidget(4, m_lureBox);
+    ui->horizontalLayout_11->insertWidget(0, m_lureBox);
+
+    m_POIBox = new LureItem();
+    m_POIBox->setAcceptDrops(true);
+    ui->horizontalLayout_18->insertWidget(0, m_POIBox);
+
     observerEvent(Controller::eTripUpdated);
     observerEvent(Controller::eTripListUpdated);
     observerEvent(Controller::eFishListUpdated);
