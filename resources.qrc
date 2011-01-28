@@ -10,5 +10,6 @@
         <file>res/reissu.png</file>
         <file>res/kalapaikka.png</file>
         <file>res/mainlogo64.png</file>
+        <file>res/osxicon32.png</file>
     </qresource>
 </RCC>
