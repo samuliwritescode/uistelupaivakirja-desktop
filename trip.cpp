@@ -5,7 +5,8 @@
 
 Trip::Trip():
     TrollingObject(),
-    m_fish(NULL)
+    m_fish(NULL),
+    m_site(NULL)
 {
     setType("trip");
     set("date",QDate::currentDate());
@@ -157,7 +158,15 @@ TrollingObjectItemList Trip::serializeItems()
 }
 
 
+void Trip::setSite(Site* p_site)
+{
+    m_site = p_site;
+}
 
+Site* Trip::getSite()
+{
+    return m_site;
+}
 
 
 /*

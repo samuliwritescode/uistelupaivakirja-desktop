@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 #include <QTableWidgetItem>
+#include <QComboBox>
 #include "trollingmodel.h"
 #include "tripcontroller.h"
 #include "lurecontroller.h"
@@ -23,13 +24,27 @@ public:
     ~MainWindow();
 
 private:
+    void setCombo(EUISource source, QComboBox* target);
     Ui::MainWindow *ui;
     TripController* m_tripController;
     LureController* m_lureController;
+    PlaceController* m_placeController;
     LureItem* m_lureBox;
     LureItem* m_POIBox;
 
 private slots:
+    void on_place_currentIndexChanged(int index);
+    void on_site_list_itemClicked(QListWidgetItem* item);
+    void on_site_list_itemSelectionChanged();
+    void on_site_list_itemActivated(QListWidgetItem* item);
+    void on_site_delete_clicked();
+    void on_site_new_clicked();
+    void on_site_misc_textChanged();
+    void on_site_invicible_clicked(bool checked);
+    void on_site_city_textChanged(QString );
+    void on_site_name_textChanged(QString );
+    void on_method_textChanged(QString );
+    void on_getter_textChanged(QString );
     void on_pressure_change_valueChanged(int value);
     void on_wind_direction_valueChanged(int value);
     void on_catchrelease_clicked(bool checked);
@@ -60,9 +75,9 @@ private slots:
     void on_fish_list_itemSelectionChanged();
     void on_trip_list_itemClicked(QListWidgetItem* item);
     void on_trip_list_itemActivated(QListWidgetItem* item);
-    void on_method_currentIndexChanged(int index);
     void observerEvent(int type);
     void observerEventLure(int type);
+    void observerEventPlace(int type);
 
 private slots:
     void on_trip_new_clicked();
@@ -74,7 +89,6 @@ private slots:
     void on_spotdepth_textChanged(QString );
     void on_length_textChanged(QString );
     void on_weight_textChanged(QString );
-    void on_species_currentIndexChanged(int index);
     void on_wind_hard_clicked(bool checked);
     void on_wind_brisk_clicked(bool checked);
     void on_wind_moderate_clicked(bool checked);

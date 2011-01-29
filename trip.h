@@ -3,6 +3,7 @@
 #include <QDate>
 #include <QTime>
 #include "fish.h"
+#include "site.h"
 #include "trollingobject.h"
 
 class Trip : public TrollingObject
@@ -16,6 +17,9 @@ public:
     QDate getDate();
     void setTime(const QTime& start, const QTime& end);
     QPair<QTime, QTime> getTime();
+
+    void setSite(Site*);
+    Site* getSite();
 
     int getFishCount();
     Fish* getFish(int id = -1);
@@ -35,6 +39,7 @@ protected:
 private:
     QList<Fish*> m_catch;
     Fish* m_fish;
+    Site* m_site;
 
 };
 

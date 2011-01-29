@@ -20,6 +20,14 @@ void TrollingModel::initialize()
         m_trollingobjects.push_back( lure );
     }
 
+    QList<int> placeIds = m_DBLayer->getIds(Site().getType());
+    foreach(int id, placeIds)
+    {
+        Site* site = new Site();
+        m_DBLayer->loadObject(id, site);
+        m_trollingobjects.push_back( site );
+    }
+
     QList<int> tripIds = m_DBLayer->getIds(Trip().getType());
     foreach(int id, tripIds)
     {
@@ -103,12 +111,31 @@ QMap<int, Lure*> TrollingModel::getLures()
     return retval;
 }
 
+QMap<int, Site*> TrollingModel::getSites()
+{
+    QMap<int, Site*> retval;
+    foreach(TrollingObject* object, m_trollingobjects)
+    {
+        if(object->getType() == "site")
+        {
+            retval[object->getId()] = reinterpret_cast<Site*>(object);
+        }
+    }
+
+    return retval;
+}
+
+
 Site* TrollingModel::getSite(int id)
 {
-    if(id < 0)
-        return new Site();
+    if(id < 0 )
+    {
+        Site* site = new Site();
+        m_trollingobjects.push_back(site);
+        return site;
+    }
 
-    return NULL;
+    return reinterpret_cast<Site*>(getTrollingObject("site", id));
 }
 
 Species* TrollingModel::getSpecies(int id)

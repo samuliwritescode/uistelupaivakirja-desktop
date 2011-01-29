@@ -29,6 +29,7 @@ public:
 
     QMap<int, Trip*> getTrips();
     QMap<int, Lure*> getLures();
+    QMap<int, Site*> getSites();
     void initialize();
 
 signals:

@@ -33,6 +33,7 @@ public:
     virtual QTime getTimeValue(EUISource source);
     QMap<QString, int> getTripList();
     QList<QMap<QString, QString> > getFishList();
+    QStringList getAlternatives(EUISource source);
 
 protected:
 

@@ -82,6 +82,9 @@ QString TripController::getTextValue(EUISource source)
     case eAirTemp: return QString::number(m_trip->getFish()->getPropertyDouble(FISH_AIR_TEMP)); break;
     case eWaterTemp: return QString::number(m_trip->getFish()->getPropertyDouble(FISH_WATER_TEMP)); break;
     case eMiscText: return m_trip->getFish()->getProperty(FISH_MISC_TEXT).toString(); break;
+    case eSpecies: return m_trip->getFish()->getProperty(FISH_SPECIES).toString(); break;
+    case eMethod: return m_trip->getFish()->getProperty(FISH_METHOD).toString(); break;
+    case eGetter: return m_trip->getFish()->getProperty(FISH_GETTER).toString(); break;
     default: qCritical() << "Unknown get text" << source; break;
     }
     return QString();
@@ -158,6 +161,14 @@ void TripController::intEvent(EUISource source, int value)
         sendNotificationToObservers(Controller::eTripUpdated);
         return;
         break;
+    case ePlaceName:
+        if(Singletons::model()->getSite(value))
+        {
+            m_trip->setSite(Singletons::model()->getSite(value));
+        }
+        sendNotificationToObservers(Controller::eTripUpdated);
+        return;
+        break;
     case eSelectLure:
 
         if(Singletons::model()->getLure(value))
@@ -200,19 +211,20 @@ void TripController::textEvent(EUISource source, const QString& value)
     {
     case ePlaceText: break;
     case eMiscText: m_trip->getFish()->setProperty(FISH_MISC_TEXT, value); break;
-    case eWaterTemp: m_trip->getFish()->setProperty(FISH_WATER_TEMP, value.toDouble()); return; break;
-    case eAirTemp: m_trip->getFish()->setProperty(FISH_AIR_TEMP, value.toDouble()); return; break;
-    case eWeight: m_trip->getFish()->setProperty(FISH_WEIGHT, value.toDouble()); return; break;
-    case eLength: m_trip->getFish()->setProperty(FISH_LENGTH, value.toDouble()); return; break;
-    case eSpotDepth: m_trip->getFish()->setProperty(FISH_SPOT_DEPTH, value.toDouble()); return; break;
-    case eTotalDepth: m_trip->getFish()->setProperty(FISH_TOTAL_DEPTH, value.toDouble()); return; break;
-    case eTrollingSpeed:m_trip->getFish()->setProperty(FISH_TROLLING_SPEED, value.toDouble()); return; break;
-    case eLineWeight: m_trip->getFish()->setProperty(FISH_LINE_WEIGHT, value.toDouble()); return; break;
-    case eReleaseWidth: m_trip->getFish()->setProperty(FISH_RELEASE_WIDTH, value.toDouble()); return; break;
+    case eWaterTemp: m_trip->getFish()->setProperty(FISH_WATER_TEMP, value.toDouble()); break;
+    case eAirTemp: m_trip->getFish()->setProperty(FISH_AIR_TEMP, value.toDouble()); break;
+    case eWeight: m_trip->getFish()->setProperty(FISH_WEIGHT, value.toDouble()); break;
+    case eLength: m_trip->getFish()->setProperty(FISH_LENGTH, value.toDouble()); break;
+    case eSpotDepth: m_trip->getFish()->setProperty(FISH_SPOT_DEPTH, value.toDouble()); break;
+    case eTotalDepth: m_trip->getFish()->setProperty(FISH_TOTAL_DEPTH, value.toDouble()); break;
+    case eTrollingSpeed:m_trip->getFish()->setProperty(FISH_TROLLING_SPEED, value.toDouble()); break;
+    case eLineWeight: m_trip->getFish()->setProperty(FISH_LINE_WEIGHT, value.toDouble()); break;
+    case eReleaseWidth: m_trip->getFish()->setProperty(FISH_RELEASE_WIDTH, value.toDouble()); break;
     case eSpecies: m_trip->getFish()->setProperty(FISH_SPECIES, value); break;
+    case eMethod: m_trip->getFish()->setProperty(FISH_METHOD, value); break;
+    case eGetter: m_trip->getFish()->setProperty(FISH_GETTER, value); break;
     default:  qCritical() << "Unknown text event. Cant handle this!" << source;
     }
-    sendNotificationToObservers(Controller::eTripUpdated);
 }
 
 void TripController::buttonEvent(EUISource source)
@@ -281,6 +293,34 @@ QList<QMap<QString, QString> > TripController::getFishList()
 
         retval.push_back(props);
     }
+    return retval;
+}
+
+QStringList TripController::getAlternatives(EUISource source)
+{
+    QStringList retval;
+    QString key;
+    switch(source)
+    {
+    case eSpecies: key = FISH_SPECIES; break;
+    case eGetter: key = FISH_GETTER; break;
+    case eMethod: key = FISH_METHOD; break;
+    default: break;
+    }
+
+    QMap<int, Trip*> trips = Singletons::model()->getTrips();
+    foreach(Trip* trip, trips)
+    {
+        for(int loop=0; loop < trip->getFishCount(); loop++)
+        {
+            Fish* fish = trip->getFish(loop);
+            if(!retval.contains(fish->getProperty(key).toString()))
+            {
+                retval.append(fish->getProperty(key).toString());
+            }
+        }
+    }
+
     return retval;
 }
 

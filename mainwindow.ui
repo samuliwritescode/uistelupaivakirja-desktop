@@ -324,47 +324,149 @@
               </layout>
              </item>
              <item>
-              <widget class="QTableWidget" name="fish_list">
-               <property name="lineWidth">
-                <number>0</number>
-               </property>
-               <property name="editTriggers">
-                <set>QAbstractItemView::NoEditTriggers</set>
-               </property>
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-               <property name="selectionMode">
-                <enum>QAbstractItemView::SingleSelection</enum>
-               </property>
-               <property name="selectionBehavior">
-                <enum>QAbstractItemView::SelectRows</enum>
-               </property>
-               <property name="showGrid">
-                <bool>false</bool>
-               </property>
-               <property name="sortingEnabled">
-                <bool>true</bool>
-               </property>
-               <property name="cornerButtonEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="columnCount">
+              <layout class="QHBoxLayout" name="horizontalLayout_9">
+               <property name="spacing">
                 <number>6</number>
                </property>
-               <attribute name="horizontalHeaderStretchLastSection">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderDefaultSectionSize">
-                <number>20</number>
-               </attribute>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-              </widget>
+               <item>
+                <widget class="QTableWidget" name="fish_list">
+                 <property name="lineWidth">
+                  <number>0</number>
+                 </property>
+                 <property name="editTriggers">
+                  <set>QAbstractItemView::NoEditTriggers</set>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::SingleSelection</enum>
+                 </property>
+                 <property name="selectionBehavior">
+                  <enum>QAbstractItemView::SelectRows</enum>
+                 </property>
+                 <property name="showGrid">
+                  <bool>false</bool>
+                 </property>
+                 <property name="sortingEnabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="cornerButtonEnabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="columnCount">
+                  <number>6</number>
+                 </property>
+                 <attribute name="horizontalHeaderStretchLastSection">
+                  <bool>true</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderDefaultSectionSize">
+                  <number>20</number>
+                 </attribute>
+                 <column/>
+                 <column/>
+                 <column/>
+                 <column/>
+                 <column/>
+                 <column/>
+                </widget>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,0">
+                 <item>
+                  <spacer name="verticalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>1</width>
+                     <height>1</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="new_fish">
+                   <property name="toolTip">
+                    <string>Lisää</string>
+                   </property>
+                   <property name="text">
+                    <string>Uusi</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="resources.qrc">
+                     <normaloff>:/res/list-add.png</normaloff>:/res/list-add.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>16</width>
+                     <height>16</height>
+                    </size>
+                   </property>
+                   <property name="shortcut">
+                    <string>Ins</string>
+                   </property>
+                   <property name="checkable">
+                    <bool>false</bool>
+                   </property>
+                   <property name="popupMode">
+                    <enum>QToolButton::DelayedPopup</enum>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonIconOnly</enum>
+                   </property>
+                   <property name="autoRaise">
+                    <bool>false</bool>
+                   </property>
+                   <property name="arrowType">
+                    <enum>Qt::NoArrow</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="del_fish">
+                   <property name="toolTip">
+                    <string>Poista / Tyhjennä kentät</string>
+                   </property>
+                   <property name="text">
+                    <string>Pois</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="resources.qrc">
+                     <normaloff>:/res/list-remove.png</normaloff>:/res/list-remove.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>16</width>
+                     <height>16</height>
+                    </size>
+                   </property>
+                   <property name="shortcut">
+                    <string>Del</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="clear_fish">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="resources.qrc">
+                     <normaloff>:/res/edit-clear.png</normaloff>:/res/edit-clear.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>16</width>
+                     <height>16</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </item>
             </layout>
            </widget>
@@ -464,7 +566,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="comboBox">
+                  <widget class="QComboBox" name="getter">
                    <property name="whatsThis">
                     <string>Saaja</string>
                    </property>
@@ -680,67 +782,6 @@
                  </item>
                 </layout>
                </item>
-               <item row="0" column="6">
-                <widget class="QToolButton" name="new_fish">
-                 <property name="toolTip">
-                  <string>Lisää</string>
-                 </property>
-                 <property name="text">
-                  <string>Uusi</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="resources.qrc">
-                   <normaloff>:/res/list-add.png</normaloff>:/res/list-add.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>16</width>
-                   <height>16</height>
-                  </size>
-                 </property>
-                 <property name="shortcut">
-                  <string>Ins</string>
-                 </property>
-                 <property name="checkable">
-                  <bool>false</bool>
-                 </property>
-                 <property name="popupMode">
-                  <enum>QToolButton::DelayedPopup</enum>
-                 </property>
-                 <property name="toolButtonStyle">
-                  <enum>Qt::ToolButtonIconOnly</enum>
-                 </property>
-                 <property name="autoRaise">
-                  <bool>false</bool>
-                 </property>
-                 <property name="arrowType">
-                  <enum>Qt::NoArrow</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="6">
-                <widget class="QToolButton" name="del_fish">
-                 <property name="toolTip">
-                  <string>Poista / Tyhjennä kentät</string>
-                 </property>
-                 <property name="text">
-                  <string>Pois</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="resources.qrc">
-                   <normaloff>:/res/list-remove.png</normaloff>:/res/list-remove.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>16</width>
-                   <height>16</height>
-                  </size>
-                 </property>
-                 <property name="shortcut">
-                  <string>Del</string>
-                 </property>
-                </widget>
-               </item>
                <item row="0" column="3">
                 <widget class="QLabel" name="label_2">
                  <property name="text">
@@ -831,23 +872,6 @@
                 <widget class="QCheckBox" name="undersize">
                  <property name="text">
                   <string>alamit</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="6">
-                <widget class="QToolButton" name="clear_fish">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="resources.qrc">
-                   <normaloff>:/res/edit-clear.png</normaloff>:/res/edit-clear.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>16</width>
-                   <height>16</height>
-                  </size>
                  </property>
                 </widget>
                </item>
@@ -1315,6 +1339,19 @@ mitattu</string>
                   <string>Ctrl+X</string>
                  </property>
                 </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>1</width>
+                   <height>1</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
               </layout>
              </item>

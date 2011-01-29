@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     m_tripController = Singletons::tripController();
     m_lureController = Singletons::lureController();
+    m_placeController = Singletons::placeController();
 
     ui->setupUi(this);
     ui->water_temp->setValidator(new QDoubleValidator(this));
@@ -24,43 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->trolling_speed->setValidator(new QDoubleValidator(this));
     ui->line_weight->setValidator(new QDoubleValidator(this));
     ui->release_width->setValidator(new QDoubleValidator(this));
-
-//    ui->dateEdit->setDate(QDate::currentDate());
-//    ui->place->insertItems(0, Singletons::placeController()->getPlaces());
-
-
-
-  //  ui->species->insertItem(0, "Hauki");
-  //  ui->species->insertItem(0, "Ahven");
-  //  ui->species->insertItem(0, "Kuha");
-
-
-   /* for(int loop=0; loop < 10; loop++)
-    {
-        LureItem* draggable = new LureItem("HK varma");
-        LureItem* poi = new LureItem("12:22 hauki 13.3-1");
-
-        QComboBox* kalat = new QComboBox();
-        kalat->insertItem(0, "hauki");
-        kalat->insertItem(0, "ahven");
-        draggable->setAcceptDrops(true);*/
-      /*  ui->catchGrid->addWidget(kalat, loop, 0);
-        ui->catchGrid->addWidget(new QLineEdit("6kg"), loop, 1);
-        ui->catchGrid->addWidget(new QLineEdit("85cm"), loop, 2);
-        ui->catchGrid->addWidget(new QLineEdit("22C"), loop, 3);
-        ui->catchGrid->addWidget(new QLineEdit("5m"), loop, 4);
-        ui->catchGrid->addWidget(draggable, loop, 5);
-        ui->catchGrid->addWidget(poi, loop, 6);*/
-    //}
-
-    //ui->lureList->setIconSize(QSize(100,50));
-   /* for(int loop=0; loop < 100; loop++)
-    {
-        QListWidgetItem* item = new QListWidgetItem("HK varma taimen 9 cm venäjän lippu"+QString::number(loop));
-        item->setFlags(Qt::ItemIsDragEnabled | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-        //item->setIcon(QIcon(":/msnlogo.jpg"));
-        ui->lureList->addItem(item);
-    }*/
 
     m_lureBox = new LureItem();
     m_lureBox->setAcceptDrops(true);
@@ -74,9 +38,11 @@ MainWindow::MainWindow(QWidget *parent) :
     observerEvent(Controller::eTripListUpdated);
     observerEvent(Controller::eFishListUpdated);
     observerEventLure(Controller::eLureListUpdated);
+    observerEventPlace(Controller::ePlaceListUpdated);
 
     connect(m_tripController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
     connect(m_lureController, SIGNAL(observerNotification(int)), this, SLOT(observerEventLure(int)));
+    connect(m_placeController, SIGNAL(observerNotification(int)), this, SLOT(observerEventPlace(int)));
 }
 
 MainWindow::~MainWindow()
@@ -139,6 +105,10 @@ void MainWindow::observerEvent(int type)
 
         m_lureBox->setText(m_tripController->getTextValue(eLureName));
 
+        setCombo(eSpecies, ui->species);
+        setCombo(eGetter, ui->getter);
+        setCombo(eMethod, ui->method);
+
     }
     else if(type == Controller::eTripListUpdated)
     {
@@ -171,6 +141,20 @@ void MainWindow::observerEvent(int type)
     }
 }
 
+void MainWindow::setCombo(EUISource source, QComboBox* target)
+{
+    QStringList valuelist = m_tripController->getAlternatives(source);
+    QString currentValue = m_tripController->getTextValue(source);
+    foreach(QString value, valuelist)
+    {
+        if(target->findText(value) == -1)
+        {
+            target->addItem(value);
+        }
+    }
+    target->setEditText(currentValue);
+}
+
 void MainWindow::observerEventLure(int type)
 {
     if(type == Controller::eLureListUpdated)
@@ -194,6 +178,31 @@ void MainWindow::observerEventLure(int type)
         ui->lure_size->setText(m_lureController->getTextValue(eLureSize));
         ui->lure_color->setText(m_lureController->getTextValue(eLureColor));
         ui->lure_favorite->setChecked(m_lureController->getBooleanValue(eLureFavorite));
+    }
+}
+
+void MainWindow::observerEventPlace(int type)
+{
+    if(type == Controller::ePlaceListUpdated)
+    {
+        ui->site_list->clear();
+        ui->place->clear();
+        QMap<QString, int> sites = m_placeController->getPlaceList();
+        for(QMap<QString, int>::iterator iter = sites.begin(); iter != sites.end(); iter++)
+        {
+            QListWidgetItem* item = new QListWidgetItem(iter.key(), ui->site_list, iter.value());
+            ui->site_list->insertItem(0, item);
+
+            //TODO: comboboxi reissussa
+
+            ui->place->addItem(iter.key(), iter.value());
+        }
+    } else if(type == Controller::ePlaceUpdated)
+    {
+        ui->site_name->setText( m_placeController->getTextValue(ePlaceName) );
+        ui->site_city->setText( m_placeController->getTextValue(ePlaceCity) );
+        ui->site_misc->setText( m_placeController->getTextValue(ePlaceMiscText) );
+        ui->site_invicible->setChecked(m_placeController->getBooleanValue(ePlaceInvisible));
     }
 }
 
@@ -273,11 +282,6 @@ void MainWindow::on_wind_hard_clicked(bool checked)
     m_tripController->booleanEvent(eWindHard, checked);
 }
 
-void MainWindow::on_species_currentIndexChanged(int index)
-{
-    m_tripController->intEvent(eSpecies, index);
-}
-
 void MainWindow::on_weight_textChanged(QString weight)
 {
     m_tripController->textEvent(eWeight, weight);
@@ -321,11 +325,6 @@ void MainWindow::on_trip_delete_clicked()
 void MainWindow::on_trip_new_clicked()
 {
     m_tripController->buttonEvent(eNewTrip);
-}
-
-void MainWindow::on_method_currentIndexChanged(int index)
-{
-    m_tripController->intEvent(eMethod, index);
 }
 
 void MainWindow::on_trip_list_itemActivated(QListWidgetItem* item)
@@ -480,4 +479,66 @@ void MainWindow::on_wind_direction_valueChanged(int value)
 void MainWindow::on_pressure_change_valueChanged(int value)
 {
     m_tripController->intEvent(ePressureChange, value);
+}
+
+void MainWindow::on_getter_textChanged(QString value)
+{
+    m_tripController->textEvent(eGetter, value);
+}
+
+void MainWindow::on_method_textChanged(QString value)
+{
+    m_tripController->textEvent(eMethod, value);
+}
+
+void MainWindow::on_site_name_textChanged(QString value)
+{
+    m_placeController->textEvent(ePlaceName, value);
+}
+
+void MainWindow::on_site_city_textChanged(QString value)
+{
+    m_placeController->textEvent(ePlaceCity, value);
+}
+
+void MainWindow::on_site_invicible_clicked(bool checked)
+{
+    m_placeController->booleanEvent(ePlaceInvisible, checked);
+}
+
+void MainWindow::on_site_misc_textChanged()
+{
+    m_placeController->textEvent(ePlaceMiscText, ui->site_misc->toPlainText());
+}
+
+void MainWindow::on_site_new_clicked()
+{
+    m_placeController->buttonEvent(ePlaceNew);
+}
+
+void MainWindow::on_site_delete_clicked()
+{
+    m_placeController->buttonEvent(ePlaceDelete);
+}
+
+void MainWindow::on_site_list_itemActivated(QListWidgetItem* item)
+{
+    m_placeController->intEvent(ePlaceList, item->type());
+}
+
+void MainWindow::on_site_list_itemSelectionChanged()
+{
+    QList<QListWidgetItem*> selected = ui->lure_list->selectedItems();
+    if(selected.size() > 1)
+        m_placeController->intEvent(ePlaceList, selected.at(0)->type());
+}
+
+void MainWindow::on_site_list_itemClicked(QListWidgetItem* item)
+{
+    m_placeController->intEvent(ePlaceList, item->type());
+}
+
+void MainWindow::on_place_currentIndexChanged(int index)
+{
+    m_tripController->intEvent(ePlaceName, ui->place->itemData(index).toInt());
 }

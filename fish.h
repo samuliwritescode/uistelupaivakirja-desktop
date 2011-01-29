@@ -22,6 +22,8 @@ const QString FISH_IS_CATCHRELEASED = "fish_cr";
 const QString FISH_WIND_DIRECTION = "fish_wind_direction";
 const QString FISH_PRESSURE_CHANGE = "fish_pressure_change";
 const QString FISH_TIME = "fish_time";
+const QString FISH_GETTER = "fish_getter";
+const QString FISH_METHOD = "fish_method";
 
 class Fish
 {

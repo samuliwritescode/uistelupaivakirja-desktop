@@ -22,7 +22,10 @@ enum EUISource {eTripDate, eStartTime, eEndTime,
                 eTime, ePressureLow, ePressureMildLow,
                 ePressureNormal, ePressureMildHigh,
                 ePressureHigh, eGroup, eCatchNRelease,
-                eWindDirection, ePressureChange};
+                eWindDirection, ePressureChange, eGetter,
+                ePlaceName, ePlaceCity, ePlaceInvisible,
+                ePlaceMiscText, ePlaceNew, ePlaceDelete,
+                ePlaceList};
 
 class Controller : public QObject
 {
@@ -45,7 +48,7 @@ public:
     enum ENotificationType {
         eTripUpdated, eTripListUpdated,
         eFishListUpdated, eLureListUpdated,
-        eLureUpdated
+        eLureUpdated, ePlaceUpdated, ePlaceListUpdated
     };
 
 signals:
