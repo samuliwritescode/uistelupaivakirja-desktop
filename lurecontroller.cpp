@@ -112,16 +112,19 @@ QString LureController::getTextValue(EUISource source)
     return QString();
 }
 
-QMap<QString, int> LureController::getLureList()
+QList<QPair<QString, int> > LureController::getLureList()
 {
-    QMap<QString, int> retval;
+    QList<QPair<QString, int> > retval;
     QMap<int, Lure*> lurelist = Singletons::model()->getLures();
 
     for(QMap<int, Lure*>::iterator iter = lurelist.begin(); iter != lurelist.end(); iter++)
     {
         Lure* lure = iter.value();
-        QString lurename = lure->getMaker()+" "+lure->getModel()+" "+lure->getSize()+" "+lure->getColor();
-        retval[lurename] = lure->getId();
+        QPair<QString, int> pair;
+        pair.first = lure->getMaker()+" "+lure->getModel()+" "+lure->getSize()+" "+lure->getColor();
+        pair.second = lure->getId();
+
+        retval.push_back(pair);
     }
     return retval;
 }

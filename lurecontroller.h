@@ -21,7 +21,7 @@ public:
     virtual QString getTextValue(EUISource source);
     virtual QTime getTimeValue(EUISource source);
 
-    QMap<QString, int> getLureList();
+    QList<QPair<QString, int> > getLureList();
 
 private:
     Lure* m_lure;

@@ -21,7 +21,7 @@ public:
     virtual QString getTextValue(EUISource source);
     virtual QTime getTimeValue(EUISource source);
 
-    QMap<QString, int> getPlaceList();
+    QList<QPair<QString, int> > getPlaceList();
 
 private:
     Site* m_site;

@@ -170,14 +170,15 @@ void MainWindow::observerEventLure(int type)
     {
         ui->lure_list->clear();
         ui->small_lure_list->clear();
-        QMap<QString, int> lures = m_lureController->getLureList();
-        for(QMap<QString, int>::iterator iter = lures.begin(); iter != lures.end(); iter++)
+        QList<QPair<QString, int> > lures = m_lureController->getLureList();
+        for(int loop=0; loop < lures.size(); loop++)
         {
-            QListWidgetItem* item = new QListWidgetItem(iter.key(), ui->lure_list, iter.value());
+            QPair<QString, int> pair = lures.at(loop);
+            QListWidgetItem* item = new QListWidgetItem(pair.first, ui->lure_list, pair.second);
             ui->lure_list->insertItem(0, item);
 
-            QListWidgetItem* itemSmall = new QListWidgetItem(iter.key(), ui->small_lure_list);
-            itemSmall->setData(Qt::UserRole+1,  iter.value());
+            QListWidgetItem* itemSmall = new QListWidgetItem(pair.first, ui->small_lure_list);
+            itemSmall->setData(Qt::UserRole+1,  pair.second);
             ui->small_lure_list->insertItem(0, itemSmall);
         }
     } else if(type == Controller::eLureUpdated)
@@ -196,15 +197,14 @@ void MainWindow::observerEventPlace(int type)
     {
         ui->site_list->clear();
         ui->place->clear();
-        QMap<QString, int> sites = m_placeController->getPlaceList();
-        for(QMap<QString, int>::iterator iter = sites.begin(); iter != sites.end(); iter++)
+        QList<QPair<QString, int> > sites = m_placeController->getPlaceList();
+        for(int loop=0; loop < sites.size(); loop++)
         {
-            QListWidgetItem* item = new QListWidgetItem(iter.key(), ui->site_list, iter.value());
+            QPair<QString, int> pair = sites.at(loop);
+            QListWidgetItem* item = new QListWidgetItem(pair.first, ui->site_list, pair.second);
             ui->site_list->insertItem(0, item);
 
-            //TODO: comboboxi reissussa
-
-            ui->place->addItem(iter.key(), iter.value());
+            ui->place->addItem(pair.first, pair.second);
         }
     } else if(type == Controller::ePlaceUpdated)
     {

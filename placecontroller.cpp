@@ -105,16 +105,18 @@ QString PlaceController::getTextValue(EUISource source)
     return QString();
 }
 
-QMap<QString, int> PlaceController::getPlaceList()
+QList<QPair<QString, int> > PlaceController::getPlaceList()
 {
-    QMap<QString, int> retval;
+    QList<QPair<QString, int> > retval;
     QMap<int, Site*> sitelist = Singletons::model()->getSites();
 
     for(QMap<int, Site*>::iterator iter = sitelist.begin(); iter != sitelist.end(); iter++)
     {
         Site* site = iter.value();
-        QString sitename = site->getName()+" "+site->getCity();
-        retval[sitename] = site->getId();
+        QPair<QString, int> pair;
+        pair.first = site->getName()+" "+site->getCity();
+        pair.second = site->getId();
+        retval.push_back(pair);
     }
     return retval;
 }
