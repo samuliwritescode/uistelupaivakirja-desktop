@@ -13,6 +13,8 @@
 #include "waypointitem.h"
 #include "waypointlist.h"
 
+class UIEventHandler;
+
 namespace Ui {
     class MainWindow;
 }
@@ -21,16 +23,18 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+    friend class UIEventHandler;
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private:
-    void setCombo(EUISource source, QComboBox* target);
+private:    
     Ui::MainWindow *ui;
     TripController* m_tripController;
     LureController* m_lureController;
     PlaceController* m_placeController;
+    UIEventHandler* m_eventHandler;
     LureItem* m_lureBox;
     WayPointItem* m_POIBox;
     WayPointList* m_wptList;
@@ -78,11 +82,6 @@ private slots:
     void on_fish_list_itemSelectionChanged();
     void on_trip_list_itemClicked(QListWidgetItem* item);
     void on_trip_list_itemActivated(QListWidgetItem* item);
-    void observerEvent(int type);
-    void observerEventLure(int type);
-    void observerEventPlace(int type);
-
-private slots:
     void on_trip_new_clicked();
     void on_trip_delete_clicked();
     void on_air_temp_textChanged(QString );
@@ -106,7 +105,6 @@ private slots:
     void on_water_temp_textChanged(QString );
     void on_trip_save_clicked();
     void on_place_currentIndexChanged(QString );
-
     void on_dateEdit_dateChanged(QDate date);
 };
 

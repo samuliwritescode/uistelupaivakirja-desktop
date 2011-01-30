@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     gpxreader.cpp \
     locationprovider.cpp \
     waypointlist.cpp \
-    waypointitem.cpp
+    waypointitem.cpp \
+    uieventhandler.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -49,7 +50,8 @@ HEADERS  += mainwindow.h \
     gpxreader.h \
     locationprovider.h \
     waypointlist.h \
-    waypointitem.h
+    waypointitem.h \
+    uieventhandler.h
 
 FORMS    += mainwindow.ui
 
