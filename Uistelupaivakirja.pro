@@ -27,7 +27,9 @@ SOURCES += main.cpp\
     controller.cpp \
     lurecontroller.cpp \
     gpxreader.cpp \
-    locationprovider.cpp
+    locationprovider.cpp \
+    waypointlist.cpp \
+    waypointitem.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -45,7 +47,9 @@ HEADERS  += mainwindow.h \
     controller.h \
     lurecontroller.h \
     gpxreader.h \
-    locationprovider.h
+    locationprovider.h \
+    waypointlist.h \
+    waypointitem.h
 
 FORMS    += mainwindow.ui
 

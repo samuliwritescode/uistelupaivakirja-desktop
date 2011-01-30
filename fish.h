@@ -24,6 +24,8 @@ const QString FISH_PRESSURE_CHANGE = "fish_pressure_change";
 const QString FISH_TIME = "fish_time";
 const QString FISH_GETTER = "fish_getter";
 const QString FISH_METHOD = "fish_method";
+const QString FISH_COORDINATES_LAT = "fish_coord_lat";
+const QString FISH_COORDINATES_LON = "fish_coord_lon";
 
 class Fish
 {

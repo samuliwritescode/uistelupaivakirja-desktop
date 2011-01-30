@@ -9,6 +9,7 @@ class LureItem : public QLabel
 public:
     explicit LureItem(QLabel *parent = 0);
     explicit LureItem(const QString& text, QLabel *parent = 0);
+    virtual void setText(const QString&);
 
 protected:
     void dragEnterEvent ( QDragEnterEvent * event );

@@ -25,7 +25,7 @@ enum EUISource {eTripDate, eStartTime, eEndTime,
                 eWindDirection, ePressureChange, eGetter,
                 ePlaceName, ePlaceCity, ePlaceInvisible,
                 ePlaceMiscText, ePlaceNew, ePlaceDelete,
-                ePlaceList};
+                ePlaceList, eWaypointsAdd, eWayPointSet};
 
 class Controller : public QObject
 {
@@ -48,7 +48,8 @@ public:
     enum ENotificationType {
         eTripUpdated, eTripListUpdated,
         eFishListUpdated, eLureListUpdated,
-        eLureUpdated, ePlaceUpdated, ePlaceListUpdated
+        eLureUpdated, ePlaceUpdated, ePlaceListUpdated,
+        eWayPointsUpdated
     };
 
 signals:

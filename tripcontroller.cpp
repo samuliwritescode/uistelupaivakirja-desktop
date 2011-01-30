@@ -3,6 +3,7 @@
 #include "singletons.h"
 #include "tripcontroller.h"
 #include "trollingmodel.h"
+#include "locationprovider.h"
 
 TripController::TripController(QObject *parent) :
         Controller(parent),
@@ -91,6 +92,7 @@ QString TripController::getTextValue(EUISource source)
     case eSpecies: return m_trip->getFish()->getProperty(FISH_SPECIES).toString(); break;
     case eMethod: return m_trip->getFish()->getProperty(FISH_METHOD).toString(); break;
     case eGetter: return m_trip->getFish()->getProperty(FISH_GETTER).toString(); break;
+    case eWayPointSet: return m_trip->getFish()->getProperty(FISH_COORDINATES_LAT).toString(); break;
     default: qCritical() << "Unknown get text" << source; break;
     }
     return QString();
@@ -161,6 +163,7 @@ void TripController::intEvent(EUISource source, int value)
         m_trip = Singletons::model()->getTrip(value);
         m_trip->newFish();
         sendNotificationToObservers(Controller::eFishListUpdated);
+        sendNotificationToObservers(Controller::eWayPointsUpdated);
         break;
     case eFishList:
         m_trip->selectFish(value);
@@ -184,6 +187,14 @@ void TripController::intEvent(EUISource source, int value)
 
         sendNotificationToObservers(Controller::eTripUpdated);
         return;
+        break;
+    case eWayPointSet:
+        {
+            WayPoint wpt = m_trip->getWayPoints().at(value);
+            m_trip->getFish()->setProperty(FISH_COORDINATES_LAT, QString::number(wpt.lat));
+            m_trip->getFish()->setProperty(FISH_COORDINATES_LON, QString::number(wpt.lon));
+            m_trip->getFish()->setProperty(FISH_TIME, wpt.time);
+        }
         break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
     }
@@ -229,6 +240,8 @@ void TripController::textEvent(EUISource source, const QString& value)
     case eSpecies: m_trip->getFish()->setProperty(FISH_SPECIES, value); break;
     case eMethod: m_trip->getFish()->setProperty(FISH_METHOD, value); break;
     case eGetter: m_trip->getFish()->setProperty(FISH_GETTER, value); break;
+    case eWaypointsAdd: m_trip->setWayPoints(value);
+        sendNotificationToObservers(Controller::eWayPointsUpdated); ;break;
     default:  qCritical() << "Unknown text event. Cant handle this!" << source;
     }
 }
@@ -312,6 +325,21 @@ QList<QMap<QString, QString> > TripController::getFishList()
         }
 
         retval.push_back(props);
+    }
+    return retval;
+}
+
+QList<QPair<QString, int> > TripController::getWayPointsList()
+{
+    QList<QPair<QString, int> > retval;
+    QList<WayPoint> waypoints = m_trip->getWayPoints();
+    for(int loop=0; loop < waypoints.count(); loop++)
+    {
+        WayPoint wpt=waypoints.at(loop);
+        QPair<QString, int> pair;
+        pair.first = wpt.name;
+        pair.second = loop;
+        retval.push_back(pair);
     }
     return retval;
 }

@@ -30,9 +30,13 @@ MainWindow::MainWindow(QWidget *parent) :
     m_lureBox->setAcceptDrops(true);
     ui->horizontalLayout_11->insertWidget(0, m_lureBox);
 
-    m_POIBox = new LureItem();
+    m_POIBox = new WayPointItem();
     m_POIBox->setAcceptDrops(true);
     ui->horizontalLayout_18->insertWidget(0, m_POIBox);
+
+    m_wptList = new WayPointList();
+    m_wptList->setAcceptDrops(true);
+    ui->poiDockLayout->insertWidget(0, m_wptList);
 
     observerEvent(Controller::eTripUpdated);
     observerEvent(Controller::eTripListUpdated);
@@ -104,6 +108,7 @@ void MainWindow::observerEvent(int type)
 
 
         m_lureBox->setText(m_tripController->getTextValue(eLureName));
+        m_POIBox->setText(m_tripController->getTextValue(eWayPointSet));
 
         setCombo(eSpecies, ui->species);
         setCombo(eGetter, ui->getter);
@@ -146,6 +151,18 @@ void MainWindow::observerEvent(int type)
             ui->fish_list->setItem(loop, 1, new QTableWidgetItem(props[FISH_WEIGHT], loop));
             ui->fish_list->setItem(loop, 2, new QTableWidgetItem(props[FISH_LENGTH], loop));
             ui->fish_list->setItem(loop, 3, new QTableWidgetItem(props[FISH_SPOT_DEPTH], loop));
+        }
+    }
+    else if(type == Controller::eWayPointsUpdated)
+    {
+        m_wptList->clear();
+        QList<QPair<QString, int> > list = m_tripController->getWayPointsList();
+        for(int loop=0; loop < list.count(); loop++)
+        {
+            QPair<QString, int> pair = list.at(loop);
+            QListWidgetItem* item = new QListWidgetItem(pair.first, m_wptList);
+            item->setData(Qt::UserRole+2,  pair.second);
+            m_wptList->insertItem(0, item);
         }
     }
 }

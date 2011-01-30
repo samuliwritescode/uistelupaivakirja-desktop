@@ -5,6 +5,7 @@
 #include "fish.h"
 #include "site.h"
 #include "trollingobject.h"
+#include "locationprovider.h"
 
 class Trip : public TrollingObject
 {
@@ -17,6 +18,9 @@ public:
     QDate getDate();
     void setTime(const QTime& start, const QTime& end);
     QPair<QTime, QTime> getTime();
+
+    void setWayPoints(const QString&);
+    QList<WayPoint> getWayPoints();
 
     void setSite(Site*);
     Site* getSite();

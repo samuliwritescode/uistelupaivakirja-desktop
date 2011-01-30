@@ -1,6 +1,7 @@
 #include <QDebug>
 #include "singletons.h"
 #include "trip.h"
+#include "gpxreader.h"
 
 Trip::Trip():
     TrollingObject(),
@@ -35,6 +36,20 @@ QPair<QTime, QTime> Trip::getTime()
     retval.first = get("time_start").toTime();
     retval.second = get("time_end").toTime();
     return retval;
+}
+
+void Trip::setWayPoints(const QString& p_wpts)
+{
+    set("waypointfile", p_wpts);
+}
+
+QList<WayPoint> Trip::getWayPoints()
+{
+    if(get("waypointfile").toString().isEmpty())
+        return QList<WayPoint>();
+    GPXReader reader;
+    reader.load(get("waypointfile").toString());
+    return reader.getWayPoints();
 }
 
 Fish* Trip::getFish(int id)

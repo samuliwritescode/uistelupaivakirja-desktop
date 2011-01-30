@@ -10,6 +10,8 @@
 #include "lurecontroller.h"
 #include "placecontroller.h"
 #include "lureitem.h"
+#include "waypointitem.h"
+#include "waypointlist.h"
 
 namespace Ui {
     class MainWindow;
@@ -30,7 +32,8 @@ private:
     LureController* m_lureController;
     PlaceController* m_placeController;
     LureItem* m_lureBox;
-    LureItem* m_POIBox;
+    WayPointItem* m_POIBox;
+    WayPointList* m_wptList;
 
 private slots:
     void on_place_currentIndexChanged(int index);
