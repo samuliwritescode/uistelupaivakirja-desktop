@@ -24,7 +24,12 @@ void LureItem::dragEnterEvent ( QDragEnterEvent * event )
 {
     if(event->mimeData()->hasFormat("application/x-qabstractitemmodeldatalist"))
     {
-        event->acceptProposedAction();
+        QStandardItemModel model;
+        model.dropMimeData(event->mimeData(), Qt::CopyAction, 0,0, QModelIndex());
+        if(!model.item(0,0)->data().isNull())
+        {
+            event->acceptProposedAction();
+        }
     }
 }
 
