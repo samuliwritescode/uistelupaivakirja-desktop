@@ -5,8 +5,7 @@
 
 Trip::Trip():
     TrollingObject(),
-    m_fish(NULL),
-    m_site(NULL)
+    m_fish(NULL)
 {
     setType("trip");
     set("date",QDate::currentDate());
@@ -160,68 +159,11 @@ TrollingObjectItemList Trip::serializeItems()
 
 void Trip::setSite(Site* p_site)
 {
-    m_site = p_site;
+    set("site", p_site->getId());
 }
 
 Site* Trip::getSite()
 {
-    return m_site;
+    Site* site = Singletons::model()->getSite(get("site").toInt());
+    return site;
 }
-
-
-/*
-
-void Trip::setWaterTemp(double temp)
-{
-    set("watertemp", temp);
-}
-
-double Trip::getWaterTemp()
-{
-    return get("watertemp").toDouble();
-}
-
-
-void Trip::setDescription(const QString& desc)
-{
-    set("description", desc);
-}
-
-
-
-
-void Trip::addWindCondition(EWindCondition wind, bool bSet)
-{
-    int mask = get("wind_condition").toInt();
-    if(bSet)
-        mask = mask|wind;
-    else
-        mask = mask^wind;
-
-    set("wind_condition", mask);
-}
-
-bool Trip::isWindCondition(EWindCondition wind)
-{
-   int mask = get("wind_condition").toInt();
-   return (mask&wind)!=0;
-}
-
-void Trip::addWeatherCondition(EWeatherCondition weather, bool bSet)
-{
-    int mask = get("weather_condition").toInt();
-    if(bSet)
-        mask = mask|weather;
-    else
-        mask = mask^weather;
-
-    set("weather_condition", mask);
-}
-
-bool Trip::isWeatherCondition(EWeatherCondition weather)
-{
-    int mask = get("weather_condition").toInt();
-    return (mask&weather)!=0;
-}
-*/
-

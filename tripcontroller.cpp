@@ -59,6 +59,12 @@ int TripController::getIntValue(EUISource source)
     case eEndTime: return m_trip->getTime().second.hour(); break;
     case eWindDirection: return m_trip->getFish()->getProperty(FISH_WIND_DIRECTION).toInt(); break;
     case ePressureChange: return m_trip->getFish()->getProperty(FISH_PRESSURE_CHANGE).toInt(); break;
+    case ePlaceName:
+        if(m_trip->getSite())
+            return m_trip->getSite()->getId();
+        else
+            return -1;
+        break;
     default: qCritical() << "Unknown get int" << source; break;
     }
     return 0;
@@ -264,7 +270,21 @@ QMap<QString, int> TripController::getTripList()
     for(QMap<int, Trip*>::iterator iter = trips.begin(); iter!=trips.end(); iter++)
     {
         Trip* trip = iter.value();
-        QString name = trip->getDate().toString();
+        QString name = QString::number(trip->getDate().year());
+        name += "-";
+        name += QString::number(trip->getDate().month());
+        name += "-";
+        name += QString::number(trip->getDate().day());
+        name += " ";
+        name += QString::number(trip->getTime().first.hour());
+        name += "-";
+        name += QString::number(trip->getTime().second.hour());
+
+        if(trip->getSite())
+        {
+            name += ", ";
+            name += trip->getSite()->getName();
+        }
         while(retval.contains(name))
         {
             name += "-1";

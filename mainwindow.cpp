@@ -109,6 +109,15 @@ void MainWindow::observerEvent(int type)
         setCombo(eGetter, ui->getter);
         setCombo(eMethod, ui->method);
 
+        int selectedPlace = m_tripController->getIntValue(ePlaceName);
+        for(int loop=0; loop < ui->place->count(); loop++)
+        {
+            if(ui->place->itemData(loop).toInt() == selectedPlace)
+            {
+                ui->place->setCurrentIndex(loop);
+            }
+        }
+
     }
     else if(type == Controller::eTripListUpdated)
     {

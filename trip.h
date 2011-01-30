@@ -39,8 +39,6 @@ protected:
 private:
     QList<Fish*> m_catch;
     Fish* m_fish;
-    Site* m_site;
-
 };
 
 #endif // TRIP_H
