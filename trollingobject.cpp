@@ -2,7 +2,8 @@
 #include "trollingobject.h"
 
 TrollingObject::TrollingObject():
-        m_id(-1)
+        m_id(-1),
+        m_unsavedChanges(false)
 {
 }
 
@@ -14,6 +15,7 @@ TrollingObject::~TrollingObject()
 void TrollingObject::storeProperties(QHash<QString, QVariant> p_properties)
 {
     m_properties = p_properties;
+    m_unsavedChanges = false;
 }
 
 void TrollingObject::constructItems(const TrollingObjectItemList&)
@@ -34,6 +36,7 @@ void TrollingObject::storeList(TrollingObjectItemList p_list)
 
 QHash<QString, QVariant> TrollingObject::getProperties()
 {
+    m_unsavedChanges = false;
     return m_properties;
 }
 
@@ -64,7 +67,17 @@ void TrollingObject::setId(int p_id)
 
 void TrollingObject::set(const QString& p_property, QVariant p_value)
 {
+    if(!m_properties.contains(p_property))
+        setUnsaved();
+    else if(m_properties[p_property] != p_value)
+        setUnsaved();
+
     m_properties[p_property] = p_value;
+}
+
+bool TrollingObject::isUnsaved()
+{
+    return m_unsavedChanges;
 }
 
 QVariant TrollingObject::get(const QString& p_property)
@@ -73,6 +86,11 @@ QVariant TrollingObject::get(const QString& p_property)
         return m_properties[p_property];
     else
         return QVariant();
+}
+
+void TrollingObject::setUnsaved()
+{
+    m_unsavedChanges = true;
 }
 
 QStringList TrollingObject::getKeys()

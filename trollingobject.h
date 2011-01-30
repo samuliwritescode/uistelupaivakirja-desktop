@@ -15,11 +15,13 @@ class TrollingObject
 public:
     int getId();
     QString getType();
+    bool isUnsaved();
     virtual ~TrollingObject();
 
 protected:    
     void setType(const QString& p_type);
     void set(const QString&, QVariant);
+    void setUnsaved();
     QVariant get(const QString&);
     QStringList getKeys();
 
@@ -39,6 +41,7 @@ private:
     int m_id;
     QString m_type;
     QHash<QString, QVariant> m_properties;
+    bool m_unsavedChanges;
     //TrollingObjectItemList m_list;
 };
 

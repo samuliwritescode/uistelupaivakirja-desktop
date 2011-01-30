@@ -47,6 +47,7 @@ bool TripController::getBooleanValue(EUISource source)
     case eGroup: return m_trip->getFish()->isProperty(FISH_IS_GROUP, true); break;
     case eCatchNRelease: return m_trip->getFish()->isProperty(FISH_IS_CATCHRELEASED, true); break;
     case eUnderSize: return m_trip->getFish()->isProperty(FISH_IS_UNDERSIZE, true); break;
+    case eUnsavedChanges: return m_trip->isUnsaved(); break;
     default: qCritical() << "Unknown get boolean" << source; break;
     }
     return false;
