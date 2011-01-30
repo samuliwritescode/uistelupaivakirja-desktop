@@ -23,7 +23,6 @@ LureItem::LureItem(const QString& text, QLabel *parent):
 
 void LureItem::dragEnterEvent ( QDragEnterEvent * event )
 {
-    qDebug() << "drag enter" << event->mimeData()->formats();
     if(event->mimeData()->hasFormat("application/x-qabstractitemmodeldatalist"))
     {
         event->acceptProposedAction();

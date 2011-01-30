@@ -138,22 +138,6 @@ Site* TrollingModel::getSite(int id)
     return reinterpret_cast<Site*>(getTrollingObject("site", id));
 }
 
-Species* TrollingModel::getSpecies(int id)
-{
-    if(id < 0)
-        return new Species();
-
-    return NULL;
-}
-
-Method* TrollingModel::getMethod(int id)
-{
-    if(id < 0)
-        return new Method();
-
-    return NULL;
-}
-
 int TrollingModel::commit(TrollingObject* object)
 {   
     if(object == NULL)

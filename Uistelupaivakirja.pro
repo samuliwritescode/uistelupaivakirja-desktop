@@ -21,12 +21,10 @@ SOURCES += main.cpp\
     fish.cpp \
     lure.cpp \
     site.cpp \
-    species.cpp \
     singletons.cpp \
     dblayer.cpp \
     xmlwriter.cpp \
     controller.cpp \
-    method.cpp \
     lurecontroller.cpp
 
 HEADERS  += mainwindow.h \
@@ -39,12 +37,10 @@ HEADERS  += mainwindow.h \
     fish.h \
     lure.h \
     site.h \
-    species.h \
     singletons.h \
     dblayer.h \
     xmlwriter.h \
     controller.h \
-    method.h \
     lurecontroller.h
 
 FORMS    += mainwindow.ui

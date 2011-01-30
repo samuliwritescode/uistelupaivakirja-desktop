@@ -1,6 +1,5 @@
 #include <QDebug>
 #include "singletons.h"
-#include "species.h"
 #include "trip.h"
 
 Trip::Trip():
