@@ -20,7 +20,7 @@ SOURCES += main.cpp\
     trip.cpp \
     fish.cpp \
     lure.cpp \
-    site.cpp \
+    place.cpp \
     singletons.cpp \
     dblayer.cpp \
     xmlwriter.cpp \
@@ -40,7 +40,7 @@ HEADERS  += mainwindow.h \
     trip.h \
     fish.h \
     lure.h \
-    site.h \
+    place.h \
     singletons.h \
     dblayer.h \
     xmlwriter.h \

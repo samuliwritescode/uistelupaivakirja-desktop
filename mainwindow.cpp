@@ -229,23 +229,23 @@ void MainWindow::observerEventPlace(int type)
 {
     if(type == Controller::ePlaceListUpdated)
     {
-        ui->site_list->clear();
+        ui->place_list->clear();
         ui->place->clear();
-        QList<QPair<QString, int> > sites = m_placeController->getPlaceList();
-        for(int loop=0; loop < sites.size(); loop++)
+        QList<QPair<QString, int> > places = m_placeController->getPlaceList();
+        for(int loop=0; loop < places.size(); loop++)
         {
-            QPair<QString, int> pair = sites.at(loop);
-            QListWidgetItem* item = new QListWidgetItem(pair.first, ui->site_list, pair.second);
-            ui->site_list->insertItem(0, item);
+            QPair<QString, int> pair = places.at(loop);
+            QListWidgetItem* item = new QListWidgetItem(pair.first, ui->place_list, pair.second);
+            ui->place_list->insertItem(0, item);
 
             ui->place->addItem(pair.first, pair.second);
         }
     } else if(type == Controller::ePlaceUpdated)
     {
-        ui->site_name->setText( m_placeController->getTextValue(ePlaceName) );
-        ui->site_city->setText( m_placeController->getTextValue(ePlaceCity) );
-        ui->site_misc->setText( m_placeController->getTextValue(ePlaceMiscText) );
-        ui->site_invicible->setChecked(m_placeController->getBooleanValue(ePlaceInvisible));
+        ui->place_name->setText( m_placeController->getTextValue(ePlaceName) );
+        ui->place_city->setText( m_placeController->getTextValue(ePlaceCity) );
+        ui->place_misc->setText( m_placeController->getTextValue(ePlaceMiscText) );
+        ui->place_invisible->setChecked(m_placeController->getBooleanValue(ePlaceInvisible));
     }
 }
 
@@ -534,49 +534,49 @@ void MainWindow::on_method_textChanged(QString value)
     m_tripController->textEvent(eMethod, value);
 }
 
-void MainWindow::on_site_name_textChanged(QString value)
+void MainWindow::on_place_name_textChanged(QString value)
 {
     m_placeController->textEvent(ePlaceName, value);
 }
 
-void MainWindow::on_site_city_textChanged(QString value)
+void MainWindow::on_place_city_textChanged(QString value)
 {
     m_placeController->textEvent(ePlaceCity, value);
 }
 
-void MainWindow::on_site_invicible_clicked(bool checked)
+void MainWindow::on_place_invisible_clicked(bool checked)
 {
     m_placeController->booleanEvent(ePlaceInvisible, checked);
 }
 
-void MainWindow::on_site_misc_textChanged()
+void MainWindow::on_place_misc_textChanged()
 {
-    m_placeController->textEvent(ePlaceMiscText, ui->site_misc->toPlainText());
+    m_placeController->textEvent(ePlaceMiscText, ui->place_misc->toPlainText());
 }
 
-void MainWindow::on_site_new_clicked()
+void MainWindow::on_place_new_clicked()
 {
     m_placeController->buttonEvent(ePlaceNew);
 }
 
-void MainWindow::on_site_delete_clicked()
+void MainWindow::on_place_delete_clicked()
 {
     m_placeController->buttonEvent(ePlaceDelete);
 }
 
-void MainWindow::on_site_list_itemActivated(QListWidgetItem* item)
+void MainWindow::on_place_list_itemActivated(QListWidgetItem* item)
 {
     m_placeController->intEvent(ePlaceList, item->type());
 }
 
-void MainWindow::on_site_list_itemSelectionChanged()
+void MainWindow::on_place_list_itemSelectionChanged()
 {
     QList<QListWidgetItem*> selected = ui->lure_list->selectedItems();
     if(selected.size() > 1)
         m_placeController->intEvent(ePlaceList, selected.at(0)->type());
 }
 
-void MainWindow::on_site_list_itemClicked(QListWidgetItem* item)
+void MainWindow::on_place_list_itemClicked(QListWidgetItem* item)
 {
     m_placeController->intEvent(ePlaceList, item->type());
 }

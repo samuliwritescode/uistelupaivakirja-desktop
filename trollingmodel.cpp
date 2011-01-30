@@ -20,12 +20,12 @@ void TrollingModel::initialize()
         m_trollingobjects.push_back( lure );
     }
 
-    QList<int> placeIds = m_DBLayer->getIds(Site().getType());
+    QList<int> placeIds = m_DBLayer->getIds(Place().getType());
     foreach(int id, placeIds)
     {
-        Site* site = new Site();
-        m_DBLayer->loadObject(id, site);
-        m_trollingobjects.push_back( site );
+        Place* place = new Place();
+        m_DBLayer->loadObject(id, place);
+        m_trollingobjects.push_back( place );
     }
 
     QList<int> tripIds = m_DBLayer->getIds(Trip().getType());
@@ -111,14 +111,14 @@ QMap<int, Lure*> TrollingModel::getLures()
     return retval;
 }
 
-QMap<int, Site*> TrollingModel::getSites()
+QMap<int, Place*> TrollingModel::getPlaces()
 {
-    QMap<int, Site*> retval;
+    QMap<int, Place*> retval;
     foreach(TrollingObject* object, m_trollingobjects)
     {
-        if(object->getType() == "site")
+        if(object->getType() == "place")
         {
-            retval[object->getId()] = reinterpret_cast<Site*>(object);
+            retval[object->getId()] = reinterpret_cast<Place*>(object);
         }
     }
 
@@ -126,16 +126,16 @@ QMap<int, Site*> TrollingModel::getSites()
 }
 
 
-Site* TrollingModel::getSite(int id)
+Place* TrollingModel::getPlace(int id)
 {
     if(id < 0 )
     {
-        Site* site = new Site();
-        m_trollingobjects.push_back(site);
-        return site;
+        Place* place = new Place();
+        m_trollingobjects.push_back(place);
+        return place;
     }
 
-    return reinterpret_cast<Site*>(getTrollingObject("site", id));
+    return reinterpret_cast<Place*>(getTrollingObject("place", id));
 }
 
 int TrollingModel::commit(TrollingObject* object)

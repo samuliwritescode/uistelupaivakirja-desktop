@@ -7,7 +7,7 @@
 #include "trip.h"
 #include "fish.h"
 #include "lure.h"
-#include "site.h"
+#include "place.h"
 #include "trollingobject.h"
 #include "dblayer.h"
 
@@ -19,13 +19,13 @@ public:
     virtual ~TrollingModel();
     Trip* getTrip(int id = -1);
     Lure* getLure(int id = -1);
-    Site* getSite(int id = -1);
+    Place* getPlace(int id = -1);
     int commit(TrollingObject*);
     void remove(TrollingObject*);
 
     QMap<int, Trip*> getTrips();
     QMap<int, Lure*> getLures();
-    QMap<int, Site*> getSites();
+    QMap<int, Place*> getPlaces();
     void initialize();
 
 signals:

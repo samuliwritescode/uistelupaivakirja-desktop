@@ -171,13 +171,13 @@ TrollingObjectItemList Trip::serializeItems()
 }
 
 
-void Trip::setSite(Site* p_site)
+void Trip::setPlace(Place* p_place)
 {
-    set("site", p_site->getId());
+    set("place", p_place->getId());
 }
 
-Site* Trip::getSite()
+Place* Trip::getPlace()
 {
-    Site* site = Singletons::model()->getSite(get("site").toInt());
-    return site;
+    Place* place = Singletons::model()->getPlace(get("place").toInt());
+    return place;
 }

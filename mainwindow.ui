@@ -52,7 +52,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1622,7 +1622,7 @@ mitattu</string>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QListWidget" name="site_list"/>
+           <widget class="QListWidget" name="place_list"/>
           </item>
          </layout>
         </item>
@@ -1643,7 +1643,7 @@ mitattu</string>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="site_name"/>
+            <widget class="QLineEdit" name="place_name"/>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="label_11">
@@ -1653,7 +1653,7 @@ mitattu</string>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QLineEdit" name="site_city"/>
+            <widget class="QLineEdit" name="place_city"/>
            </item>
            <item row="3" column="0">
             <widget class="QLabel" name="label_12">
@@ -1663,24 +1663,24 @@ mitattu</string>
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QTextEdit" name="site_misc"/>
+            <widget class="QTextEdit" name="place_misc"/>
            </item>
            <item row="4" column="0">
-            <widget class="QToolButton" name="site_new">
+            <widget class="QToolButton" name="place_new">
              <property name="text">
               <string>Uusi</string>
              </property>
             </widget>
            </item>
            <item row="4" column="1">
-            <widget class="QToolButton" name="site_delete">
+            <widget class="QToolButton" name="place_delete">
              <property name="text">
               <string>Poista</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QCheckBox" name="site_invicible">
+            <widget class="QCheckBox" name="place_invisible">
              <property name="text">
               <string/>
              </property>

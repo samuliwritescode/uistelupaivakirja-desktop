@@ -37,15 +37,15 @@ private:
 
 private slots:
     void on_place_currentIndexChanged(int index);
-    void on_site_list_itemClicked(QListWidgetItem* item);
-    void on_site_list_itemSelectionChanged();
-    void on_site_list_itemActivated(QListWidgetItem* item);
-    void on_site_delete_clicked();
-    void on_site_new_clicked();
-    void on_site_misc_textChanged();
-    void on_site_invicible_clicked(bool checked);
-    void on_site_city_textChanged(QString );
-    void on_site_name_textChanged(QString );
+    void on_place_list_itemClicked(QListWidgetItem* item);
+    void on_place_list_itemSelectionChanged();
+    void on_place_list_itemActivated(QListWidgetItem* item);
+    void on_place_delete_clicked();
+    void on_place_new_clicked();
+    void on_place_misc_textChanged();
+    void on_place_invisible_clicked(bool checked);
+    void on_place_city_textChanged(QString );
+    void on_place_name_textChanged(QString );
     void on_method_textChanged(QString );
     void on_getter_textChanged(QString );
     void on_pressure_change_valueChanged(int value);

@@ -2,7 +2,7 @@
 #define PLACECONTROLLER_H
 
 #include "controller.h"
-#include "site.h"
+#include "place.h"
 
 class PlaceController : public Controller
 {
@@ -24,7 +24,7 @@ public:
     QList<QPair<QString, int> > getPlaceList();
 
 private:
-    Site* m_site;
+    Place* m_place;
 };
 
 #endif // PLACECONTROLLER_H

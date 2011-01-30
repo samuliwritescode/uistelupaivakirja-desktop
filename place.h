@@ -1,11 +1,11 @@
-#ifndef SITE_H
-#define SITE_H
+#ifndef PLACE_H
+#define PLACE_H
 #include "trollingobject.h"
 
-class Site : public TrollingObject
+class Place : public TrollingObject
 {
 public:
-    Site();
+    Place();
     void setName(const QString&);
     void setCity(const QString&);
     void setMiscText(const QString&);
@@ -17,4 +17,4 @@ public:
     bool getInvisible();
 };
 
-#endif // SITE_H
+#endif // PLACE_H

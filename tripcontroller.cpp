@@ -61,8 +61,8 @@ int TripController::getIntValue(EUISource source)
     case eWindDirection: return m_trip->getFish()->getProperty(FISH_WIND_DIRECTION).toInt(); break;
     case ePressureChange: return m_trip->getFish()->getProperty(FISH_PRESSURE_CHANGE).toInt(); break;
     case ePlaceName:
-        if(m_trip->getSite())
-            return m_trip->getSite()->getId();
+        if(m_trip->getPlace())
+            return m_trip->getPlace()->getId();
         else
             return -1;
         break;
@@ -171,9 +171,9 @@ void TripController::intEvent(EUISource source, int value)
         return;
         break;
     case ePlaceName:
-        if(Singletons::model()->getSite(value))
+        if(Singletons::model()->getPlace(value))
         {
-            m_trip->setSite(Singletons::model()->getSite(value));
+            m_trip->setPlace(Singletons::model()->getPlace(value));
         }
         sendNotificationToObservers(Controller::eTripUpdated);
         return;
@@ -293,10 +293,10 @@ QMap<QString, int> TripController::getTripList()
         name += "-";
         name += QString::number(trip->getTime().second.hour());
 
-        if(trip->getSite())
+        if(trip->getPlace())
         {
             name += ", ";
-            name += trip->getSite()->getName();
+            name += trip->getPlace()->getName();
         }
         while(retval.contains(name))
         {

@@ -3,7 +3,7 @@
 #include <QDate>
 #include <QTime>
 #include "fish.h"
-#include "site.h"
+#include "place.h"
 #include "trollingobject.h"
 #include "locationprovider.h"
 
@@ -22,8 +22,8 @@ public:
     void setWayPoints(const QString&);
     QList<WayPoint> getWayPoints();
 
-    void setSite(Site*);
-    Site* getSite();
+    void setPlace(Place*);
+    Place* getPlace();
 
     int getFishCount();
     Fish* getFish(int id = -1);
