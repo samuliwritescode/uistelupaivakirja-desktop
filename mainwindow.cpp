@@ -140,17 +140,34 @@ void MainWindow::observerEvent(int type)
         ui->fish_list->clearContents();
         ui->fish_list->setRowCount(0);
         QStringList headers;
-        headers << tr("laji") << tr("paino") << tr("pituus") << tr("syvyys");
+        headers << tr("aika") <<
+                tr("laji") <<
+                tr("tapa") <<
+                tr("saaja") <<
+                tr("viehe") <<
+                tr("paino") <<
+                tr("pituus") <<
+                tr("syvyys") <<
+                tr("ved.syv") <<
+                tr("vetonop") <<
+                tr("vap.pit");
         ui->fish_list->setHorizontalHeaderLabels(headers);
         QList<QMap<QString, QString> > fishes = m_tripController->getFishList();
         for(int loop=0; loop < fishes.size(); loop++)
         {
             QMap<QString, QString> props = fishes.at(loop);
             ui->fish_list->insertRow(loop);
-            ui->fish_list->setItem(loop, 0, new QTableWidgetItem(props[FISH_SPECIES], loop));
-            ui->fish_list->setItem(loop, 1, new QTableWidgetItem(props[FISH_WEIGHT], loop));
-            ui->fish_list->setItem(loop, 2, new QTableWidgetItem(props[FISH_LENGTH], loop));
-            ui->fish_list->setItem(loop, 3, new QTableWidgetItem(props[FISH_SPOT_DEPTH], loop));
+            ui->fish_list->setItem(loop, 0, new QTableWidgetItem(props[FISH_TIME], loop));
+            ui->fish_list->setItem(loop, 1, new QTableWidgetItem(props[FISH_SPECIES], loop));
+            ui->fish_list->setItem(loop, 2, new QTableWidgetItem(props[FISH_METHOD], loop));
+            ui->fish_list->setItem(loop, 3, new QTableWidgetItem(props[FISH_GETTER], loop));
+            ui->fish_list->setItem(loop, 4, new QTableWidgetItem(props["lure"], loop));
+            ui->fish_list->setItem(loop, 5, new QTableWidgetItem(props[FISH_WEIGHT], loop));
+            ui->fish_list->setItem(loop, 6, new QTableWidgetItem(props[FISH_LENGTH], loop));
+            ui->fish_list->setItem(loop, 7, new QTableWidgetItem(props[FISH_SPOT_DEPTH], loop));
+            ui->fish_list->setItem(loop, 8, new QTableWidgetItem(props[FISH_TOTAL_DEPTH], loop));
+            ui->fish_list->setItem(loop, 9, new QTableWidgetItem(props[FISH_TROLLING_SPEED], loop));
+            ui->fish_list->setItem(loop, 10, new QTableWidgetItem(props[FISH_RELEASE_WIDTH], loop));
         }
     }
     else if(type == Controller::eWayPointsUpdated)

@@ -324,6 +324,9 @@ QList<QMap<QString, QString> > TripController::getFishList()
             props[propname] = fish->getProperty(propname).toString();
         }
 
+        if(fish->getLure())
+            props["lure"] = fish->getLure()->getMaker();
+
         retval.push_back(props);
     }
     return retval;
