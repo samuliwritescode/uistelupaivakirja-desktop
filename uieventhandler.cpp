@@ -110,9 +110,10 @@ void UIEventHandler::observerEvent(int type)
     }
     else if (type == Controller::eFishListUpdated)
     {
-         ui->fish_list->clear();
-         ui->fish_list->clearContents();
-         ui->fish_list->setRowCount(0);
+        ui->fish_list->setSortingEnabled(false);
+        ui->fish_list->clear();
+        ui->fish_list->clearContents();
+        ui->fish_list->setRowCount(0);
         QStringList headers;
         headers << tr("aika") <<
                 tr("laji") <<
@@ -125,7 +126,7 @@ void UIEventHandler::observerEvent(int type)
                 tr("ved.syv") <<
                 tr("vetonop") <<
                 tr("vap.pit");
-         ui->fish_list->setHorizontalHeaderLabels(headers);
+        ui->fish_list->setHorizontalHeaderLabels(headers);
         QList<QMap<QString, QString> > fishes = m_tripController->getFishList();
         for(int loop=0; loop < fishes.size(); loop++)
         {
@@ -143,6 +144,7 @@ void UIEventHandler::observerEvent(int type)
              ui->fish_list->setItem(loop, 9, new QTableWidgetItem(props[FISH_TROLLING_SPEED], loop));
              ui->fish_list->setItem(loop, 10, new QTableWidgetItem(props[FISH_RELEASE_WIDTH], loop));
         }
+        ui->fish_list->setSortingEnabled(true);
     }
     else if(type == Controller::eWayPointsUpdated)
     {
@@ -160,9 +162,9 @@ void UIEventHandler::observerEvent(int type)
 
 void UIEventHandler::setCombo(EUISource source, QComboBox* target)
 {
-    return;
     QStringList valuelist = m_tripController->getAlternatives(source);
     QString currentValue = m_tripController->getTextValue(source);
+    target->blockSignals(true);
     foreach(QString value, valuelist)
     {
         if(target->findText(value) == -1)
@@ -171,6 +173,7 @@ void UIEventHandler::setCombo(EUISource source, QComboBox* target)
         }
     }
     target->setEditText(currentValue);
+    target->blockSignals(false);
 }
 
 QString UIEventHandler::format(const QString& str)

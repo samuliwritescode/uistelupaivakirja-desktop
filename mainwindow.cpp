@@ -57,18 +57,12 @@ void MainWindow::on_dateEdit_dateChanged(QDate date)
     m_tripController->dateEvent(eTripDate, date);
 }
 
-
-void MainWindow::on_place_currentIndexChanged(QString place)
-{
-    m_tripController->textEvent(ePlaceText, place);
-}
-
 void MainWindow::on_trip_save_clicked()
 {
     m_tripController->buttonEvent(eSaveTrip);
 }
 
-void MainWindow::on_water_temp_textChanged(QString temp)
+void MainWindow::on_water_temp_textEdited(QString temp)
 {
     m_tripController->textEvent(eWaterTemp, temp);
 }
@@ -128,17 +122,17 @@ void MainWindow::on_wind_hard_clicked(bool checked)
     m_tripController->booleanEvent(eWindHard, checked);
 }
 
-void MainWindow::on_weight_textChanged(QString weight)
+void MainWindow::on_weight_textEdited(QString weight)
 {
     m_tripController->textEvent(eWeight, weight);
 }
 
-void MainWindow::on_length_textChanged(QString length)
+void MainWindow::on_length_textEdited(QString length)
 {
     m_tripController->textEvent(eLength, length);
 }
 
-void MainWindow::on_spotdepth_textChanged(QString depth)
+void MainWindow::on_spotdepth_textEdited(QString depth)
 {
     m_tripController->textEvent(eSpotDepth, depth);
 }
@@ -158,7 +152,7 @@ void MainWindow::on_del_fish_clicked()
     m_tripController->buttonEvent(eDeleteFish);
 }
 
-void MainWindow::on_air_temp_textChanged(QString temp)
+void MainWindow::on_air_temp_textEdited(QString temp)
 {
     m_tripController->textEvent(eAirTemp, temp);
 }
@@ -210,22 +204,22 @@ void MainWindow::on_lure_delete_clicked()
     m_lureController->buttonEvent(eLureDelete);
 }
 
-void MainWindow::on_lure_manufacturer_textChanged(QString text)
+void MainWindow::on_lure_manufacturer_textEdited(QString text)
 {
     m_lureController->textEvent(eLureMaker, text);
 }
 
-void MainWindow::on_lure_model_textChanged(QString text)
+void MainWindow::on_lure_model_textEdited(QString text)
 {
     m_lureController->textEvent(eLureModel, text);
 }
 
-void MainWindow::on_lure_size_textChanged(QString text)
+void MainWindow::on_lure_size_textEdited(QString text)
 {
     m_lureController->textEvent(eLureSize, text);
 }
 
-void MainWindow::on_lure_color_textChanged(QString text)
+void MainWindow::on_lure_color_textEdited(QString text)
 {
     m_lureController->textEvent(eLureColor, text);
 }
@@ -252,22 +246,22 @@ void MainWindow::on_lure_list_itemClicked(QListWidgetItem* item)
     m_lureController->intEvent(eLureList, item->type());
 }
 
-void MainWindow::on_totaldepth_textChanged(QString value)
+void MainWindow::on_totaldepth_textEdited(QString value)
 {
     m_tripController->textEvent(eTotalDepth, value);
 }
 
-void MainWindow::on_trolling_speed_textChanged(QString value)
+void MainWindow::on_trolling_speed_textEdited(QString value)
 {
     m_tripController->textEvent(eTrollingSpeed, value);
 }
 
-void MainWindow::on_line_weight_textChanged(QString value)
+void MainWindow::on_line_weight_textEdited(QString value)
 {
     m_tripController->textEvent(eLineWeight, value);
 }
 
-void MainWindow::on_release_width_textChanged(QString value)
+void MainWindow::on_release_width_textEdited(QString value)
 {
     m_tripController->textEvent(eReleaseWidth, value);
 }
@@ -337,12 +331,12 @@ void MainWindow::on_method_textChanged(QString value)
     m_tripController->textEvent(eMethod, value);
 }
 
-void MainWindow::on_place_name_textChanged(QString value)
+void MainWindow::on_place_name_textEdited(QString value)
 {
     m_placeController->textEvent(ePlaceName, value);
 }
 
-void MainWindow::on_place_city_textChanged(QString value)
+void MainWindow::on_place_city_textEdited(QString value)
 {
     m_placeController->textEvent(ePlaceCity, value);
 }

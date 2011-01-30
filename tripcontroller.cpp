@@ -116,6 +116,7 @@ QTime TripController::getTimeValue(EUISource source)
 
 void TripController::booleanEvent(EUISource source, bool value)
 {
+    qDebug() << "got bool event" << source << value;
     switch(source)
     {
     case eWindCalm: m_trip->getFish()->setProperty(FISH_WIND, Fish::eCalm); break;
@@ -147,6 +148,7 @@ void TripController::booleanEvent(EUISource source, bool value)
 
 void TripController::intEvent(EUISource source, int value)
 {
+    qDebug() << "got int event" << source << value;
     switch(source)
     {
     case eStartTime: m_trip->setTime(QTime(value,0), QTime()); break;
@@ -204,6 +206,7 @@ void TripController::intEvent(EUISource source, int value)
 
 void TripController::dateEvent(EUISource source, const QDate& value)
 {
+    qDebug() << "got date event" << source << value;
     switch(source)
     {
     case eTripDate: m_trip->setDate(value); break;
@@ -214,6 +217,7 @@ void TripController::dateEvent(EUISource source, const QDate& value)
 
 void TripController::timeEvent(EUISource source, const QTime& value)
 {
+    qDebug() << "got time event" << source << value;
     switch(source)
     {
     case eTime: m_trip->getFish()->setProperty(FISH_TIME, value); break;
@@ -224,9 +228,9 @@ void TripController::timeEvent(EUISource source, const QTime& value)
 
 void TripController::textEvent(EUISource source, const QString& value)
 {
+    qDebug() << "got text event" << source << value;
     switch(source)
     {
-    case ePlaceText: break;
     case eMiscText: m_trip->getFish()->setProperty(FISH_MISC_TEXT, value); break;
     case eWaterTemp: m_trip->getFish()->setProperty(FISH_WATER_TEMP, value); break;
     case eAirTemp: m_trip->getFish()->setProperty(FISH_AIR_TEMP, value); break;
@@ -248,6 +252,7 @@ void TripController::textEvent(EUISource source, const QString& value)
 
 void TripController::buttonEvent(EUISource source)
 {
+    qDebug() << "got button event" << source;
     switch(source)
     {
     case eSaveTrip: Singletons::model()->commit(m_trip); break;
