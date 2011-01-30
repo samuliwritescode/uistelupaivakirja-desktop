@@ -5,6 +5,7 @@
 #include <QListWidgetItem>
 #include <QTableWidgetItem>
 #include <QComboBox>
+#include "ui_mainwindow.h"
 #include "trollingmodel.h"
 #include "tripcontroller.h"
 #include "lurecontroller.h"
@@ -13,12 +14,10 @@
 #include "waypointitem.h"
 #include "waypointlist.h"
 
-class UIEventHandler;
-
 namespace Ui {
     class MainWindow;
 }
-
+class UIEventHandler;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

@@ -4,11 +4,7 @@
 #include <QObject>
 #include "controller.h"
 #include "singletons.h"
-
-namespace Ui {
-    class MainWindow;
-}
-class MainWindow;
+#include "mainwindow.h"
 
 class UIEventHandler : public QObject
 {

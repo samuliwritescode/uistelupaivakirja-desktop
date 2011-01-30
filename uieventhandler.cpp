@@ -1,6 +1,6 @@
 #include "uieventhandler.h"
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+//#include "ui_mainwindow.h"
 
 UIEventHandler::UIEventHandler(MainWindow* p_mw, QObject *parent) :
     QObject(parent),
@@ -160,6 +160,7 @@ void UIEventHandler::observerEvent(int type)
 
 void UIEventHandler::setCombo(EUISource source, QComboBox* target)
 {
+    return;
     QStringList valuelist = m_tripController->getAlternatives(source);
     QString currentValue = m_tripController->getTextValue(source);
     foreach(QString value, valuelist)
