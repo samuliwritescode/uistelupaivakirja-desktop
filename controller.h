@@ -32,18 +32,18 @@ class Controller : public QObject
     Q_OBJECT
 public:
 
-    virtual void buttonEvent(EUISource source) = 0;
-    virtual void booleanEvent(EUISource source, bool value) = 0;
-    virtual void dateEvent(EUISource source, const QDate& value) = 0;
-    virtual void timeEvent(EUISource source, const QTime& value) = 0;
-    virtual void textEvent(EUISource source, const QString& value) = 0;
-    virtual void intEvent(EUISource source, int value) = 0;
+    virtual void buttonEvent(EUISource);
+    virtual void booleanEvent(EUISource, bool);
+    virtual void dateEvent(EUISource, const QDate&);
+    virtual void timeEvent(EUISource, const QTime&);
+    virtual void textEvent(EUISource, const QString&);
+    virtual void intEvent(EUISource, int);
 
-    virtual QDate getDateValue(EUISource source) = 0;
-    virtual QTime getTimeValue(EUISource source) = 0;
-    virtual bool getBooleanValue(EUISource source) = 0;
-    virtual int getIntValue(EUISource source) = 0;
-    virtual QString getTextValue(EUISource source) = 0;
+    virtual QDate getDateValue(EUISource);
+    virtual QTime getTimeValue(EUISource);
+    virtual bool getBooleanValue(EUISource);
+    virtual int getIntValue(EUISource);
+    virtual QString getTextValue(EUISource);
 
     enum ENotificationType {
         eTripUpdated, eTripListUpdated,

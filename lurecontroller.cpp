@@ -34,16 +34,6 @@ void LureController::booleanEvent(EUISource source, bool value)
     sendNotificationToObservers(Controller::eLureUpdated);
 }
 
-void LureController::dateEvent(EUISource source, const QDate& value)
-{
-
-}
-
-void LureController::timeEvent(EUISource source, const QTime& value)
-{
-
-}
-
 void LureController::textEvent(EUISource source, const QString& value)
 {
     if(!m_lure) return;
@@ -71,16 +61,6 @@ void LureController::intEvent(EUISource source, int value)
     sendNotificationToObservers(Controller::eLureUpdated);
 }
 
-QDate LureController::getDateValue(EUISource source)
-{
-    return QDate();
-}
-
-QTime LureController::getTimeValue(EUISource source)
-{
-    return QTime();
-}
-
 bool LureController::getBooleanValue(EUISource source)
 {
     if(!m_lure) return false;
@@ -90,11 +70,6 @@ bool LureController::getBooleanValue(EUISource source)
     default: break;
     }
     return false;
-}
-
-int LureController::getIntValue(EUISource source)
-{
-    return 0;
 }
 
 QString LureController::getTextValue(EUISource source)

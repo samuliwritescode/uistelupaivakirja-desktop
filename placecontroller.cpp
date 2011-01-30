@@ -35,16 +35,6 @@ void PlaceController::booleanEvent(EUISource source, bool value)
     sendNotificationToObservers(Controller::ePlaceUpdated);
 }
 
-void PlaceController::dateEvent(EUISource source, const QDate& value)
-{
-    qCritical() << "Dont know how to handle date event" << source;
-}
-
-void PlaceController::timeEvent(EUISource source, const QTime& value)
-{
-    qCritical() << "Dont know how to handle time event" << source;
-}
-
 void PlaceController::textEvent(EUISource source, const QString& value)
 {
 
@@ -55,7 +45,6 @@ void PlaceController::textEvent(EUISource source, const QString& value)
     case ePlaceMiscText: m_place->setMiscText(value); break;
     default: qCritical() << "Dont know how to handle text event" << source; break;
     }
-
 }
 
 void PlaceController::intEvent(EUISource source, int value)
@@ -68,16 +57,6 @@ void PlaceController::intEvent(EUISource source, int value)
     sendNotificationToObservers(Controller::ePlaceUpdated);
 }
 
-QDate PlaceController::getDateValue(EUISource source)
-{
-    return QDate();
-}
-
-QTime PlaceController::getTimeValue(EUISource source)
-{
-    return QTime();
-}
-
 bool PlaceController::getBooleanValue(EUISource source)
 {
     switch(source)
@@ -86,11 +65,6 @@ bool PlaceController::getBooleanValue(EUISource source)
     default: break;
     }
     return false;
-}
-
-int PlaceController::getIntValue(EUISource source)
-{
-    return 0;
 }
 
 QString PlaceController::getTextValue(EUISource source)
