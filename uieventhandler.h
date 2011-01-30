@@ -25,6 +25,7 @@ private slots:
     void observerEventPlace(int type);
 
 private:
+    QString format(const QString& str);
     void setCombo(EUISource source, QComboBox* target);
     MainWindow* mw;
     Ui::MainWindow* ui;

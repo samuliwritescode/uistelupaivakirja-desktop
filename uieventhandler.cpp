@@ -131,8 +131,8 @@ void UIEventHandler::observerEvent(int type)
         {
             QMap<QString, QString> props = fishes.at(loop);
              ui->fish_list->insertRow(loop);
-             ui->fish_list->setItem(loop, 0, new QTableWidgetItem(props[FISH_TIME], loop));
-             ui->fish_list->setItem(loop, 1, new QTableWidgetItem(props[FISH_SPECIES], loop));
+             ui->fish_list->setItem(loop, 0, new QTableWidgetItem(format(props[FISH_TIME]), loop));
+             ui->fish_list->setItem(loop, 1, new QTableWidgetItem(format(props[FISH_SPECIES]), loop));
              ui->fish_list->setItem(loop, 2, new QTableWidgetItem(props[FISH_METHOD], loop));
              ui->fish_list->setItem(loop, 3, new QTableWidgetItem(props[FISH_GETTER], loop));
              ui->fish_list->setItem(loop, 4, new QTableWidgetItem(props["lure"], loop));
@@ -170,6 +170,13 @@ void UIEventHandler::setCombo(EUISource source, QComboBox* target)
         }
     }
     target->setEditText(currentValue);
+}
+
+QString UIEventHandler::format(const QString& str)
+{
+    if(str == "")
+        return "n/a";
+    return str;
 }
 
 void UIEventHandler::observerEventLure(int type)
