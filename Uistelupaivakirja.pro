@@ -25,7 +25,9 @@ SOURCES += main.cpp\
     dblayer.cpp \
     xmlwriter.cpp \
     controller.cpp \
-    lurecontroller.cpp
+    lurecontroller.cpp \
+    gpxreader.cpp \
+    locationprovider.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -41,7 +43,9 @@ HEADERS  += mainwindow.h \
     dblayer.h \
     xmlwriter.h \
     controller.h \
-    lurecontroller.h
+    lurecontroller.h \
+    gpxreader.h \
+    locationprovider.h
 
 FORMS    += mainwindow.ui
 

@@ -31,8 +31,10 @@ bool XMLWriter::write(TrollingObject* p_object)
     while( iter.hasNext() )
     {
         iter.next();
+        if(iter.value().toString().isEmpty())
+            continue;
         QDomElement property = m_document.createElement(iter.key());
-        QDomText text = m_document.createTextNode(iter.value().toString());
+        QDomText text = m_document.createTextNode(iter.value().toString());       
         property.appendChild(text);
         trollingObject.appendChild(property);
     }
@@ -47,6 +49,8 @@ bool XMLWriter::write(TrollingObject* p_object)
         while( iter.hasNext() )
         {
             iter.next();
+            if(iter.value().toString().isEmpty())
+                continue;
             QDomElement property = m_document.createElement(iter.key());
             QDomText text = m_document.createTextNode(iter.value().toString());
             property.appendChild(text);
