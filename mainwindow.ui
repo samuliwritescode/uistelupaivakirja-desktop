@@ -838,6 +838,19 @@
                <item row="3" column="2">
                 <layout class="QHBoxLayout" name="horizontalLayout_5">
                  <item>
+                  <spacer name="horizontalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>1</width>
+                     <height>1</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <widget class="QLabel" name="label_14">
                    <property name="text">
                     <string>Vapautuspituus</string>
@@ -1483,8 +1496,8 @@ mitattu</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>338</width>
-                   <height>104</height>
+                   <width>367</width>
+                   <height>125</height>
                   </rect>
                  </property>
                 </widget>
