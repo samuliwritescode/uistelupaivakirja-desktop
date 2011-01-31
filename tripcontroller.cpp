@@ -289,15 +289,11 @@ QMap<QString, int> TripController::getTripList()
     for(QMap<int, Trip*>::iterator iter = trips.begin(); iter!=trips.end(); iter++)
     {
         Trip* trip = iter.value();
-        QString name = QString::number(trip->getDate().year());
-        name += "-";
-        name += QString::number(trip->getDate().month());
-        name += "-";
-        name += QString::number(trip->getDate().day());
+        QString name = trip->getDate().toString("yyyy-MM-dd");
         name += " ";
-        name += QString::number(trip->getTime().first.hour());
+        name += trip->getTime().first.toString("HH");
         name += "-";
-        name += QString::number(trip->getTime().second.hour());
+        name +=trip->getTime().second.toString("HH");
 
         if(trip->getPlace())
         {
