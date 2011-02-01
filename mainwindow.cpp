@@ -382,3 +382,13 @@ void MainWindow::on_place_currentIndexChanged(int index)
 {
     m_tripController->intEvent(ePlaceName, ui->place->itemData(index).toInt());
 }
+
+void MainWindow::on_new_fishweather_clicked()
+{
+    m_tripController->buttonEvent(eNewFishWeather);
+}
+
+void MainWindow::on_new_weather_clicked()
+{
+    m_tripController->buttonEvent(eNewWeather);
+}

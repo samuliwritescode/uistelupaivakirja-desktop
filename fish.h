@@ -34,6 +34,7 @@ public:
     enum EWindCondition{eCalm=1, eFaint=2, eModerate=4, eBrisk=8, eHard=16};
     enum EWeatherCondition{eClear=1, eHalfClear=2, eOvercast=4, eRain=8, eFog=16};
     enum EPressureCondition{eLow=1, eMildLow=2, eNormal=4, eMildHigh=8, eHigh=16};
+    enum EType {eFish, eWeather, eFishAndWeather};
 
     Fish();
 

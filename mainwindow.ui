@@ -383,7 +383,7 @@
                 </widget>
                </item>
                <item>
-                <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,0">
+                <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,0,0">
                  <item>
                   <spacer name="verticalSpacer">
                    <property name="orientation">
@@ -407,7 +407,7 @@
                    </property>
                    <property name="icon">
                     <iconset resource="resources.qrc">
-                     <normaloff>:/res/list-add.png</normaloff>:/res/list-add.png</iconset>
+                     <normaloff>:/res/mainlogo64.png</normaloff>:/res/mainlogo64.png</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
@@ -436,6 +436,30 @@
                   </widget>
                  </item>
                  <item>
+                  <widget class="QToolButton" name="new_weather">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="resources.qrc">
+                     <normaloff>:/res/weather-few-clouds.png</normaloff>:/res/weather-few-clouds.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>16</width>
+                     <height>16</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="new_fishweather">
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <widget class="QToolButton" name="del_fish">
                    <property name="toolTip">
                     <string>Poista / Tyhjennä kentät</string>
@@ -455,23 +479,6 @@
                    </property>
                    <property name="shortcut">
                     <string>Del</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QToolButton" name="clear_fish">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="resources.qrc">
-                     <normaloff>:/res/edit-clear.png</normaloff>:/res/edit-clear.png</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
                    </property>
                   </widget>
                  </item>
@@ -1496,8 +1503,8 @@ mitattu</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>367</width>
-                   <height>125</height>
+                   <width>338</width>
+                   <height>104</height>
                   </rect>
                  </property>
                 </widget>

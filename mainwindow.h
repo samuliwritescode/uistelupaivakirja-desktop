@@ -39,6 +39,8 @@ private:
     WayPointList* m_wptList;
 
 private slots:
+    void on_new_weather_clicked();
+    void on_new_fishweather_clicked();
     void on_place_currentIndexChanged(int index);
     void on_place_list_itemClicked(QListWidgetItem* item);
     void on_place_list_itemSelectionChanged();

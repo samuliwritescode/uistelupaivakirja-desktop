@@ -268,6 +268,10 @@ void TripController::buttonEvent(EUISource source)
         sendNotificationToObservers(Controller::eTripUpdated);
         return;
         break;
+    case eNewWeather:
+        break;
+    case eNewFishWeather:
+        break;
     case eDeleteFish:
         m_trip->deleteFish(m_trip->getSelectedFish());
         sendNotificationToObservers(Controller::eFishListUpdated);
