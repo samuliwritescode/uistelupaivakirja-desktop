@@ -165,10 +165,22 @@
            <enum>QLayout::SetNoConstraint</enum>
           </property>
           <property name="margin">
-           <number>1</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QGroupBox" name="groupBoxTrip">
+            <property name="minimumSize">
+             <size>
+              <width>800</width>
+              <height>300</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>800</width>
+              <height>300</height>
+             </size>
+            </property>
             <property name="title">
              <string>Kalareissu ja tapahtumat</string>
             </property>
@@ -400,10 +412,10 @@
                  <item>
                   <widget class="QToolButton" name="new_fish">
                    <property name="toolTip">
-                    <string>Lisää</string>
+                    <string>Uusi kalatapahtuma</string>
                    </property>
                    <property name="text">
-                    <string>Uusi</string>
+                    <string/>
                    </property>
                    <property name="icon">
                     <iconset resource="resources.qrc">
@@ -437,6 +449,9 @@
                  </item>
                  <item>
                   <widget class="QToolButton" name="new_weather">
+                   <property name="toolTip">
+                    <string>Uusi säähavainto</string>
+                   </property>
                    <property name="text">
                     <string/>
                    </property>
@@ -454,15 +469,22 @@
                  </item>
                  <item>
                   <widget class="QToolButton" name="new_fishweather">
+                   <property name="toolTip">
+                    <string>Uusi kalatapahtuma säähavainnon kanssa</string>
+                   </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="resources.qrc">
+                     <normaloff>:/res/osxicon32.png</normaloff>:/res/osxicon32.png</iconset>
                    </property>
                   </widget>
                  </item>
                  <item>
                   <widget class="QToolButton" name="del_fish">
                    <property name="toolTip">
-                    <string>Poista / Tyhjennä kentät</string>
+                    <string>Poista tapahtuma</string>
                    </property>
                    <property name="text">
                     <string>Pois</string>
@@ -491,6 +513,18 @@
           </item>
           <item>
            <widget class="QGroupBox" name="groupBoxFish">
+            <property name="minimumSize">
+             <size>
+              <width>800</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>800</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="title">
              <string>Tapahtuman tiedot</string>
             </property>
@@ -965,6 +999,18 @@
           </item>
           <item>
            <widget class="QGroupBox" name="groupBoxWeather">
+            <property name="minimumSize">
+             <size>
+              <width>800</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>800</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="title">
              <string>Lämpötila, sää, tuuli ja ilmanpaine</string>
             </property>
@@ -1282,6 +1328,18 @@ korkea</string>
           </item>
           <item>
            <widget class="QGroupBox" name="groupBoxOther">
+            <property name="minimumSize">
+             <size>
+              <width>800</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>800</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="title">
              <string>Mediatiedostot ja muut tiedot</string>
             </property>
@@ -1340,6 +1398,19 @@ korkea</string>
             </layout>
            </widget>
           </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>1</width>
+              <height>1</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </item>
         <item>
@@ -1373,7 +1444,7 @@ korkea</string>
                <item>
                 <widget class="QToolButton" name="trip_new">
                  <property name="toolTip">
-                  <string>Uusi</string>
+                  <string>Uusi reissu</string>
                  </property>
                  <property name="text">
                   <string>Uusi</string>
@@ -1390,7 +1461,7 @@ korkea</string>
                <item>
                 <widget class="QToolButton" name="trip_save">
                  <property name="toolTip">
-                  <string>Tallenna</string>
+                  <string>Tallenna reissu</string>
                  </property>
                  <property name="text">
                   <string>Tallenna</string>
@@ -1407,7 +1478,7 @@ korkea</string>
                <item>
                 <widget class="QToolButton" name="trip_delete">
                  <property name="toolTip">
-                  <string>Poista</string>
+                  <string>Poista reissu</string>
                  </property>
                  <property name="text">
                   <string>Poista</string>
@@ -1553,7 +1624,7 @@ korkea</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>296</width>
+                   <width>243</width>
                    <height>104</height>
                   </rect>
                  </property>
