@@ -122,17 +122,51 @@ void UIEventHandler::observerEvent(int type)
         {
             QMap<QString, QString> props = fishes.at(loop);
              ui->fish_list->insertRow(loop);
-             ui->fish_list->setItem(loop, 0, new QTableWidgetItem(format(props[FISH_TIME]), loop));
-             ui->fish_list->setItem(loop, 1, new QTableWidgetItem(format(props[FISH_SPECIES]), loop));
-             ui->fish_list->setItem(loop, 2, new QTableWidgetItem(props[FISH_METHOD], loop));
-             ui->fish_list->setItem(loop, 3, new QTableWidgetItem(props[FISH_GETTER], loop));
-             ui->fish_list->setItem(loop, 4, new QTableWidgetItem(props["lure"], loop));
-             ui->fish_list->setItem(loop, 5, new QTableWidgetItem(props[FISH_WEIGHT], loop));
-             ui->fish_list->setItem(loop, 6, new QTableWidgetItem(props[FISH_LENGTH], loop));
-             ui->fish_list->setItem(loop, 7, new QTableWidgetItem(props[FISH_SPOT_DEPTH], loop));
-             ui->fish_list->setItem(loop, 8, new QTableWidgetItem(props[FISH_TOTAL_DEPTH], loop));
-             ui->fish_list->setItem(loop, 9, new QTableWidgetItem(props[FISH_TROLLING_SPEED], loop));
-             ui->fish_list->setItem(loop, 10, new QTableWidgetItem(props[FISH_RELEASE_WIDTH], loop));
+
+             QColor bgcolor;
+             switch(props[FISH_TYPE].toInt())
+             {
+             case Fish::eFish: bgcolor = QColor::fromRgb(255,255,255); break;
+             case Fish::eWeather: bgcolor = QColor::fromRgb(240,240,255); break;
+             case Fish::eFishAndWeather: bgcolor = QColor::fromRgb(240,240,240); break;
+             default: bgcolor = QColor::fromRgb(255,255,255); break;
+             }
+
+             QTableWidgetItem* item1 = new QTableWidgetItem(format(props[FISH_TIME]), loop);
+             QTableWidgetItem* item2 = new QTableWidgetItem(format(props[FISH_SPECIES]), loop);
+             QTableWidgetItem* item3 = new QTableWidgetItem(props[FISH_METHOD], loop);
+             QTableWidgetItem* item4 = new QTableWidgetItem(props[FISH_GETTER], loop);
+             QTableWidgetItem* item5 = new QTableWidgetItem(props["lure"], loop);
+             QTableWidgetItem* item6 = new QTableWidgetItem(props[FISH_WEIGHT], loop);
+             QTableWidgetItem* item7 = new QTableWidgetItem(props[FISH_LENGTH], loop);
+             QTableWidgetItem* item8 = new QTableWidgetItem(props[FISH_SPOT_DEPTH], loop);
+             QTableWidgetItem* item9 = new QTableWidgetItem(props[FISH_TOTAL_DEPTH], loop);
+             QTableWidgetItem* item10 = new QTableWidgetItem(props[FISH_TROLLING_SPEED], loop);
+             QTableWidgetItem* item11 = new QTableWidgetItem(props[FISH_RELEASE_WIDTH], loop);
+
+             item1->setBackgroundColor(bgcolor);
+             item2->setBackgroundColor(bgcolor);
+             item3->setBackgroundColor(bgcolor);
+             item4->setBackgroundColor(bgcolor);
+             item5->setBackgroundColor(bgcolor);
+             item6->setBackgroundColor(bgcolor);
+             item7->setBackgroundColor(bgcolor);
+             item8->setBackgroundColor(bgcolor);
+             item9->setBackgroundColor(bgcolor);
+             item10->setBackgroundColor(bgcolor);
+             item11->setBackgroundColor(bgcolor);
+
+             ui->fish_list->setItem(loop, 0, item1);
+             ui->fish_list->setItem(loop, 1, item2);
+             ui->fish_list->setItem(loop, 2, item3);
+             ui->fish_list->setItem(loop, 3, item4);
+             ui->fish_list->setItem(loop, 4, item5);
+             ui->fish_list->setItem(loop, 5, item6);
+             ui->fish_list->setItem(loop, 6, item7);
+             ui->fish_list->setItem(loop, 7, item8);
+             ui->fish_list->setItem(loop, 8, item9);
+             ui->fish_list->setItem(loop, 9, item10);
+             ui->fish_list->setItem(loop, 10, item11);
         }
 
         if(selectedFish >= 0)
