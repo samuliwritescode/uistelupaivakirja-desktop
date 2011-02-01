@@ -21,6 +21,8 @@ private slots:
     void observerEventPlace(int type);
 
 private:
+    void updateFish();
+    void updateWeather();
     QString format(const QString& str);
     void setCombo(EUISource source, QComboBox* target);
     MainWindow* mw;

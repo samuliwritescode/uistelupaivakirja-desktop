@@ -57,6 +57,7 @@ int TripController::getIntValue(EUISource source)
 {
     switch(source)
     {
+    case eFishType: return m_trip->getFish()->getType(); break;
     case eStartTime: return m_trip->getTime().first.hour(); break;
     case eEndTime: return m_trip->getTime().second.hour(); break;
     case eWindDirection: return m_trip->getFish()->getProperty(FISH_WIND_DIRECTION).toInt(); break;
@@ -164,7 +165,7 @@ void TripController::intEvent(EUISource source, int value)
         return; break;
     case eTrip:
         m_trip = Singletons::model()->getTrip(value);
-        m_trip->newFish();
+        m_trip->selectFish(-1);
         sendNotificationToObservers(Controller::eFishListUpdated);
         sendNotificationToObservers(Controller::eWayPointsUpdated);
         break;
@@ -263,14 +264,22 @@ void TripController::buttonEvent(EUISource source)
         m_trip = Singletons::model()->getTrip();
         break;
     case eNewFish:
-        m_trip->insertFish();
+        m_trip->newFish(Fish::eFish);
         sendNotificationToObservers(Controller::eFishListUpdated);
         sendNotificationToObservers(Controller::eTripUpdated);
         return;
         break;
     case eNewWeather:
+        m_trip->newFish(Fish::eWeather);
+        sendNotificationToObservers(Controller::eFishListUpdated);
+        sendNotificationToObservers(Controller::eTripUpdated);
+        return;
         break;
     case eNewFishWeather:
+        m_trip->newFish(Fish::eFishAndWeather);
+        sendNotificationToObservers(Controller::eFishListUpdated);
+        sendNotificationToObservers(Controller::eTripUpdated);
+        return;
         break;
     case eDeleteFish:
         m_trip->deleteFish(m_trip->getSelectedFish());

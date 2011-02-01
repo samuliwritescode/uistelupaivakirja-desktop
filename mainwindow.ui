@@ -168,7 +168,13 @@
            <number>1</number>
           </property>
           <item>
-           <widget class="QGroupBox" name="groupBox_8">
+           <widget class="QGroupBox" name="groupBoxTrip">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>300</height>
+             </size>
+            </property>
             <property name="title">
              <string>Kalareissu ja tapahtumat</string>
             </property>
@@ -490,7 +496,20 @@
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_7">
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>1</width>
+              <height>1</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBoxFish">
             <property name="title">
              <string>Tapahtuman tiedot</string>
             </property>
@@ -912,7 +931,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_5">
+           <widget class="QGroupBox" name="groupBoxWeather">
             <property name="title">
              <string>Lämpötila, sää, tuuli ja ilmanpaine</string>
             </property>
@@ -1231,7 +1250,7 @@ mitattu</string>
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_6">
+           <widget class="QGroupBox" name="groupBoxOther">
             <property name="title">
              <string>Mediatiedostot ja muut tiedot</string>
             </property>

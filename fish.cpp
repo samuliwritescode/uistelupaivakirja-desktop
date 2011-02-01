@@ -3,6 +3,17 @@
 Fish::Fish():
         m_lure(NULL)
 {
+
+}
+
+void Fish::setType(EType type)
+{
+    m_properties[FISH_TYPE] = type;
+}
+
+Fish::EType Fish::getType()
+{
+    return static_cast<EType>(m_properties[FISH_TYPE].toInt());
 }
 
 void Fish::setLure(Lure* p_lure)

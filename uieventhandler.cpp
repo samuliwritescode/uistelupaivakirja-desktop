@@ -11,7 +11,7 @@ UIEventHandler::UIEventHandler(MainWindow* p_mw, QObject *parent) :
     m_lureController = Singletons::lureController();
     m_placeController = Singletons::placeController();
     observerEvent(Controller::eTripUpdated);
-    observerEvent(Controller::eTripListUpdated);
+    //observerEvent(Controller::eTripListUpdated);
     observerEvent(Controller::eFishListUpdated);
     observerEventLure(Controller::eLureListUpdated);
     observerEventPlace(Controller::ePlaceListUpdated);
@@ -32,61 +32,14 @@ void UIEventHandler::observerEvent(int type)
 {
     if(type == Controller::eTripUpdated)
     {
-         ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
+        int type = m_tripController->getIntValue(eFishType);
+        ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
 
-         ui->startDial->setValue(m_tripController->getIntValue(eStartTime));
-         ui->timeStartLbl->setText(tr("aloitus klo ")+QString::number(m_tripController->getIntValue(eStartTime)));
+        ui->startDial->setValue(m_tripController->getIntValue(eStartTime));
+        ui->timeStartLbl->setText(tr("aloitus klo ")+QString::number(m_tripController->getIntValue(eStartTime)));
 
-         ui->endDial->setValue(m_tripController->getIntValue(eEndTime));
-         ui->timeEndLbl->setText(tr("lopetus klo ")+QString::number(m_tripController->getIntValue(eEndTime)));
-
-         ui->weather_clear->setChecked(m_tripController->getBooleanValue(eWeatherClear));
-         ui->weather_halfclear->setChecked(m_tripController->getBooleanValue(eWeatherHalfClear));
-         ui->weather_overcast->setChecked(m_tripController->getBooleanValue(eWeatherOvercast));
-         ui->weather_rain->setChecked(m_tripController->getBooleanValue(eWeatherRain));
-         ui->weather_fog->setChecked(m_tripController->getBooleanValue(eWeatherFog));
-
-         ui->wind_calm->setChecked(m_tripController->getBooleanValue(eWindCalm));
-         ui->wind_faint->setChecked(m_tripController->getBooleanValue(eWindFaint));
-         ui->wind_moderate->setChecked(m_tripController->getBooleanValue(eWindModerate));
-         ui->wind_brisk->setChecked(m_tripController->getBooleanValue(eWindBrisk));
-         ui->wind_hard->setChecked(m_tripController->getBooleanValue(eWindHard));
-
-         ui->pressure_low->setChecked(m_tripController->getBooleanValue(ePressureLow));
-         ui->pressure_mildlow->setChecked(m_tripController->getBooleanValue(ePressureMildLow));
-         ui->pressure_normal->setChecked(m_tripController->getBooleanValue(ePressureNormal));
-         ui->pressure_mildhigh->setChecked(m_tripController->getBooleanValue(ePressureMildHigh));
-         ui->pressure_high->setChecked(m_tripController->getBooleanValue(ePressureHigh));
-
-         ui->length->setText(m_tripController->getTextValue(eLength));
-         ui->weight->setText(m_tripController->getTextValue(eWeight));
-         ui->spotdepth->setText(m_tripController->getTextValue(eSpotDepth));
-         ui->totaldepth->setText(m_tripController->getTextValue(eTotalDepth));
-         ui->trolling_speed->setText(m_tripController->getTextValue(eTrollingSpeed));
-         ui->line_weight->setText(m_tripController->getTextValue(eLineWeight));
-         ui->release_width->setText(m_tripController->getTextValue(eReleaseWidth));
-         ui->air_temp->setText(m_tripController->getTextValue(eAirTemp));
-         ui->water_temp->setText(m_tripController->getTextValue(eWaterTemp));
-
-         ui->group->setChecked(m_tripController->getBooleanValue(eGroup));
-         ui->undersize->setChecked(m_tripController->getBooleanValue(eUnderSize));
-         ui->catchrelease->setChecked(m_tripController->getBooleanValue(eCatchNRelease));
-
-         ui->wind_direction->setValue(m_tripController->getIntValue(eWindDirection));
-         ui->pressure_change->setValue(m_tripController->getIntValue(ePressureChange));
-
-         ui->timeEdit->setTime(m_tripController->getTimeValue(eTime));
-
-        if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
-             ui->misc->setText(m_tripController->getTextValue(eMiscText));
-
-
-         mw->m_lureBox->setText(m_tripController->getTextValue(eLureName));
-         mw->m_POIBox->setText(m_tripController->getTextValue(eWayPointSet));
-
-        setCombo(eSpecies,  ui->species);
-        setCombo(eGetter,  ui->getter);
-        setCombo(eMethod,  ui->method);
+        ui->endDial->setValue(m_tripController->getIntValue(eEndTime));
+        ui->timeEndLbl->setText(tr("lopetus klo ")+QString::number(m_tripController->getIntValue(eEndTime)));
 
         int selectedPlace = m_tripController->getIntValue(ePlaceName);
         for(int loop=0; loop <  ui->place->count(); loop++)
@@ -96,6 +49,40 @@ void UIEventHandler::observerEvent(int type)
                  ui->place->setCurrentIndex(loop);
             }
         }
+
+
+        if(type == Fish::eFish)
+        {
+            ui->groupBoxWeather->hide();
+            ui->groupBoxFish->show();
+            ui->groupBoxOther->show();
+            updateFish();
+        }
+        else if(type == Fish::eWeather)
+        {
+            ui->groupBoxFish->hide();
+            ui->groupBoxWeather->show();
+            ui->groupBoxOther->show();
+            updateWeather();
+        }
+        else if(type == Fish::eFishAndWeather)
+        {
+            ui->groupBoxFish->show();
+            ui->groupBoxWeather->show();
+            ui->groupBoxOther->show();
+            updateFish();
+            updateWeather();
+        }
+        else
+        {
+            ui->groupBoxFish->hide();
+            ui->groupBoxWeather->hide();
+            ui->groupBoxOther->hide();
+            return;
+        }
+
+        if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
+             ui->misc->setText(m_tripController->getTextValue(eMiscText));
 
     }
     else if(type == Controller::eTripListUpdated)
@@ -158,6 +145,55 @@ void UIEventHandler::observerEvent(int type)
             mw->m_wptList->insertItem(0, item);
         }
     }
+}
+
+void UIEventHandler::updateFish()
+{
+    ui->length->setText(m_tripController->getTextValue(eLength));
+    ui->weight->setText(m_tripController->getTextValue(eWeight));
+    ui->spotdepth->setText(m_tripController->getTextValue(eSpotDepth));
+    ui->totaldepth->setText(m_tripController->getTextValue(eTotalDepth));
+    ui->trolling_speed->setText(m_tripController->getTextValue(eTrollingSpeed));
+    ui->line_weight->setText(m_tripController->getTextValue(eLineWeight));
+    ui->release_width->setText(m_tripController->getTextValue(eReleaseWidth));
+    ui->air_temp->setText(m_tripController->getTextValue(eAirTemp));
+    ui->water_temp->setText(m_tripController->getTextValue(eWaterTemp));
+
+    ui->group->setChecked(m_tripController->getBooleanValue(eGroup));
+    ui->undersize->setChecked(m_tripController->getBooleanValue(eUnderSize));
+    ui->catchrelease->setChecked(m_tripController->getBooleanValue(eCatchNRelease));
+    mw->m_lureBox->setText(m_tripController->getTextValue(eLureName));
+    mw->m_POIBox->setText(m_tripController->getTextValue(eWayPointSet));
+
+    ui->timeEdit->setTime(m_tripController->getTimeValue(eTime));
+
+    setCombo(eSpecies,  ui->species);
+    setCombo(eGetter,  ui->getter);
+    setCombo(eMethod,  ui->method);
+}
+
+void UIEventHandler::updateWeather()
+{
+    ui->weather_clear->setChecked(m_tripController->getBooleanValue(eWeatherClear));
+    ui->weather_halfclear->setChecked(m_tripController->getBooleanValue(eWeatherHalfClear));
+    ui->weather_overcast->setChecked(m_tripController->getBooleanValue(eWeatherOvercast));
+    ui->weather_rain->setChecked(m_tripController->getBooleanValue(eWeatherRain));
+    ui->weather_fog->setChecked(m_tripController->getBooleanValue(eWeatherFog));
+
+    ui->wind_calm->setChecked(m_tripController->getBooleanValue(eWindCalm));
+    ui->wind_faint->setChecked(m_tripController->getBooleanValue(eWindFaint));
+    ui->wind_moderate->setChecked(m_tripController->getBooleanValue(eWindModerate));
+    ui->wind_brisk->setChecked(m_tripController->getBooleanValue(eWindBrisk));
+    ui->wind_hard->setChecked(m_tripController->getBooleanValue(eWindHard));
+
+    ui->pressure_low->setChecked(m_tripController->getBooleanValue(ePressureLow));
+    ui->pressure_mildlow->setChecked(m_tripController->getBooleanValue(ePressureMildLow));
+    ui->pressure_normal->setChecked(m_tripController->getBooleanValue(ePressureNormal));
+    ui->pressure_mildhigh->setChecked(m_tripController->getBooleanValue(ePressureMildHigh));
+    ui->pressure_high->setChecked(m_tripController->getBooleanValue(ePressureHigh));
+
+    ui->wind_direction->setValue(m_tripController->getIntValue(eWindDirection));
+    ui->pressure_change->setValue(m_tripController->getIntValue(ePressureChange));
 }
 
 void UIEventHandler::setCombo(EUISource source, QComboBox* target)

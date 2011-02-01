@@ -11,7 +11,7 @@ class Trip : public TrollingObject
 {
 public:
     Trip();
-
+    ~Trip();
 
 
     void setDate(const QDate& date);
@@ -29,9 +29,8 @@ public:
     Fish* getFish(int id = -1);
 
     void selectFish(int);
-    Fish* newFish();
+    Fish* newFish(Fish::EType type);
     void deleteFish(int);
-    void insertFish();
     int getSelectedFish();
 
 protected:
@@ -42,7 +41,8 @@ protected:
 
 private:
     QList<Fish*> m_catch;
-    Fish* m_fish;
+    int m_selectedFish;
+    Fish* m_nullFish;
 };
 
 #endif // TRIP_H

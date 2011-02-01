@@ -5,10 +5,17 @@
 
 Trip::Trip():
     TrollingObject(),
-    m_fish(NULL)
+    m_selectedFish(-1)
 {
     setType("trip");
     set("date",QDate::currentDate());
+    m_nullFish = new Fish();
+}
+
+Trip::~Trip()
+{
+    delete m_nullFish;
+    m_nullFish = NULL;
 }
 
 void Trip::setDate(const QDate& date)
@@ -54,17 +61,16 @@ QList<WayPoint> Trip::getWayPoints()
 
 Fish* Trip::getFish(int id)
 {
-    if(!m_fish)
+    if(id < 0 && m_selectedFish >= 0)
     {
-        m_fish = new Fish();
+        return m_catch.at(m_selectedFish);
+    }
+    else if(id >= 0 && id < m_catch.size())
+    {
+        return m_catch.at(id);
     }
 
-    if(id < 0)
-    {
-        return m_fish;
-    }
-
-    return m_catch.at(id);
+    return m_nullFish;
 }
 
 int Trip::getFishCount()
@@ -74,36 +80,20 @@ int Trip::getFishCount()
 
 void Trip::selectFish(int id)
 {
-   m_fish = m_catch.at(id);
+   m_selectedFish = id;
 }
 
-Fish* Trip::newFish()
+Fish* Trip::newFish(Fish::EType type)
 {
-    if(indexOfFish(m_fish) == -1)
-    {
-        delete m_fish;
-    }
-
-    m_fish = new Fish();
-    return m_fish;
-}
-
-void Trip::insertFish()
-{
-    if(indexOfFish(m_fish) == -1)
-    {
-        m_catch.push_back(m_fish);
-    }
-    newFish();
+    Fish* fish = new Fish();
+    fish->setType(type);
+    m_catch.push_back(fish);
+    m_selectedFish = m_catch.size()-1;
+    return fish;
 }
 
 void Trip::deleteFish(int id)
 {
-    if(indexOfFish(m_fish) == id)
-    {
-        newFish();
-    }
-
     if(id > -1 && m_catch.size() > id)
     {
         delete m_catch.at(id);
@@ -113,7 +103,7 @@ void Trip::deleteFish(int id)
 
 int Trip::getSelectedFish()
 {
-    return indexOfFish(m_fish);
+    return m_selectedFish;
 }
 
 int Trip::indexOfFish(Fish* p_fish)

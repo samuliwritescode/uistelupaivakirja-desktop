@@ -2,6 +2,7 @@
 #define FISH_H
 #include "lure.h"
 
+const QString FISH_TYPE = "type";
 const QString FISH_WIND = "fish_wind";
 const QString FISH_WEATHER = "fish_weather";
 const QString FISH_LENGTH = "fish_length";
@@ -29,17 +30,20 @@ const QString FISH_COORDINATES_LON = "fish_coord_lon";
 
 class Fish
 {
+    friend class Trip;
 public:
 
     enum EWindCondition{eCalm=1, eFaint=2, eModerate=4, eBrisk=8, eHard=16};
     enum EWeatherCondition{eClear=1, eHalfClear=2, eOvercast=4, eRain=8, eFog=16};
     enum EPressureCondition{eLow=1, eMildLow=2, eNormal=4, eMildHigh=8, eHigh=16};
-    enum EType {eFish, eWeather, eFishAndWeather};
+    enum EType {eNaN, eFish, eWeather, eFishAndWeather};
 
     Fish();
 
     void setLure(Lure*);
     Lure* getLure();
+
+    EType getType();
 
     void setProperty(const QString&, double);
     void setProperty(const QString&, QString);
@@ -55,6 +59,7 @@ public:
     QList<QString> getPropertyNames();
 
 private:
+    void setType(EType type);
     Lure* m_lure;
     QHash<QString, QVariant> m_properties;
 };
