@@ -35,10 +35,10 @@ void UIEventHandler::observerEvent(int type)
         int type = m_tripController->getIntValue(eFishType);
         ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
 
-        ui->startDial->setValue(m_tripController->getIntValue(eStartTime));
+        ui->startDial->setValue((m_tripController->getIntValue(eStartTime)+12)%24);
         ui->timeStartLbl->setText(tr("aloitus klo ")+QString::number(m_tripController->getIntValue(eStartTime)));
 
-        ui->endDial->setValue(m_tripController->getIntValue(eEndTime));
+        ui->endDial->setValue((m_tripController->getIntValue(eEndTime)+12)%24);
         ui->timeEndLbl->setText(tr("lopetus klo ")+QString::number(m_tripController->getIntValue(eEndTime)));
 
         int selectedPlace = m_tripController->getIntValue(ePlaceName);
@@ -173,7 +173,10 @@ void UIEventHandler::updateFish()
     mw->m_lureBox->setText(m_tripController->getTextValue(eLureName));
     mw->m_POIBox->setText(m_tripController->getTextValue(eWayPointSet));
 
-    ui->timeEdit->setTime(m_tripController->getTimeValue(eTime));
+    QTime time = m_tripController->getTimeValue(eTime);
+    ui->timeEdit->setTime(time);
+    ui->time_dial_hour->setValue((time.hour()+12)%24);
+    ui->time_dial_minutes->setValue((time.minute()+30)%60);
 
     setCombo(eSpecies,  ui->species);
     setCombo(eGetter,  ui->getter);

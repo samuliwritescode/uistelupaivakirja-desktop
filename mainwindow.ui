@@ -524,13 +524,6 @@
                  </item>
                 </layout>
                </item>
-               <item row="0" column="1">
-                <widget class="QTimeEdit" name="timeEdit">
-                 <property name="displayFormat">
-                  <string>hh:mm</string>
-                 </property>
-                </widget>
-               </item>
                <item row="0" column="2">
                 <layout class="QHBoxLayout" name="horizontalLayout_13">
                  <item>
@@ -590,17 +583,6 @@
                    </property>
                    <property name="editable">
                     <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="1">
-                <layout class="QHBoxLayout" name="horizontalLayout_15">
-                 <item>
-                  <widget class="QCheckBox" name="group">
-                   <property name="text">
-                    <string>könttä</string>
                    </property>
                   </widget>
                  </item>
@@ -892,19 +874,89 @@
                <item row="3" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_18"/>
                </item>
-               <item row="3" column="1">
-                <widget class="QCheckBox" name="catchrelease">
-                 <property name="text">
-                  <string>CR</string>
-                 </property>
-                </widget>
-               </item>
                <item row="2" column="1">
-                <widget class="QCheckBox" name="undersize">
-                 <property name="text">
-                  <string>alamit</string>
+                <layout class="QHBoxLayout" name="horizontalLayout_23">
+                 <property name="spacing">
+                  <number>0</number>
                  </property>
-                </widget>
+                 <item>
+                  <widget class="QCheckBox" name="catchrelease">
+                   <property name="text">
+                    <string>CR</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="undersize">
+                   <property name="text">
+                    <string>alamit</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="1" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_15">
+                 <item>
+                  <widget class="QCheckBox" name="group">
+                   <property name="text">
+                    <string>könttä</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="0" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_21">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QDial" name="time_dial_hour">
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximum">
+                    <number>23</number>
+                   </property>
+                   <property name="wrapping">
+                    <bool>true</bool>
+                   </property>
+                   <property name="notchesVisible">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QTimeEdit" name="timeEdit">
+                   <property name="displayFormat">
+                    <string>hh:mm</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDial" name="time_dial_minutes">
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximum">
+                    <number>59</number>
+                   </property>
+                   <property name="wrapping">
+                    <bool>true</bool>
+                   </property>
+                   <property name="notchesVisible">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -1503,7 +1555,7 @@ mitattu</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>338</width>
+                   <width>296</width>
                    <height>104</height>
                   </rect>
                  </property>

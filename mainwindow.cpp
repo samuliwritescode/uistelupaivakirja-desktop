@@ -186,12 +186,12 @@ void MainWindow::on_fish_list_itemSelectionChanged()
 
 void MainWindow::on_startDial_valueChanged(int value)
 {
-    m_tripController->intEvent(eStartTime, value);
+    m_tripController->intEvent(eStartTime, (value+12)%24);
 }
 
 void MainWindow::on_endDial_valueChanged(int value)
 {
-    m_tripController->intEvent(eEndTime, value);
+    m_tripController->intEvent(eEndTime, (value+12)%24);
 }
 
 void MainWindow::on_lure_new_clicked()
@@ -391,4 +391,19 @@ void MainWindow::on_new_fishweather_clicked()
 void MainWindow::on_new_weather_clicked()
 {
     m_tripController->buttonEvent(eNewWeather);
+}
+
+
+void MainWindow::on_time_dial_hour_valueChanged(int value)
+{
+    QTime time;
+    time.setHMS((value+12)%24, ui->timeEdit->time().minute(), 0);
+    m_tripController->timeEvent(eTime, time);
+}
+
+void MainWindow::on_time_dial_minutes_valueChanged(int value)
+{
+    QTime time;
+    time.setHMS(ui->timeEdit->time().hour(), (value+30)%60, 0);
+    m_tripController->timeEvent(eTime, time);
 }
