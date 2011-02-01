@@ -92,9 +92,14 @@ public:
     virtual QString getTextValue(EUISource);
 
     enum ENotificationType {
-        eTripUpdated, eTripListUpdated,
-        eFishListUpdated, eLureListUpdated,
-        eLureUpdated, ePlaceUpdated, ePlaceListUpdated,
+        eTripUpdated,
+        eTripListUpdated,
+        eFishListUpdated,
+        eFishPropertyUpdated,
+        eLureListUpdated,
+        eLureUpdated,
+        ePlaceUpdated,
+        ePlaceListUpdated,
         eWayPointsUpdated
     };
 

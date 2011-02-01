@@ -95,8 +95,9 @@ void UIEventHandler::observerEvent(int type)
              ui->trip_list->insertItem(0, item);
         }
     }
-    else if (type == Controller::eFishListUpdated)
+    else if (type == Controller::eFishListUpdated || type == Controller::eFishPropertyUpdated)
     {
+        ui->fish_list->blockSignals(true);
         ui->fish_list->setSortingEnabled(false);
         ui->fish_list->clear();
         ui->fish_list->clearContents();
@@ -138,6 +139,7 @@ void UIEventHandler::observerEvent(int type)
             ui->fish_list->selectRow(selectedFish);
 
         ui->fish_list->setSortingEnabled(true);
+        ui->fish_list->blockSignals(false);
     }
     else if(type == Controller::eWayPointsUpdated)
     {

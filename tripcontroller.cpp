@@ -205,6 +205,7 @@ void TripController::intEvent(EUISource source, int value)
     }
     sendNotificationToObservers(Controller::eTripUpdated);    
     sendNotificationToObservers(Controller::eFishListUpdated);
+    sendNotificationToObservers(Controller::eFishPropertyUpdated);
 }
 
 void TripController::dateEvent(EUISource source, const QDate& value)
@@ -227,6 +228,7 @@ void TripController::timeEvent(EUISource source, const QTime& value)
     default:  qCritical() << "Unknown time event. Cant handle this!" << source;
     }
     sendNotificationToObservers(Controller::eTripUpdated);
+    sendNotificationToObservers(Controller::eFishPropertyUpdated);
 }
 
 void TripController::textEvent(EUISource source, const QString& value)
@@ -251,6 +253,8 @@ void TripController::textEvent(EUISource source, const QString& value)
         sendNotificationToObservers(Controller::eWayPointsUpdated); ;break;
     default:  qCritical() << "Unknown text event. Cant handle this!" << source;
     }
+
+    sendNotificationToObservers(Controller::eFishPropertyUpdated);
 }
 
 void TripController::buttonEvent(EUISource source)
