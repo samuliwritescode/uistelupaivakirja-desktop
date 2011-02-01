@@ -61,7 +61,7 @@ QList<WayPoint> Trip::getWayPoints()
 
 Fish* Trip::getFish(int id)
 {
-    if(id < 0 && m_selectedFish >= 0)
+    if(id < 0 && m_selectedFish >= 0 && m_selectedFish < m_catch.size())
     {
         return m_catch.at(m_selectedFish);
     }

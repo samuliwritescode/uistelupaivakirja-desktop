@@ -11,7 +11,7 @@ UIEventHandler::UIEventHandler(MainWindow* p_mw, QObject *parent) :
     m_lureController = Singletons::lureController();
     m_placeController = Singletons::placeController();
     observerEvent(Controller::eTripUpdated);
-    //observerEvent(Controller::eTripListUpdated);
+    observerEvent(Controller::eTripListUpdated);
     observerEvent(Controller::eFishListUpdated);
     observerEventLure(Controller::eLureListUpdated);
     observerEventPlace(Controller::ePlaceListUpdated);
@@ -113,6 +113,8 @@ void UIEventHandler::observerEvent(int type)
                 tr("ved.syv") <<
                 tr("vetonop") <<
                 tr("vap.pit");
+
+        int selectedFish = m_tripController->getIntValue(eFishList);
         ui->fish_list->setHorizontalHeaderLabels(headers);
         QList<QMap<QString, QString> > fishes = m_tripController->getFishList();
         for(int loop=0; loop < fishes.size(); loop++)
@@ -131,6 +133,10 @@ void UIEventHandler::observerEvent(int type)
              ui->fish_list->setItem(loop, 9, new QTableWidgetItem(props[FISH_TROLLING_SPEED], loop));
              ui->fish_list->setItem(loop, 10, new QTableWidgetItem(props[FISH_RELEASE_WIDTH], loop));
         }
+
+        if(selectedFish >= 0)
+            ui->fish_list->selectRow(selectedFish);
+
         ui->fish_list->setSortingEnabled(true);
     }
     else if(type == Controller::eWayPointsUpdated)

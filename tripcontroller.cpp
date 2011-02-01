@@ -57,6 +57,7 @@ int TripController::getIntValue(EUISource source)
 {
     switch(source)
     {
+    case eFishList: return m_trip->getSelectedFish(); break;
     case eFishType: return m_trip->getFish()->getType(); break;
     case eStartTime: return m_trip->getTime().first.hour(); break;
     case eEndTime: return m_trip->getTime().second.hour(); break;
