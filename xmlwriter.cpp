@@ -161,6 +161,73 @@ bool XMLWriter::load(TrollingObject* p_object, int p_id)
     return true;
 }
 
+bool XMLWriter::loadAll(const QString& p_type, TrollingObjectFactory* p_factory)
+{
+    if(!loadDocument())
+        return false;
+
+    if(m_document.elementsByTagName("TrollingObjects").count() != 1)
+    {
+        qDebug() << "Invalid number of TrollingObjects roots";
+        return false;
+    }
+
+    QDomNodeList trollingobjectsnodelist = m_document.elementsByTagName("TrollingObject");
+
+    for(int loop0=0; loop0 < trollingobjectsnodelist.size(); loop0++)
+    {
+        if(trollingobjectsnodelist.at(loop0).isElement())
+        {
+            QDomElement trollingobjectelement = trollingobjectsnodelist.at(loop0).toElement();
+            QDomNodeList propertiesnodes = trollingobjectelement.childNodes();
+            QHash<QString, QVariant> properties;
+            if(trollingobjectelement.attribute("type") != p_type)
+            {
+                qDebug() << "Skipping non expected type" << p_type;
+                continue;
+            }
+
+            TrollingObject* object = p_factory->createTrollingObject(p_type);
+            object->setId(trollingobjectelement.attribute("id").toInt());
+
+            for(int loop=0; loop < propertiesnodes.size(); loop++)
+            {
+                QDomNode node = propertiesnodes.at(loop);
+                if(node.isElement() && node.toElement().tagName() != "PropertyList")
+                {
+                    QDomElement element = node.toElement();
+                    properties[element.tagName()] = element.text();
+                    //qDebug() << "read" << element.tagName();
+                }
+                else if(node.isElement() && node.hasChildNodes() && node.toElement().tagName() == "PropertyList")
+                {
+                    QList< QHash<QString, QVariant> > list;
+                    QDomNodeList propertylist = node.toElement().elementsByTagName("PropertyListItem");
+                    for(int loop2=0; loop2 < propertylist.size(); loop2++)
+                    {
+                        QHash<QString, QVariant> propertylistitem;
+                        QDomNodeList listitemlist = propertylist.at(loop2).childNodes();
+                        for(int loop3=0; loop3 < listitemlist.size(); loop3++)
+                        {
+                            QDomNode subnode = listitemlist.at(loop3);
+                            if(subnode.isElement())
+                            {
+                               QDomElement subelement = subnode.toElement();
+                               propertylistitem[subelement.tagName()] = subelement.text();
+                               //qDebug() << "subread" << subelement.tagName();
+                            }
+                        }
+                        list.push_back(propertylistitem);
+                    }
+                    object->storeList(list);
+                }
+            }
+            object->storeProperties(properties);
+        }
+    }
+    return true;
+}
+
 bool XMLWriter::getTrollingObjectElement(QDomElement& p_element, int& p_id)
 {
     QDomElement root;

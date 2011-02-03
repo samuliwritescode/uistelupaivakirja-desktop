@@ -146,14 +146,14 @@ TrollingObjectItemList Trip::serializeItems()
         TrollingObjectItem fishprops;
         Fish* fish = m_catch.at(loop);
 
-        if(fish->getLure())
-            fishprops["lure"] = fish->getLure()->getId();
-
         QList<QString> propnames = fish->getPropertyNames();
         foreach(QString propname, propnames)
         {
             fishprops[propname] = fish->getProperty(propname);
         }
+
+        if(fish->getLure())
+            fishprops["lure"] = fish->getLure()->getId();
 
         retval.push_back(fishprops);
     }

@@ -8,10 +8,11 @@
 #include "fish.h"
 #include "lure.h"
 #include "place.h"
+#include "trollingobjectfactory.h"
 #include "trollingobject.h"
 #include "dblayer.h"
 
-class TrollingModel : public QObject
+class TrollingModel : public QObject, public TrollingObjectFactory
 {
     Q_OBJECT
 public:
@@ -27,6 +28,7 @@ public:
     QMap<int, Lure*> getLures();
     QMap<int, Place*> getPlaces();
     void initialize();
+    virtual TrollingObject* createTrollingObject(const QString& p_type);
 
 signals:
 

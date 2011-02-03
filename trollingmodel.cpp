@@ -11,30 +11,33 @@ TrollingModel::TrollingModel(QObject *parent) :
 void TrollingModel::initialize()
 {
     m_DBLayer = new DBLayer(QDir::homePath()+"/uistelu/database");
+    qDebug() << "start loading";
+    m_DBLayer->loadObjects(Lure().getType(), this);
+    m_DBLayer->loadObjects(Trip().getType(), this);
+    m_DBLayer->loadObjects(Place().getType(), this);
+    qDebug() << "finished loading";
+}
 
-    QList<int> lureIds = m_DBLayer->getIds(Lure().getType());
-    foreach(int id, lureIds)
+TrollingObject* TrollingModel::createTrollingObject(const QString& p_type)
+{
+    TrollingObject* object = NULL;
+    if(p_type == Lure().getType())
     {
-        Lure* lure = new Lure();
-        m_DBLayer->loadObject(id, lure);
-        m_trollingobjects.push_back( lure );
+        object = new Lure();
+    } else if(p_type == Trip().getType())
+    {
+        object = new Trip();
+    } else if(p_type == Place().getType())
+    {
+        object = new Place();
     }
 
-    QList<int> placeIds = m_DBLayer->getIds(Place().getType());
-    foreach(int id, placeIds)
+    if(object)
     {
-        Place* place = new Place();
-        m_DBLayer->loadObject(id, place);
-        m_trollingobjects.push_back( place );
+        m_trollingobjects.push_back(object);
     }
 
-    QList<int> tripIds = m_DBLayer->getIds(Trip().getType());
-    foreach(int id, tripIds)
-    {
-        Trip* trip = new Trip();
-        m_DBLayer->loadObject(id, trip);
-        m_trollingobjects.push_back( trip );
-    }
+    return object;
 }
 
 TrollingModel::~TrollingModel()

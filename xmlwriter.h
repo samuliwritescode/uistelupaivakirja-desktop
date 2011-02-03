@@ -1,8 +1,8 @@
 #ifndef XMLWRITER_H
 #define XMLWRITER_H
 #include <QDomElement>
+#include "trollingobjectfactory.h"
 #include "trollingobject.h"
-class TrollingObject;
 
 class XMLWriter
 {
@@ -10,6 +10,7 @@ public:
     XMLWriter(const QString& p_filename);
     bool write(TrollingObject* p_object);
     bool load(TrollingObject* p_object, int p_id);
+    bool loadAll(const QString& p_type, TrollingObjectFactory* p_factory);
     void remove(TrollingObject* p_object);
     QList<int> getIds(const QString& p_type = QString());
 

@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     locationprovider.cpp \
     waypointlist.cpp \
     waypointitem.cpp \
-    uieventhandler.cpp
+    uieventhandler.cpp \
+    trollingobjectfactory.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h \
     locationprovider.h \
     waypointlist.h \
     waypointitem.h \
-    uieventhandler.h
+    uieventhandler.h \
+    trollingobjectfactory.h
 
 FORMS    += mainwindow.ui
 
