@@ -84,6 +84,16 @@ void UIEventHandler::observerEvent(int type)
         if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
              ui->misc->setText(m_tripController->getTextValue(eMiscText));
 
+        QList<QString> userValues = m_tripController->getUserFields();
+        ui->user_props->clear();
+        for(int loop=0; loop < userValues.count(); loop++)
+        {
+            QString uservalue = userValues.at(loop);
+
+            ui->user_props->setItem(loop, 0, new QTableWidgetItem("arvo"));
+            ui->user_props->setItem(loop, 1, new QTableWidgetItem(uservalue));
+        }
+
     }
     else if(type == Controller::eTripListUpdated)
     {

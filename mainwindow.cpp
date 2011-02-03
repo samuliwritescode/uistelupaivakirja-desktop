@@ -407,3 +407,21 @@ void MainWindow::on_time_dial_minutes_valueChanged(int value)
     time.setHMS(ui->timeEdit->time().hour(), (value+30)%60, 0);
     m_tripController->timeEvent(eTime, time);
 }
+
+void MainWindow::on_user_props_cellChanged(int row, int column)
+{
+    QString name;
+    if(ui->user_props->item(row, 0))
+        name = ui->user_props->item(row, 0)->text();
+
+    QString value;
+    if(ui->user_props->item(row, 1))
+        value = ui->user_props->item(row, 1)->text();
+
+    qDebug() << "nimi"<<name<<"arvo"<<value;
+    if(!name.isEmpty())
+    {
+        m_tripController->textEvent(eUserField, QString::number(row)+"\n"+value);
+    }
+
+}

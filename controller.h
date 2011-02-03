@@ -71,7 +71,8 @@ enum EUISource {eTripDate,
                 ePlaceList,
                 eWaypointsAdd,
                 eWayPointSet,
-                eUnsavedChanges};
+                eUnsavedChanges,
+                eUserField};
 
 class Controller : public QObject
 {

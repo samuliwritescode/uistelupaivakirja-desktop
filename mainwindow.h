@@ -39,6 +39,7 @@ private:
     WayPointList* m_wptList;
 
 private slots:
+    void on_user_props_cellChanged(int row, int column);
     void on_time_dial_minutes_valueChanged(int value);
     void on_time_dial_hour_valueChanged(int value);
     void on_new_weather_clicked();

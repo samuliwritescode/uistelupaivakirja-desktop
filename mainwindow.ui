@@ -164,9 +164,6 @@
           <property name="sizeConstraint">
            <enum>QLayout::SetNoConstraint</enum>
           </property>
-          <property name="margin">
-           <number>0</number>
-          </property>
           <item>
            <widget class="QGroupBox" name="groupBoxTrip">
             <property name="minimumSize">
@@ -1363,7 +1360,7 @@ korkea</string>
                 <widget class="QTextEdit" name="misc"/>
                </item>
                <item>
-                <widget class="QTableWidget" name="tableWidget">
+                <widget class="QTableWidget" name="user_props">
                  <property name="maximumSize">
                   <size>
                    <width>300</width>
@@ -1374,7 +1371,7 @@ korkea</string>
                   <bool>true</bool>
                  </property>
                  <property name="rowCount">
-                  <number>1</number>
+                  <number>4</number>
                  </property>
                  <property name="columnCount">
                   <number>2</number>
@@ -1385,6 +1382,9 @@ korkea</string>
                  <attribute name="verticalHeaderVisible">
                   <bool>false</bool>
                  </attribute>
+                 <row/>
+                 <row/>
+                 <row/>
                  <row/>
                  <column/>
                  <column/>

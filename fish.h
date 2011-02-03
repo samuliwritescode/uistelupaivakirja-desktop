@@ -27,6 +27,7 @@ const QString FISH_GETTER = "fish_getter";
 const QString FISH_METHOD = "fish_method";
 const QString FISH_COORDINATES_LAT = "fish_coord_lat";
 const QString FISH_COORDINATES_LON = "fish_coord_lon";
+const QString FISH_USERFIELD = "fish_user:";
 
 class Fish
 {

@@ -249,6 +249,13 @@ void TripController::textEvent(EUISource source, const QString& value)
     case eSpecies: m_trip->getFish()->setProperty(FISH_SPECIES, value); break;
     case eMethod: m_trip->getFish()->setProperty(FISH_METHOD, value); break;
     case eGetter: m_trip->getFish()->setProperty(FISH_GETTER, value); break;
+    case eUserField: {
+            if(value.split("\n").count() != 2)
+                break;
+            QString field = value.split("\n").at(0);
+            QString uservalue = value.split("\n").at(1);
+            m_trip->getFish()->setProperty(FISH_USERFIELD+field, uservalue);
+        }
     case eWaypointsAdd: m_trip->setWayPoints(value);
         sendNotificationToObservers(Controller::eWayPointsUpdated); ;break;
     default:  qCritical() << "Unknown text event. Cant handle this!" << source;
@@ -393,5 +400,28 @@ QStringList TripController::getAlternatives(EUISource source)
     }
 
     return retval;
+}
+
+QList<QString> TripController::getUserFields()
+{
+    QMap<int, QString> retval;
+    Fish* fish = m_trip->getFish();
+    QList<QString> names = fish->getPropertyNames();
+    foreach(QString name, names)
+    {
+        if(name.startsWith(FISH_USERFIELD))
+        {
+            QString id = name.mid(FISH_USERFIELD.length());
+            qDebug() << "key is" << id;
+            retval[id.toInt()] = fish->getProperty(name).toString();
+        }
+    }
+
+    QList<QString> retval2;
+    for(QMap<int, QString>::iterator iter = retval.begin(); iter != retval.end(); iter++)
+    {
+        retval2.push_back(iter.value());
+    }
+    return retval2;
 }
 
