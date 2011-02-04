@@ -1,36 +1,82 @@
-#include "uieventhandler.h"
-#include "mainwindow.h"
-//#include "ui_mainwindow.h"
+#include "tripform.h"
+#include "ui_tripform.h"
 
-UIEventHandler::UIEventHandler(MainWindow* p_mw, QObject *parent) :
-    QObject(parent),
-    mw(p_mw)
+TripForm::TripForm(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::TripForm)
 {
-    ui = mw->ui;
+    ui->setupUi(this);
+
     m_tripController = Singletons::tripController();
-    m_lureController = Singletons::lureController();
-    m_placeController = Singletons::placeController();
+
+    ui->water_temp->setValidator(new QDoubleValidator(this));
+    ui->air_temp->setValidator(new QDoubleValidator(this));
+    ui->weight->setValidator(new QDoubleValidator(this));
+    ui->length->setValidator(new QDoubleValidator(this));
+    ui->spotdepth->setValidator(new QDoubleValidator(this));
+    ui->totaldepth->setValidator(new QDoubleValidator(this));
+    ui->trolling_speed->setValidator(new QDoubleValidator(this));
+    ui->line_weight->setValidator(new QDoubleValidator(this));
+    ui->release_width->setValidator(new QDoubleValidator(this));
+
+    m_lureBox = new LureItem();
+    m_lureBox->setAcceptDrops(true);
+    ui->horizontalLayout_11->insertWidget(0, m_lureBox);
+
+    m_POIBox = new WayPointItem();
+    m_POIBox->setAcceptDrops(true);
+    ui->horizontalLayout_18->insertWidget(0, m_POIBox);
+
+    m_wptList = new WayPointList();
+    m_wptList->setAcceptDrops(true);
+    ui->poiDockLayout->insertWidget(0, m_wptList);
+
     observerEvent(Controller::eTripUpdated);
     observerEvent(Controller::eTripListUpdated);
     observerEvent(Controller::eFishListUpdated);
-    observerEventLure(Controller::eLureListUpdated);
-    observerEventPlace(Controller::ePlaceListUpdated);
+    observerEvent(Controller::ePlaceListUpdated);
+    observerEvent(Controller::eLureListUpdated);
 
     connect(m_tripController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
-    connect(m_lureController, SIGNAL(observerNotification(int)), this, SLOT(observerEventLure(int)));
-    connect(m_placeController, SIGNAL(observerNotification(int)), this, SLOT(observerEventPlace(int)));
+
+    connect(Singletons::lureController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
+    connect(Singletons::placeController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
 }
 
-UIEventHandler::~UIEventHandler()
+TripForm::~TripForm()
 {
     disconnect(m_tripController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
-    disconnect(m_lureController, SIGNAL(observerNotification(int)), this, SLOT(observerEventLure(int)));
-    disconnect(m_placeController, SIGNAL(observerNotification(int)), this, SLOT(observerEventPlace(int)));
+    delete ui;
+    delete m_lureBox;
+    delete m_POIBox;
+    delete m_wptList;
 }
 
-void UIEventHandler::observerEvent(int type)
+
+void TripForm::observerEvent(int type)
 {
-    if(type == Controller::eTripUpdated)
+    if(type == Controller::ePlaceListUpdated)
+    {
+         ui->place->clear();
+         QList<QPair<QString, int> > places = Singletons::placeController()->getPlaceList();
+        for(int loop=0; loop < places.size(); loop++)
+        {
+            QPair<QString, int> pair = places.at(loop);
+            ui->place->addItem(pair.first, pair.second);
+        }
+    } else if(type == Controller::eLureListUpdated)
+    {
+         ui->small_lure_list->clear();
+         QList<QPair<QString, int> > lures = Singletons::lureController()->getLureList();
+        for(int loop=0; loop < lures.size(); loop++)
+        {
+            QPair<QString, int> pair = lures.at(loop);
+
+            QListWidgetItem* itemSmall = new QListWidgetItem(pair.first,  ui->small_lure_list);
+            itemSmall->setData(Qt::UserRole+1,  pair.second);
+             ui->small_lure_list->insertItem(0, itemSmall);
+        }
+    }else if(type == Controller::eTripUpdated)
     {
         int type = m_tripController->getIntValue(eFishType);
         ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
@@ -187,19 +233,19 @@ void UIEventHandler::observerEvent(int type)
     }
     else if(type == Controller::eWayPointsUpdated)
     {
-        mw->m_wptList->clear();
+        m_wptList->clear();
         QList<QPair<QString, int> > list = m_tripController->getWayPointsList();
         for(int loop=0; loop < list.count(); loop++)
         {
             QPair<QString, int> pair = list.at(loop);
-            QListWidgetItem* item = new QListWidgetItem(pair.first, mw->m_wptList);
+            QListWidgetItem* item = new QListWidgetItem(pair.first, m_wptList);
             item->setData(Qt::UserRole+2,  pair.second);
-            mw->m_wptList->insertItem(0, item);
+            m_wptList->insertItem(0, item);
         }
     }
 }
 
-void UIEventHandler::updateFish()
+void TripForm::updateFish()
 {
     ui->length->setText(m_tripController->getTextValue(eLength));
     ui->weight->setText(m_tripController->getTextValue(eWeight));
@@ -214,8 +260,8 @@ void UIEventHandler::updateFish()
     ui->group->setChecked(m_tripController->getBooleanValue(eGroup));
     ui->undersize->setChecked(m_tripController->getBooleanValue(eUnderSize));
     ui->catchrelease->setChecked(m_tripController->getBooleanValue(eCatchNRelease));
-    mw->m_lureBox->setText(m_tripController->getTextValue(eLureName));
-    mw->m_POIBox->setText(m_tripController->getTextValue(eWayPointSet));
+    m_lureBox->setText(m_tripController->getTextValue(eLureName));
+    m_POIBox->setText(m_tripController->getTextValue(eWayPointSet));
 
     QTime time = m_tripController->getTimeValue(eTime);
     ui->timeEdit->setTime(time);
@@ -227,7 +273,7 @@ void UIEventHandler::updateFish()
     setCombo(eMethod,  ui->method);
 }
 
-void UIEventHandler::updateWeather()
+void TripForm::updateWeather()
 {
     ui->weather_clear->setChecked(m_tripController->getBooleanValue(eWeatherClear));
     ui->weather_halfclear->setChecked(m_tripController->getBooleanValue(eWeatherHalfClear));
@@ -251,7 +297,7 @@ void UIEventHandler::updateWeather()
     ui->pressure_change->setValue(m_tripController->getIntValue(ePressureChange));
 }
 
-void UIEventHandler::setCombo(EUISource source, QComboBox* target)
+void TripForm::setCombo(EUISource source, QComboBox* target)
 {
     QStringList valuelist = m_tripController->getAlternatives(source);
     QString currentValue = m_tripController->getTextValue(source);
@@ -267,60 +313,289 @@ void UIEventHandler::setCombo(EUISource source, QComboBox* target)
     target->blockSignals(false);
 }
 
-QString UIEventHandler::format(const QString& str)
+QString TripForm::format(const QString& str)
 {
     if(str == "")
         return "n/a";
     return str;
 }
 
-void UIEventHandler::observerEventLure(int type)
+void TripForm::on_dateEdit_dateChanged(QDate date)
 {
-    if(type == Controller::eLureListUpdated)
-    {
-         ui->lure_list->clear();
-         ui->small_lure_list->clear();
-        QList<QPair<QString, int> > lures = m_lureController->getLureList();
-        for(int loop=0; loop < lures.size(); loop++)
-        {
-            QPair<QString, int> pair = lures.at(loop);
-            QListWidgetItem* item = new QListWidgetItem(pair.first,  ui->lure_list, pair.second);
-             ui->lure_list->insertItem(0, item);
-
-            QListWidgetItem* itemSmall = new QListWidgetItem(pair.first,  ui->small_lure_list);
-            itemSmall->setData(Qt::UserRole+1,  pair.second);
-             ui->small_lure_list->insertItem(0, itemSmall);
-        }
-    } else if(type == Controller::eLureUpdated)
-    {
-         ui->lure_manufacturer->setText(m_lureController->getTextValue(eLureMaker));
-         ui->lure_model->setText(m_lureController->getTextValue(eLureModel));
-         ui->lure_size->setText(m_lureController->getTextValue(eLureSize));
-         ui->lure_color->setText(m_lureController->getTextValue(eLureColor));
-         ui->lure_favorite->setChecked(m_lureController->getBooleanValue(eLureFavorite));
-    }
+    m_tripController->dateEvent(eTripDate, date);
 }
 
-void UIEventHandler::observerEventPlace(int type)
+void TripForm::on_trip_save_clicked()
 {
-    if(type == Controller::ePlaceListUpdated)
-    {
-         ui->place_list->clear();
-         ui->place->clear();
-        QList<QPair<QString, int> > places = m_placeController->getPlaceList();
-        for(int loop=0; loop < places.size(); loop++)
-        {
-            QPair<QString, int> pair = places.at(loop);
-            QListWidgetItem* item = new QListWidgetItem(pair.first,  ui->place_list, pair.second);
-             ui->place_list->insertItem(0, item);
+    m_tripController->buttonEvent(eSaveTrip);
+}
 
-             ui->place->addItem(pair.first, pair.second);
-        }
-    } else if(type == Controller::ePlaceUpdated)
+void TripForm::on_water_temp_textEdited(QString temp)
+{
+    m_tripController->textEvent(eWaterTemp, temp);
+}
+
+void TripForm::on_misc_textChanged()
+{
+    m_tripController->textEvent(eMiscText, ui->misc->toPlainText());
+}
+
+void TripForm::on_weather_clear_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWeatherClear, checked);
+}
+
+void TripForm::on_weather_halfclear_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWeatherHalfClear, checked);
+}
+
+void TripForm::on_weather_overcast_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWeatherOvercast, checked);
+}
+
+void TripForm::on_weather_rain_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWeatherRain, checked);
+}
+
+void TripForm::on_weather_fog_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWeatherFog, checked);
+}
+
+void TripForm::on_wind_calm_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWindCalm, checked);
+}
+
+void TripForm::on_wind_faint_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWindFaint, checked);
+}
+
+void TripForm::on_wind_moderate_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWindModerate, checked);
+}
+
+void TripForm::on_wind_brisk_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWindBrisk, checked);
+}
+
+void TripForm::on_wind_hard_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eWindHard, checked);
+}
+
+void TripForm::on_weight_textEdited(QString weight)
+{
+    m_tripController->textEvent(eWeight, weight);
+}
+
+void TripForm::on_length_textEdited(QString length)
+{
+    m_tripController->textEvent(eLength, length);
+}
+
+void TripForm::on_spotdepth_textEdited(QString depth)
+{
+    m_tripController->textEvent(eSpotDepth, depth);
+}
+
+void TripForm::on_undersize_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eUnderSize, checked);
+}
+
+void TripForm::on_new_fish_clicked()
+{
+    m_tripController->buttonEvent(eNewFish);
+}
+
+void TripForm::on_del_fish_clicked()
+{
+    m_tripController->buttonEvent(eDeleteFish);
+}
+
+void TripForm::on_air_temp_textEdited(QString temp)
+{
+    m_tripController->textEvent(eAirTemp, temp);
+}
+
+void TripForm::on_trip_delete_clicked()
+{
+    m_tripController->buttonEvent(eDeleteTrip);
+}
+
+void TripForm::on_trip_new_clicked()
+{
+    m_tripController->buttonEvent(eNewTrip);
+}
+
+void TripForm::on_trip_list_itemActivated(QListWidgetItem* item)
+{
+    m_tripController->intEvent(eTrip, item->type());
+}
+
+void TripForm::on_trip_list_itemClicked(QListWidgetItem* item)
+{
+    m_tripController->intEvent(eTrip, item->type());
+}
+
+void TripForm::on_fish_list_itemSelectionChanged()
+{
+    QList<QTableWidgetItem *> selected = ui->fish_list->selectedItems();
+    if(selected.size() > 1)
+        m_tripController->intEvent(eFishList, selected.at(0)->type());
+}
+
+void TripForm::on_startDial_valueChanged(int value)
+{
+    m_tripController->intEvent(eStartTime, (value+12)%24);
+}
+
+void TripForm::on_endDial_valueChanged(int value)
+{
+    m_tripController->intEvent(eEndTime, (value+12)%24);
+}
+
+
+
+void TripForm::on_totaldepth_textEdited(QString value)
+{
+    m_tripController->textEvent(eTotalDepth, value);
+}
+
+void TripForm::on_trolling_speed_textEdited(QString value)
+{
+    m_tripController->textEvent(eTrollingSpeed, value);
+}
+
+void TripForm::on_line_weight_textEdited(QString value)
+{
+    m_tripController->textEvent(eLineWeight, value);
+}
+
+void TripForm::on_release_width_textEdited(QString value)
+{
+    m_tripController->textEvent(eReleaseWidth, value);
+}
+
+void TripForm::on_timeEdit_timeChanged(QTime date)
+{
+    m_tripController->timeEvent(eTime, date);
+}
+
+void TripForm::on_species_textChanged(QString value)
+{
+    m_tripController->textEvent(eSpecies, value);
+}
+
+void TripForm::on_pressure_low_clicked(bool checked)
+{
+    m_tripController->booleanEvent(ePressureLow, checked);
+}
+
+void TripForm::on_pressure_mildlow_clicked(bool checked)
+{
+   m_tripController->booleanEvent(ePressureMildLow, checked);
+}
+
+void TripForm::on_pressure_normal_clicked(bool checked)
+{
+    m_tripController->booleanEvent(ePressureNormal, checked);
+}
+
+void TripForm::on_pressure_mildhigh_clicked(bool checked)
+{
+    m_tripController->booleanEvent(ePressureMildHigh, checked);
+}
+
+void TripForm::on_pressure_high_clicked(bool checked)
+{
+    m_tripController->booleanEvent(ePressureHigh, checked);
+}
+
+void TripForm::on_group_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eGroup, checked);
+}
+
+void TripForm::on_catchrelease_clicked(bool checked)
+{
+    m_tripController->booleanEvent(eCatchNRelease, checked);
+}
+
+void TripForm::on_wind_direction_valueChanged(int value)
+{
+    m_tripController->intEvent(eWindDirection, value);
+}
+
+void TripForm::on_pressure_change_valueChanged(int value)
+{
+    m_tripController->intEvent(ePressureChange, value);
+}
+
+void TripForm::on_getter_textChanged(QString value)
+{
+    m_tripController->textEvent(eGetter, value);
+}
+
+void TripForm::on_method_textChanged(QString value)
+{
+    m_tripController->textEvent(eMethod, value);
+}
+
+
+
+
+void TripForm::on_new_fishweather_clicked()
+{
+    m_tripController->buttonEvent(eNewFishWeather);
+}
+
+void TripForm::on_new_weather_clicked()
+{
+    m_tripController->buttonEvent(eNewWeather);
+}
+
+
+void TripForm::on_time_dial_hour_valueChanged(int value)
+{
+    QTime time;
+    time.setHMS((value+12)%24, ui->timeEdit->time().minute(), 0);
+    m_tripController->timeEvent(eTime, time);
+}
+
+void TripForm::on_time_dial_minutes_valueChanged(int value)
+{
+    QTime time;
+    time.setHMS(ui->timeEdit->time().hour(), (value+30)%60, 0);
+    m_tripController->timeEvent(eTime, time);
+}
+
+void TripForm::on_user_props_cellChanged(int row, int column)
+{
+    QString name;
+    if(ui->user_props->item(row, 0))
+        name = ui->user_props->item(row, 0)->text();
+
+    QString value;
+    if(ui->user_props->item(row, 1))
+        value = ui->user_props->item(row, 1)->text();
+
+    qDebug() << "nimi"<<name<<"arvo"<<value;
+    if(!name.isEmpty())
     {
-         ui->place_name->setText( m_placeController->getTextValue(ePlaceName) );
-         ui->place_city->setText( m_placeController->getTextValue(ePlaceCity) );
-         ui->place_misc->setText( m_placeController->getTextValue(ePlaceMiscText) );
-         ui->place_invisible->setChecked(m_placeController->getBooleanValue(ePlaceInvisible));
+        m_tripController->textEvent(eUserField, QString::number(row)+"\n"+value);
     }
+
+}
+
+void TripForm::on_place_currentIndexChanged(int index)
+{
+    m_tripController->intEvent(ePlaceName, ui->place->itemData(index).toInt());
 }

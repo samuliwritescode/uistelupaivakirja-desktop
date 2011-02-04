@@ -30,8 +30,10 @@ SOURCES += main.cpp\
     locationprovider.cpp \
     waypointlist.cpp \
     waypointitem.cpp \
-    uieventhandler.cpp \
-    trollingobjectfactory.cpp
+    trollingobjectfactory.cpp \
+    tripform.cpp \
+    lureform.cpp \
+    placeform.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -52,10 +54,15 @@ HEADERS  += mainwindow.h \
     locationprovider.h \
     waypointlist.h \
     waypointitem.h \
-    uieventhandler.h \
-    trollingobjectfactory.h
+    trollingobjectfactory.h \
+    tripform.h \
+    lureform.h \
+    placeform.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    tripform.ui \
+    lureform.ui \
+    placeform.ui
 
 RESOURCES += \
     resources.qrc
