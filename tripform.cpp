@@ -46,6 +46,8 @@ TripForm::TripForm(QWidget *parent) :
 TripForm::~TripForm()
 {
     disconnect(m_tripController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
+    disconnect(Singletons::lureController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
+    disconnect(Singletons::placeController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
     delete ui;
     delete m_lureBox;
     delete m_POIBox;
@@ -183,8 +185,8 @@ void TripForm::observerEvent(int type)
              switch(props[FISH_TYPE].toInt())
              {
              case Fish::eFish: bgcolor = QColor::fromRgb(255,255,255); break;
-             case Fish::eWeather: bgcolor = QColor::fromRgb(240,240,255); break;
-             case Fish::eFishAndWeather: bgcolor = QColor::fromRgb(240,240,240); break;
+             case Fish::eWeather: bgcolor = QColor::fromRgb(255,245,220); break;
+             case Fish::eFishAndWeather: bgcolor = QColor::fromRgb(230,230,255); break;
              default: bgcolor = QColor::fromRgb(255,255,255); break;
              }
 
