@@ -21,6 +21,12 @@ public:
     ~TripForm();
 
 private:
+    void updatePlaceList();
+    void updateLureList();
+    void updateTrip();
+    void updateTripList();
+    void updateFishList();
+    void updateWaypoints();
     void updateFish();
     void updateWeather();
     QString format(const QString& str);

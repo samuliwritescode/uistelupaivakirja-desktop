@@ -57,193 +57,210 @@ TripForm::~TripForm()
 
 void TripForm::observerEvent(int type)
 {
-    if(type == Controller::ePlaceListUpdated)
+    switch(type)
     {
-         ui->place->clear();
-         QList<QPair<QString, int> > places = Singletons::placeController()->getPlaceList();
-        for(int loop=0; loop < places.size(); loop++)
-        {
-            QPair<QString, int> pair = places.at(loop);
-            ui->place->addItem(pair.first, pair.second);
-        }
-    } else if(type == Controller::eLureListUpdated)
-    {
-         ui->small_lure_list->clear();
-         QList<QPair<QString, int> > lures = Singletons::lureController()->getLureList();
-        for(int loop=0; loop < lures.size(); loop++)
-        {
-            QPair<QString, int> pair = lures.at(loop);
-
-            QListWidgetItem* itemSmall = new QListWidgetItem(pair.first,  ui->small_lure_list);
-            itemSmall->setData(Qt::UserRole+1,  pair.second);
-             ui->small_lure_list->insertItem(0, itemSmall);
-        }
-    }else if(type == Controller::eTripUpdated)
-    {
-        int type = m_tripController->getIntValue(eFishType);
-        ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
-
-        ui->startDial->setValue((m_tripController->getIntValue(eStartTime)+12)%24);
-        ui->timeStartLbl->setText(tr("aloitus klo ")+QString::number(m_tripController->getIntValue(eStartTime)));
-
-        ui->endDial->setValue((m_tripController->getIntValue(eEndTime)+12)%24);
-        ui->timeEndLbl->setText(tr("lopetus klo ")+QString::number(m_tripController->getIntValue(eEndTime)));
-
-        int selectedPlace = m_tripController->getIntValue(ePlaceName);
-        for(int loop=0; loop <  ui->place->count(); loop++)
-        {
-            if( ui->place->itemData(loop).toInt() == selectedPlace)
-            {
-                 ui->place->setCurrentIndex(loop);
-            }
-        }
-
-
-        if(type == Fish::eFish)
-        {
-            ui->groupBoxWeather->hide();
-            ui->groupBoxFish->show();
-            ui->groupBoxOther->show();
-            updateFish();
-        }
-        else if(type == Fish::eWeather)
-        {
-            ui->groupBoxFish->hide();
-            ui->groupBoxWeather->show();
-            ui->groupBoxOther->show();
-            updateWeather();
-        }
-        else if(type == Fish::eFishAndWeather)
-        {
-            ui->groupBoxFish->show();
-            ui->groupBoxWeather->show();
-            ui->groupBoxOther->show();
-            updateFish();
-            updateWeather();
-        }
-        else
-        {
-            ui->groupBoxFish->hide();
-            ui->groupBoxWeather->hide();
-            ui->groupBoxOther->hide();
-            return;
-        }
-
-        if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
-             ui->misc->setText(m_tripController->getTextValue(eMiscText));
-
-        QList<QString> userValues = m_tripController->getUserFields();
-        ui->user_props->clear();
-        for(int loop=0; loop < userValues.count(); loop++)
-        {
-            QString uservalue = userValues.at(loop);
-
-            ui->user_props->setItem(loop, 0, new QTableWidgetItem("arvo"));
-            ui->user_props->setItem(loop, 1, new QTableWidgetItem(uservalue));
-        }
-
+    case Controller::ePlaceListUpdated: updatePlaceList(); break;
+    case Controller::eLureListUpdated: updateLureList(); break;
+    case Controller::eTripUpdated: updateTrip(); break;
+    case Controller::eTripListUpdated: updateTripList(); break;
+    case Controller::eFishListUpdated:
+    case Controller::eFishPropertyUpdated: updateFishList(); break;
+    case Controller::eWayPointsUpdated: updateWaypoints(); break;
+    default: qDebug() << "TripForm do not understand event" << type; break;
     }
-    else if(type == Controller::eTripListUpdated)
+}
+
+void TripForm::updatePlaceList()
+{
+    ui->place->clear();
+    QList<QPair<QString, int> > places = Singletons::placeController()->getPlaceList();
+   for(int loop=0; loop < places.size(); loop++)
+   {
+       QPair<QString, int> pair = places.at(loop);
+       ui->place->addItem(pair.first, pair.second);
+   }
+}
+
+void TripForm::updateLureList()
+{
+    ui->small_lure_list->clear();
+    QList<QPair<QString, int> > lures = Singletons::lureController()->getLureList();
+   for(int loop=0; loop < lures.size(); loop++)
+   {
+       QPair<QString, int> pair = lures.at(loop);
+
+       QListWidgetItem* itemSmall = new QListWidgetItem(pair.first,  ui->small_lure_list);
+       itemSmall->setData(Qt::UserRole+1,  pair.second);
+        ui->small_lure_list->insertItem(0, itemSmall);
+   }
+}
+
+void TripForm::updateTrip()
+{
+    int type = m_tripController->getIntValue(eFishType);
+    ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
+
+    ui->startDial->setValue((m_tripController->getIntValue(eStartTime)+12)%24);
+    ui->timeStartLbl->setText(tr("aloitus klo ")+QString::number(m_tripController->getIntValue(eStartTime)));
+
+    ui->endDial->setValue((m_tripController->getIntValue(eEndTime)+12)%24);
+    ui->timeEndLbl->setText(tr("lopetus klo ")+QString::number(m_tripController->getIntValue(eEndTime)));
+
+    int selectedPlace = m_tripController->getIntValue(ePlaceName);
+    for(int loop=0; loop <  ui->place->count(); loop++)
     {
-         ui->trip_list->clear();
-        QMap<QString, int> trips = m_tripController->getTripList();
-        for(QMap<QString, int>::iterator iter = trips.begin(); iter != trips.end(); iter++)
+        if( ui->place->itemData(loop).toInt() == selectedPlace)
         {
-            QListWidgetItem* item = new QListWidgetItem(iter.key(),  ui->trip_list, iter.value());
-             ui->trip_list->insertItem(0, item);
+             ui->place->setCurrentIndex(loop);
         }
     }
-    else if (type == Controller::eFishListUpdated || type == Controller::eFishPropertyUpdated)
+
+    if(type == Fish::eFish)
     {
-        ui->fish_list->blockSignals(true);
-        ui->fish_list->setSortingEnabled(false);
-        ui->fish_list->clear();
-        ui->fish_list->clearContents();
-        ui->fish_list->setRowCount(0);
-        QStringList headers;
-        headers << tr("aika") <<
-                tr("laji") <<
-                tr("tapa") <<
-                tr("saaja") <<
-                tr("viehe") <<
-                tr("paino") <<
-                tr("pituus") <<
-                tr("syvyys") <<
-                tr("ved.syv") <<
-                tr("vetonop") <<
-                tr("vap.pit");
-
-        int selectedFish = m_tripController->getIntValue(eFishList);
-        ui->fish_list->setHorizontalHeaderLabels(headers);
-        QList<QMap<QString, QString> > fishes = m_tripController->getFishList();
-        for(int loop=0; loop < fishes.size(); loop++)
-        {
-            QMap<QString, QString> props = fishes.at(loop);
-             ui->fish_list->insertRow(loop);
-
-             QColor bgcolor;
-             switch(props[FISH_TYPE].toInt())
-             {
-             case Fish::eFish: bgcolor = QColor::fromRgb(255,255,255); break;
-             case Fish::eWeather: bgcolor = QColor::fromRgb(255,245,220); break;
-             case Fish::eFishAndWeather: bgcolor = QColor::fromRgb(230,230,255); break;
-             default: bgcolor = QColor::fromRgb(255,255,255); break;
-             }
-
-             QTableWidgetItem* item1 = new QTableWidgetItem(format(props[FISH_TIME]), loop);
-             QTableWidgetItem* item2 = new QTableWidgetItem(format(props[FISH_SPECIES]), loop);
-             QTableWidgetItem* item3 = new QTableWidgetItem(props[FISH_METHOD], loop);
-             QTableWidgetItem* item4 = new QTableWidgetItem(props[FISH_GETTER], loop);
-             QTableWidgetItem* item5 = new QTableWidgetItem(props["lure"], loop);
-             QTableWidgetItem* item6 = new QTableWidgetItem(props[FISH_WEIGHT], loop);
-             QTableWidgetItem* item7 = new QTableWidgetItem(props[FISH_LENGTH], loop);
-             QTableWidgetItem* item8 = new QTableWidgetItem(props[FISH_SPOT_DEPTH], loop);
-             QTableWidgetItem* item9 = new QTableWidgetItem(props[FISH_TOTAL_DEPTH], loop);
-             QTableWidgetItem* item10 = new QTableWidgetItem(props[FISH_TROLLING_SPEED], loop);
-             QTableWidgetItem* item11 = new QTableWidgetItem(props[FISH_RELEASE_WIDTH], loop);
-
-             item1->setBackgroundColor(bgcolor);
-             item2->setBackgroundColor(bgcolor);
-             item3->setBackgroundColor(bgcolor);
-             item4->setBackgroundColor(bgcolor);
-             item5->setBackgroundColor(bgcolor);
-             item6->setBackgroundColor(bgcolor);
-             item7->setBackgroundColor(bgcolor);
-             item8->setBackgroundColor(bgcolor);
-             item9->setBackgroundColor(bgcolor);
-             item10->setBackgroundColor(bgcolor);
-             item11->setBackgroundColor(bgcolor);
-
-             ui->fish_list->setItem(loop, 0, item1);
-             ui->fish_list->setItem(loop, 1, item2);
-             ui->fish_list->setItem(loop, 2, item3);
-             ui->fish_list->setItem(loop, 3, item4);
-             ui->fish_list->setItem(loop, 4, item5);
-             ui->fish_list->setItem(loop, 5, item6);
-             ui->fish_list->setItem(loop, 6, item7);
-             ui->fish_list->setItem(loop, 7, item8);
-             ui->fish_list->setItem(loop, 8, item9);
-             ui->fish_list->setItem(loop, 9, item10);
-             ui->fish_list->setItem(loop, 10, item11);
-        }
-
-        if(selectedFish >= 0)
-            ui->fish_list->selectRow(selectedFish);
-
-        ui->fish_list->setSortingEnabled(true);
-        ui->fish_list->blockSignals(false);
+        ui->groupBoxWeather->hide();
+        ui->groupBoxFish->show();
+        ui->groupBoxOther->show();
+        updateFish();
     }
-    else if(type == Controller::eWayPointsUpdated)
+    else if(type == Fish::eWeather)
     {
-        m_wptList->clear();
-        QList<QPair<QString, int> > list = m_tripController->getWayPointsList();
-        for(int loop=0; loop < list.count(); loop++)
-        {
-            QPair<QString, int> pair = list.at(loop);
-            QListWidgetItem* item = new QListWidgetItem(pair.first, m_wptList);
-            item->setData(Qt::UserRole+2,  pair.second);
-            m_wptList->insertItem(0, item);
-        }
+        ui->groupBoxFish->hide();
+        ui->groupBoxWeather->show();
+        ui->groupBoxOther->show();
+        updateWeather();
+    }
+    else if(type == Fish::eFishAndWeather)
+    {
+        ui->groupBoxFish->show();
+        ui->groupBoxWeather->show();
+        ui->groupBoxOther->show();
+        updateFish();
+        updateWeather();
+    }
+    else
+    {
+        ui->groupBoxFish->hide();
+        ui->groupBoxWeather->hide();
+        ui->groupBoxOther->hide();
+        return;
+    }
+
+    if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
+         ui->misc->setText(m_tripController->getTextValue(eMiscText));
+
+    QList<QString> userValues = m_tripController->getUserFields();
+    ui->user_props->clear();
+    for(int loop=0; loop < userValues.count(); loop++)
+    {
+        QString uservalue = userValues.at(loop);
+
+        ui->user_props->setItem(loop, 0, new QTableWidgetItem("arvo"));
+        ui->user_props->setItem(loop, 1, new QTableWidgetItem(uservalue));
+    }
+}
+
+void TripForm::updateTripList()
+{
+    ui->trip_list->clear();
+   QMap<QString, int> trips = m_tripController->getTripList();
+   for(QMap<QString, int>::iterator iter = trips.begin(); iter != trips.end(); iter++)
+   {
+       QListWidgetItem* item = new QListWidgetItem(iter.key(),  ui->trip_list, iter.value());
+        ui->trip_list->insertItem(0, item);
+   }
+}
+
+void TripForm::updateFishList()
+{
+    ui->fish_list->blockSignals(true);
+    ui->fish_list->setSortingEnabled(false);
+    ui->fish_list->clear();
+    ui->fish_list->clearContents();
+    ui->fish_list->setRowCount(0);
+    QStringList headers;
+    headers << tr("aika") <<
+            tr("laji") <<
+            tr("tapa") <<
+            tr("saaja") <<
+            tr("viehe") <<
+            tr("paino") <<
+            tr("pituus") <<
+            tr("syvyys") <<
+            tr("ved.syv") <<
+            tr("vetonop") <<
+            tr("vap.pit");
+
+    int selectedFish = m_tripController->getIntValue(eFishList);
+    ui->fish_list->setHorizontalHeaderLabels(headers);
+    QList<QMap<QString, QString> > fishes = m_tripController->getFishList();
+    for(int loop=0; loop < fishes.size(); loop++)
+    {
+        QMap<QString, QString> props = fishes.at(loop);
+         ui->fish_list->insertRow(loop);
+
+         QColor bgcolor;
+         switch(props[FISH_TYPE].toInt())
+         {
+         case Fish::eFish: bgcolor = QColor::fromRgb(255,255,255); break;
+         case Fish::eWeather: bgcolor = QColor::fromRgb(255,245,220); break;
+         case Fish::eFishAndWeather: bgcolor = QColor::fromRgb(230,230,255); break;
+         default: bgcolor = QColor::fromRgb(255,255,255); break;
+         }
+
+         QTableWidgetItem* item1 = new QTableWidgetItem(format(props[FISH_TIME]), loop);
+         QTableWidgetItem* item2 = new QTableWidgetItem(format(props[FISH_SPECIES]), loop);
+         QTableWidgetItem* item3 = new QTableWidgetItem(props[FISH_METHOD], loop);
+         QTableWidgetItem* item4 = new QTableWidgetItem(props[FISH_GETTER], loop);
+         QTableWidgetItem* item5 = new QTableWidgetItem(props["lure"], loop);
+         QTableWidgetItem* item6 = new QTableWidgetItem(props[FISH_WEIGHT], loop);
+         QTableWidgetItem* item7 = new QTableWidgetItem(props[FISH_LENGTH], loop);
+         QTableWidgetItem* item8 = new QTableWidgetItem(props[FISH_SPOT_DEPTH], loop);
+         QTableWidgetItem* item9 = new QTableWidgetItem(props[FISH_TOTAL_DEPTH], loop);
+         QTableWidgetItem* item10 = new QTableWidgetItem(props[FISH_TROLLING_SPEED], loop);
+         QTableWidgetItem* item11 = new QTableWidgetItem(props[FISH_RELEASE_WIDTH], loop);
+
+         item1->setBackgroundColor(bgcolor);
+         item2->setBackgroundColor(bgcolor);
+         item3->setBackgroundColor(bgcolor);
+         item4->setBackgroundColor(bgcolor);
+         item5->setBackgroundColor(bgcolor);
+         item6->setBackgroundColor(bgcolor);
+         item7->setBackgroundColor(bgcolor);
+         item8->setBackgroundColor(bgcolor);
+         item9->setBackgroundColor(bgcolor);
+         item10->setBackgroundColor(bgcolor);
+         item11->setBackgroundColor(bgcolor);
+
+         ui->fish_list->setItem(loop, 0, item1);
+         ui->fish_list->setItem(loop, 1, item2);
+         ui->fish_list->setItem(loop, 2, item3);
+         ui->fish_list->setItem(loop, 3, item4);
+         ui->fish_list->setItem(loop, 4, item5);
+         ui->fish_list->setItem(loop, 5, item6);
+         ui->fish_list->setItem(loop, 6, item7);
+         ui->fish_list->setItem(loop, 7, item8);
+         ui->fish_list->setItem(loop, 8, item9);
+         ui->fish_list->setItem(loop, 9, item10);
+         ui->fish_list->setItem(loop, 10, item11);
+    }
+
+    if(selectedFish >= 0)
+        ui->fish_list->selectRow(selectedFish);
+
+    ui->fish_list->setSortingEnabled(true);
+    ui->fish_list->blockSignals(false);
+}
+
+void TripForm::updateWaypoints()
+{
+    m_wptList->clear();
+    QList<QPair<QString, int> > list = m_tripController->getWayPointsList();
+    for(int loop=0; loop < list.count(); loop++)
+    {
+        QPair<QString, int> pair = list.at(loop);
+        QListWidgetItem* item = new QListWidgetItem(pair.first, m_wptList);
+        item->setData(Qt::UserRole+2,  pair.second);
+        m_wptList->insertItem(0, item);
     }
 }
 
