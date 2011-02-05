@@ -4,6 +4,7 @@ TrollingModel* Singletons::s_model = NULL;
 TripController* Singletons::s_tripController = NULL;
 PlaceController* Singletons::s_placeController = NULL;
 LureController* Singletons::s_lureController = NULL;
+StatisticsController* Singletons::s_statsController = NULL;
 
 TrollingModel* Singletons::model()
 {
@@ -38,6 +39,14 @@ LureController* Singletons::lureController()
         s_lureController = new LureController();
 
     return s_lureController;
+}
+
+StatisticsController* Singletons::statsController()
+{
+    if(!s_statsController)
+        s_statsController = new StatisticsController();
+
+    return s_statsController;
 }
 
 Singletons::Singletons()

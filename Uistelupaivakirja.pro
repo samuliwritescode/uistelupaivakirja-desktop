@@ -34,7 +34,10 @@ SOURCES += main.cpp\
     tripform.cpp \
     lureform.cpp \
     placeform.cpp \
-    trollingexception.cpp
+    trollingexception.cpp \
+    trollingstatistics.cpp \
+    statisticscontroller.cpp \
+    statisticsform.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -59,12 +62,16 @@ HEADERS  += mainwindow.h \
     tripform.h \
     lureform.h \
     placeform.h \
-    trollingexception.h
+    trollingexception.h \
+    trollingstatistics.h \
+    statisticscontroller.h \
+    statisticsform.h
 
 FORMS    += mainwindow.ui \
     tripform.ui \
     lureform.ui \
-    placeform.ui
+    placeform.ui \
+    statisticsform.ui
 
 RESOURCES += \
     resources.qrc

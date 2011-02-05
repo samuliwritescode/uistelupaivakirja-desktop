@@ -6,6 +6,7 @@
 #include "tripform.h"
 #include "lureform.h"
 #include "placeform.h"
+#include "statisticsform.h"
 
 namespace Ui {
     class MainWindow;

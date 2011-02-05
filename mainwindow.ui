@@ -52,7 +52,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -75,7 +75,7 @@
       <property name="movable">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="mainTab">
+      <widget class="QWidget" name="statsTab">
        <attribute name="icon">
         <iconset resource="resources.qrc">
          <normaloff>:/res/mainlogo64.png</normaloff>:/res/mainlogo64.png</iconset>
@@ -83,66 +83,7 @@
        <attribute name="title">
         <string>Tilastot</string>
        </attribute>
-       <widget class="QCommandLinkButton" name="newTripBtn">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>80</y>
-          <width>227</width>
-          <height>87</height>
-         </rect>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Uusi reissu</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>70</width>
-          <height>70</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QCommandLinkButton" name="statisticsBtn">
-        <property name="geometry">
-         <rect>
-          <x>390</x>
-          <y>190</y>
-          <width>222</width>
-          <height>87</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Tilastot</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>70</width>
-          <height>70</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QCommandLinkButton" name="luresBtn">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>360</y>
-          <width>339</width>
-          <height>87</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Vieheet</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>70</width>
-          <height>70</height>
-         </size>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_3"/>
       </widget>
       <widget class="QWidget" name="tripsTab">
        <attribute name="icon">
