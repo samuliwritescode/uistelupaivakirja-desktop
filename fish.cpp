@@ -6,7 +6,7 @@ Fish::Fish():
         m_lure(NULL)
 {
     m_stringprops << FISH_MISC_TEXT << FISH_SPECIES <<
-            FISH_GETTER << FISH_METHOD << FISH_USERFIELD;
+            FISH_GETTER << FISH_METHOD;
     m_timeprops << FISH_TIME;
     m_intprops << FISH_WIND << FISH_WEATHER << FISH_PRESSURE <<
             FISH_WIND_DIRECTION << FISH_PRESSURE_CHANGE;
@@ -53,12 +53,12 @@ void Fish::setUserField(const QString& p_field, const QString& p_value)
             if(key == p_field)
             {
                 keyvalues[loop] = key+"="+p_value;
-                setProperty(FISH_USERFIELD, keyvalues.join("\n"));
+                m_properties[FISH_USERFIELD] = keyvalues.join("\n");
                 return;
             }
         }
     }
-    setProperty(FISH_USERFIELD, userfield+"\n"+p_field+"="+p_value);
+    m_properties[FISH_USERFIELD] = userfield+"\n"+p_field+"="+p_value;
 }
 
 QMap<QString, QString> Fish::getUserFields()
