@@ -13,7 +13,18 @@ QString StatisticsController::getTextValue(EUISource source)
     case eStatistics:
         {
             TrollingStatistics stats;
-            return stats.stats();
+            stats.setY(tr("Paino"));
+            stats.setUnit(TrollingStatistics::eFishPerTime);
+            QMap<QString, QString> chart = stats.stats();
+            QString retval;
+            for(QMap<QString, QString>::iterator iter = chart.begin(); iter != chart.end(); iter++)
+            {
+                retval += iter.key();
+                retval += "\t";
+                retval += iter.value();
+                retval += "\n";
+            }
+            return retval;
         }
         break;
     default: break;
