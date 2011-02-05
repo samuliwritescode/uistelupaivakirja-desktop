@@ -198,7 +198,7 @@ void TripController::intEvent(EUISource source, int value)
             WayPoint wpt = m_trip->getWayPoints().at(value);
             m_trip->getFish()->setProperty(FISH_COORDINATES_LAT, QString::number(wpt.lat));
             m_trip->getFish()->setProperty(FISH_COORDINATES_LON, QString::number(wpt.lon));
-            m_trip->getFish()->setProperty(FISH_TIME, wpt.time);
+            m_trip->getFish()->setProperty(FISH_TIME, wpt.time.time());
         }
         break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
@@ -252,9 +252,8 @@ void TripController::textEvent(EUISource source, const QString& value)
     case eUserField: {
             if(value.split("\n").count() != 2)
                 break;
-            QString field = value.split("\n").at(0);
-            QString uservalue = value.split("\n").at(1);
-            m_trip->getFish()->setProperty(FISH_USERFIELD+field, uservalue);
+            m_trip->getFish()->setUserField(value.split("\n").at(0),
+                                            value.split("\n").at(1));
         }
     case eWaypointsAdd: m_trip->setWayPoints(value);
         sendNotificationToObservers(Controller::eWayPointsUpdated); ;break;
@@ -404,24 +403,15 @@ QStringList TripController::getAlternatives(EUISource source)
 
 QList<QString> TripController::getUserFields()
 {
-    QMap<int, QString> retval;
+    QList<QString> retval;
     Fish* fish = m_trip->getFish();
-    QList<QString> names = fish->getPropertyNames();
-    foreach(QString name, names)
+    QMap<QString, QString> userfields = fish->getUserFields();
+    int index = 0;
+    while(userfields.contains(QString::number(index)))
     {
-        if(name.startsWith(FISH_USERFIELD))
-        {
-            QString id = name.mid(FISH_USERFIELD.length());
-            qDebug() << "key is" << id;
-            retval[id.toInt()] = fish->getProperty(name).toString();
-        }
+        retval.push_back(userfields[QString::number(index)]);
+        index++;
     }
-
-    QList<QString> retval2;
-    for(QMap<int, QString>::iterator iter = retval.begin(); iter != retval.end(); iter++)
-    {
-        retval2.push_back(iter.value());
-    }
-    return retval2;
+    return retval;
 }
 

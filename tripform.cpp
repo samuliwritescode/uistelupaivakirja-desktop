@@ -607,7 +607,7 @@ void TripForm::on_user_props_cellChanged(int row, int column)
         value = ui->user_props->item(row, 1)->text();
 
     qDebug() << "nimi"<<name<<"arvo"<<value;
-    if(!name.isEmpty())
+    //if(!name.isEmpty())
     {
         m_tripController->textEvent(eUserField, QString::number(row)+"\n"+value);
     }

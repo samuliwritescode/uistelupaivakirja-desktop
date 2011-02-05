@@ -1,5 +1,6 @@
 #ifndef FISH_H
 #define FISH_H
+#include <QTime>
 #include "lure.h"
 
 const QString FISH_TYPE = "type";
@@ -27,7 +28,7 @@ const QString FISH_GETTER = "fish_getter";
 const QString FISH_METHOD = "fish_method";
 const QString FISH_COORDINATES_LAT = "fish_coord_lat";
 const QString FISH_COORDINATES_LON = "fish_coord_lon";
-const QString FISH_USERFIELD = "fish_user:";
+const QString FISH_USERFIELD = "fish_user";
 
 class Fish
 {
@@ -50,7 +51,10 @@ public:
     void setProperty(const QString&, QString);
     void setProperty(const QString&, int);
     void setProperty(const QString&, bool);
-    void setProperty(const QString&, QVariant);
+    void setProperty(const QString&, QTime);
+
+    void setUserField(const QString&, const QString&);
+    QMap<QString, QString> getUserFields();
 
     QVariant getProperty(const QString&);
 
@@ -60,6 +64,12 @@ public:
     QList<QString> getPropertyNames();
 
 private:
+    QStringList m_stringprops;
+    QStringList m_timeprops;
+    QStringList m_intprops;
+    QStringList m_boolprops;
+    QStringList m_doubleprops;
+    void setProperty(const QString&, QVariant);
     void setType(EType type);
     Lure* m_lure;
     QHash<QString, QVariant> m_properties;

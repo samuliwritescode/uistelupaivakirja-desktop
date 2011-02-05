@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     trollingobjectfactory.cpp \
     tripform.cpp \
     lureform.cpp \
-    placeform.cpp
+    placeform.cpp \
+    trollingexception.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -57,7 +58,8 @@ HEADERS  += mainwindow.h \
     trollingobjectfactory.h \
     tripform.h \
     lureform.h \
-    placeform.h
+    placeform.h \
+    trollingexception.h
 
 FORMS    += mainwindow.ui \
     tripform.ui \
