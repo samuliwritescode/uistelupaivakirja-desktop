@@ -14,7 +14,9 @@ QString StatisticsController::getTextValue(EUISource source)
         {
             TrollingStatistics stats;
             stats.setY(tr("Paino"));
-            stats.setUnit(TrollingStatistics::eFishPerTime);
+            stats.setScaling(true);
+            stats.setUnit(TrollingStatistics::eCount);
+            stats.setUnitField(tr("Paino"));
             QMap<QString, QString> chart = stats.stats();
             QString retval;
             for(QMap<QString, QString>::iterator iter = chart.begin(); iter != chart.end(); iter++)
