@@ -7,7 +7,7 @@ class TrollingStatistics: public QObject
 {
     Q_OBJECT
 public:
-    enum EUnit { eCount, eFishPerTime, eMean };
+    enum EUnit { eCount, eFishPerTime, eMean, eSum };
     TrollingStatistics();
     QMap<QString, QString> stats();
     void setY(const QString&);

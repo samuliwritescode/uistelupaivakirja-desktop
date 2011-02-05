@@ -13,9 +13,9 @@ QString StatisticsController::getTextValue(EUISource source)
     case eStatistics:
         {
             TrollingStatistics stats;
-            stats.setY(tr("Paino"));
-            stats.setScaling(true);
-            stats.setUnit(TrollingStatistics::eCount);
+            stats.setY(tr("Kuukausi"));
+            //stats.setScaling(true);
+            stats.setUnit(TrollingStatistics::eSum);
             stats.setUnitField(tr("Paino"));
             QMap<QString, QString> chart = stats.stats();
             QString retval;

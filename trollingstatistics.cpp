@@ -100,6 +100,9 @@ QMap<QString, QString> TrollingStatistics::stats()
         {
             fishcount[iter.key()] = sum[iter.key()] / count[iter.key()];
         }
+    } else if(m_unit == TrollingStatistics::eSum)
+    {
+        fishcount = sumFields(statistics, m_field);
     }
 
     for(QMap<QString, double>::iterator iter= fishcount.begin(); iter!=fishcount.end(); iter++)
