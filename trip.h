@@ -9,10 +9,10 @@
 
 class Trip : public TrollingObject
 {
+    Q_OBJECT
 public:
     Trip();
     ~Trip();
-
 
     void setDate(const QDate& date);
     QDate getDate();
@@ -38,6 +38,9 @@ protected:
 
     virtual void constructItems(const TrollingObjectItemList&);
     virtual TrollingObjectItemList serializeItems();
+
+private slots:
+    void FishModified();
 
 private:
     QList<Fish*> m_catch;

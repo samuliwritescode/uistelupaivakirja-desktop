@@ -1,28 +1,16 @@
 #include <QDebug>
 #include "fish.h"
+#include "trip.h"
 #include "trollingexception.h"
 
 Fish::Fish():
         m_lure(NULL)
 {
-    m_stringprops << FISH_MISC_TEXT << FISH_SPECIES <<
-            FISH_GETTER << FISH_METHOD;
-    m_timeprops << FISH_TIME;
-    m_intprops << FISH_WIND << FISH_WEATHER << FISH_PRESSURE <<
-            FISH_WIND_DIRECTION << FISH_PRESSURE_CHANGE;
-    m_boolprops << FISH_IS_GROUP << FISH_IS_UNDERSIZE <<
-            FISH_IS_CATCHRELEASED;
-    m_doubleprops << FISH_LENGTH << FISH_WEIGHT <<
-            FISH_SPOT_DEPTH << FISH_WATER_TEMP <<
-            FISH_AIR_TEMP << FISH_TOTAL_DEPTH <<
-            FISH_TROLLING_SPEED << FISH_LINE_WEIGHT <<
-            FISH_RELEASE_WIDTH << FISH_COORDINATES_LAT <<
-            FISH_COORDINATES_LON;
 }
 
 void Fish::setType(EType type)
 {
-    m_properties[FISH_TYPE] = type;
+    setProperty(FISH_TYPE, type);
 }
 
 Fish::EType Fish::getType()
@@ -53,12 +41,12 @@ void Fish::setUserField(const QString& p_field, const QString& p_value)
             if(key == p_field)
             {
                 keyvalues[loop] = key+"="+p_value;
-                m_properties[FISH_USERFIELD] = keyvalues.join("\n");
+                setProperty(FISH_USERFIELD, keyvalues.join("\n"));
                 return;
             }
         }
     }
-    m_properties[FISH_USERFIELD] = userfield+"\n"+p_field+"="+p_value;
+    setProperty(FISH_USERFIELD, userfield+"\n"+p_field+"="+p_value);
 }
 
 QMap<QString, QString> Fish::getUserFields()
@@ -82,88 +70,18 @@ QMap<QString, QString> Fish::getUserFields()
     return retval;
 }
 
-void Fish::setProperty(const QString& p_prop, double p_value)
-{
-    if(m_doubleprops.contains(p_prop))
-        m_properties[p_prop] = p_value;
-    else
-        throw TrollingException("Dont try to set double value to property: "+p_prop);
-}
-
-void Fish::setProperty(const QString& p_prop, QString p_value)
-{
-    if(m_stringprops.contains(p_prop))
-    {
-        m_properties[p_prop] = p_value;
-    }
-    else if(m_doubleprops.contains(p_prop))
-    {
-        bool bConvOk = false;
-        if(p_value.isEmpty())
-        {
-            m_properties[p_prop] = QString();
-        }
-        else
-        {
-            p_value.toDouble(&bConvOk);
-            if(bConvOk)
-            {
-                m_properties[p_prop] = p_value;
-            }
-            else
-            {
-                throw TrollingException("Dont try to set double value to property: "+p_prop);
-            }
-        }
-    }
-    else
-    {
-        throw TrollingException("Dont try to set string value to property: "+p_prop);
-    }
-}
-
-void Fish::setProperty(const QString& p_prop, int p_value)
-{
-    if(m_intprops.contains(p_prop))
-        m_properties[p_prop] = p_value;
-    else
-        throw TrollingException("Dont try to set int value to property: "+p_prop);
-}
-
-void Fish::setProperty(const QString& p_prop, QTime p_value)
-{
-    if(m_timeprops.contains(p_prop))
-        m_properties[p_prop] = p_value;
-    else
-        throw TrollingException("Dont try to set time value to property: "+p_prop);
-}
-
 QVariant Fish::getProperty(const QString& p_prop)
 {
     return m_properties[p_prop];
 }
 
-bool Fish::isProperty(const QString& p_prop, QVariant p_compareTo)
-{
-    return m_properties[p_prop] == p_compareTo;
-}
-
-double Fish::getPropertyDouble(const QString& p_prop)
-{
-    return m_properties[p_prop].toDouble();
-}
-
-void Fish::setProperty(const QString& p_prop, bool p_value)
-{
-    if(m_boolprops.contains(p_prop))
-        m_properties[p_prop] = p_value;
-    else
-        throw TrollingException("Dont try to set time value to property: "+p_prop);
-}
-
 void Fish::setProperty(const QString& p_prop, QVariant p_value)
 {
-     m_properties[p_prop] = p_value;
+    if(m_properties[p_prop].toString() == p_value.toString())
+        return;
+
+    m_properties[p_prop] = p_value;
+    emit FishModified();
 }
 
 QList<QString> Fish::getPropertyNames()
@@ -214,4 +132,261 @@ QString Fish::getHumanReadablePressure()
     default: break;
     }
     return QObject::tr("Ei määritelty");
+}
+
+void Fish::setDouble(const QString& p_prop, const QString& p_value)
+{
+    bool bConvOk = false;
+    if(p_value.isEmpty())
+    {
+        setProperty(p_prop, QString());
+    }
+    else
+    {
+        p_value.toDouble(&bConvOk);
+        if(bConvOk)
+        {
+            setProperty(p_prop, p_value);
+        }
+        else
+        {
+            throw TrollingException("Value is not numeric: "+p_value+" property: "+p_prop);
+        }
+    }
+}
+
+void Fish::setWeight(const QString& p_val)
+{
+    setDouble(FISH_WEIGHT, p_val);
+}
+
+void Fish::setLength(const QString& p_val)
+{
+    setDouble(FISH_LENGTH, p_val);
+}
+
+void Fish::setSpotDepth(const QString& p_val)
+{
+    setDouble(FISH_SPOT_DEPTH, p_val);
+}
+
+void Fish::setTotalDepth(const QString& p_val)
+{
+    setDouble(FISH_TOTAL_DEPTH, p_val);
+}
+
+void Fish::setTrollingSpeed(const QString& p_val)
+{
+    setDouble(FISH_TROLLING_SPEED, p_val);
+}
+
+void Fish::setLineWeight(const QString& p_val)
+{
+    setDouble(FISH_LINE_WEIGHT, p_val);
+}
+
+void Fish::setReleaseWidth(const QString& p_val)
+{
+    setDouble(FISH_RELEASE_WIDTH, p_val);
+}
+
+void Fish::setSpecies(const QString& p_val)
+{
+    setProperty(FISH_SPECIES, p_val);
+}
+
+void Fish::setMethod(const QString& p_val)
+{
+    setProperty(FISH_METHOD, p_val);
+}
+
+void Fish::setGetter(const QString& p_val)
+{
+    setProperty(FISH_GETTER, p_val);
+}
+
+void Fish::setMiscText(const QString& p_val)
+{
+    setProperty(FISH_MISC_TEXT, p_val);
+}
+
+void Fish::setWaterTemp(const QString& p_val)
+{
+    setDouble(FISH_WATER_TEMP, p_val);
+}
+
+void Fish::setAirTemp(const QString& p_val)
+{
+    setDouble(FISH_AIR_TEMP, p_val);
+}
+
+void Fish::setCoordinates(const QString& p_lat, const QString& p_lon)
+{
+    setDouble(FISH_COORDINATES_LAT, p_lat);
+    setDouble(FISH_COORDINATES_LON, p_lon);
+}
+
+void Fish::setTime(const QTime& p_val)
+{
+    setProperty(FISH_TIME, p_val);
+}
+
+void Fish::setWindCondition(EWindCondition p_val)
+{
+    setProperty(FISH_WIND, p_val);
+}
+
+void Fish::setWindDirection(EWindDirection p_val)
+{
+    setProperty(FISH_WIND_DIRECTION, p_val);
+}
+
+void Fish::setWeatherCondition(EWeatherCondition p_val)
+{
+    setProperty(FISH_WEATHER, p_val);
+}
+
+void Fish::setPressureCondition(EPressureCondition p_val)
+{
+    setProperty(FISH_PRESSURE, p_val);
+}
+
+void Fish::setPressureChange(EPressureChange p_val)
+{
+    setProperty(FISH_PRESSURE_CHANGE, p_val);
+}
+
+void Fish::setGroup(bool p_val)
+{
+    setProperty(FISH_IS_GROUP, p_val);
+}
+
+void Fish::setCR(bool p_val)
+{
+    setProperty(FISH_IS_CATCHRELEASED, p_val);
+}
+
+void Fish::setUnderSize(bool p_val)
+{
+    setProperty(FISH_IS_UNDERSIZE, p_val);
+}
+
+QString Fish::getWeight()
+{
+    return m_properties[FISH_WEIGHT].toString();
+}
+
+QString Fish::getLength()
+{
+    return m_properties[FISH_LENGTH].toString();
+}
+
+QString Fish::getSpotDepth()
+{
+    return m_properties[FISH_SPOT_DEPTH].toString();
+}
+
+QString Fish::getTotalDepth()
+{
+    return m_properties[FISH_TOTAL_DEPTH].toString();
+}
+
+QString Fish::getTrollingSpeed()
+{
+    return m_properties[FISH_TROLLING_SPEED].toString();
+}
+
+QString Fish::getLineWeight()
+{
+    return m_properties[FISH_LINE_WEIGHT].toString();
+}
+
+QString Fish::getReleaseWidth()
+{
+    return m_properties[FISH_RELEASE_WIDTH].toString();
+}
+
+QString Fish::getSpecies()
+{
+    return m_properties[FISH_SPECIES].toString();
+}
+
+QString Fish::getMethod()
+{
+    return m_properties[FISH_METHOD].toString();
+}
+
+QString Fish::getGetter()
+{
+    return m_properties[FISH_GETTER].toString();
+}
+
+QString Fish::getMiscText()
+{
+    return m_properties[FISH_MISC_TEXT].toString();
+}
+
+QString Fish::getWaterTemp()
+{
+    return m_properties[FISH_WATER_TEMP].toString();
+}
+
+QString Fish::getAirTemp()
+{
+    return m_properties[FISH_AIR_TEMP].toString();
+}
+
+QString Fish::getCoordinatesLat()
+{
+    return m_properties[FISH_COORDINATES_LAT].toString();
+}
+
+QString Fish::getCoordinatesLon()
+{
+    return m_properties[FISH_COORDINATES_LON].toString();
+}
+
+QTime Fish::getTime()
+{
+   return m_properties[FISH_TIME].toTime();
+}
+
+bool Fish::isGroup()
+{
+    return m_properties[FISH_IS_GROUP].toBool() == true;
+}
+
+bool Fish::isUnderSize()
+{
+       return m_properties[FISH_IS_UNDERSIZE].toBool() == true;
+}
+
+bool Fish::isCR()
+{
+       return m_properties[FISH_IS_CATCHRELEASED].toBool() == true;
+}
+
+Fish::EWindCondition Fish::getWindCondition()
+{
+    return static_cast<Fish::EWindCondition>(m_properties[FISH_WIND].toInt());
+}
+
+Fish::EWeatherCondition Fish::getWeatherCondition()
+{
+    return static_cast<Fish::EWeatherCondition>(m_properties[FISH_WEATHER].toInt());
+}
+
+Fish::EPressureCondition Fish::getPressureCondition()
+{
+    return static_cast<Fish::EPressureCondition>(m_properties[FISH_PRESSURE].toInt());
+}
+
+Fish::EWindDirection Fish::getWindDirection()
+{
+   return static_cast<Fish::EWindDirection>(m_properties[FISH_WIND_DIRECTION].toInt());
+}
+
+Fish::EPressureChange Fish::getPressureChange()
+{
+    return static_cast<Fish::EPressureChange>(m_properties[FISH_PRESSURE_CHANGE].toInt());
 }

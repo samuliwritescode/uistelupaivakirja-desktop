@@ -86,6 +86,7 @@ void Trip::selectFish(int id)
 Fish* Trip::newFish(Fish::EType type)
 {
     Fish* fish = new Fish();
+    connect(fish, SIGNAL(FishModified()), this, SLOT(FishModified()));
     fish->setType(type);
     m_catch.push_back(fish);
     m_selectedFish = m_catch.size()-1;
@@ -96,7 +97,9 @@ void Trip::deleteFish(int id)
 {
     if(id > -1 && m_catch.size() > id)
     {
-        delete m_catch.at(id);
+        Fish* fish = m_catch.at(id);
+        disconnect(fish, SIGNAL(FishModified()), this, SLOT(FishModified()));
+        delete fish;
         m_catch.removeAt(id);
     }
 }
@@ -118,12 +121,19 @@ int Trip::indexOfFish(Fish* p_fish)
     return -1;
 }
 
+void Trip::FishModified()
+{
+    qDebug() << "trip is unsaved";
+    setUnsaved();
+}
+
 void Trip::constructItems(const TrollingObjectItemList& p_items)
 {
     m_catch.clear();
     foreach(TrollingObjectItem item, p_items)
     {
         Fish* fish = new Fish();
+        connect(fish, SIGNAL(FishModified()), this, SLOT(FishModified()));
 
         for(QHash<QString, QVariant>::iterator iter = item.begin(); iter != item.end(); iter++)
         {

@@ -2,6 +2,7 @@
 #define FISH_H
 #include <QTime>
 #include "lure.h"
+class Trip;
 
 const QString FISH_TYPE = "type";
 const QString FISH_WIND = "fish_wind";
@@ -30,14 +31,18 @@ const QString FISH_COORDINATES_LAT = "fish_coord_lat";
 const QString FISH_COORDINATES_LON = "fish_coord_lon";
 const QString FISH_USERFIELD = "fish_user";
 
-class Fish
+class Fish: public QObject
 {
+    Q_OBJECT
+
     friend class Trip;
 public:
 
     enum EWindCondition{eCalm=1, eFaint=2, eModerate=4, eBrisk=8, eHard=16};
+    enum EWindDirection{eNoWindDirection, eSouth, eSouthWest, eWest, eNorthWest, eNorth, eNorthEast, eEast, eSouthEast};
     enum EWeatherCondition{eClear=1, eHalfClear=2, eOvercast=4, eRain=8, eFog=16};
     enum EPressureCondition{eLow=1, eMildLow=2, eNormal=4, eMildHigh=8, eHigh=16};
+    enum EPressureChange{eNoPressureChange, eSlow, eFast};
     enum EType {eNaN, eFish, eWeather, eFishAndWeather};
 
     Fish();
@@ -51,28 +56,65 @@ public:
     QString getHumanReadableWind();
     QString getHumanReadablePressure();
 
-    void setProperty(const QString&, double);
-    void setProperty(const QString&, QString);
-    void setProperty(const QString&, int);
-    void setProperty(const QString&, bool);
-    void setProperty(const QString&, QTime);
+    void setWeight(const QString&);
+    void setLength(const QString&);
+    void setSpotDepth(const QString&);
+    void setTotalDepth(const QString&);
+    void setTrollingSpeed(const QString&);
+    void setLineWeight(const QString&);
+    void setReleaseWidth(const QString&);
+    void setSpecies(const QString&);
+    void setMethod(const QString&);
+    void setGetter(const QString&);
+    void setMiscText(const QString&);
+    void setWaterTemp(const QString&);
+    void setAirTemp(const QString&);
+    void setCoordinates(const QString&, const QString&);
+    void setWindCondition(EWindCondition);
+    void setWeatherCondition(EWeatherCondition);
+    void setPressureCondition(EPressureCondition);
+    void setWindDirection(EWindDirection);
+    void setPressureChange(EPressureChange);
+    void setGroup(bool);
+    void setCR(bool);
+    void setUnderSize(bool);
+    void setTime(const QTime&);
+
+    QString getWeight();
+    QString getLength();
+    QString getSpotDepth();
+    QString getTotalDepth();
+    QString getTrollingSpeed();
+    QString getLineWeight();
+    QString getReleaseWidth();
+    QString getSpecies();
+    QString getMethod();
+    QString getGetter();
+    QString getMiscText();
+    QString getWaterTemp();
+    QString getAirTemp();
+    QString getCoordinatesLat();
+    QString getCoordinatesLon();
+    EWindCondition getWindCondition();
+    EWeatherCondition getWeatherCondition();
+    EPressureCondition getPressureCondition();
+    EWindDirection getWindDirection();
+    EPressureChange getPressureChange();
+    QTime getTime();
+    bool isGroup();
+    bool isUnderSize();
+    bool isCR();
 
     void setUserField(const QString&, const QString&);
     QMap<QString, QString> getUserFields();
-
     QVariant getProperty(const QString&);
-
-    double getPropertyDouble(const QString&);
-    bool isProperty(const QString&, QVariant);
-
     QList<QString> getPropertyNames();
 
+signals:
+    void FishModified();
+
 private:
-    QStringList m_stringprops;
-    QStringList m_timeprops;
-    QStringList m_intprops;
-    QStringList m_boolprops;
-    QStringList m_doubleprops;
+    void setDouble(const QString&, const QString&);
     void setProperty(const QString&, QVariant);
     void setType(EType type);
     Lure* m_lure;

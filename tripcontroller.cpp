@@ -26,27 +26,27 @@ bool TripController::getBooleanValue(EUISource source)
 {
     switch(source)
     {
-    case eWindCalm: return m_trip->getFish()->isProperty(FISH_WIND, Fish::eCalm); break;
-    case eWindFaint: return m_trip->getFish()->isProperty(FISH_WIND, Fish::eFaint); break;
-    case eWindModerate: return m_trip->getFish()->isProperty(FISH_WIND, Fish::eModerate); break;
-    case eWindBrisk: return m_trip->getFish()->isProperty(FISH_WIND, Fish::eBrisk); break;
-    case eWindHard: return m_trip->getFish()->isProperty(FISH_WIND, Fish::eHard); break;
+    case eWindCalm: return m_trip->getFish()->getWindCondition() == Fish::eCalm; break;
+    case eWindFaint: return m_trip->getFish()->getWindCondition() == Fish::eFaint; break;
+    case eWindModerate: return m_trip->getFish()->getWindCondition() == Fish::eModerate; break;
+    case eWindBrisk: return m_trip->getFish()->getWindCondition() == Fish::eBrisk; break;
+    case eWindHard: return m_trip->getFish()->getWindCondition() == Fish::eHard; break;
 
-    case eWeatherClear: return m_trip->getFish()->isProperty(FISH_WEATHER, Fish::eClear); break;
-    case eWeatherHalfClear: return m_trip->getFish()->isProperty(FISH_WEATHER, Fish::eHalfClear); break;
-    case eWeatherOvercast: return m_trip->getFish()->isProperty(FISH_WEATHER, Fish::eOvercast); break;
-    case eWeatherRain: return m_trip->getFish()->isProperty(FISH_WEATHER, Fish::eRain); break;
-    case eWeatherFog: return m_trip->getFish()->isProperty(FISH_WEATHER, Fish::eFog); break;
+    case eWeatherClear: return m_trip->getFish()->getWeatherCondition() == Fish::eClear; break;
+    case eWeatherHalfClear: return m_trip->getFish()->getWeatherCondition() == Fish::eHalfClear; break;
+    case eWeatherOvercast: return m_trip->getFish()->getWeatherCondition() == Fish::eOvercast; break;
+    case eWeatherRain: return m_trip->getFish()->getWeatherCondition() == Fish::eRain; break;
+    case eWeatherFog: return m_trip->getFish()->getWeatherCondition() == Fish::eFog; break;
 
-    case ePressureLow: return m_trip->getFish()->isProperty(FISH_PRESSURE, Fish::eLow); break;
-    case ePressureMildLow: return m_trip->getFish()->isProperty(FISH_PRESSURE, Fish::eMildLow); break;
-    case ePressureNormal: return m_trip->getFish()->isProperty(FISH_PRESSURE, Fish::eNormal); break;
-    case ePressureMildHigh: return m_trip->getFish()->isProperty(FISH_PRESSURE, Fish::eMildHigh); break;
-    case ePressureHigh: return m_trip->getFish()->isProperty(FISH_PRESSURE, Fish::eHigh); break;
+    case ePressureLow: return m_trip->getFish()->getPressureCondition() == Fish::eLow; break;
+    case ePressureMildLow: return m_trip->getFish()->getPressureCondition() == Fish::eMildLow; break;
+    case ePressureNormal: return m_trip->getFish()->getPressureCondition() == Fish::eNormal; break;
+    case ePressureMildHigh: return m_trip->getFish()->getPressureCondition() == Fish::eMildHigh; break;
+    case ePressureHigh: return m_trip->getFish()->getPressureCondition() == Fish::eHigh; break;
 
-    case eGroup: return m_trip->getFish()->isProperty(FISH_IS_GROUP, true); break;
-    case eCatchNRelease: return m_trip->getFish()->isProperty(FISH_IS_CATCHRELEASED, true); break;
-    case eUnderSize: return m_trip->getFish()->isProperty(FISH_IS_UNDERSIZE, true); break;
+    case eGroup: return m_trip->getFish()->isGroup(); break;
+    case eCatchNRelease: return m_trip->getFish()->isCR(); break;
+    case eUnderSize: return m_trip->getFish()->isUnderSize(); break;
     case eUnsavedChanges: return m_trip->isUnsaved(); break;
     default: qCritical() << "Unknown get boolean" << source; break;
     }
@@ -61,8 +61,8 @@ int TripController::getIntValue(EUISource source)
     case eFishType: return m_trip->getFish()->getType(); break;
     case eStartTime: return m_trip->getTime().first.hour(); break;
     case eEndTime: return m_trip->getTime().second.hour(); break;
-    case eWindDirection: return m_trip->getFish()->getProperty(FISH_WIND_DIRECTION).toInt(); break;
-    case ePressureChange: return m_trip->getFish()->getProperty(FISH_PRESSURE_CHANGE).toInt(); break;
+    case eWindDirection: return m_trip->getFish()->getWindDirection(); break;
+    case ePressureChange: return m_trip->getFish()->getPressureChange(); break;
     case ePlaceName:
         if(m_trip->getPlace())
             return m_trip->getPlace()->getId();
@@ -82,20 +82,21 @@ QString TripController::getTextValue(EUISource source)
         if(m_trip->getFish()->getLure())
             return m_trip->getFish()->getLure()->getMaker();
         break;
-    case eLength: return m_trip->getFish()->getProperty(FISH_LENGTH).toString(); break;
-    case eWeight: return m_trip->getFish()->getProperty(FISH_WEIGHT).toString(); break;
-    case eSpotDepth: return m_trip->getFish()->getProperty(FISH_SPOT_DEPTH).toString(); break;
-    case eTotalDepth: return m_trip->getFish()->getProperty(FISH_TOTAL_DEPTH).toString(); break;
-    case eTrollingSpeed: return m_trip->getFish()->getProperty(FISH_TROLLING_SPEED).toString(); break;
-    case eLineWeight: return m_trip->getFish()->getProperty(FISH_LINE_WEIGHT).toString(); break;
-    case eReleaseWidth: return m_trip->getFish()->getProperty(FISH_RELEASE_WIDTH).toString(); break;
-    case eAirTemp: return m_trip->getFish()->getProperty(FISH_AIR_TEMP).toString(); break;
-    case eWaterTemp: return m_trip->getFish()->getProperty(FISH_WATER_TEMP).toString(); break;
-    case eMiscText: return m_trip->getFish()->getProperty(FISH_MISC_TEXT).toString(); break;
-    case eSpecies: return m_trip->getFish()->getProperty(FISH_SPECIES).toString(); break;
-    case eMethod: return m_trip->getFish()->getProperty(FISH_METHOD).toString(); break;
-    case eGetter: return m_trip->getFish()->getProperty(FISH_GETTER).toString(); break;
-    case eWayPointSet: return m_trip->getFish()->getProperty(FISH_COORDINATES_LAT).toString(); break;
+    case eLength: return m_trip->getFish()->getLength(); break;
+    case eWeight: return m_trip->getFish()->getWeight(); break;
+    case eSpotDepth: return m_trip->getFish()->getSpotDepth(); break;
+    case eTotalDepth: return m_trip->getFish()->getTotalDepth(); break;
+    case eTrollingSpeed: return m_trip->getFish()->getTrollingSpeed(); break;
+    case eLineWeight: return m_trip->getFish()->getLineWeight(); break;
+    case eReleaseWidth: return m_trip->getFish()->getReleaseWidth(); break;
+    case eAirTemp: return m_trip->getFish()->getAirTemp(); break;
+    case eWaterTemp: return m_trip->getFish()->getWaterTemp(); break;
+    case eMiscText: return m_trip->getFish()->getMiscText(); break;
+    case eSpecies: return m_trip->getFish()->getSpecies(); break;
+    case eMethod: return m_trip->getFish()->getMethod(); break;
+    case eGetter: return m_trip->getFish()->getGetter(); break;
+    case eWayPointSet: return m_trip->getFish()->getCoordinatesLat()+" "+
+                m_trip->getFish()->getCoordinatesLon(); break;
     default: qCritical() << "Unknown get text" << source; break;
     }
     return QString();
@@ -106,8 +107,8 @@ QTime TripController::getTimeValue(EUISource source)
     switch(source)
     {
     case eTime:
-        if(m_trip->getFish()->getProperty(FISH_TIME).toTime().isValid())
-            return m_trip->getFish()->getProperty(FISH_TIME).toTime();
+        if(m_trip->getFish()->getTime().isValid())
+            return m_trip->getFish()->getTime();
         else
             return QTime(0,0,0);
 
@@ -122,27 +123,27 @@ void TripController::booleanEvent(EUISource source, bool value)
     qDebug() << "got bool event" << source << value;
     switch(source)
     {
-    case eWindCalm: m_trip->getFish()->setProperty(FISH_WIND, Fish::eCalm); break;
-    case eWindFaint: m_trip->getFish()->setProperty(FISH_WIND, Fish::eFaint); break;
-    case eWindModerate: m_trip->getFish()->setProperty(FISH_WIND, Fish::eModerate); break;
-    case eWindBrisk: m_trip->getFish()->setProperty(FISH_WIND, Fish::eBrisk); break;
-    case eWindHard: m_trip->getFish()->setProperty(FISH_WIND, Fish::eHard); break;
+    case eWindCalm: m_trip->getFish()->setWindCondition(Fish::eCalm); break;
+    case eWindFaint: m_trip->getFish()->setWindCondition(Fish::eFaint); break;
+    case eWindModerate: m_trip->getFish()->setWindCondition(Fish::eModerate); break;
+    case eWindBrisk: m_trip->getFish()->setWindCondition(Fish::eBrisk); break;
+    case eWindHard: m_trip->getFish()->setWindCondition(Fish::eHard); break;
 
-    case eWeatherClear: m_trip->getFish()->setProperty(FISH_WEATHER, Fish::eClear); break;
-    case eWeatherHalfClear: m_trip->getFish()->setProperty(FISH_WEATHER, Fish::eHalfClear); break;
-    case eWeatherOvercast: m_trip->getFish()->setProperty(FISH_WEATHER, Fish::eOvercast); break;
-    case eWeatherRain: m_trip->getFish()->setProperty(FISH_WEATHER, Fish::eRain); break;
-    case eWeatherFog: m_trip->getFish()->setProperty(FISH_WEATHER, Fish::eFog); break;
+    case eWeatherClear: m_trip->getFish()->setWeatherCondition(Fish::eClear); break;
+    case eWeatherHalfClear: m_trip->getFish()->setWeatherCondition(Fish::eHalfClear); break;
+    case eWeatherOvercast: m_trip->getFish()->setWeatherCondition(Fish::eOvercast); break;
+    case eWeatherRain: m_trip->getFish()->setWeatherCondition(Fish::eRain); break;
+    case eWeatherFog: m_trip->getFish()->setWeatherCondition(Fish::eFog); break;
 
-    case ePressureLow: m_trip->getFish()->setProperty(FISH_PRESSURE, Fish::eLow); break;
-    case ePressureMildLow: m_trip->getFish()->setProperty(FISH_PRESSURE, Fish::eMildLow); break;
-    case ePressureNormal: m_trip->getFish()->setProperty(FISH_PRESSURE, Fish::eNormal); break;
-    case ePressureMildHigh: m_trip->getFish()->setProperty(FISH_PRESSURE, Fish::eMildHigh); break;
-    case ePressureHigh: m_trip->getFish()->setProperty(FISH_PRESSURE, Fish::eHigh); break;
+    case ePressureLow: m_trip->getFish()->setPressureCondition(Fish::eLow); break;
+    case ePressureMildLow: m_trip->getFish()->setPressureCondition(Fish::eMildLow); break;
+    case ePressureNormal: m_trip->getFish()->setPressureCondition(Fish::eNormal); break;
+    case ePressureMildHigh: m_trip->getFish()->setPressureCondition(Fish::eMildHigh); break;
+    case ePressureHigh: m_trip->getFish()->setPressureCondition(Fish::eHigh); break;
 
-    case eGroup: m_trip->getFish()->setProperty(FISH_IS_GROUP, value); break;
-    case eCatchNRelease: m_trip->getFish()->setProperty(FISH_IS_CATCHRELEASED, value); break;
-    case eUnderSize: m_trip->getFish()->setProperty(FISH_IS_UNDERSIZE, value); break;
+    case eGroup: m_trip->getFish()->setGroup(value); break;
+    case eCatchNRelease: m_trip->getFish()->setCR(value); break;
+    case eUnderSize: m_trip->getFish()->setUnderSize(value); break;
     default: qCritical() << "Unknown boolean event. Cant handle this!" << source << value;
     }
 
@@ -157,11 +158,11 @@ void TripController::intEvent(EUISource source, int value)
     case eStartTime: m_trip->setTime(QTime(value,0), QTime()); break;
     case eEndTime: m_trip->setTime(QTime(), QTime(value,0)); break;
     case eWindDirection:
-        m_trip->getFish()->setProperty(FISH_WIND_DIRECTION, value);
+        m_trip->getFish()->setWindDirection(static_cast<Fish::EWindDirection>(value));
         sendNotificationToObservers(Controller::eTripUpdated);
         return; break;
     case ePressureChange:
-        m_trip->getFish()->setProperty(FISH_PRESSURE_CHANGE, value);
+        m_trip->getFish()->setPressureChange(static_cast<Fish::EPressureChange>(value));
         sendNotificationToObservers(Controller::eTripUpdated);
         return; break;
     case eTrip:
@@ -196,9 +197,8 @@ void TripController::intEvent(EUISource source, int value)
     case eWayPointSet:
         {
             WayPoint wpt = m_trip->getWayPoints().at(value);
-            m_trip->getFish()->setProperty(FISH_COORDINATES_LAT, QString::number(wpt.lat));
-            m_trip->getFish()->setProperty(FISH_COORDINATES_LON, QString::number(wpt.lon));
-            m_trip->getFish()->setProperty(FISH_TIME, wpt.time.time());
+            m_trip->getFish()->setCoordinates(QString::number(wpt.lat), QString::number(wpt.lon));
+            m_trip->getFish()->setTime(wpt.time.time());
         }
         break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
@@ -224,7 +224,7 @@ void TripController::timeEvent(EUISource source, const QTime& value)
     qDebug() << "got time event" << source << value;
     switch(source)
     {
-    case eTime: m_trip->getFish()->setProperty(FISH_TIME, value); break;
+    case eTime: m_trip->getFish()->setTime(value); break;
     default:  qCritical() << "Unknown time event. Cant handle this!" << source;
     }
     sendNotificationToObservers(Controller::eTripUpdated);
@@ -236,19 +236,19 @@ void TripController::textEvent(EUISource source, const QString& value)
     qDebug() << "got text event" << source << value;
     switch(source)
     {
-    case eMiscText: m_trip->getFish()->setProperty(FISH_MISC_TEXT, value); break;
-    case eWaterTemp: m_trip->getFish()->setProperty(FISH_WATER_TEMP, value); break;
-    case eAirTemp: m_trip->getFish()->setProperty(FISH_AIR_TEMP, value); break;
-    case eWeight: m_trip->getFish()->setProperty(FISH_WEIGHT, value); break;
-    case eLength: m_trip->getFish()->setProperty(FISH_LENGTH, value); break;
-    case eSpotDepth: m_trip->getFish()->setProperty(FISH_SPOT_DEPTH, value); break;
-    case eTotalDepth: m_trip->getFish()->setProperty(FISH_TOTAL_DEPTH, value); break;
-    case eTrollingSpeed:m_trip->getFish()->setProperty(FISH_TROLLING_SPEED, value); break;
-    case eLineWeight: m_trip->getFish()->setProperty(FISH_LINE_WEIGHT, value); break;
-    case eReleaseWidth: m_trip->getFish()->setProperty(FISH_RELEASE_WIDTH, value); break;
-    case eSpecies: m_trip->getFish()->setProperty(FISH_SPECIES, value); break;
-    case eMethod: m_trip->getFish()->setProperty(FISH_METHOD, value); break;
-    case eGetter: m_trip->getFish()->setProperty(FISH_GETTER, value); break;
+    case eMiscText: m_trip->getFish()->setMiscText(value); break;
+    case eWaterTemp: m_trip->getFish()->setWaterTemp(value); break;
+    case eAirTemp: m_trip->getFish()->setAirTemp(value); break;
+    case eWeight: m_trip->getFish()->setWeight(value); break;
+    case eLength: m_trip->getFish()->setLength(value); break;
+    case eSpotDepth: m_trip->getFish()->setSpotDepth(value); break;
+    case eTotalDepth: m_trip->getFish()->setTotalDepth(value); break;
+    case eTrollingSpeed:m_trip->getFish()->setTrollingSpeed(value); break;
+    case eLineWeight: m_trip->getFish()->setLineWeight(value); break;
+    case eReleaseWidth: m_trip->getFish()->setReleaseWidth(value); break;
+    case eSpecies: m_trip->getFish()->setSpecies(value); break;
+    case eMethod: m_trip->getFish()->setMethod(value); break;
+    case eGetter: m_trip->getFish()->setGetter(value); break;
     case eUserField: {
             if(value.split("\n").count() != 2)
                 break;

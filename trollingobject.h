@@ -9,7 +9,7 @@
 typedef QHash<QString, QVariant> TrollingObjectItem;
 typedef QList<TrollingObjectItem> TrollingObjectItemList;
 
-class TrollingObject
+class TrollingObject: public QObject
 {
     friend class XMLWriter;
 public:
@@ -42,7 +42,6 @@ private:
     QString m_type;
     QHash<QString, QVariant> m_properties;
     bool m_unsavedChanges;
-    //TrollingObjectItemList m_list;
 };
 
 #endif // TROLLINGOBJECT_H
