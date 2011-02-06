@@ -73,7 +73,10 @@ enum EUISource {eTripDate,
                 eWayPointSet,
                 eUnsavedChanges,
                 eUserField,
-                eStatistics};
+                eStatistics,
+                eStatisticsUnit,
+                eStatisticsColumn,
+                eStatisticsField};
 
 class Controller : public QObject
 {
@@ -102,7 +105,8 @@ public:
         eLureUpdated,
         ePlaceUpdated,
         ePlaceListUpdated,
-        eWayPointsUpdated
+        eWayPointsUpdated,
+        eStatisticsUpdated
     };
 
 signals:

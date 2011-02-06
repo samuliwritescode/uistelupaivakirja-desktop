@@ -19,6 +19,15 @@ public:
 private:
     StatisticsController* m_statsController;
     Ui::StatisticsForm *ui;
+
+private slots:
+    void on_columnCombo_currentIndexChanged(QString );
+    void on_calculatefromfieldCombo_currentIndexChanged(QString );
+    void on_unitCombo_currentIndexChanged(QString );
+    void observerEvent(int type);
+    void on_columnCombo_textChanged(QString );
+    void on_calculatefromfieldCombo_textChanged(QString );
+    void on_unitCombo_textChanged(QString );
 };
 
 #endif // STATISTICSFORM_H
