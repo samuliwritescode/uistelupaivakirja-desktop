@@ -170,3 +170,48 @@ QList<QString> Fish::getPropertyNames()
 {
     return m_properties.keys();
 }
+
+QString Fish::getHumanReadableWeather()
+{
+    EWeatherCondition weather = static_cast<EWeatherCondition>(m_properties[FISH_WEATHER].toInt());
+    switch(weather)
+    {
+    case eClear: return QObject::tr("Selkeää");
+    case eHalfClear: return QObject::tr("Puolipilvistä");
+    case eOvercast: return QObject::tr("Pilvistä");
+    case eRain: return QObject::tr("Sadetta");
+    case eFog: return QObject::tr("Sumua");
+    default: break;
+    }
+    return QObject::tr("Ei määritelty");
+}
+
+QString Fish::getHumanReadableWind()
+{
+    EWindCondition wind = static_cast<EWindCondition>(m_properties[FISH_WIND].toInt());
+    switch(wind)
+    {
+    case eCalm: return QObject::tr("Tyyntä");
+    case eFaint: return QObject::tr("Heikkoa");
+    case eModerate: return QObject::tr("Kohtalaista");
+    case eBrisk: return QObject::tr("Navakkaa");
+    case eHard: return QObject::tr("Kovaa");
+    default: break;
+    }
+    return QObject::tr("Ei määritelty");
+}
+
+QString Fish::getHumanReadablePressure()
+{
+    EPressureCondition pressure = static_cast<EPressureCondition>(m_properties[FISH_PRESSURE].toInt());
+    switch(pressure)
+    {
+    case eLow: return QObject::tr("Matala");
+    case eMildLow: return QObject::tr("Melko matala");
+    case eNormal: return QObject::tr("Normaali");
+    case eMildHigh: return QObject::tr("Melko korkea");
+    case eHigh: return QObject::tr("Korkea");
+    default: break;
+    }
+    return QObject::tr("Ei määritelty");
+}

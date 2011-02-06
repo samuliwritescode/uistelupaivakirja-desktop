@@ -18,7 +18,8 @@ public:
     void setScaling(bool);
 
 protected:
-    QMap<QString, QString> calculate(const QList<QMap<QString, QString> >& statistics);
+    QMap<QString, QString> calculate(const QList<QMap<QString, QString> >&);
+
 
 private:
     QMap<QString, double> countFields(const QList<QMap<QString, QString> >&, const QString&);

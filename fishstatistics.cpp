@@ -48,8 +48,36 @@ QMap<QString, QString> FishStatistics::stats()
                 else
                     statline[tr("Reissun pituus")] = QString::number(24 + trip->getTime().second.hour() - trip->getTime().first.hour());
 
-                //Kalarivit
-                statline[tr("Säätila")] = QString::number(fish->getProperty(FISH_WEATHER).toInt());
+                //No weather information. Look for closest
+                if(fish->getType() == Fish::eFish)
+                {
+                    Fish* closestHit = NULL;
+                    int closestTime = 0xFFFFFF;
+                    for(int i=0; i < trip->getFishCount(); i++)
+                    {
+                        Fish* weather = trip->getFish(i);
+                        if(weather->getType() == Fish::eWeather ||
+                           weather->getType() == Fish::eFishAndWeather)
+                        {
+                            QTime time1 = weather->getProperty(FISH_TIME).toTime();
+                            QTime time2 = fish->getProperty(FISH_TIME).toTime();
+                            if(abs(time1.secsTo(time2)) < closestTime)
+                            {
+                                closestTime = abs(time1.secsTo(time2));
+                                closestHit = weather;
+                            }
+                        }
+                    }
+
+                    if(closestHit)
+                    {
+                        fish = closestHit;
+                    }
+                }
+
+                statline[tr("Säätila")] = fish->getHumanReadableWeather();
+                statline[tr("Tuuli")] = fish->getHumanReadableWind();
+                statline[tr("Ilmanpaine")] = fish->getHumanReadablePressure();
 
                 statistics.push_back(statline);
             }

@@ -1,5 +1,6 @@
 #include "statisticscontroller.h"
 #include "tripstatistics.h"
+#include "fishstatistics.h"
 
 StatisticsController::StatisticsController(QObject *parent) :
     Controller(parent)
@@ -12,10 +13,10 @@ QString StatisticsController::getTextValue(EUISource source)
     {
     case eStatistics:
         {
-            TripStatistics stats;
-            stats.setY(tr("Vuosi ja kk"));
+            FishStatistics stats;
+            stats.setY(tr("Tuuli"));
             //stats.setScaling(true);
-            stats.setUnit(TrollingStatistics::eMean);
+            stats.setUnit(TrollingStatistics::eCount);
             stats.setUnitField(tr("Reissun pituus"));
             QMap<QString, QString> chart = stats.stats();
             QString retval;

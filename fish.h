@@ -47,6 +47,10 @@ public:
 
     EType getType();
 
+    QString getHumanReadableWeather();
+    QString getHumanReadableWind();
+    QString getHumanReadablePressure();
+
     void setProperty(const QString&, double);
     void setProperty(const QString&, QString);
     void setProperty(const QString&, int);
