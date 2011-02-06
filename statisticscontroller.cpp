@@ -33,24 +33,35 @@ QString StatisticsController::getTextValue(EUISource source)
     return QString();
 }
 
+void StatisticsController::intEvent(EUISource source, int value)
+{
+    switch(source)
+    {
+    case eStatisticsUnit: m_stats->setUnit(static_cast<TrollingStatistics::EUnit>(value)); break;
+    default: break;
+    }
+    sendNotificationToObservers(Controller::eStatisticsUpdated);
+}
+
 void StatisticsController::textEvent(EUISource source, const QString& value)
 {
-    qDebug() << "got text event";
     switch(source)
     {
     case eStatisticsColumn: m_stats->setY(value); break;
     case eStatisticsField: m_stats->setUnitField(value); break;
-    case eStatisticsUnit:
-        if(value == "Kalojen määrä")
-            m_stats->setUnit(TrollingStatistics::eCount);
-        else if(value == "Kaloja tunnissa")
-            m_stats->setUnit(TrollingStatistics::eFishPerTime);
-        else if(value == "Keskiarvo")
-            m_stats->setUnit(TrollingStatistics::eMean);
-        else if(value == "Summa")
-            m_stats->setUnit(TrollingStatistics::eSum);
-        break;
     default: break;
     }
     sendNotificationToObservers(Controller::eStatisticsUpdated);
+}
+
+QStringList StatisticsController::getFields()
+{
+    QStringList list = m_stats->getTextFields();
+    list.append(m_stats->getNumericFields());
+    return list;
+}
+
+QStringList StatisticsController::getNumericFields()
+{
+    return m_stats->getNumericFields();
 }

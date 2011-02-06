@@ -7,7 +7,9 @@ class TripStatistics : public TrollingStatistics
     Q_OBJECT
 public:
     explicit TripStatistics(QObject *parent = 0);
-    virtual QMap<QString, QString> stats() ;
+    virtual QMap<QString, QString> stats();
+    virtual QStringList getTextFields();
+    virtual QStringList getNumericFields();
 
 signals:
 

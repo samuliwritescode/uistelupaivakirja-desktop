@@ -9,7 +9,10 @@ class StatisticsController : public Controller
 public:
     explicit StatisticsController(QObject *parent = 0);
     virtual void textEvent(EUISource, const QString&);
+    virtual void intEvent(EUISource, int);
     virtual QString getTextValue(EUISource source);
+    QStringList getFields();
+    QStringList getNumericFields();
 
 signals:
 

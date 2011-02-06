@@ -8,6 +8,8 @@ class FishStatistics : public TrollingStatistics
 public:
     explicit FishStatistics(QObject *parent = 0);
     virtual QMap<QString, QString> stats();
+    virtual QStringList getTextFields();
+    virtual QStringList getNumericFields();
 
 signals:
 

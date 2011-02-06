@@ -12,6 +12,8 @@ public:
     TrollingStatistics();
 
     virtual QMap<QString, QString> stats() = 0;
+    virtual QStringList getTextFields() = 0;
+    virtual QStringList getNumericFields() = 0;
     void setY(const QString&);
     void setUnitField(const QString&);
     void setUnit(EUnit);

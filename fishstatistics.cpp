@@ -1,10 +1,68 @@
 #include "fishstatistics.h"
 
+#define COL_SPECIES tr("Laji")
+#define COL_WEIGHT tr("Paino")
+#define COL_LENGTH tr("Pituus")
+#define COL_WATERDEPTH tr("Veden syvyys")
+#define COL_LINEWEIGHT tr("Painotus")
+#define COL_RELEASELENGTH tr("Vapautuspituus")
+#define COL_SPOTDEPTH tr("Ottisyvyys")
+#define COL_TIME tr("Aika")
+#define COL_GETTER tr("Saaja")
+#define COL_METHOD tr("Kalastustapa")
+#define COL_LUREMANUFACTURER tr("Uistinvalmistaja")
+#define COL_PLACE tr("Kalapaikka")
+#define COL_DATE tr("Päiväys")
+#define COL_YEAR tr("Vuosi")
+#define COL_MONTH tr("Kuukausi")
+#define COL_YEARMONTH tr("Vuosi ja kk")
+#define COL_TRIPLENGTH tr("Reissun pituus")
+#define COL_TEMP tr("Lämpötila")
+#define COL_WEATHER tr("Säätila")
+#define COL_WIND tr("Tuuli")
+#define COL_WINDDIR tr("Tuulen suunta")
+#define COL_PRESSURE tr("Ilmanpaine")
+#define COL_PRESSURECHANGE tr("Ilmanpaineen muutos")
+
+
 FishStatistics::FishStatistics(QObject *) :
     TrollingStatistics()
 {
 }
 
+QStringList FishStatistics::getTextFields()
+{
+    QStringList retval;
+    retval << COL_SPECIES;
+    retval << COL_TIME;
+    retval << COL_GETTER;
+    retval << COL_METHOD;
+    retval << COL_LUREMANUFACTURER;
+    retval << COL_PLACE;
+    retval << COL_DATE;
+    retval << COL_YEAR;
+    retval << COL_MONTH;
+    retval << COL_YEARMONTH;
+    retval << COL_WEATHER;
+    retval << COL_WIND;
+    retval << COL_WINDDIR;
+    retval << COL_PRESSURE;
+    retval << COL_PRESSURECHANGE;
+    return retval;
+}
+
+QStringList FishStatistics::getNumericFields()
+{
+    QStringList retval;
+    retval << COL_WEIGHT;
+    retval << COL_LENGTH;
+    retval << COL_WATERDEPTH;
+    retval << COL_LINEWEIGHT;
+    retval << COL_RELEASELENGTH;
+    retval << COL_SPOTDEPTH;
+    retval << COL_TEMP;
+    return retval;
+}
 
 QMap<QString, QString> FishStatistics::stats()
 {
@@ -20,33 +78,33 @@ QMap<QString, QString> FishStatistics::stats()
             if(fish->getType() == Fish::eFish ||
                fish->getType() == Fish::eFishAndWeather)
             {
-                statline[tr("Laji")] = fish->getSpecies();
-                statline[tr("Paino")] = fish->getWeight();
-                statline[tr("Pituus")] = fish->getLength();
-                statline[tr("Veden syvyys")] = fish->getTotalDepth();
-                statline[tr("Painotus")] = fish->getLineWeight();
-                statline[tr("Vapautuspituus")] = fish->getReleaseWidth();
-                statline[tr("Ottisyvyys")] = fish->getSpotDepth();
-                statline[tr("Aika")] = fish->getTime().toString();
-                statline[tr("Saaja")] = fish->getGetter();
-                statline[tr("Kalastustapa")] = fish->getMethod();
+                statline[COL_SPECIES] = fish->getSpecies();
+                statline[COL_WEIGHT] = fish->getWeight();
+                statline[COL_LENGTH] = fish->getLength();
+                statline[COL_WATERDEPTH] = fish->getTotalDepth();
+                statline[COL_LINEWEIGHT] = fish->getLineWeight();
+                statline[COL_RELEASELENGTH] = fish->getReleaseWidth();
+                statline[COL_SPOTDEPTH] = fish->getSpotDepth();
+                statline[COL_TIME] = fish->getTime().toString();
+                statline[COL_GETTER] = fish->getGetter();
+                statline[COL_METHOD] = fish->getMethod();
 
                 if(fish->getLure())
                 {
                     Lure* lure = fish->getLure();
-                    statline[tr("Uistinvalmistaja")] = lure->getMaker();
+                    statline[COL_LUREMANUFACTURER] = lure->getMaker();
                 }
 
-                statline[tr("Kalapaikka")] = trip->getPlace()->getName();
-                statline[tr("Päiväys")] = trip->getDate().toString();
-                statline[tr("Vuosi")] = QString::number(trip->getDate().year());
-                statline[tr("Kuukausi")] = QString::number(trip->getDate().month());
-                statline[tr("Vuosi ja kk")] = QString::number(trip->getDate().year())+" "+QString::number(trip->getDate().month());
+                statline[COL_PLACE] = trip->getPlace()->getName();
+                statline[COL_DATE] = trip->getDate().toString();
+                statline[COL_YEAR] = QString::number(trip->getDate().year());
+                statline[COL_MONTH] = QString::number(trip->getDate().month());
+                statline[COL_YEARMONTH] = QString::number(trip->getDate().year())+" "+QString::number(trip->getDate().month());
 
                 if(trip->getTime().second.hour() - trip->getTime().first.hour() > 0)
-                    statline[tr("Reissun pituus")] = QString::number(trip->getTime().second.hour() - trip->getTime().first.hour());
+                    statline[COL_TRIPLENGTH] = QString::number(trip->getTime().second.hour() - trip->getTime().first.hour());
                 else
-                    statline[tr("Reissun pituus")] = QString::number(24 + trip->getTime().second.hour() - trip->getTime().first.hour());
+                    statline[COL_TRIPLENGTH] = QString::number(24 + trip->getTime().second.hour() - trip->getTime().first.hour());
 
                 //No weather information. Look for closest
                 if(fish->getType() == Fish::eFish)
@@ -75,12 +133,12 @@ QMap<QString, QString> FishStatistics::stats()
                     }
                 }
 
-                statline[tr("Lämpötila")] = fish->getAirTemp();
-                statline[tr("Säätila")] = fish->getHumanReadableWeather();
-                statline[tr("Tuuli")] = fish->getHumanReadableWind();
-                statline[tr("Tuulen suunta")] = fish->getHumanReadableWindDirection();
-                statline[tr("Ilmanpaine")] = fish->getHumanReadablePressure();
-                statline[tr("Ilmanpaineen muutos")] = fish->getHumanReadablePressureChange();
+                statline[COL_TEMP] = fish->getAirTemp();
+                statline[COL_WEATHER] = fish->getHumanReadableWeather();
+                statline[COL_WIND] = fish->getHumanReadableWind();
+                statline[COL_WINDDIR] = fish->getHumanReadableWindDirection();
+                statline[COL_PRESSURE] = fish->getHumanReadablePressure();
+                statline[COL_PRESSURECHANGE] = fish->getHumanReadablePressureChange();
 
                 statistics.push_back(statline);
             }

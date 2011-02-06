@@ -5,6 +5,15 @@ TripStatistics::TripStatistics(QObject *) :
 {
 }
 
+QStringList TripStatistics::getTextFields()
+{
+
+}
+
+QStringList TripStatistics::getNumericFields()
+{
+
+}
 
 QMap<QString, QString> TripStatistics::stats()
 {
