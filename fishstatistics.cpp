@@ -24,7 +24,6 @@
 #define COL_PRESSURE tr("Ilmanpaine")
 #define COL_PRESSURECHANGE tr("Ilmanpaineen muutos")
 
-
 FishStatistics::FishStatistics(QObject *) :
     TrollingStatistics()
 {
@@ -78,7 +77,7 @@ QMap<QString, QString> FishStatistics::stats()
             if(fish->getType() == Fish::eFish ||
                fish->getType() == Fish::eFishAndWeather)
             {
-                statline[COL_SPECIES] = fish->getSpecies();
+                statline[COL_SPECIES] = fish->getSpecies().toLower();
                 statline[COL_WEIGHT] = fish->getWeight();
                 statline[COL_LENGTH] = fish->getLength();
                 statline[COL_WATERDEPTH] = fish->getTotalDepth();
