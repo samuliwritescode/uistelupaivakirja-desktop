@@ -318,6 +318,9 @@ void TripForm::updateWeather()
 
     ui->wind_direction->setValue(m_tripController->getIntValue(eWindDirection));
     ui->pressure_change->setValue(m_tripController->getIntValue(ePressureChange));
+
+    ui->wind_direction_label->setText(m_tripController->getTextValue(eWindDirection));
+    ui->pressure_change_label->setText(m_tripController->getTextValue(ePressureChange));
 }
 
 void TripForm::setCombo(EUISource source, QComboBox* target)

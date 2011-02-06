@@ -91,7 +91,7 @@ QList<QString> Fish::getPropertyNames()
 
 QString Fish::getHumanReadableWeather()
 {
-    EWeatherCondition weather = static_cast<EWeatherCondition>(m_properties[FISH_WEATHER].toInt());
+    EWeatherCondition weather = getWeatherCondition();
     switch(weather)
     {
     case eClear: return QObject::tr("Selkeää");
@@ -101,12 +101,12 @@ QString Fish::getHumanReadableWeather()
     case eFog: return QObject::tr("Sumua");
     default: break;
     }
-    return QObject::tr("Ei määritelty");
+    return QObject::tr("n/a");
 }
 
 QString Fish::getHumanReadableWind()
 {
-    EWindCondition wind = static_cast<EWindCondition>(m_properties[FISH_WIND].toInt());
+    EWindCondition wind = getWindCondition();
     switch(wind)
     {
     case eCalm: return QObject::tr("Tyyntä");
@@ -116,12 +116,12 @@ QString Fish::getHumanReadableWind()
     case eHard: return QObject::tr("Kovaa");
     default: break;
     }
-    return QObject::tr("Ei määritelty");
+    return QObject::tr("n/a");
 }
 
 QString Fish::getHumanReadablePressure()
 {
-    EPressureCondition pressure = static_cast<EPressureCondition>(m_properties[FISH_PRESSURE].toInt());
+    EPressureCondition pressure = getPressureCondition();
     switch(pressure)
     {
     case eLow: return QObject::tr("Matala");
@@ -131,7 +131,44 @@ QString Fish::getHumanReadablePressure()
     case eHigh: return QObject::tr("Korkea");
     default: break;
     }
-    return QObject::tr("Ei määritelty");
+    return QObject::tr("n/a");
+}
+
+QString Fish::getHumanReadableWindDirection()
+{
+    EWindDirection direction = getWindDirection();
+    switch(direction)
+    {
+    case eNoWindDirection: return QObject::tr("Ei suuntaa");
+    case eSouth: return QObject::tr("Etelä");
+    case eSouthWest: return QObject::tr("Lounas");
+    case eWest: return QObject::tr("Länsi");
+    case eNorthWest: return QObject::tr("Luode");
+    case eNorth: return QObject::tr("Pohjoinen");
+    case eNorthEast: return QObject::tr("Koillinen");
+    case eEast: return QObject::tr("Itä");
+    case eSouthEast: return QObject::tr("Kaakko");
+    default: break;
+    }
+    return QObject::tr("n/a");
+}
+
+QString Fish::getHumanReadablePressureChange()
+{
+    EPressureChange change = getPressureChange();
+    switch(change)
+    {
+    case eFastDecline: return QObject::tr("Laskee nopeasti");
+    case eModerateDecline: return QObject::tr("Laskee");
+    case eSlowDecline: return QObject::tr("Laskee hitaasti");
+    case eNoChange: return QObject::tr("Muuttumaton");
+    case eSlowRaise: return QObject::tr("Nousee hitaasti");
+    case eModerateRaise: return QObject::tr("Nousee");
+    case eFastRaise: return QObject::tr("Nousee nopeasti");
+
+    default: break;
+    }
+    return QObject::tr("n/a");
 }
 
 void Fish::setDouble(const QString& p_prop, const QString& p_value)

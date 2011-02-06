@@ -82,21 +82,23 @@ QString TripController::getTextValue(EUISource source)
         if(m_trip->getFish()->getLure())
             return m_trip->getFish()->getLure()->getMaker();
         break;
-    case eLength: return m_trip->getFish()->getLength(); break;
-    case eWeight: return m_trip->getFish()->getWeight(); break;
-    case eSpotDepth: return m_trip->getFish()->getSpotDepth(); break;
-    case eTotalDepth: return m_trip->getFish()->getTotalDepth(); break;
-    case eTrollingSpeed: return m_trip->getFish()->getTrollingSpeed(); break;
-    case eLineWeight: return m_trip->getFish()->getLineWeight(); break;
-    case eReleaseWidth: return m_trip->getFish()->getReleaseWidth(); break;
-    case eAirTemp: return m_trip->getFish()->getAirTemp(); break;
-    case eWaterTemp: return m_trip->getFish()->getWaterTemp(); break;
-    case eMiscText: return m_trip->getFish()->getMiscText(); break;
-    case eSpecies: return m_trip->getFish()->getSpecies(); break;
-    case eMethod: return m_trip->getFish()->getMethod(); break;
-    case eGetter: return m_trip->getFish()->getGetter(); break;
+    case eLength: return m_trip->getFish()->getLength();
+    case eWeight: return m_trip->getFish()->getWeight();
+    case eSpotDepth: return m_trip->getFish()->getSpotDepth();
+    case eTotalDepth: return m_trip->getFish()->getTotalDepth();
+    case eTrollingSpeed: return m_trip->getFish()->getTrollingSpeed();
+    case eLineWeight: return m_trip->getFish()->getLineWeight();
+    case eReleaseWidth: return m_trip->getFish()->getReleaseWidth();
+    case eAirTemp: return m_trip->getFish()->getAirTemp();
+    case eWaterTemp: return m_trip->getFish()->getWaterTemp();
+    case eMiscText: return m_trip->getFish()->getMiscText();
+    case eSpecies: return m_trip->getFish()->getSpecies();
+    case eMethod: return m_trip->getFish()->getMethod();
+    case eGetter: return m_trip->getFish()->getGetter();
     case eWayPointSet: return m_trip->getFish()->getCoordinatesLat()+" "+
-                m_trip->getFish()->getCoordinatesLon(); break;
+                m_trip->getFish()->getCoordinatesLon();
+    case eWindDirection: return m_trip->getFish()->getHumanReadableWindDirection();
+    case ePressureChange: return m_trip->getFish()->getHumanReadablePressureChange();
     default: qCritical() << "Unknown get text" << source; break;
     }
     return QString();

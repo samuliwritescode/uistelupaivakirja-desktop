@@ -20,16 +20,16 @@ QMap<QString, QString> FishStatistics::stats()
             if(fish->getType() == Fish::eFish ||
                fish->getType() == Fish::eFishAndWeather)
             {
-                statline[tr("Laji")] = fish->getProperty(FISH_SPECIES).toString();
-                statline[tr("Paino")] = fish->getProperty(FISH_WEIGHT).toString();
-                statline[tr("Pituus")] = fish->getProperty(FISH_LENGTH).toString();
-                statline[tr("Veden syvyys")] = fish->getProperty(FISH_TOTAL_DEPTH).toString();
-                statline[tr("Painotus")] = fish->getProperty(FISH_LINE_WEIGHT).toString();
-                statline[tr("Vapautuspituus")] = fish->getProperty(FISH_RELEASE_WIDTH).toString();
-                statline[tr("Ottisyvyys")] = fish->getProperty(FISH_SPOT_DEPTH).toString();
-                statline[tr("Aika")] = fish->getProperty(FISH_TIME).toString();
-                statline[tr("Saaja")] = fish->getProperty(FISH_GETTER).toString();
-                statline[tr("Kalastustapa")] = fish->getProperty(FISH_METHOD).toString();
+                statline[tr("Laji")] = fish->getSpecies();
+                statline[tr("Paino")] = fish->getWeight();
+                statline[tr("Pituus")] = fish->getLength();
+                statline[tr("Veden syvyys")] = fish->getTotalDepth();
+                statline[tr("Painotus")] = fish->getLineWeight();
+                statline[tr("Vapautuspituus")] = fish->getReleaseWidth();
+                statline[tr("Ottisyvyys")] = fish->getSpotDepth();
+                statline[tr("Aika")] = fish->getTime().toString();
+                statline[tr("Saaja")] = fish->getGetter();
+                statline[tr("Kalastustapa")] = fish->getMethod();
 
                 if(fish->getLure())
                 {
@@ -59,8 +59,8 @@ QMap<QString, QString> FishStatistics::stats()
                         if(weather->getType() == Fish::eWeather ||
                            weather->getType() == Fish::eFishAndWeather)
                         {
-                            QTime time1 = weather->getProperty(FISH_TIME).toTime();
-                            QTime time2 = fish->getProperty(FISH_TIME).toTime();
+                            QTime time1 = weather->getTime();
+                            QTime time2 = fish->getTime();
                             if(abs(time1.secsTo(time2)) < closestTime)
                             {
                                 closestTime = abs(time1.secsTo(time2));
@@ -77,7 +77,9 @@ QMap<QString, QString> FishStatistics::stats()
 
                 statline[tr("Säätila")] = fish->getHumanReadableWeather();
                 statline[tr("Tuuli")] = fish->getHumanReadableWind();
+                statline[tr("Tuulen suunta")] = fish->getHumanReadableWindDirection();
                 statline[tr("Ilmanpaine")] = fish->getHumanReadablePressure();
+                statline[tr("Ilmanpaineen muutos")] = fish->getHumanReadablePressureChange();
 
                 statistics.push_back(statline);
             }

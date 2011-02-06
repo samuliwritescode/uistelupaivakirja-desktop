@@ -38,11 +38,11 @@ class Fish: public QObject
     friend class Trip;
 public:
 
-    enum EWindCondition{eCalm=1, eFaint=2, eModerate=4, eBrisk=8, eHard=16};
-    enum EWindDirection{eNoWindDirection, eSouth, eSouthWest, eWest, eNorthWest, eNorth, eNorthEast, eEast, eSouthEast};
-    enum EWeatherCondition{eClear=1, eHalfClear=2, eOvercast=4, eRain=8, eFog=16};
-    enum EPressureCondition{eLow=1, eMildLow=2, eNormal=4, eMildHigh=8, eHigh=16};
-    enum EPressureChange{eNoPressureChange, eSlow, eFast};
+    enum EWindCondition{eCalm=1, eFaint, eModerate, eBrisk, eHard};
+    enum EWindDirection{eSouth=1, eSouthWest, eWest, eNorthWest, eNorth, eNorthEast, eEast, eSouthEast, eNoWindDirection};
+    enum EWeatherCondition{eClear=1, eHalfClear, eOvercast, eRain, eFog};
+    enum EPressureCondition{eLow=1, eMildLow, eNormal, eMildHigh, eHigh};
+    enum EPressureChange{eFastDecline=1, eModerateDecline, eSlowDecline, eNoChange, eSlowRaise, eModerateRaise, eFastRaise};
     enum EType {eNaN, eFish, eWeather, eFishAndWeather};
 
     Fish();
@@ -55,6 +55,8 @@ public:
     QString getHumanReadableWeather();
     QString getHumanReadableWind();
     QString getHumanReadablePressure();
+    QString getHumanReadableWindDirection();
+    QString getHumanReadablePressureChange();
 
     void setWeight(const QString&);
     void setLength(const QString&);

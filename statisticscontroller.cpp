@@ -14,7 +14,7 @@ QString StatisticsController::getTextValue(EUISource source)
     case eStatistics:
         {
             FishStatistics stats;
-            stats.setY(tr("Tuuli"));
+            stats.setY(tr("Tuulen suunta"));
             //stats.setScaling(true);
             stats.setUnit(TrollingStatistics::eCount);
             stats.setUnitField(tr("Reissun pituus"));

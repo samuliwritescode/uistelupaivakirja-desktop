@@ -1091,14 +1091,20 @@ korkea</string>
                 <height>40</height>
                </size>
               </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
               <property name="maximum">
-               <number>8</number>
+               <number>9</number>
               </property>
               <property name="pageStep">
                <number>2</number>
               </property>
               <property name="wrapping">
                <bool>true</bool>
+              </property>
+              <property name="notchTarget">
+               <double>4.700000000000000</double>
               </property>
               <property name="notchesVisible">
                <bool>true</bool>
@@ -1107,8 +1113,23 @@ korkea</string>
             </item>
             <item>
              <widget class="QLabel" name="wind_direction_label">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="text">
                <string>n/a</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -1147,6 +1168,9 @@ korkea</string>
                 <height>40</height>
                </size>
               </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
               <property name="maximum">
                <number>8</number>
               </property>
@@ -1154,7 +1178,7 @@ korkea</string>
                <number>2</number>
               </property>
               <property name="wrapping">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="notchTarget">
                <double>9.699999999999999</double>
@@ -1166,8 +1190,23 @@ korkea</string>
             </item>
             <item>
              <widget class="QLabel" name="pressure_change_label">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="text">
                <string>n/a</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
