@@ -2,6 +2,7 @@
 #define TROLLINGSTATISTICS_H
 #include <QObject>
 #include <QMap>
+#include "singletons.h"
 
 class TrollingStatistics: public QObject
 {
@@ -9,11 +10,15 @@ class TrollingStatistics: public QObject
 public:
     enum EUnit { eCount, eFishPerTime, eMean, eSum };
     TrollingStatistics();
-    QMap<QString, QString> stats();
+
+    virtual QMap<QString, QString> stats() = 0;
     void setY(const QString&);
     void setUnitField(const QString&);
     void setUnit(EUnit);
     void setScaling(bool);
+
+protected:
+    QMap<QString, QString> calculate(const QList<QMap<QString, QString> >& statistics);
 
 private:
     QMap<QString, double> countFields(const QList<QMap<QString, QString> >&, const QString&);

@@ -37,7 +37,9 @@ SOURCES += main.cpp\
     trollingexception.cpp \
     trollingstatistics.cpp \
     statisticscontroller.cpp \
-    statisticsform.cpp
+    statisticsform.cpp \
+    tripstatistics.cpp \
+    fishstatistics.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -65,7 +67,9 @@ HEADERS  += mainwindow.h \
     trollingexception.h \
     trollingstatistics.h \
     statisticscontroller.h \
-    statisticsform.h
+    statisticsform.h \
+    tripstatistics.h \
+    fishstatistics.h
 
 FORMS    += mainwindow.ui \
     tripform.ui \
