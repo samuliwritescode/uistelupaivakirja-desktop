@@ -149,6 +149,8 @@ void TripForm::updateTrip()
          ui->misc->setText(m_tripController->getTextValue(eMiscText));
 
     QList<QString> userValues = m_tripController->getUserFields();
+    ui->user_props->blockSignals(true);
+    ui->user_props->setSortingEnabled(false);
     ui->user_props->clear();
     for(int loop=0; loop < userValues.count(); loop++)
     {
@@ -157,6 +159,8 @@ void TripForm::updateTrip()
         ui->user_props->setItem(loop, 0, new QTableWidgetItem("arvo"));
         ui->user_props->setItem(loop, 1, new QTableWidgetItem(uservalue));
     }
+    ui->user_props->setSortingEnabled(false);
+    ui->user_props->blockSignals(true);
 }
 
 void TripForm::updateTripList()

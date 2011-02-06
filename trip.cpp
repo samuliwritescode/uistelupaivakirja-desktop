@@ -137,7 +137,7 @@ void Trip::constructItems(const TrollingObjectItemList& p_items)
 
         for(QHash<QString, QVariant>::iterator iter = item.begin(); iter != item.end(); iter++)
         {
-            fish->setProperty(iter.key(), iter.value());
+            fish->m_properties[iter.key()] = iter.value();
         }
 
         Lure* lure = Singletons::model()->getLure(item["lure"].toInt());
