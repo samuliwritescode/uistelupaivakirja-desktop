@@ -75,6 +75,7 @@ QMap<QString, QString> FishStatistics::stats()
                     }
                 }
 
+                statline[tr("Lämpötila")] = fish->getAirTemp();
                 statline[tr("Säätila")] = fish->getHumanReadableWeather();
                 statline[tr("Tuuli")] = fish->getHumanReadableWind();
                 statline[tr("Tuulen suunta")] = fish->getHumanReadableWindDirection();

@@ -69,7 +69,7 @@ QString TrollingStatistics::makeGroup(const QString& p_value)
         return p_value;
 
     bool bCanConvert = false;
-    double value = p_value.toDouble(&bCanConvert);
+    double value = abs(p_value.toDouble(&bCanConvert));
 
     if(!bCanConvert)
         return p_value;
@@ -78,7 +78,14 @@ QString TrollingStatistics::makeGroup(const QString& p_value)
     int start = floor(value/pow(10,log))*pow(10,log);
     int end = start+pow(10,log);
 
-    return QString::number(start)+"-"+QString::number(end);
+    QString neg;
+    if(p_value.toDouble() < 0)
+        neg = "-";
+
+    if(p_value.toDouble() != 0)
+        return neg+QString::number(start)+"-"+neg+QString::number(end);
+    else
+        return "0";
 }
 
 QMap<QString, double> TrollingStatistics::countFields(const QList<QMap<QString, QString> >& statistics, const QString& field)

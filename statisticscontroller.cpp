@@ -14,10 +14,10 @@ QString StatisticsController::getTextValue(EUISource source)
     case eStatistics:
         {
             FishStatistics stats;
-            stats.setY(tr("Tuulen suunta"));
-            //stats.setScaling(true);
+            stats.setY(tr("Lämpötila"));
+            stats.setScaling(true);
             stats.setUnit(TrollingStatistics::eCount);
-            stats.setUnitField(tr("Reissun pituus"));
+            stats.setUnitField(tr("Laji"));
             QMap<QString, QString> chart = stats.stats();
             QString retval;
             for(QMap<QString, QString>::iterator iter = chart.begin(); iter != chart.end(); iter++)
