@@ -102,8 +102,8 @@ QMap<QString, QString> FishStatistics::stats()
                 statline[COL_PLACE] = trip->getPlace()->getName();
                 statline[COL_DATE] = trip->getDate().toString();
                 statline[COL_YEAR] = QString::number(trip->getDate().year());
-                statline[COL_MONTH] = QString::number(trip->getDate().month());
-                statline[COL_YEARMONTH] = QString::number(trip->getDate().year())+" "+QString::number(trip->getDate().month());
+                statline[COL_MONTH] = trip->getDate().toString("MM");
+                statline[COL_YEARMONTH] = QString::number(trip->getDate().year())+" "+trip->getDate().toString("MM");
 
                 if(trip->getTime().second.hour() - trip->getTime().first.hour() > 0)
                     statline[COL_TRIPLENGTH] = QString::number(trip->getTime().second.hour() - trip->getTime().first.hour());
