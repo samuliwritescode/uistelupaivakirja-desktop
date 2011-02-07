@@ -106,7 +106,8 @@ public:
         ePlaceUpdated,
         ePlaceListUpdated,
         eWayPointsUpdated,
-        eStatisticsUpdated
+        eStatisticsUpdated,
+        eStatisticsEngineUpdated
     };
 
 signals:

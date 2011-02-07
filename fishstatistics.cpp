@@ -63,6 +63,11 @@ QStringList FishStatistics::getNumericFields()
     return retval;
 }
 
+QString FishStatistics::getName()
+{
+    return tr("Kalat");
+}
+
 QMap<QString, QString> FishStatistics::stats()
 {
 

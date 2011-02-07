@@ -13,6 +13,7 @@ public:
     virtual QString getTextValue(EUISource source);
     QStringList getFields();
     QStringList getNumericFields();
+    QStringList getEngines();
 
 signals:
 

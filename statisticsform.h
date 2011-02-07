@@ -21,6 +21,7 @@ private:
     Ui::StatisticsForm *ui;
 
 private slots:
+    void on_statisticsCombo_currentIndexChanged(QString );
     void on_unitCombo_currentIndexChanged(int index);
     void on_columnCombo_currentIndexChanged(QString );
     void on_calculatefromfieldCombo_currentIndexChanged(QString );

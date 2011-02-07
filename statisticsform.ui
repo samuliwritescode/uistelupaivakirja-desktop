@@ -79,6 +79,9 @@
       </spacer>
      </item>
      <item>
+      <widget class="QComboBox" name="statisticsCombo"/>
+     </item>
+     <item>
       <widget class="QComboBox" name="unitCombo"/>
      </item>
      <item>

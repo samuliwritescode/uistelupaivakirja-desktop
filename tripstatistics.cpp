@@ -1,5 +1,13 @@
 #include "tripstatistics.h"
 
+#define COL_FISHCOUNT tr("Kaloja")
+#define COL_PLACE tr("Kalapaikka")
+#define COL_DATE tr("Päiväys")
+#define COL_YEAR tr("Vuosi")
+#define COL_MONTH tr("Kuukausi")
+#define COL_YEARMONTH tr("Vuosi ja kk")
+#define COL_TRIPLEN tr("Reissun pituus")
+
 TripStatistics::TripStatistics(QObject *) :
     TrollingStatistics()
 {
@@ -7,45 +15,59 @@ TripStatistics::TripStatistics(QObject *) :
 
 QStringList TripStatistics::getTextFields()
 {
-
+    QStringList retval;
+    retval << COL_PLACE;
+    retval << COL_DATE;
+    retval << COL_YEAR;
+    retval << COL_MONTH;
+    retval << COL_YEARMONTH;
+    return retval;
 }
 
 QStringList TripStatistics::getNumericFields()
 {
+    QStringList retval;
+    retval << COL_FISHCOUNT;
+    retval << COL_TRIPLEN;
+    return retval;
+}
 
+QString TripStatistics::getName()
+{
+    return tr("Reissut");
 }
 
 QMap<QString, QString> TripStatistics::stats()
 {
-
-
     QList<QMap<QString, QString> > statistics;
     QMap<int, Trip*> trips = Singletons::model()->getTrips();
     foreach(Trip* trip, trips)
     {
-        int kaloja = 0;
+        int fishCount = 0;
         for(int loop=0; loop < trip->getFishCount(); loop++)
         {
             Fish* fish = trip->getFish(loop);
             if(fish->getType() == Fish::eFish ||
                fish->getType() == Fish::eFishAndWeather)
             {
-                kaloja++;
+                fishCount++;
             }
         }
 
         QMap<QString, QString> statline;
-        statline[tr("Kaloja")] = QString::number(kaloja);
-        statline[tr("Kalapaikka")] = trip->getPlace()->getName();
-        statline[tr("Päiväys")] = trip->getDate().toString();
-        statline[tr("Vuosi")] = QString::number(trip->getDate().year());
-        statline[tr("Kuukausi")] = QString::number(trip->getDate().month());
-        statline[tr("Vuosi ja kk")] = QString::number(trip->getDate().year())+" "+QString::number(trip->getDate().month());
+        statline[COL_FISHCOUNT] = QString::number(fishCount);
+        statline[COL_PLACE] = trip->getPlace()->getName();
+        statline[COL_DATE] = trip->getDate().toString();
+        statline[COL_YEAR] = QString::number(trip->getDate().year());
+        statline[COL_MONTH] = QString::number(trip->getDate().month());
+        statline[COL_YEARMONTH] = QString::number(trip->getDate().year())+" "+QString::number(trip->getDate().month());
 
         if(trip->getTime().second.hour() - trip->getTime().first.hour() > 0)
-            statline[tr("Reissun pituus")] = QString::number(trip->getTime().second.hour() - trip->getTime().first.hour());
+            statline[COL_TRIPLEN] = QString::number(trip->getTime().second.hour() - trip->getTime().first.hour());
         else
-            statline[tr("Reissun pituus")] = QString::number(24 + trip->getTime().second.hour() - trip->getTime().first.hour());
+            statline[COL_TRIPLEN] = QString::number(24 + trip->getTime().second.hour() - trip->getTime().first.hour());
+
+        statline[tr("Aikaa per kala")] = QString::number(statline[COL_TRIPLEN].toDouble() / fishCount);
 
         statistics.push_back(statline);
     }

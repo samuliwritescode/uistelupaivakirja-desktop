@@ -11,6 +11,8 @@ StatisticsController::StatisticsController(QObject *parent) :
 
 QString StatisticsController::getTextValue(EUISource source)
 {
+    if(!m_stats) return QString();
+
     switch(source)
     {
     case eStatistics:
@@ -49,6 +51,25 @@ void StatisticsController::textEvent(EUISource source, const QString& value)
     {
     case eStatisticsColumn: m_stats->setY(value); break;
     case eStatisticsField: m_stats->setUnitField(value); break;
+    case eStatistics:
+        if(m_stats->getName() == value)
+        {
+            break;
+        }
+        if(FishStatistics().getName() == value)
+        {
+            delete m_stats;
+            m_stats = new FishStatistics();
+        }
+        else if(TripStatistics().getName() == value)
+        {
+            delete m_stats;
+            m_stats = new TripStatistics();
+        }
+
+        sendNotificationToObservers(Controller::eStatisticsEngineUpdated);
+        return;
+        break;
     default: break;
     }
     sendNotificationToObservers(Controller::eStatisticsUpdated);
@@ -64,4 +85,12 @@ QStringList StatisticsController::getFields()
 QStringList StatisticsController::getNumericFields()
 {
     return m_stats->getNumericFields();
+}
+
+QStringList StatisticsController::getEngines()
+{
+    QStringList list;
+    list << FishStatistics().getName();
+    list << TripStatistics().getName();
+    return list;
 }
