@@ -38,7 +38,7 @@ QMap<QString, QString> TrollingStatistics::calculate(const QList<QMap<QString, Q
     }else if(m_unit == TrollingStatistics::eFishPerTime)
     {
         QMap<QString, double> count = countFields(statistics, m_Y);
-        QMap<QString, double> time = sumFields(statistics, tr("Reissun pituus"));
+        QMap<QString, double> time = sumFields(statistics, tr("Aikaa per kala"));
         for(QMap<QString, double>::iterator iter= count.begin(); iter!=count.end(); iter++)
         {
             fishcount[iter.key()] = count[iter.key()] / time[iter.key()];

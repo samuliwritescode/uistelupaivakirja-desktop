@@ -105,6 +105,19 @@ QMap<QString, QString> FishStatistics::stats()
                 else
                     statline[COL_TRIPLENGTH] = QString::number(24 + trip->getTime().second.hour() - trip->getTime().first.hour());
 
+                int fishCount = 0;
+                for(int i=0; i<trip->getFishCount(); i++)
+                {
+                    Fish* other = trip->getFish(i);
+                    if(other->getType() == Fish::eFish ||
+                       other->getType() == Fish::eFishAndWeather)
+                    {
+                        fishCount++;
+                    }
+                }
+
+                statline[tr("Aikaa per kala")] = QString::number(statline[COL_TRIPLENGTH].toDouble() / fishCount);
+
                 //No weather information. Look for closest
                 if(fish->getType() == Fish::eFish)
                 {
