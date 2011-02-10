@@ -38,8 +38,8 @@ void GLStatWidget::paintGL()
     glLoadIdentity();
     glPushMatrix();
     glTranslatef(xPos/160.0, -yPos/160.0, -zPos/160);
-    glRotatef(yRot, 1, 0, 0);
-    glRotatef(xRot, 0, 1, 0);
+    glRotatef(-yRot, 1, 0, 0);
+    glRotatef(-xRot, 0, 1, 0);
 
     double maxval=0;
 
@@ -161,8 +161,13 @@ void GLStatWidget::mouseMoveEvent(QMouseEvent *event)
     {
         xRot += event->x() - lastPos.x();
         yRot += event->y() - lastPos.y();
-        zPos += event->y() - lastPos.y();
         updateGL();
     }
     lastPos = event->pos();
+}
+
+void GLStatWidget::wheelEvent ( QWheelEvent * event )
+{
+    zPos += event->delta();
+    updateGL();
 }

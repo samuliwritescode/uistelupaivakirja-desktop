@@ -126,7 +126,6 @@ QList<QMap<QString, QString> > TrollingStatistics::stats3D(const QString& p_byCo
     {
         m_Y = y;
         m_filters[p_byCol] = iter.key();
-        qDebug() << "filter out" << p_byCol << iter.key();
         retval.push_back(stats());
         m_filters = filters;
     }
