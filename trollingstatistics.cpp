@@ -112,3 +112,26 @@ QMap<QString, double> TrollingStatistics::sumFields(const QList<QMap<QString, QS
     }
     return retval;
 }
+
+QList<QMap<QString, QString> > TrollingStatistics::stats3D(const QString& p_byCol)
+{
+    QList<QMap<QString, QString> > retval;
+    QMap<QString, QString> filters = m_filters;
+    QString y = m_Y;
+
+    //get column values
+    m_Y = p_byCol;
+    QMap<QString, QString> cols = stats();
+    for(QMap<QString, QString>::iterator iter = cols.begin(); iter != cols.end(); iter++)
+    {
+        m_Y = y;
+        m_filters[p_byCol] = iter.key();
+        qDebug() << "filter out" << p_byCol << iter.key();
+        retval.push_back(stats());
+        m_filters = filters;
+    }
+
+    m_Y = y;
+    m_filters = filters;
+    return retval;
+}

@@ -16,6 +16,7 @@ public:
     QStringList getNumericFields();
     QStringList getEngines();
     QMap<QString, QString> getStats();
+    QList<QMap<QString, QString> > getStats3D();
 
 signals:
 

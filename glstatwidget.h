@@ -9,7 +9,7 @@ class GLStatWidget : public QGLWidget
     Q_OBJECT
 public:
     explicit GLStatWidget(QGLWidget *parent = 0);
-    void setStat(const QMap<QString, QString>&);
+    void setStat(const QList<QMap<QString, QString> >&);
 
 protected:
     virtual void initializeGL();
@@ -17,7 +17,7 @@ protected:
     virtual void resizeGL(int width, int height);
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseMoveEvent(QMouseEvent *event);
-    void drawBox(GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, QString);
+    void drawBox(GLfloat, GLfloat, GLfloat, GLfloat, GLfloat);
 
 signals:
 
@@ -26,8 +26,11 @@ private:
     int yPos;
     int zPos;
 
+    int xRot;
+    int yRot;
+
     QPoint lastPos;
-    QMap<QString, QString> m_stats;
+    QList<QMap<QString, QString> > m_stats;
 
 };
 

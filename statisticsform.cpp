@@ -37,8 +37,8 @@ void StatisticsForm::observerEvent(int type)
     if(type == Controller::eStatisticsUpdated)
     {
         qDebug() << m_statsController->getTextValue(eStatistics);
-        QMap<QString, QString> stat = m_statsController->getStats();
-        m_statWidget->setStat(stat);
+        //QMap<QString, QString> stat = m_statsController->getStats();
+        m_statWidget->setStat(m_statsController->getStats3D());
         //ui->statistics->setText(m_statsController->getTextValue(eStatistics));
     }
     else if(type == Controller::eStatisticsEngineUpdated)

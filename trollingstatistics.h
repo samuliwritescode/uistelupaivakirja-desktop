@@ -15,6 +15,7 @@ public:
     virtual QStringList getTextFields() = 0;
     virtual QStringList getNumericFields() = 0;
     virtual QString getName() = 0;
+    QList<QMap<QString, QString> > stats3D(const QString&);
     void setY(const QString&);
     void setUnitField(const QString&);
     void setUnit(EUnit);
@@ -22,7 +23,7 @@ public:
 
 protected:
     QMap<QString, QString> calculate(const QList<QMap<QString, QString> >&);
-
+    QMap<QString, QString> m_filters;
 
 private:
     QMap<QString, double> countFields(const QList<QMap<QString, QString> >&, const QString&);

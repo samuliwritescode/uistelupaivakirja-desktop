@@ -9,6 +9,8 @@ GLStatWidget::GLStatWidget(QGLWidget *parent) :
     yPos = 0;
     zPos = 2000;
 
+    xRot = 0;
+    yRot = 0;
 }
 
 void GLStatWidget::initializeGL()
@@ -36,23 +38,35 @@ void GLStatWidget::paintGL()
     glLoadIdentity();
     glPushMatrix();
     glTranslatef(xPos/160.0, -yPos/160.0, -zPos/160);
+    glRotatef(yRot, 1, 0, 0);
+    glRotatef(xRot, 0, 1, 0);
 
     double maxval=0;
-    for(QMap<QString, QString>::iterator iter = m_stats.begin(); iter != m_stats.end(); iter++)
+
+    for(int loop=0; loop < m_stats.count(); loop++)
     {
-        if(iter.value().toDouble() > maxval)
-            maxval = iter.value().toDouble();
+        QMap<QString, QString> stats = m_stats.at(loop);
+
+        for(QMap<QString, QString>::iterator iter = stats.begin(); iter != stats.end(); iter++)
+        {
+            if(iter.value().toDouble() > maxval)
+                maxval = iter.value().toDouble();
+        }
     }
 
-    int index = 0;
-    for(QMap<QString, QString>::iterator iter = m_stats.begin(); iter != m_stats.end(); iter++)
+    for(int loop=0; loop < m_stats.count(); loop++)
     {
-        QString name = iter.key();
-        double value = 5*iter.value().toDouble()/maxval;
-        drawBox(index, 0.0, -1.0, 0.4, value, name);
-        renderText(index, -1.0, -1.0, name);
-        renderText(index, value, -1.0, iter.value());
-        index++;
+        QMap<QString, QString> stats = m_stats.at(loop);
+        int indexX = 0;
+        for(QMap<QString, QString>::iterator iter = stats.begin(); iter != stats.end(); iter++)
+        {
+            QString name = iter.key();
+            double value = 5*iter.value().toDouble()/maxval;
+            drawBox(indexX, 0.0, -loop, 0.4, value);
+            renderText(indexX, -1.0, -loop, name);
+            renderText(indexX, value, -loop, iter.value());
+            indexX++;
+        }
     }
 
     glTranslatef(0.5, 1.5, 0);
@@ -60,14 +74,13 @@ void GLStatWidget::paintGL()
 
 }
 
-void GLStatWidget::setStat(const QMap<QString, QString>& p_stats)
+void GLStatWidget::setStat(const QList<QMap<QString, QString> >& p_stats)
 {
-    QMap<QString, QString> temp = p_stats;
-    m_stats = temp;
+    m_stats = p_stats;
     updateGL();
 }
 
-void GLStatWidget::drawBox(GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLfloat h, QString text)
+void GLStatWidget::drawBox(GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLfloat h)
 {
 
     GLfloat vertices[] =
@@ -146,6 +159,8 @@ void GLStatWidget::mouseMoveEvent(QMouseEvent *event)
     }
     else if (event->buttons() == Qt::RightButton)
     {
+        xRot += event->x() - lastPos.x();
+        yRot += event->y() - lastPos.y();
         zPos += event->y() - lastPos.y();
         updateGL();
     }

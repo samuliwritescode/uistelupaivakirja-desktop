@@ -157,6 +157,20 @@ QMap<QString, QString> FishStatistics::stats()
                 statline[COL_PRESSURE] = fish->getHumanReadablePressure();
                 statline[COL_PRESSURECHANGE] = fish->getHumanReadablePressureChange();
 
+                bool bSkip = false;
+                for(QMap<QString, QString>::iterator iter = m_filters.begin(); iter != m_filters.end(); iter++)
+                {
+                    if(statline.contains(iter.key()))
+                    {
+                        if(statline[iter.key()] != iter.value())
+                        {
+                            bSkip=true;
+                        }
+                    }
+                }
+                if(bSkip)
+                    continue;
+
                 statistics.push_back(statline);
             }
         }

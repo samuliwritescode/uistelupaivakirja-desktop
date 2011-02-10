@@ -69,6 +69,19 @@ QMap<QString, QString> TripStatistics::stats()
 
         statline[tr("Aikaa per kala")] = QString::number(statline[COL_TRIPLEN].toDouble() / fishCount);
 
+        bool bSkip = false;
+        for(QMap<QString, QString>::iterator iter = m_filters.begin(); iter != m_filters.end(); iter++)
+        {
+            if(statline.contains(iter.key()))
+            {
+                if(statline[iter.key()] != iter.value())
+                {
+                    bSkip=true;
+                }
+            }
+        }
+        if(bSkip)
+            continue;
         statistics.push_back(statline);
     }
 

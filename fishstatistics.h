@@ -10,7 +10,7 @@ public:
     virtual QMap<QString, QString> stats();
     virtual QStringList getTextFields();
     virtual QStringList getNumericFields();
-    virtual QString getName();
+    virtual QString getName();    
 
 signals:
 
