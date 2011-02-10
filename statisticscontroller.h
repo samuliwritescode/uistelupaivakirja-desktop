@@ -1,5 +1,6 @@
 #ifndef STATISTICSCONTROLLER_H
 #define STATISTICSCONTROLLER_H
+#include <QMap>
 #include "controller.h"
 class TrollingStatistics;
 
@@ -14,6 +15,7 @@ public:
     QStringList getFields();
     QStringList getNumericFields();
     QStringList getEngines();
+    QMap<QString, QString> getStats();
 
 signals:
 

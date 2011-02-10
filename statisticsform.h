@@ -8,6 +8,8 @@ namespace Ui {
     class StatisticsForm;
 }
 
+class GLStatWidget;
+
 class StatisticsForm : public QWidget
 {
     Q_OBJECT
@@ -19,6 +21,7 @@ public:
 private:
     StatisticsController* m_statsController;
     Ui::StatisticsForm *ui;
+    GLStatWidget* m_statWidget;
 
 private slots:
     void on_statisticsCombo_currentIndexChanged(QString );

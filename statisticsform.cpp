@@ -1,11 +1,15 @@
 #include "statisticsform.h"
 #include "ui_statisticsform.h"
+#include "glstatwidget.h"
 
 StatisticsForm::StatisticsForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StatisticsForm)
 {
     ui->setupUi(this);
+    m_statWidget = new GLStatWidget();
+    ui->statisticslayout->addWidget(m_statWidget);
+
     m_statsController = Singletons::statsController();
     connect(m_statsController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
 
@@ -32,8 +36,10 @@ void StatisticsForm::observerEvent(int type)
 {
     if(type == Controller::eStatisticsUpdated)
     {
-        qDebug() << "update stats";
-        ui->statistics->setText(m_statsController->getTextValue(eStatistics));
+        qDebug() << m_statsController->getTextValue(eStatistics);
+        QMap<QString, QString> stat = m_statsController->getStats();
+        m_statWidget->setStat(stat);
+        //ui->statistics->setText(m_statsController->getTextValue(eStatistics));
     }
     else if(type == Controller::eStatisticsEngineUpdated)
     {

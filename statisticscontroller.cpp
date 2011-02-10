@@ -75,6 +75,14 @@ void StatisticsController::textEvent(EUISource source, const QString& value)
     sendNotificationToObservers(Controller::eStatisticsUpdated);
 }
 
+QMap<QString, QString> StatisticsController::getStats()
+{
+    if(m_stats)
+        return m_stats->stats();
+
+    return QMap<QString, QString>();
+}
+
 QStringList StatisticsController::getFields()
 {
     QStringList list = m_stats->getTextFields();

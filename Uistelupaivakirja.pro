@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml
+QT       += core gui xml opengl
 
 TARGET = Uistelupaivakirja
 TEMPLATE = app
@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     statisticscontroller.cpp \
     statisticsform.cpp \
     tripstatistics.cpp \
-    fishstatistics.cpp
+    fishstatistics.cpp \
+    glstatwidget.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -69,7 +70,8 @@ HEADERS  += mainwindow.h \
     statisticscontroller.h \
     statisticsform.h \
     tripstatistics.h \
-    fishstatistics.h
+    fishstatistics.h \
+    glstatwidget.h
 
 FORMS    += mainwindow.ui \
     tripform.ui \
@@ -82,3 +84,4 @@ RESOURCES += \
 
 macx:ICON = res/icon.icns
 win32:RC_FILE = res/icon.rc
+macx:QMAKE_CXXFLAGS += -isysroot /Developer/SDKs/MacOSX10.5.sdk
