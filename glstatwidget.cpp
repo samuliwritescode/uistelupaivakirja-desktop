@@ -1,6 +1,10 @@
 #include <QtGui>
 #include <QtOpenGL>
+
+#ifndef Q_OS_DARWIN
 #include <GL/glext.h>
+#endif
+
 #include "glstatwidget.h"
 
 GLStatWidget::GLStatWidget(QGLWidget *parent) :
