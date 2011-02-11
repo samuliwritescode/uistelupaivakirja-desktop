@@ -1,5 +1,6 @@
 #include <QtGui>
 #include <QtOpenGL>
+#include <GL/glext.h>
 #include "glstatwidget.h"
 
 GLStatWidget::GLStatWidget(QGLWidget *parent) :
@@ -22,7 +23,7 @@ void GLStatWidget::initializeGL()
     glShadeModel(GL_SMOOTH);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    glEnable(GL_MULTISAMPLE);
+    glEnable(GL_MULTISAMPLE_ARB);
 
     glEnable(GL_TEXTURE_2D);
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
