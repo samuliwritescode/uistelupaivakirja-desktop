@@ -24,6 +24,7 @@ private:
     GLStatWidget* m_statWidget;
 
 private slots:
+    void on_byColumnCombo_currentIndexChanged(QString );
     void on_statisticsCombo_currentIndexChanged(QString );
     void on_unitCombo_currentIndexChanged(int index);
     void on_columnCombo_currentIndexChanged(QString );

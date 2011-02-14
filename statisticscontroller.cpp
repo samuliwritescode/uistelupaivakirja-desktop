@@ -18,7 +18,7 @@ QString StatisticsController::getTextValue(EUISource source)
     case eStatistics:
         {
 //            stats.setScaling(true);
-            QList<QMap<QString, QString> > chartlist = m_stats->stats3D(tr("Kuukausi"));
+            QList<QMap<QString, QString> > chartlist = m_stats->stats3D();
             QString retval;
             for(int loop=0; loop < chartlist.size(); loop++)
             {
@@ -54,7 +54,8 @@ void StatisticsController::textEvent(EUISource source, const QString& value)
 {
     switch(source)
     {
-    case eStatisticsColumn: m_stats->setY(value); break;
+    case eStatisticsColumn: m_stats->setX(value); break;
+    case eStatisticsByColumn: m_stats->setZ(value); break;
     case eStatisticsField: m_stats->setUnitField(value); break;
     case eStatistics:
         if(m_stats->getName() == value)
@@ -91,7 +92,7 @@ QMap<QString, QString> StatisticsController::getStats()
 QList<QMap<QString, QString> > StatisticsController::getStats3D()
 {
     if(m_stats)
-        return m_stats->stats3D(tr("Kuukausi"));
+        return m_stats->stats3D();
 
     return QList<QMap<QString, QString> >();
 }

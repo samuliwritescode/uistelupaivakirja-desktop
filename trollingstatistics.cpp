@@ -8,9 +8,14 @@ TrollingStatistics::TrollingStatistics():
 {
 }
 
-void TrollingStatistics::setY(const QString& p_y)
+void TrollingStatistics::setX(const QString& p_y)
 {
-    m_Y = p_y;
+    m_X = p_y;
+}
+
+void TrollingStatistics::setZ(const QString& p_z)
+{
+    m_Z = p_z;
 }
 
 void TrollingStatistics::setUnit(EUnit p_unit)
@@ -34,10 +39,10 @@ QMap<QString, QString> TrollingStatistics::calculate(const QList<QMap<QString, Q
     QMap<QString, double> fishcount;
     if(m_unit == TrollingStatistics::eCount)
     {
-        fishcount = countFields(statistics, m_Y);
+        fishcount = countFields(statistics, m_X);
     }else if(m_unit == TrollingStatistics::eFishPerTime)
     {
-        QMap<QString, double> count = countFields(statistics, m_Y);
+        QMap<QString, double> count = countFields(statistics, m_X);
         QMap<QString, double> time = sumFields(statistics, tr("Aikaa per kala"));
         for(QMap<QString, double>::iterator iter= count.begin(); iter!=count.end(); iter++)
         {
@@ -96,7 +101,7 @@ QMap<QString, double> TrollingStatistics::countFields(const QList<QMap<QString, 
         QMap<QString, QString> statline = statistics.at(loop);
         if(!statline[field].isEmpty())
         {
-            retval[makeGroup(statline[m_Y])]++;
+            retval[makeGroup(statline[m_X])]++;
         }
     }
     return retval;
@@ -108,29 +113,29 @@ QMap<QString, double> TrollingStatistics::sumFields(const QList<QMap<QString, QS
     for(int loop=0; loop < statistics.count(); loop++)
     {
         QMap<QString, QString> statline = statistics.at(loop);
-        retval[makeGroup(statline[m_Y])] = retval[makeGroup(statline[m_Y])] + statline[field].toDouble();
+        retval[makeGroup(statline[m_X])] = retval[makeGroup(statline[m_X])] + statline[field].toDouble();
     }
     return retval;
 }
 
-QList<QMap<QString, QString> > TrollingStatistics::stats3D(const QString& p_byCol)
+QList<QMap<QString, QString> > TrollingStatistics::stats3D()
 {
     QList<QMap<QString, QString> > retval;
     QMap<QString, QString> filters = m_filters;
-    QString y = m_Y;
+    QString y = m_X;
 
     //get column values
-    m_Y = p_byCol;
+    m_X = m_Z;
     QMap<QString, QString> cols = stats();
     for(QMap<QString, QString>::iterator iter = cols.begin(); iter != cols.end(); iter++)
     {
-        m_Y = y;
-        m_filters[p_byCol] = iter.key();
+        m_X = y;
+        m_filters[m_Z] = iter.key();
         retval.push_back(stats());
         m_filters = filters;
     }
 
-    m_Y = y;
+    m_X = y;
     m_filters = filters;
     return retval;
 }

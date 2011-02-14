@@ -15,8 +15,9 @@ public:
     virtual QStringList getTextFields() = 0;
     virtual QStringList getNumericFields() = 0;
     virtual QString getName() = 0;
-    QList<QMap<QString, QString> > stats3D(const QString&);
-    void setY(const QString&);
+    QList<QMap<QString, QString> > stats3D();
+    void setX(const QString&);
+    void setZ(const QString&);
     void setUnitField(const QString&);
     void setUnit(EUnit);
     void setScaling(bool);
@@ -29,7 +30,8 @@ private:
     QMap<QString, double> countFields(const QList<QMap<QString, QString> >&, const QString&);
     QMap<QString, double> sumFields(const QList<QMap<QString, QString> >&, const QString&);
     QString makeGroup(const QString&);
-    QString m_Y;
+    QString m_X;
+    QString m_Z;
     QString m_field;
     EUnit m_unit;
     bool m_doScaling;

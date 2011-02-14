@@ -46,11 +46,15 @@ void StatisticsForm::observerEvent(int type)
         qDebug() << "update stats engine";
         ui->columnCombo->blockSignals(true);
         ui->columnCombo->clear();
+        ui->byColumnCombo->blockSignals(true);
+        ui->byColumnCombo->clear();
         QStringList fields = m_statsController->getFields();
         for(int loop=0; loop < fields.count(); loop++)
         {
             ui->columnCombo->addItem(fields.at(loop));
+            ui->byColumnCombo->addItem(fields.at(loop));
         }
+        ui->byColumnCombo->blockSignals(false);
         ui->columnCombo->blockSignals(false);
 
         ui->calculatefromfieldCombo->blockSignals(true);
@@ -102,4 +106,9 @@ void StatisticsForm::on_unitCombo_currentIndexChanged(int index)
 void StatisticsForm::on_statisticsCombo_currentIndexChanged(QString value)
 {
     m_statsController->textEvent(eStatistics, value);
+}
+
+void StatisticsForm::on_byColumnCombo_currentIndexChanged(QString value)
+{
+    m_statsController->textEvent(eStatisticsByColumn, value);
 }
