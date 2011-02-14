@@ -70,6 +70,8 @@ void GLStatWidget::paintGL()
             drawBox(indexX, 0.0, -loop, 0.4, value);
             renderText(indexX, -1.0, -loop, name);
             renderText(indexX, value, -loop, iter.value());
+            drawLine(indexX, 0.0, -loop, indexX+10, 0.0, -loop-10);
+
             indexX++;
         }
     }
@@ -136,6 +138,23 @@ void GLStatWidget::drawBox(GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLfloat h
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
+
+}
+
+void GLStatWidget::drawLine(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2)
+{
+
+    GLfloat vertices[] =
+    {
+        x1,y2,z1,
+        x2,y2,z2
+    };
+
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, vertices);
+    glDrawArrays(GL_LINES, 0, 2);
+    glDisableClientState(GL_VERTEX_ARRAY);
 
 }
 

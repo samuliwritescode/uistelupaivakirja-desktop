@@ -19,6 +19,7 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void	wheelEvent ( QWheelEvent * event );
     void drawBox(GLfloat, GLfloat, GLfloat, GLfloat, GLfloat);
+    void drawLine(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2);
 
 signals:
 
