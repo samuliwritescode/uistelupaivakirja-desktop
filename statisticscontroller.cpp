@@ -18,7 +18,7 @@ QString StatisticsController::getTextValue(EUISource source)
     case eStatistics:
         {
 //            stats.setScaling(true);
-            QList<QMap<QString, QString> > chartlist = m_stats->stats3D();
+            /*QList<QMap<QString, QString> > chartlist = m_stats->stats3D();
             QString retval;
             for(int loop=0; loop < chartlist.size(); loop++)
             {
@@ -33,6 +33,7 @@ QString StatisticsController::getTextValue(EUISource source)
                 }
             }
             return retval;
+            */
         }
         break;
     default: break;
@@ -89,12 +90,12 @@ QMap<QString, QString> StatisticsController::getStats()
     return QMap<QString, QString>();
 }
 
-QList<QMap<QString, QString> > StatisticsController::getStats3D()
+TrollingStatisticsTable StatisticsController::getStats3D()
 {
     if(m_stats)
         return m_stats->stats3D();
 
-    return QList<QMap<QString, QString> >();
+    return TrollingStatisticsTable();
 }
 
 QStringList StatisticsController::getFields()

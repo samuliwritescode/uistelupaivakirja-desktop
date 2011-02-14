@@ -2,6 +2,8 @@
 #define STATISTICSCONTROLLER_H
 #include <QMap>
 #include "controller.h"
+#include "trollingstatisticstable.h"
+
 class TrollingStatistics;
 
 class StatisticsController : public Controller
@@ -16,7 +18,7 @@ public:
     QStringList getNumericFields();
     QStringList getEngines();
     QMap<QString, QString> getStats();
-    QList<QMap<QString, QString> > getStats3D();
+    TrollingStatisticsTable getStats3D();
 
 signals:
 

@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QMap>
 #include "singletons.h"
+#include "trollingstatisticstable.h"
 
 class TrollingStatistics: public QObject
 {
@@ -15,7 +16,7 @@ public:
     virtual QStringList getTextFields() = 0;
     virtual QStringList getNumericFields() = 0;
     virtual QString getName() = 0;
-    QList<QMap<QString, QString> > stats3D();
+    TrollingStatisticsTable stats3D();
     void setX(const QString&);
     void setZ(const QString&);
     void setUnitField(const QString&);

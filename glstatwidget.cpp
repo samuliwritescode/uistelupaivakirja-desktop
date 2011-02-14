@@ -50,30 +50,40 @@ void GLStatWidget::paintGL()
 
     for(int loop=0; loop < m_stats.count(); loop++)
     {
-        QMap<QString, QString> stats = m_stats.at(loop);
+        QHash<QString, QString> stats = m_stats.at(loop);
 
-        for(QMap<QString, QString>::iterator iter = stats.begin(); iter != stats.end(); iter++)
+        for(QHash<QString, QString>::iterator iter = stats.begin(); iter != stats.end(); iter++)
         {
             if(iter.value().toDouble() > maxval)
                 maxval = iter.value().toDouble();
         }
     }
 
+    for(int loop=0; loop < m_cols.count(); loop++)
+    {
+        QString text = m_cols.at(loop);
+        renderText((double)loop, 0.0, 1.0, text);
+    }
+
+    for(int loop=0; loop < m_rows.count(); loop++)
+    {
+        QString text = m_rows.at(loop);
+        renderText(-1, 0.0, -loop, text);
+    }
+
     for(int loop=0; loop < m_stats.count(); loop++)
     {
-        QMap<QString, QString> stats = m_stats.at(loop);
+        QHash<QString, QString> stats = m_stats.at(loop);
         int indexX = 0;
-        for(QMap<QString, QString>::iterator iter = stats.begin(); iter != stats.end(); iter++)
+        foreach(QString name, m_cols)
         {
-            QString name = iter.key();
-            double value = 5*iter.value().toDouble()/maxval;
-            drawBox(indexX, 0.0, -loop, 0.4, value);
-            renderText(indexX, -1.0, -loop, name);
-            renderText(indexX, value, -loop, iter.value());
+            double value = 5*stats[name].toDouble()/maxval;
+            drawBox(indexX, 0.0, -loop, 0.4, value);            
+            renderText(indexX, value, -loop, stats[name]);
             drawLine(indexX, 0.0, -loop, indexX+10, 0.0, -loop-10);
-
             indexX++;
         }
+
     }
 
     glTranslatef(0.5, 1.5, 0);
@@ -81,11 +91,23 @@ void GLStatWidget::paintGL()
 
 }
 
-void GLStatWidget::setStat(const QList<QMap<QString, QString> >& p_stats)
+void GLStatWidget::setStat(const QList<QHash<QString, QString> >& p_stats)
 {
     m_stats = p_stats;
     updateGL();
 }
+
+void GLStatWidget::setCols(const QList<QString>& p_cols)
+{
+    m_cols = p_cols;
+    updateGL();
+}
+
+void GLStatWidget::setRows(const QList<QString>& p_rows)
+ {
+     m_rows = p_rows;
+     updateGL();
+ }
 
 void GLStatWidget::drawBox(GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLfloat h)
 {
@@ -146,7 +168,7 @@ void GLStatWidget::drawLine(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfl
 
     GLfloat vertices[] =
     {
-        x1,y2,z1,
+        x1,y1,z1,
         x2,y2,z2
     };
 

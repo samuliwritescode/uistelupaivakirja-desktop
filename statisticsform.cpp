@@ -38,7 +38,10 @@ void StatisticsForm::observerEvent(int type)
     {
         //qDebug() << m_statsController->getTextValue(eStatistics);
         //QMap<QString, QString> stat = m_statsController->getStats();
-        m_statWidget->setStat(m_statsController->getStats3D());
+        TrollingStatisticsTable stats = m_statsController->getStats3D();
+        m_statWidget->setCols(stats.m_columns);
+        m_statWidget->setRows(stats.m_rows);
+        m_statWidget->setStat(stats.m_data);
         //ui->statistics->setText(m_statsController->getTextValue(eStatistics));
     }
     else if(type == Controller::eStatisticsEngineUpdated)

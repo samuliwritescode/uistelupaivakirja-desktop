@@ -2,14 +2,17 @@
 #define GLSTATWIDGET_H
 
 #include <QGLWidget>
-#include <QMap>
+#include <QHash>
+#include <QList>
 
 class GLStatWidget : public QGLWidget
 {
     Q_OBJECT
 public:
     explicit GLStatWidget(QGLWidget *parent = 0);
-    void setStat(const QList<QMap<QString, QString> >&);
+    void setStat(const QList<QHash<QString, QString> >&);
+    void setCols(const QList<QString>&);
+    void setRows(const QList<QString>&);
 
 protected:
     virtual void initializeGL();
@@ -32,7 +35,9 @@ private:
     int yRot;
 
     QPoint lastPos;
-    QList<QMap<QString, QString> > m_stats;
+    QList<QHash<QString, QString> > m_stats;
+    QList<QString> m_cols;
+    QList<QString> m_rows;
 
 };
 

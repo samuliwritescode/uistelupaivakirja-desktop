@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     statisticsform.cpp \
     tripstatistics.cpp \
     fishstatistics.cpp \
-    glstatwidget.cpp
+    glstatwidget.cpp \
+    trollingstatisticstable.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -71,7 +72,8 @@ HEADERS  += mainwindow.h \
     statisticsform.h \
     tripstatistics.h \
     fishstatistics.h \
-    glstatwidget.h
+    glstatwidget.h \
+    trollingstatisticstable.h
 
 FORMS    += mainwindow.ui \
     tripform.ui \
