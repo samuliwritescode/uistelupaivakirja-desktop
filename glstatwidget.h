@@ -10,9 +10,10 @@ class GLStatWidget : public QGLWidget
     Q_OBJECT
 public:
     explicit GLStatWidget(QGLWidget *parent = 0);
-    void setStat(const QList<QHash<QString, QString> >&);
+    void addStat(const QHash<QString, QString>&, const QString&);
+    void clearStat();
     void setCols(const QList<QString>&);
-    void setRows(const QList<QString>&);
+    void setProgress(int);
 
 protected:
     virtual void initializeGL();
@@ -21,7 +22,7 @@ protected:
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void	wheelEvent ( QWheelEvent * event );
-    void drawBox(GLfloat, GLfloat, GLfloat, GLfloat, GLfloat);
+    void drawBox(GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, GLfloat);
     void drawLine(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2);
 
 signals:
@@ -38,7 +39,8 @@ private:
     QList<QHash<QString, QString> > m_stats;
     QList<QString> m_cols;
     QList<QString> m_rows;
-
+    double m_maxVal;
+    int m_progress;
 };
 
 #endif // GLSTATWIDGET_H

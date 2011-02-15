@@ -12,6 +12,7 @@ StatisticsForm::StatisticsForm(QWidget *parent) :
 
     m_statsController = Singletons::statsController();
     connect(m_statsController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
+    connect(m_statsController, SIGNAL(progress(int)), this, SLOT(progressBarChanged(int)));
 
     observerEvent(Controller::eStatisticsEngineUpdated);
     QStringList engines = m_statsController->getEngines();
@@ -24,7 +25,6 @@ StatisticsForm::StatisticsForm(QWidget *parent) :
     ui->unitCombo->addItem(tr("Riviä tunnissa"));
     ui->unitCombo->addItem(tr("Keskiarvo"));
     ui->unitCombo->addItem(tr("Summa"));
-
 }
 
 StatisticsForm::~StatisticsForm()
@@ -36,13 +36,14 @@ void StatisticsForm::observerEvent(int type)
 {
     if(type == Controller::eStatisticsUpdated)
     {
-        //qDebug() << m_statsController->getTextValue(eStatistics);
         //QMap<QString, QString> stat = m_statsController->getStats();
         TrollingStatisticsTable stats = m_statsController->getStats3D();
         m_statWidget->setCols(stats.m_columns);
-        m_statWidget->setRows(stats.m_rows);
-        m_statWidget->setStat(stats.m_data);
-        //ui->statistics->setText(m_statsController->getTextValue(eStatistics));
+        m_statWidget->clearStat();
+        for(int loop=0; loop < stats.m_data.count(); loop++)
+        {
+            m_statWidget->addStat(stats.m_data.at(loop), stats.m_rows.at(loop));
+        }
     }
     else if(type == Controller::eStatisticsEngineUpdated)
     {
@@ -69,6 +70,11 @@ void StatisticsForm::observerEvent(int type)
         }
         ui->calculatefromfieldCombo->blockSignals(false);
     }
+}
+
+void StatisticsForm::progressBarChanged(int value)
+{
+    m_statWidget->setProgress(value);
 }
 
 void StatisticsForm::on_unitCombo_textChanged(QString text)

@@ -21,8 +21,7 @@ public:
     TrollingStatisticsTable getStats3D();
 
 signals:
-
-public slots:
+    void progress(int);
 
 private:
     TrollingStatistics* m_stats;

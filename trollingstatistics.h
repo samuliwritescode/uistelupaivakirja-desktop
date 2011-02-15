@@ -23,6 +23,9 @@ public:
     void setUnit(EUnit);
     void setScaling(bool);
 
+signals:
+    void progress(int);
+
 protected:
     QMap<QString, QString> calculate(const QList<QMap<QString, QString> >&);
     QMap<QString, QString> m_filters;

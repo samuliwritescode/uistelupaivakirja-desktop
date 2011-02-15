@@ -124,6 +124,7 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
     TrollingStatisticsTable retval;
     QMap<QString, QString> filters = m_filters;
     QString y = m_X;
+    emit progress(0);
 
     QMap<QString, QString> allPossible = stats();
     retval.m_columns = allPossible.keys();
@@ -135,7 +136,7 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
     int idx = 0;
     for(QMap<QString, QString>::iterator iter = cols.begin(); iter != cols.end(); iter++)
     {
-        qDebug() << (double)idx/cols.size();
+        emit progress(100*idx/cols.size());
         m_X = y;
         m_filters[m_Z] = iter.key();
         TrollingStatisticsTableRow row;
@@ -150,6 +151,7 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
         idx++;
     }
 
+    emit progress(100);
     m_X = y;
     m_filters = filters;
     return retval;

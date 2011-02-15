@@ -7,6 +7,7 @@ StatisticsController::StatisticsController(QObject *parent) :
     m_stats(NULL)
 {
     m_stats = new FishStatistics();
+    connect(m_stats, SIGNAL(progress(int)), this, SIGNAL(progress(int)));
 }
 
 QString StatisticsController::getTextValue(EUISource source)
@@ -15,27 +16,6 @@ QString StatisticsController::getTextValue(EUISource source)
 
     switch(source)
     {
-    case eStatistics:
-        {
-//            stats.setScaling(true);
-            /*QList<QMap<QString, QString> > chartlist = m_stats->stats3D();
-            QString retval;
-            for(int loop=0; loop < chartlist.size(); loop++)
-            {
-                QMap<QString, QString> chart = chartlist.at(loop);
-                retval += "**BEGIN**\n";
-                for(QMap<QString, QString>::iterator iter = chart.begin(); iter != chart.end(); iter++)
-                {
-                    retval += iter.key();
-                    retval += "\t";
-                    retval += iter.value();
-                    retval += "\n";
-                }
-            }
-            return retval;
-            */
-        }
-        break;
     default: break;
     }
     return QString();
@@ -65,13 +45,17 @@ void StatisticsController::textEvent(EUISource source, const QString& value)
         }
         if(FishStatistics().getName() == value)
         {
+            disconnect(m_stats, SIGNAL(progress(int)), this, SIGNAL(progress(int)));
             delete m_stats;
             m_stats = new FishStatistics();
+            connect(m_stats, SIGNAL(progress(int)), this, SIGNAL(progress(int)));
         }
         else if(TripStatistics().getName() == value)
         {
+            disconnect(m_stats, SIGNAL(progress(int)), this, SIGNAL(progress(int)));
             delete m_stats;
             m_stats = new TripStatistics();
+            connect(m_stats, SIGNAL(progress(int)), this, SIGNAL(progress(int)));
         }
 
         sendNotificationToObservers(Controller::eStatisticsEngineUpdated);

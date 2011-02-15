@@ -30,7 +30,21 @@
       </spacer>
      </item>
      <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Lajittele vaakasuunnassa</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QComboBox" name="columnCombo"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>syvyyssuunnassa</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QComboBox" name="byColumnCombo"/>
@@ -66,10 +80,34 @@
       </spacer>
      </item>
      <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Laske tilastot</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QComboBox" name="statisticsCombo"/>
      </item>
      <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>kaavalla</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QComboBox" name="unitCombo"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>suureesta</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="calculatefromfieldCombo"/>
      </item>
      <item>
       <spacer name="horizontalSpacer_2">
@@ -90,37 +128,7 @@
     <layout class="QHBoxLayout" name="statisticslayout"/>
    </item>
    <item row="1" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QComboBox" name="calculatefromfieldCombo"/>
-     </item>
-     <item>
-      <spacer name="verticalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
+    <layout class="QVBoxLayout" name="verticalLayout"/>
    </item>
   </layout>
  </widget>

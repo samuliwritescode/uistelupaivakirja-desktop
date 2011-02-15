@@ -31,6 +31,7 @@ private slots:
     void on_calculatefromfieldCombo_currentIndexChanged(QString );
     void on_unitCombo_currentIndexChanged(QString );
     void observerEvent(int type);
+    void progressBarChanged(int);
     void on_columnCombo_textChanged(QString );
     void on_calculatefromfieldCombo_textChanged(QString );
     void on_unitCombo_textChanged(QString );

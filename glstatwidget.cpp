@@ -16,6 +16,7 @@ GLStatWidget::GLStatWidget(QGLWidget *parent) :
 
     xRot = 0;
     yRot = 0;
+    m_progress = 100;
 }
 
 void GLStatWidget::initializeGL()
@@ -40,60 +41,86 @@ void GLStatWidget::initializeGL()
 void GLStatWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    if(m_progress != 100)
+    {
+        QFont font;
+        font.setPixelSize(24);
+        renderText(this->width()/2-50, this->height()/2, tr("Lasken (")+QString::number(m_progress)+")%", font);
+        return;
+    }
+
     glLoadIdentity();
     glPushMatrix();
+
     glTranslatef(xPos/160.0, -yPos/160.0, -zPos/160);
     glRotatef(-yRot, 1, 0, 0);
     glRotatef(-xRot, 0, 1, 0);
 
-    double maxval=0;
-
-    for(int loop=0; loop < m_stats.count(); loop++)
+    if(m_stats.count() == 0)
     {
-        QHash<QString, QString> stats = m_stats.at(loop);
-
-        for(QHash<QString, QString>::iterator iter = stats.begin(); iter != stats.end(); iter++)
+        QFont font;
+        font.setPixelSize(24);
+        renderText(this->width()/2-50, this->height()/2, tr("Ei tilastoa"), font);
+    }
+    else
+    {
+        for(int loop=0; loop < m_cols.count(); loop++)
         {
-            if(iter.value().toDouble() > maxval)
-                maxval = iter.value().toDouble();
-        }
-    }
-
-    for(int loop=0; loop < m_cols.count(); loop++)
-    {
-        QString text = m_cols.at(loop);
-        renderText((double)loop, 0.0, 1.0, text);
-    }
-
-    for(int loop=0; loop < m_rows.count(); loop++)
-    {
-        QString text = m_rows.at(loop);
-        renderText(-1, 0.0, -loop, text);
-    }
-
-    for(int loop=0; loop < m_stats.count(); loop++)
-    {
-        QHash<QString, QString> stats = m_stats.at(loop);
-        int indexX = 0;
-        foreach(QString name, m_cols)
-        {
-            double value = 5*stats[name].toDouble()/maxval;
-            drawBox(indexX, 0.0, -loop, 0.4, value);            
-            renderText(indexX, value, -loop, stats[name]);
-            drawLine(indexX, 0.0, -loop, indexX+10, 0.0, -loop-10);
-            indexX++;
+            QString text = m_cols.at(loop);
+            renderText((double)loop, 0.0, 1.0, text);
         }
 
-    }
+        for(int loop=0; loop < m_rows.count(); loop++)
+        {
+            QString text = m_rows.at(loop);
+            renderText(-1, 0.0, -loop, text);
+        }
 
+        for(int loop=0; loop < m_stats.count(); loop++)
+        {
+            QHash<QString, QString> stats = m_stats.at(loop);
+            int indexX = 0;
+            foreach(QString name, m_cols)
+            {
+                double value = 5*stats[name].toDouble()/m_maxVal;
+                drawBox(indexX, 0.0, -loop, 0.4, value, stats[name].toDouble()/m_maxVal);
+                renderText(indexX, value, -loop, stats[name]);
+                //drawLine(indexX, 0.0, -loop, indexX+10, 0.0, -loop-10);
+                indexX++;
+            }
+
+        }
+    }
     glTranslatef(0.5, 1.5, 0);
     glPopMatrix();
 
 }
 
-void GLStatWidget::setStat(const QList<QHash<QString, QString> >& p_stats)
+void GLStatWidget::addStat(const QHash<QString, QString>& p_stat, const QString& p_name)
 {
-    m_stats = p_stats;
+    m_stats.append(p_stat);
+    m_rows.push_back(p_name);
+
+    for(QHash<QString, QString>::const_iterator iter = p_stat.begin(); iter != p_stat.end(); iter++)
+    {
+        if(iter.value().toDouble() > m_maxVal)
+            m_maxVal = iter.value().toDouble();
+    }
+
+    updateGL();
+}
+
+void GLStatWidget::clearStat()
+{
+    m_stats.clear();
+    m_rows.clear();
+    m_maxVal = 0;
+    updateGL();
+}
+
+void GLStatWidget::setProgress(int p_progress)
+{
+    m_progress = p_progress;
     updateGL();
 }
 
@@ -103,13 +130,7 @@ void GLStatWidget::setCols(const QList<QString>& p_cols)
     updateGL();
 }
 
-void GLStatWidget::setRows(const QList<QString>& p_rows)
- {
-     m_rows = p_rows;
-     updateGL();
- }
-
-void GLStatWidget::drawBox(GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLfloat h)
+void GLStatWidget::drawBox(GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLfloat h, GLfloat color)
 {
 
     GLfloat vertices[] =
@@ -132,8 +153,8 @@ void GLStatWidget::drawBox(GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLfloat h
         0,0,-1,     0,0,-1,     0,0,-1,     0,0,-1
      };
 
-    GLfloat r1 = 1.0;
-    GLfloat g1 = 0.0;
+    GLfloat r1 = color;
+    GLfloat g1 = 1.0-color;
     GLfloat b1 = 0.0;
 
     GLfloat r2 = 0.0;
