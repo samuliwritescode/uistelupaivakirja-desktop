@@ -174,11 +174,12 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
     retval.m_rows = cols.keys();
     qSort(retval.m_rows);
     int idx = 0;
-    for(QHash<QString, QString>::iterator iter = cols.begin(); iter != cols.end(); iter++)
+    for(int loop=0; loop < retval.m_rows.count(); loop++)
     {
+        QString col = retval.m_rows.at(loop);
         emit progress(100*idx/cols.size());
         m_X = y;
-        m_filters[m_Z] = iter.key();
+        m_filters[m_Z] = col;
         TrollingStatisticsTableRow row;
         QHash<QString, QString> stat = stats();
 
