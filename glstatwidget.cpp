@@ -48,6 +48,12 @@ void GLStatWidget::paintGL()
         font.setPixelSize(24);
         renderText(this->width()/2-50, this->height()/2, tr("Lasken (")+QString::number(m_progress)+")%", font);
         return;
+    } else if(m_stats.count() == 0)
+    {
+        QFont font;
+        font.setPixelSize(24);
+        renderText(this->width()/2-50, this->height()/2, tr("Ei tilastoa"), font);
+        return;
     }
 
     glLoadIdentity();
@@ -57,41 +63,33 @@ void GLStatWidget::paintGL()
     glRotatef(-yRot, 1, 0, 0);
     glRotatef(-xRot, 0, 1, 0);
 
-    if(m_stats.count() == 0)
+    for(int loop=0; loop < m_cols.count(); loop++)
     {
-        QFont font;
-        font.setPixelSize(24);
-        renderText(this->width()/2-50, this->height()/2, tr("Ei tilastoa"), font);
+        QString text = m_cols.at(loop);
+        renderText((double)loop, -0.3, 1.0, text);
     }
-    else
+
+    for(int loop=0; loop < m_rows.count(); loop++)
     {
-        for(int loop=0; loop < m_cols.count(); loop++)
-        {
-            QString text = m_cols.at(loop);
-            renderText((double)loop, -0.3, 1.0, text);
-        }
-
-        for(int loop=0; loop < m_rows.count(); loop++)
-        {
-            QString text = m_rows.at(loop);
-            renderText(-1, -0.3, -loop, text);
-        }
-
-        for(int loop=0; loop < m_stats.count(); loop++)
-        {
-            QHash<QString, QString> stats = m_stats.at(loop);
-            int indexX = 0;
-            foreach(QString name, m_cols)
-            {
-                double value = 5*stats[name].toDouble()/m_maxVal;
-                drawBox(indexX, 0.0, -loop, 0.4, value, stats[name].toDouble()/m_maxVal);
-                renderText(indexX, value, -loop+0.3, stats[name]);
-                //drawLine(indexX, 0.0, -loop, indexX+10, 0.0, -loop-10);
-                indexX++;
-            }
-
-        }
+        QString text = m_rows.at(loop);
+        renderText(-1, -0.3, -loop, text);
     }
+
+    for(int loop=0; loop < m_stats.count(); loop++)
+    {
+        QHash<QString, QString> stats = m_stats.at(loop);
+        int indexX = 0;
+        foreach(QString name, m_cols)
+        {
+            double value = 5*stats[name].toDouble()/m_maxVal;
+            drawBox(indexX, 0.0, -loop, 0.4, value, stats[name].toDouble()/m_maxVal);
+            renderText(indexX, value, -loop+0.3, stats[name]);
+            //drawLine(indexX, 0.0, -loop, indexX+10, 0.0, -loop-10);
+            indexX++;
+        }
+
+    }
+
     glTranslatef(0.5, 1.5, 0);
     glPopMatrix();
 
@@ -99,6 +97,9 @@ void GLStatWidget::paintGL()
 
 void GLStatWidget::addStat(const QHash<QString, QString>& p_stat, const QString& p_name)
 {
+    if(p_stat.count() == 0)
+        return;
+
     m_stats.append(p_stat);
     m_rows.push_back(p_name);
 
