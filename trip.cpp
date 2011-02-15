@@ -123,7 +123,6 @@ int Trip::indexOfFish(Fish* p_fish)
 
 void Trip::FishModified()
 {
-    qDebug() << "trip is unsaved";
     setUnsaved();
 }
 

@@ -68,6 +68,8 @@ void TripForm::observerEvent(int type)
     case Controller::eWayPointsUpdated: updateWaypoints(); break;
     default: qDebug() << "TripForm do not understand event" << type; break;
     }
+
+    ui->trip_save->setDisabled(!m_tripController->getBooleanValue(eUnsavedChanges));
 }
 
 void TripForm::updatePlaceList()
