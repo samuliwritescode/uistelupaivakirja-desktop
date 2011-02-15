@@ -72,6 +72,10 @@ void TripForm::observerEvent(int type)
     ui->trip_save->setDisabled(!m_tripController->getBooleanValue(eUnsavedChanges));
     ui->trip_delete->setDisabled(!m_tripController->getBooleanValue(eTrip));
     ui->groupBoxTrip->setVisible(m_tripController->getBooleanValue(eTrip));
+    ui->labelCreateNewTrip->setVisible(!m_tripController->getBooleanValue(eTrip));
+    ui->poiDock->setVisible(m_tripController->getBooleanValue(eTrip));
+    ui->mapDock->setVisible(m_tripController->getBooleanValue(eTrip));
+    ui->lureDock->setVisible(m_tripController->getBooleanValue(eTrip));
 }
 
 void TripForm::updatePlaceList()
@@ -95,7 +99,7 @@ void TripForm::updateLureList()
 
        QListWidgetItem* itemSmall = new QListWidgetItem(pair.first,  ui->small_lure_list);
        itemSmall->setData(Qt::UserRole+1,  pair.second);
-        ui->small_lure_list->insertItem(0, itemSmall);
+       ui->small_lure_list->insertItem(0, itemSmall);
    }
 }
 
@@ -174,7 +178,7 @@ void TripForm::updateTripList()
    for(QMap<QString, int>::iterator iter = trips.begin(); iter != trips.end(); iter++)
    {
        QListWidgetItem* item = new QListWidgetItem(iter.key(),  ui->trip_list, iter.value());
-        ui->trip_list->insertItem(0, item);
+       ui->trip_list->insertItem(0, item);
    }
 }
 
