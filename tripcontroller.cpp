@@ -76,6 +76,7 @@ int TripController::getIntValue(EUISource source)
         else
             return -1;
         break;
+    case eTrip: return m_trip->getId(); break;
     default: qCritical() << "Unknown get int" << source; break;
     }
     return 0;

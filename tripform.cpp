@@ -173,12 +173,16 @@ void TripForm::updateTrip()
 
 void TripForm::updateTripList()
 {
-    ui->trip_list->clear();
+   ui->trip_list->clear();
    QMap<QString, int> trips = m_tripController->getTripList();
    for(QMap<QString, int>::iterator iter = trips.begin(); iter != trips.end(); iter++)
    {
        QListWidgetItem* item = new QListWidgetItem(iter.key(),  ui->trip_list, iter.value());
        ui->trip_list->insertItem(0, item);
+       if(iter.value() == m_tripController->getIntValue(eTrip))
+       {
+           ui->trip_list->setCurrentItem(item);
+       }
    }
 }
 
