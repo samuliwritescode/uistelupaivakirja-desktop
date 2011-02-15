@@ -58,6 +58,9 @@ void StatisticsForm::observerEvent(int type)
             ui->columnCombo->addItem(fields.at(loop));
             ui->byColumnCombo->addItem(fields.at(loop));
         }
+        ui->columnCombo->setCurrentIndex(-1);
+        ui->byColumnCombo->setCurrentIndex(-1);
+
         ui->byColumnCombo->blockSignals(false);
         ui->columnCombo->blockSignals(false);
 
@@ -68,6 +71,7 @@ void StatisticsForm::observerEvent(int type)
         {
             ui->calculatefromfieldCombo->addItem(numFields.at(loop));
         }
+        ui->calculatefromfieldCombo->setCurrentIndex(-1);
         ui->calculatefromfieldCombo->blockSignals(false);
     }
 }
