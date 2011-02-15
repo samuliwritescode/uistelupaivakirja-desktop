@@ -41,6 +41,7 @@ void GLStatWidget::initializeGL()
 void GLStatWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    qglColor(QColor::fromRgb(0,0,0));
     if(m_progress != 100)
     {
         QFont font;
@@ -67,13 +68,13 @@ void GLStatWidget::paintGL()
         for(int loop=0; loop < m_cols.count(); loop++)
         {
             QString text = m_cols.at(loop);
-            renderText((double)loop, 0.0, 1.0, text);
+            renderText((double)loop, -0.3, 1.0, text);
         }
 
         for(int loop=0; loop < m_rows.count(); loop++)
         {
             QString text = m_rows.at(loop);
-            renderText(-1, 0.0, -loop, text);
+            renderText(-1, -0.3, -loop, text);
         }
 
         for(int loop=0; loop < m_stats.count(); loop++)
@@ -84,7 +85,7 @@ void GLStatWidget::paintGL()
             {
                 double value = 5*stats[name].toDouble()/m_maxVal;
                 drawBox(indexX, 0.0, -loop, 0.4, value, stats[name].toDouble()/m_maxVal);
-                renderText(indexX, value, -loop, stats[name]);
+                renderText(indexX, value, -loop+0.3, stats[name]);
                 //drawLine(indexX, 0.0, -loop, indexX+10, 0.0, -loop-10);
                 indexX++;
             }
