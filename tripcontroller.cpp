@@ -9,11 +9,13 @@ TripController::TripController(QObject *parent) :
         Controller(parent),
         m_trip(NULL)
 {
-    m_trip = Singletons::model()->getTrip();
+    //m_trip = Singletons::model()->getTrip();
 }
 
 QDate TripController::getDateValue(EUISource source)
 {
+    if(!m_trip) return QDate();
+
     switch(source)
     {
     case eTripDate: return m_trip->getDate(); break;
@@ -24,6 +26,8 @@ QDate TripController::getDateValue(EUISource source)
 
 bool TripController::getBooleanValue(EUISource source)
 {
+    if(!m_trip) return false;
+
     switch(source)
     {
     case eWindCalm: return m_trip->getFish()->getWindCondition() == Fish::eCalm; break;
@@ -48,6 +52,7 @@ bool TripController::getBooleanValue(EUISource source)
     case eCatchNRelease: return m_trip->getFish()->isCR(); break;
     case eUnderSize: return m_trip->getFish()->isUnderSize(); break;
     case eUnsavedChanges: return m_trip->isUnsaved(); break;
+    case eTrip: return m_trip != NULL; break;
     default: qCritical() << "Unknown get boolean" << source; break;
     }
     return false;
@@ -55,6 +60,8 @@ bool TripController::getBooleanValue(EUISource source)
 
 int TripController::getIntValue(EUISource source)
 {
+    if(!m_trip) return 0;
+
     switch(source)
     {
     case eFishList: return m_trip->getSelectedFish(); break;
@@ -76,6 +83,8 @@ int TripController::getIntValue(EUISource source)
 
 QString TripController::getTextValue(EUISource source)
 {
+    if(!m_trip) return QString();
+
     switch(source)
     {
     case eLureName:
@@ -106,6 +115,7 @@ QString TripController::getTextValue(EUISource source)
 
 QTime TripController::getTimeValue(EUISource source)
 {
+    if(!m_trip) return QTime();
     switch(source)
     {
     case eTime:
@@ -122,6 +132,7 @@ QTime TripController::getTimeValue(EUISource source)
 
 void TripController::booleanEvent(EUISource source, bool value)
 {
+    if(!m_trip) return;
     qDebug() << "got bool event" << source << value;
     switch(source)
     {
@@ -154,6 +165,7 @@ void TripController::booleanEvent(EUISource source, bool value)
 
 void TripController::intEvent(EUISource source, int value)
 {
+    if(!m_trip && source != eTrip) return;
     qDebug() << "got int event" << source << value;
     switch(source)
     {
@@ -168,10 +180,13 @@ void TripController::intEvent(EUISource source, int value)
         sendNotificationToObservers(Controller::eTripUpdated);
         return; break;
     case eTrip:
-        m_trip = Singletons::model()->getTrip(value);
-        m_trip->selectFish(-1);
-        sendNotificationToObservers(Controller::eFishListUpdated);
-        sendNotificationToObservers(Controller::eWayPointsUpdated);
+        if(value > -1)
+        {
+            m_trip = Singletons::model()->getTrip(value);
+            m_trip->selectFish(-1);
+            sendNotificationToObservers(Controller::eFishListUpdated);
+            sendNotificationToObservers(Controller::eWayPointsUpdated);
+        }
         break;
     case eFishList:
         m_trip->selectFish(value);
@@ -212,6 +227,8 @@ void TripController::intEvent(EUISource source, int value)
 
 void TripController::dateEvent(EUISource source, const QDate& value)
 {
+    if(!m_trip) return;
+
     qDebug() << "got date event" << source << value;
     switch(source)
     {
@@ -223,6 +240,8 @@ void TripController::dateEvent(EUISource source, const QDate& value)
 
 void TripController::timeEvent(EUISource source, const QTime& value)
 {
+    if(!m_trip) return;
+
     qDebug() << "got time event" << source << value;
     switch(source)
     {
@@ -235,6 +254,8 @@ void TripController::timeEvent(EUISource source, const QTime& value)
 
 void TripController::textEvent(EUISource source, const QString& value)
 {
+    if(!m_trip) return;
+
     qDebug() << "got text event" << source << value;
     switch(source)
     {
@@ -274,7 +295,8 @@ void TripController::buttonEvent(EUISource source)
     case eNewTrip: m_trip = Singletons::model()->getTrip(); break;
     case eDeleteTrip:
         Singletons::model()->remove(m_trip);
-        m_trip = Singletons::model()->getTrip();
+        m_trip = NULL;
+        //m_trip = Singletons::model()->getTrip();
         break;
     case eNewFish:
         m_trip->newFish(Fish::eFish);
@@ -342,6 +364,8 @@ QMap<QString, int> TripController::getTripList()
 QList<QMap<QString, QString> > TripController::getFishList()
 {
     QList<QMap<QString, QString> > retval;
+    if(!m_trip) return retval;
+
     for(int loop=0; loop < m_trip->getFishCount(); loop++)
     {
         QMap<QString, QString> props;

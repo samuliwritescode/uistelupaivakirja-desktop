@@ -70,6 +70,8 @@ void TripForm::observerEvent(int type)
     }
 
     ui->trip_save->setDisabled(!m_tripController->getBooleanValue(eUnsavedChanges));
+    ui->trip_delete->setDisabled(!m_tripController->getBooleanValue(eTrip));
+    ui->groupBoxTrip->setVisible(m_tripController->getBooleanValue(eTrip));
 }
 
 void TripForm::updatePlaceList()

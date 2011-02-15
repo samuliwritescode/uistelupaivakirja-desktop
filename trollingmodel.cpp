@@ -52,7 +52,7 @@ TrollingModel::~TrollingModel()
 
 Trip* TrollingModel::getTrip(int id)
 {
-    if(id < 0 )
+    if(id < 0 && getTrollingObject("trip", id) == NULL)
     {
         Trip* trip = new Trip();
         m_trollingobjects.push_back(trip);
@@ -90,7 +90,7 @@ TrollingObject* TrollingModel::getTrollingObject(const QString& type, int id)
 
 Lure* TrollingModel::getLure(int id)
 {
-    if(id < 0 )
+    if(id < 0 && getTrollingObject("lure", id) == NULL )
     {
         Lure* lure = new Lure();
         m_trollingobjects.push_back(lure);
@@ -131,7 +131,7 @@ QMap<int, Place*> TrollingModel::getPlaces()
 
 Place* TrollingModel::getPlace(int id)
 {
-    if(id < 0 )
+    if(id < 0 && getTrollingObject("place", id) == NULL)
     {
         Place* place = new Place();
         m_trollingobjects.push_back(place);
@@ -161,6 +161,7 @@ void TrollingModel::remove(TrollingObject* p_object)
         if(m_trollingobjects[loop] == p_object)
         {
             m_trollingobjects.removeAt(loop);
+            break;
         }
     }
 
