@@ -20,11 +20,8 @@ StatisticsForm::StatisticsForm(QWidget *parent) :
     {
         ui->statisticsCombo->addItem(engines.at(loop));
     }
+    ui->byColumnCombo->setVisible(false);
 
-    ui->unitCombo->addItem(tr("Määrä"));
-    ui->unitCombo->addItem(tr("Riviä tunnissa"));
-    ui->unitCombo->addItem(tr("Keskiarvo"));
-    ui->unitCombo->addItem(tr("Summa"));
 }
 
 StatisticsForm::~StatisticsForm()
@@ -36,13 +33,35 @@ void StatisticsForm::observerEvent(int type)
 {
     if(type == Controller::eStatisticsUpdated)
     {
-        //QMap<QString, QString> stat = m_statsController->getStats();
-        TrollingStatisticsTable stats = m_statsController->getStats3D();
-        m_statWidget->setCols(stats.m_columns);
-        m_statWidget->clearStat();
-        for(int loop=0; loop < stats.m_data.count(); loop++)
+        if(ui->checkBox3D->isChecked())
         {
-            m_statWidget->addStat(stats.m_data.at(loop), stats.m_rows.at(loop));
+            TrollingStatisticsTable stats = m_statsController->getStats3D();
+            m_statWidget->setCols(stats.m_columns);
+            m_statWidget->clearStat();
+            for(int loop=0; loop < stats.m_data.count(); loop++)
+            {
+                m_statWidget->addStat(stats.m_data.at(loop), stats.m_rows.at(loop));
+            }
+        }
+        else
+        {
+            QHash<QString, QString> stats = m_statsController->getStats();
+            QList<QString> cols = stats.keys();
+            qSort(cols);
+            m_statWidget->setCols(cols);
+            m_statWidget->clearStat();
+            m_statWidget->addStat(stats, "");
+        }
+
+        if(m_statsController->getBooleanValue(eStatisticsUnit))
+        {
+            ui->calculatefromfieldCombo->show();
+            ui->labelFromField->show();
+        }
+        else
+        {
+            ui->calculatefromfieldCombo->hide();
+            ui->labelFromField->hide();
         }
     }
     else if(type == Controller::eStatisticsEngineUpdated)
@@ -73,6 +92,15 @@ void StatisticsForm::observerEvent(int type)
         }
         ui->calculatefromfieldCombo->setCurrentIndex(-1);
         ui->calculatefromfieldCombo->blockSignals(false);
+
+        ui->unitCombo->blockSignals(true);
+        ui->unitCombo->clear();
+        QStringList operators = m_statsController->getOperators();
+        for(int loop=0; loop < operators.count(); loop++)
+        {
+            ui->unitCombo->addItem(operators.at(loop));
+        }
+        ui->unitCombo->blockSignals(false);
     }
 }
 
@@ -98,7 +126,7 @@ void StatisticsForm::on_columnCombo_textChanged(QString text)
 
 void StatisticsForm::on_unitCombo_currentIndexChanged(QString text)
 {
-
+    m_statsController->textEvent(eStatisticsUnit, text);
 }
 
 void StatisticsForm::on_calculatefromfieldCombo_currentIndexChanged(QString text)
@@ -113,7 +141,6 @@ void StatisticsForm::on_columnCombo_currentIndexChanged(QString text)
 
 void StatisticsForm::on_unitCombo_currentIndexChanged(int index)
 {
-    m_statsController->intEvent(eStatisticsUnit, index);
 }
 
 void StatisticsForm::on_statisticsCombo_currentIndexChanged(QString value)
@@ -124,4 +151,11 @@ void StatisticsForm::on_statisticsCombo_currentIndexChanged(QString value)
 void StatisticsForm::on_byColumnCombo_currentIndexChanged(QString value)
 {
     m_statsController->textEvent(eStatisticsByColumn, value);
+}
+
+void StatisticsForm::on_checkBox3D_clicked(bool checked)
+{
+    ui->byColumnCombo->setVisible(checked);
+    //send something to controller to get update.
+    m_statsController->textEvent(eFishList, "");
 }

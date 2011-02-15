@@ -12,12 +12,12 @@ class StatisticsController : public Controller
 public:
     explicit StatisticsController(QObject *parent = 0);
     virtual void textEvent(EUISource, const QString&);
-    virtual void intEvent(EUISource, int);
-    virtual QString getTextValue(EUISource source);
+    virtual bool getBooleanValue(EUISource);
     QStringList getFields();
     QStringList getNumericFields();
     QStringList getEngines();
-    QMap<QString, QString> getStats();
+    QStringList getOperators();
+    QHash<QString, QString> getStats();
     TrollingStatisticsTable getStats3D();
 
 signals:

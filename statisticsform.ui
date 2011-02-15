@@ -40,9 +40,9 @@
       <widget class="QComboBox" name="columnCombo"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QCheckBox" name="checkBox3D">
        <property name="text">
-        <string>syvyyssuunnassa</string>
+        <string>3D</string>
        </property>
       </widget>
      </item>
@@ -100,7 +100,7 @@
       <widget class="QComboBox" name="unitCombo"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="labelFromField">
        <property name="text">
         <string>suureesta</string>
        </property>

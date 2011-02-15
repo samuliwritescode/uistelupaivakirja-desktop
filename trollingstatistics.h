@@ -9,35 +9,41 @@ class TrollingStatistics: public QObject
 {
     Q_OBJECT
 public:
-    enum EUnit { eCount, eFishPerTime, eMean, eSum };
     TrollingStatistics();
 
-    virtual QMap<QString, QString> stats() = 0;
+    virtual QHash<QString, QString> stats() = 0;
     virtual QStringList getTextFields() = 0;
     virtual QStringList getNumericFields() = 0;
+    virtual QStringList getOperators();
     virtual QString getName() = 0;
+    virtual bool supportOperand();
     TrollingStatisticsTable stats3D();
     void setX(const QString&);
     void setZ(const QString&);
-    void setUnitField(const QString&);
-    void setUnit(EUnit);
+    void setOperand(const QString&);
+    void setOperator(const QString&);
     void setScaling(bool);
 
 signals:
     void progress(int);
 
 protected:
-    QMap<QString, QString> calculate(const QList<QMap<QString, QString> >&);
-    QMap<QString, QString> m_filters;
+    virtual QHash<QString, QString> calculate(const QList<QHash<QString, QString> >&);
+    QHash<QString, QString> m_filters;
+    QHash<QString, double> countFields(const QList<QHash<QString, QString> >&, const QString&);
+    QHash<QString, double> sumFields(const QList<QHash<QString, QString> >&, const QString&);
+    QString makeGroup(const QString&);
+    QString getX();
+    QString getZ();
+    QString getField();
+    QString getOperator();
+    bool isScaling();
 
 private:
-    QMap<QString, double> countFields(const QList<QMap<QString, QString> >&, const QString&);
-    QMap<QString, double> sumFields(const QList<QMap<QString, QString> >&, const QString&);
-    QString makeGroup(const QString&);
     QString m_X;
     QString m_Z;
     QString m_field;
-    EUnit m_unit;
+    QString m_operator;
     bool m_doScaling;
 };
 

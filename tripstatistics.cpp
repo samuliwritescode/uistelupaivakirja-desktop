@@ -21,6 +21,7 @@ QStringList TripStatistics::getTextFields()
     retval << COL_YEAR;
     retval << COL_MONTH;
     retval << COL_YEARMONTH;
+    retval.sort();
     return retval;
 }
 
@@ -29,6 +30,7 @@ QStringList TripStatistics::getNumericFields()
     QStringList retval;
     retval << COL_FISHCOUNT;
     retval << COL_TRIPLEN;
+    retval.sort();
     return retval;
 }
 
@@ -37,9 +39,9 @@ QString TripStatistics::getName()
     return tr("Reissut");
 }
 
-QMap<QString, QString> TripStatistics::stats()
+QHash<QString, QString> TripStatistics::stats()
 {
-    QList<QMap<QString, QString> > statistics;
+    QList<QHash<QString, QString> > statistics;
     QMap<int, Trip*> trips = Singletons::model()->getTrips();
     foreach(Trip* trip, trips)
     {
@@ -54,7 +56,7 @@ QMap<QString, QString> TripStatistics::stats()
             }
         }
 
-        QMap<QString, QString> statline;
+        QHash<QString, QString> statline;
         statline[COL_FISHCOUNT] = QString::number(fishCount);
         statline[COL_PLACE] = trip->getPlace()->getName();
         statline[COL_DATE] = trip->getDate().toString();
@@ -70,7 +72,7 @@ QMap<QString, QString> TripStatistics::stats()
         statline[tr("Aikaa per kala")] = QString::number(statline[COL_TRIPLEN].toDouble() / fishCount);
 
         bool bSkip = false;
-        for(QMap<QString, QString>::iterator iter = m_filters.begin(); iter != m_filters.end(); iter++)
+        for(QHash<QString, QString>::iterator iter = m_filters.begin(); iter != m_filters.end(); iter++)
         {
             if(statline.contains(iter.key()))
             {

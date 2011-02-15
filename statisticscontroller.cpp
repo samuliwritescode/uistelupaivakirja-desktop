@@ -10,25 +10,13 @@ StatisticsController::StatisticsController(QObject *parent) :
     connect(m_stats, SIGNAL(progress(int)), this, SIGNAL(progress(int)));
 }
 
-QString StatisticsController::getTextValue(EUISource source)
+bool StatisticsController::getBooleanValue(EUISource source)
 {
-    if(!m_stats) return QString();
-
-    switch(source)
+    if(source == eStatisticsUnit)
     {
-    default: break;
+        return m_stats->supportOperand();
     }
-    return QString();
-}
-
-void StatisticsController::intEvent(EUISource source, int value)
-{
-    switch(source)
-    {
-    case eStatisticsUnit: m_stats->setUnit(static_cast<TrollingStatistics::EUnit>(value)); break;
-    default: break;
-    }
-    sendNotificationToObservers(Controller::eStatisticsUpdated);
+    return false;
 }
 
 void StatisticsController::textEvent(EUISource source, const QString& value)
@@ -37,7 +25,8 @@ void StatisticsController::textEvent(EUISource source, const QString& value)
     {
     case eStatisticsColumn: m_stats->setX(value); break;
     case eStatisticsByColumn: m_stats->setZ(value); break;
-    case eStatisticsField: m_stats->setUnitField(value); break;
+    case eStatisticsField: m_stats->setOperand(value); break;
+    case eStatisticsUnit: m_stats->setOperator(value); break;
     case eStatistics:
         if(m_stats->getName() == value)
         {
@@ -66,12 +55,12 @@ void StatisticsController::textEvent(EUISource source, const QString& value)
     sendNotificationToObservers(Controller::eStatisticsUpdated);
 }
 
-QMap<QString, QString> StatisticsController::getStats()
+QHash<QString, QString> StatisticsController::getStats()
 {
     if(m_stats)
         return m_stats->stats();
 
-    return QMap<QString, QString>();
+    return QHash<QString, QString>();
 }
 
 TrollingStatisticsTable StatisticsController::getStats3D()
@@ -99,5 +88,11 @@ QStringList StatisticsController::getEngines()
     QStringList list;
     list << FishStatistics().getName();
     list << TripStatistics().getName();
+    return list;
+}
+
+QStringList StatisticsController::getOperators()
+{
+    QStringList list = m_stats->getOperators();
     return list;
 }

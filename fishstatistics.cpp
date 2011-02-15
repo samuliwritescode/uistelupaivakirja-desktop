@@ -24,6 +24,8 @@
 #define COL_PRESSURE tr("Ilmanpaine")
 #define COL_PRESSURECHANGE tr("Ilmanpaineen muutos")
 
+#define OPERATOR_FISHPERTIME tr("Kalaa tunnissa")
+
 FishStatistics::FishStatistics(QObject *) :
     TrollingStatistics()
 {
@@ -47,6 +49,7 @@ QStringList FishStatistics::getTextFields()
     retval << COL_WINDDIR;
     retval << COL_PRESSURE;
     retval << COL_PRESSURECHANGE;
+    retval.sort();
     return retval;
 }
 
@@ -60,6 +63,14 @@ QStringList FishStatistics::getNumericFields()
     retval << COL_RELEASELENGTH;
     retval << COL_SPOTDEPTH;
     retval << COL_TEMP;
+    retval.sort();
+    return retval;
+}
+
+QStringList FishStatistics::getOperators()
+{
+    QStringList retval = TrollingStatistics::getOperators();
+    retval << OPERATOR_FISHPERTIME;
     return retval;
 }
 
@@ -68,16 +79,16 @@ QString FishStatistics::getName()
     return tr("Kalat");
 }
 
-QMap<QString, QString> FishStatistics::stats()
+QHash<QString, QString> FishStatistics::stats()
 {
 
-    QList<QMap<QString, QString> > statistics;
+    QList<QHash<QString, QString> > statistics;
     QMap<int, Trip*> trips = Singletons::model()->getTrips();
     foreach(Trip* trip, trips)
     {
         for(int loop=0; loop < trip->getFishCount(); loop++)
         {
-            QMap<QString, QString> statline;
+            QHash<QString, QString> statline;
             Fish* fish = trip->getFish(loop);
             if(fish->getType() == Fish::eFish ||
                fish->getType() == Fish::eFishAndWeather)
@@ -158,7 +169,7 @@ QMap<QString, QString> FishStatistics::stats()
                 statline[COL_PRESSURECHANGE] = fish->getHumanReadablePressureChange();
 
                 bool bSkip = false;
-                for(QMap<QString, QString>::iterator iter = m_filters.begin(); iter != m_filters.end(); iter++)
+                for(QHash<QString, QString>::iterator iter = m_filters.begin(); iter != m_filters.end(); iter++)
                 {
                     if(statline.contains(iter.key()))
                     {
@@ -176,4 +187,28 @@ QMap<QString, QString> FishStatistics::stats()
         }
     }
     return calculate(statistics);
+}
+
+QHash<QString, QString> FishStatistics::calculate(const QList<QHash<QString, QString> >& statistics)
+{
+    if(getOperator() == OPERATOR_FISHPERTIME)
+    {
+        QHash<QString, QString> retval;
+        QHash<QString, double> fishcount;
+        QHash<QString, double> count = countFields(statistics, getX());
+        QHash<QString, double> time = sumFields(statistics, tr("Aikaa per kala"));
+        for(QHash<QString, double>::iterator iter= count.begin(); iter!=count.end(); iter++)
+        {
+            fishcount[iter.key()] = count[iter.key()] / time[iter.key()];
+        }
+        for(QHash<QString, double>::iterator iter= fishcount.begin(); iter!=fishcount.end(); iter++)
+        {
+            retval[iter.key()] = QString::number(iter.value());
+        }
+
+        return retval;
+    } else
+    {
+        return TrollingStatistics::calculate(statistics);
+    }
 }
