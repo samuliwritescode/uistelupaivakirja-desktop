@@ -1,4 +1,5 @@
 #include <QDebug>
+#include "singletons.h"
 #include "trollingobject.h"
 
 TrollingObject::TrollingObject():
@@ -101,4 +102,9 @@ QStringList TrollingObject::getKeys()
         retval << iter.key();
     }
     return retval;
+}
+
+QString TrollingObject::importFile(const QString& p_filename)
+{
+    return Singletons::model()->importFile(this, p_filename);
 }

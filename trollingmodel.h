@@ -30,6 +30,7 @@ public:
     QMap<int, Place*> getPlaces();
     void initialize();
     virtual TrollingObject* createTrollingObject(const QString& p_type);
+    QString importFile(TrollingObject*, const QString&);
 
 signals:
 
@@ -39,7 +40,7 @@ private:
     TrollingObject* getTrollingObject(const QString&, int);
     QList<TrollingObject*> m_trollingobjects;
     DBLayer* m_DBLayer;
-
+    QString m_filePath;
 };
 
 #endif // TROLLINGMODEL_H

@@ -48,7 +48,7 @@ QPair<QTime, QTime> Trip::getTime()
 
 void Trip::setWayPoints(const QString& p_wpts)
 {
-    set("waypointfile", p_wpts);
+    set("waypointfile", importFile(p_wpts));
 }
 
 QList<WayPoint> Trip::getWayPoints()

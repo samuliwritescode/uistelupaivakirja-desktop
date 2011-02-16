@@ -1,16 +1,17 @@
 #include <QDir>
 #include <QDebug>
+#include "trollingexception.h"
 #include "trollingmodel.h"
 
 TrollingModel::TrollingModel(QObject *parent) :
     QObject(parent)
 {
-
+    m_filePath = QDir::homePath()+"/uistelu/";
 }
 
 void TrollingModel::initialize()
 {
-    m_DBLayer = new DBLayer(QDir::homePath()+"/uistelu/database");
+    m_DBLayer = new DBLayer(m_filePath+"/database");
     qDebug() << "start loading";
     m_DBLayer->loadObjects(Lure().getType(), this);
     m_DBLayer->loadObjects(Trip().getType(), this);
@@ -184,4 +185,40 @@ void TrollingModel::reset(TrollingObject* p_object)
     }
 
     delete p_object;
+}
+
+QString TrollingModel::importFile(TrollingObject* p_object, const QString& p_file)
+{
+    QFileInfo fileinfo(p_file);
+
+    QString newPath = m_filePath+p_object->getType()+"/"+QString::number(p_object->getId())+"/";
+    QString newFile = newPath+fileinfo.fileName();
+    QDir dir(newPath);
+    if(!dir.mkpath("."))
+    {
+        QString error = QObject::tr("En pystynyt luomaan kansiota, jonne tallentaa antamasi tiedosto. Katso, että hakemisto ");
+        error += newPath;
+        error +=  QObject::tr(" on olemassa ja sinne on kirjoitusoikeudet myös ohjelman käyttäjäoikeuksilla. Windows 7:ssä tämä voi vaatia antamaan ylläpitäjäoikeudet Uistelupäiväkirjalle.");
+        throw TrollingException(error);
+    }
+
+    if(QFile::exists(newFile))
+    {
+        if(!QFile::remove(newFile))
+        {
+            QString error = QObject::tr("Antamasi tiedosto on jo olemassa ja sen poistaminen ei onnistu. Tiedosto: ");
+            error += newFile;
+            throw TrollingException(error);
+        }
+    }
+
+    if(!QFile::copy(p_file, newFile))
+    {
+        QString error = QObject::tr("Tiedoston ");
+        error += p_file;
+        error += QObject::tr(" liittäminen ei onnistunut");
+        throw TrollingException(error);
+    }
+
+    return newFile;
 }

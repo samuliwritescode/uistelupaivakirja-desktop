@@ -18,7 +18,8 @@ public:
     bool isUnsaved();
     virtual ~TrollingObject();
 
-protected:    
+protected:
+    QString importFile(const QString& p_filename);
     void setType(const QString& p_type);
     void set(const QString&, QVariant);
     void setUnsaved();
