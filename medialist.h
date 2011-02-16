@@ -24,6 +24,8 @@ protected:
     virtual void dragMoveEvent(QDragMoveEvent *event);
     virtual void contextMenuEvent ( QContextMenuEvent * e );
 private:
+    bool checkMovieExtension(const QString&);
+    bool checkImageExtension(const QString&);
     bool checkFileExtension(const QString&);
     QAction* m_removeAction;
     QAction* m_openAction;

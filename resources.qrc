@@ -13,5 +13,7 @@
         <file>res/osxicon32.png</file>
         <file>res/weather-few-clouds.png</file>
         <file>res/edit-undo.png</file>
+        <file>res/image-x-generic.png</file>
+        <file>res/video-x-generic.png</file>
     </qresource>
 </RCC>

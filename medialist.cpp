@@ -82,14 +82,31 @@ void MediaList::dragMoveEvent(QDragMoveEvent *event)
 
 bool MediaList::checkFileExtension(const QString& file)
 {
+    if(checkMovieExtension(file) ||
+       checkImageExtension(file) )
+        return true;
+
+    return false;
+}
+
+bool MediaList::checkMovieExtension(const QString& file)
+{
     QString lowercase = file.toLower();
-    if(lowercase.endsWith("jpg") ||
-       lowercase.endsWith("avi") ||
-       lowercase.endsWith("png") ||
+    if(lowercase.endsWith("avi") ||
        lowercase.endsWith("mov") ||
        lowercase.endsWith("wmv") ||
-       lowercase.endsWith("mpg") ||
-       lowercase.endsWith("jpeg"))
+       lowercase.endsWith("mpg") )
+        return true;
+
+    return false;
+}
+
+bool MediaList::checkImageExtension(const QString& file)
+{
+    QString lowercase = file.toLower();
+    if(lowercase.endsWith("jpg") ||
+       lowercase.endsWith("png") ||
+       lowercase.endsWith("jpeg") )
         return true;
 
     return false;
@@ -103,6 +120,13 @@ void MediaList::setMediaFiles(QStringList files)
     {
         QFileInfo fileinfo(file);
         QListWidgetItem* item = new QListWidgetItem();
+        if(checkMovieExtension(fileinfo.fileName()))
+        {
+            item->setIcon(QIcon(":/res/video-x-generic.png"));
+        }else if(checkImageExtension(fileinfo.fileName()))
+        {
+            item->setIcon(QIcon(":/res/image-x-generic.png"));
+        }
         item->setText(fileinfo.fileName());
         item->setData(Qt::UserRole+1, file);
         addItem(item);
