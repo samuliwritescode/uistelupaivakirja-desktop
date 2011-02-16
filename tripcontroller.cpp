@@ -77,6 +77,7 @@ int TripController::getIntValue(EUISource source)
             return -1;
         break;
     case eTrip: return m_trip->getId(); break;
+    case eGroup: return m_trip->getFish()->getGroupAmount(); break;
     default: qCritical() << "Unknown get int" << source; break;
     }
     return 0;
@@ -167,6 +168,7 @@ void TripController::booleanEvent(EUISource source, bool value)
     }
 
     sendNotificationToObservers(Controller::eTripUpdated);
+    sendNotificationToObservers(Controller::eFishListUpdated);
 }
 
 void TripController::intEvent(EUISource source, int value)
@@ -220,6 +222,9 @@ void TripController::intEvent(EUISource source, int value)
             m_trip->getFish()->setCoordinates(QString::number(wpt.lat), QString::number(wpt.lon));
             m_trip->getFish()->setTime(wpt.time.time());
         }
+        break;
+    case eGroup:
+        m_trip->getFish()->setGroupAmount(value);
         break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
     }

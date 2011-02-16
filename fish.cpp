@@ -307,7 +307,18 @@ void Fish::setPressureChange(EPressureChange p_val)
 
 void Fish::setGroup(bool p_val)
 {
+    if(!p_val)
+        setProperty(FISH_GROUP_AMOUNT, "");
+    else
+        setProperty(FISH_LENGTH, "");
+
     setProperty(FISH_IS_GROUP, p_val);
+}
+
+void Fish::setGroupAmount(int p_value)
+{
+    if(getProperty(FISH_IS_GROUP).toBool() == true)
+        setProperty(FISH_GROUP_AMOUNT, p_value);
 }
 
 void Fish::setCR(bool p_val)
@@ -403,6 +414,11 @@ QTime Fish::getTime()
 bool Fish::isGroup()
 {
     return m_properties[FISH_IS_GROUP].toBool() == true;
+}
+
+int Fish::getGroupAmount()
+{
+    return m_properties[FISH_GROUP_AMOUNT].toInt();
 }
 
 bool Fish::isUnderSize()

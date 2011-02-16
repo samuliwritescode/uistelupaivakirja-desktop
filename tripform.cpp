@@ -18,6 +18,7 @@ TripForm::TripForm(QWidget *parent) :
     ui->trolling_speed->setValidator(new QDoubleValidator(this));
     ui->line_weight->setValidator(new QDoubleValidator(this));
     ui->release_width->setValidator(new QDoubleValidator(this));
+    ui->group_number->setValidator(new QIntValidator(this));
 
     m_lureBox = new LureItem();
     m_lureBox->setAcceptDrops(true);
@@ -293,6 +294,13 @@ void TripForm::updateWaypoints()
 
 void TripForm::updateFish()
 {
+    ui->group_number->setDisabled(!m_tripController->getBooleanValue(eGroup));
+    ui->group_label->setDisabled(!m_tripController->getBooleanValue(eGroup));
+    ui->length->setDisabled(m_tripController->getBooleanValue(eGroup));
+    ui->label_length->setDisabled(m_tripController->getBooleanValue(eGroup));
+
+    ui->group_number->setText(QString::number(m_tripController->getIntValue(eGroup)));
+
     ui->length->setText(m_tripController->getTextValue(eLength));
     ui->weight->setText(m_tripController->getTextValue(eWeight));
     ui->spotdepth->setText(m_tripController->getTextValue(eSpotDepth));
@@ -643,4 +651,9 @@ void TripForm::on_time_dial_minutes_sliderMoved(int value)
     QTime time;
     time.setHMS(ui->timeEdit->time().hour(), (value+30)%60, 0);
     m_tripController->timeEvent(eTime, time);
+}
+
+void TripForm::on_group_number_textEdited(QString value)
+{
+    m_tripController->intEvent(eGroup, value.toInt());
 }

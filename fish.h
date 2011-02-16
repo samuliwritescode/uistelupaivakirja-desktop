@@ -20,6 +20,7 @@ const QString FISH_RELEASE_WIDTH = "fish_release_width";
 const QString FISH_SPECIES = "fish_species";
 const QString FISH_PRESSURE = "fish_pressure";
 const QString FISH_IS_GROUP = "fish_group";
+const QString FISH_GROUP_AMOUNT = "fish_group_amount";
 const QString FISH_IS_UNDERSIZE = "fish_undersize";
 const QString FISH_IS_CATCHRELEASED = "fish_cr";
 const QString FISH_WIND_DIRECTION = "fish_wind_direction";
@@ -78,6 +79,7 @@ public:
     void setWindDirection(EWindDirection);
     void setPressureChange(EPressureChange);
     void setGroup(bool);
+    void setGroupAmount(int);
     void setCR(bool);
     void setUnderSize(bool);
     void setTime(const QTime&);
@@ -97,6 +99,7 @@ public:
     QString getAirTemp();
     QString getCoordinatesLat();
     QString getCoordinatesLon();
+    int getGroupAmount();
     EWindCondition getWindCondition();
     EWeatherCondition getWeatherCondition();
     EPressureCondition getPressureCondition();

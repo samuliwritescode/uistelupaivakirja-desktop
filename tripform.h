@@ -38,6 +38,7 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_group_number_textEdited(QString );
     void on_time_dial_minutes_sliderMoved(int position);
     void on_time_dial_hour_sliderMoved(int position);
     void on_trip_undo_clicked();
