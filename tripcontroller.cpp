@@ -105,8 +105,13 @@ QString TripController::getTextValue(EUISource source)
     case eSpecies: return m_trip->getFish()->getSpecies();
     case eMethod: return m_trip->getFish()->getMethod();
     case eGetter: return m_trip->getFish()->getGetter();
-    case eWayPointSet: return m_trip->getFish()->getCoordinatesLat()+" "+
-                m_trip->getFish()->getCoordinatesLon();
+    case eWayPointSet:
+        if(!m_trip->getFish()->getCoordinatesLat().isEmpty() &&
+           !m_trip->getFish()->getCoordinatesLon().isEmpty())
+        {
+            return m_trip->getFish()->getCoordinatesLat()+" "+m_trip->getFish()->getCoordinatesLon();
+        }
+        break;
     case eWindDirection: return m_trip->getFish()->getHumanReadableWindDirection();
     case ePressureChange: return m_trip->getFish()->getHumanReadablePressureChange();
     default: qCritical() << "Unknown get text" << source; break;
