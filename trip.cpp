@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QSettings>
 #include "singletons.h"
 #include "trip.h"
 #include "gpxreader.h"
@@ -85,7 +86,16 @@ void Trip::selectFish(int id)
 
 Fish* Trip::newFish(Fish::EType type)
 {
+    QSettings settings;
     Fish* fish = new Fish();
+    if(type == Fish::eFish ||
+       type == Fish::eFishAndWeather)
+    {
+        fish->setSpecies(settings.value("Species").toString());
+        fish->setGetter(settings.value("Getter").toString());
+        fish->setMethod(settings.value("Method").toString());
+    }
+    fish->setTime(get("time_start").toTime());
     connect(fish, SIGNAL(FishModified()), this, SLOT(FishModified()));
     fish->setType(type);
     m_catch.push_back(fish);
