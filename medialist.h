@@ -5,6 +5,7 @@
 #include <QStringList>
 #include <QListWidgetItem>
 #include <QContextMenuEvent>
+#include <QAction>
 
 class MediaList : public QListWidget
 {
@@ -24,6 +25,8 @@ protected:
     virtual void contextMenuEvent ( QContextMenuEvent * e );
 private:
     bool checkFileExtension(const QString&);
+    QAction* m_removeAction;
+    QAction* m_openAction;
 };
 
 #endif // MEDIALIST_H
