@@ -221,6 +221,7 @@ void TripController::intEvent(EUISource source, int value)
             WayPoint wpt = m_trip->getWayPoints().at(value);
             m_trip->getFish()->setCoordinates(QString::number(wpt.lat), QString::number(wpt.lon));
             m_trip->getFish()->setTime(wpt.time.time());
+            m_trip->getFish()->setMiscText(wpt.name);
         }
         break;
     case eGroup:
