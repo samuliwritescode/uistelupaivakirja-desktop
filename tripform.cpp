@@ -179,6 +179,12 @@ void TripForm::updateTrip()
     ui->user_props->blockSignals(true);
     ui->user_props->setSortingEnabled(false);
     ui->user_props->clear();
+    QStringList userHeaders;
+    userHeaders << tr("Parametri") <<
+                    tr("Arvo");
+
+    ui->user_props->setHorizontalHeaderLabels(userHeaders);
+
     for(int loop=0; loop < userValues.count(); loop++)
     {
         QString uservalue = userValues.at(loop);

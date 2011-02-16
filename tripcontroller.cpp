@@ -288,6 +288,7 @@ void TripController::textEvent(EUISource source, const QString& value)
             m_trip->getFish()->setUserField(value.split("\n").at(0),
                                             value.split("\n").at(1));
         }
+        break;
     case eWaypointsAdd: m_trip->setWayPoints(value);
         sendNotificationToObservers(Controller::eWayPointsUpdated);break;
     case eMediaFileAdd: m_trip->getFish()->addMediaFile(value);
@@ -318,7 +319,6 @@ void TripController::buttonEvent(EUISource source)
     case eDeleteTrip:
         Singletons::model()->remove(m_trip);
         m_trip = NULL;
-        //m_trip = Singletons::model()->getTrip();
         break;
     case eNewFish:
         m_trip->newFish(Fish::eFish);

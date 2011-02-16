@@ -851,27 +851,6 @@
           <item row="3" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_15"/>
           </item>
-          <item row="1" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_23">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QCheckBox" name="catchrelease">
-              <property name="text">
-               <string>CR</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="undersize">
-              <property name="text">
-               <string>alamit</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
           <item row="3" column="3">
            <widget class="QLabel" name="label_7">
             <property name="text">
@@ -911,6 +890,27 @@
                 <width>70</width>
                 <height>16777215</height>
                </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_23">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="catchrelease">
+              <property name="text">
+               <string>CR</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="undersize">
+              <property name="text">
+               <string>alamit</string>
               </property>
              </widget>
             </item>
