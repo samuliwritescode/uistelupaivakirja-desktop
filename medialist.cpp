@@ -1,7 +1,10 @@
 #include <QDragEnterEvent>
+#include <QDesktopServices>
 #include <QDropEvent>
 #include <QUrl>
 #include <QDebug>
+#include <QFileInfo>
+#include "mainwindow.h"
 #include "singletons.h"
 #include "medialist.h"
 
@@ -11,6 +14,7 @@ MediaList::MediaList(QWidget *parent) :
     setAcceptDrops(true);
     setDragEnabled(true);
     setDropIndicatorShown(true);
+    connect(this, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(openFile(QListWidgetItem*)));
 }
 
 void MediaList::dragEnterEvent ( QDragEnterEvent * event )
@@ -61,4 +65,27 @@ bool MediaList::checkFileExtension(const QString& file)
         return true;
 
     return false;
+}
+
+void MediaList::setMediaFiles(QStringList files)
+{
+    files.sort();
+    clear();
+    foreach(QString file, files)
+    {
+        QFileInfo fileinfo(file);
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(fileinfo.fileName());
+        item->setData(Qt::UserRole+1, file);
+        addItem(item);
+    }
+}
+
+void MediaList::openFile( QListWidgetItem * item )
+{
+    QString filename = item->data(Qt::UserRole+1).toString();
+    if(!QDesktopServices::openUrl(QUrl("file://"+filename)))
+    {
+        MainWindow::showErrorNotification(tr("Tiedosto ei auennut ulkoisessa ohjelmassa"));
+    }
 }

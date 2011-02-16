@@ -20,6 +20,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    static void showErrorNotification(const QString&);
+
 private:    
     Ui::MainWindow *ui;
 };

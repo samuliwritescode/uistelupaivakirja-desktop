@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -18,3 +19,10 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::showErrorNotification(const QString& error)
+{
+    QMessageBox box;
+    box.setIcon(QMessageBox::Critical);
+    box.setText(error);
+    box.exec();
+}

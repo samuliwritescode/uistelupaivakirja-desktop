@@ -169,12 +169,7 @@ void TripForm::updateTrip()
     ui->time_dial_hour->setValue((time.hour()+12)%24);
     ui->time_dial_minutes->setValue((time.minute()+30)%60);
 
-    m_mediaList->clear();
-    QStringList files = m_tripController->getMediaFiles();
-    for(int loop=0; loop < files.count(); loop++)
-    {
-        m_mediaList->insertItem(loop, files.at(loop));
-    }
+    m_mediaList->setMediaFiles(m_tripController->getMediaFiles());
 
     if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
          ui->misc->setText(m_tripController->getTextValue(eMiscText));
