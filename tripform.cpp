@@ -169,7 +169,7 @@ void TripForm::updateTrip()
         ui->user_props->setItem(loop, 1, new QTableWidgetItem(uservalue));
     }
     ui->user_props->setSortingEnabled(false);
-    ui->user_props->blockSignals(true);
+    ui->user_props->blockSignals(false);
 }
 
 void TripForm::updateTripList()
