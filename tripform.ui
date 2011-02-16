@@ -1575,6 +1575,9 @@ p, li { white-space: pre-wrap; }
            <property name="dragDropMode">
             <enum>QAbstractItemView::DragOnly</enum>
            </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>

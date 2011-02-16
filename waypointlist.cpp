@@ -11,6 +11,7 @@ WayPointList::WayPointList(QWidget *parent) :
     setAcceptDrops(true);
     setDragEnabled(true);
     setDropIndicatorShown(true);
+    setAlternatingRowColors(true);
 }
 
 void WayPointList::dragEnterEvent ( QDragEnterEvent * event )

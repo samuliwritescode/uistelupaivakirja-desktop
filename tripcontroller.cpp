@@ -391,7 +391,7 @@ QList<QMap<QString, QString> > TripController::getFishList()
     {
         QMap<QString, QString> props;
         Fish* fish = m_trip->getFish(loop);
-        props[FISH_TIME] = fish->getTime().toString();
+        props[FISH_TIME] = fish->getTime().toString("HH:mm");
         if(fish->getType() == Fish::eWeather)
             props[FISH_SPECIES] = tr("säähav.");
         else
@@ -422,7 +422,7 @@ QList<QPair<QString, int> > TripController::getWayPointsList()
     {
         WayPoint wpt=waypoints.at(loop);
         QPair<QString, int> pair;
-        pair.first = wpt.name;
+        pair.first = wpt.time.toString("dd.MM HH:mm")+" "+wpt.name;
         pair.second = loop;
         retval.push_back(pair);
     }

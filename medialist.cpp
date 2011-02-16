@@ -19,6 +19,7 @@ MediaList::MediaList(QWidget *parent) :
     connect(this, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(openFile(QListWidgetItem*)));
     m_removeAction = new QAction(tr("Poista reissulta"), this);
     m_openAction = new QAction(tr("Avaa ulkoisessa ohjelmassa"), this);
+    setAlternatingRowColors(true);
 }
 
 void MediaList::dragEnterEvent ( QDragEnterEvent * event )
@@ -114,8 +115,15 @@ bool MediaList::checkImageExtension(const QString& file)
 
 void MediaList::setMediaFiles(QStringList files)
 {
+
     files.sort();
     clear();
+
+    if(files.length()==0)
+    {
+        addItem(tr("Lisää mediatiedostoja tänne raahaamalla"));
+    }
+
     foreach(QString file, files)
     {
         QFileInfo fileinfo(file);
