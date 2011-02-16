@@ -593,9 +593,6 @@ void TripForm::on_method_textChanged(QString value)
     m_tripController->textEvent(eMethod, value);
 }
 
-
-
-
 void TripForm::on_new_fishweather_clicked()
 {
     m_tripController->buttonEvent(eNewFishWeather);
@@ -604,21 +601,6 @@ void TripForm::on_new_fishweather_clicked()
 void TripForm::on_new_weather_clicked()
 {
     m_tripController->buttonEvent(eNewWeather);
-}
-
-
-void TripForm::on_time_dial_hour_valueChanged(int value)
-{
-    QTime time;
-    time.setHMS((value+12)%24, ui->timeEdit->time().minute(), 0);
-    m_tripController->timeEvent(eTime, time);
-}
-
-void TripForm::on_time_dial_minutes_valueChanged(int value)
-{
-    QTime time;
-    time.setHMS(ui->timeEdit->time().hour(), (value+30)%60, 0);
-    m_tripController->timeEvent(eTime, time);
 }
 
 void TripForm::on_user_props_cellChanged(int row, int column)
@@ -647,4 +629,18 @@ void TripForm::on_place_currentIndexChanged(int index)
 void TripForm::on_trip_undo_clicked()
 {
     m_tripController->buttonEvent(eTripUndo);
+}
+
+void TripForm::on_time_dial_hour_sliderMoved(int value)
+{
+    QTime time;
+    time.setHMS((value+12)%24, ui->timeEdit->time().minute(), 0);
+    m_tripController->timeEvent(eTime, time);
+}
+
+void TripForm::on_time_dial_minutes_sliderMoved(int value)
+{
+    QTime time;
+    time.setHMS(ui->timeEdit->time().hour(), (value+30)%60, 0);
+    m_tripController->timeEvent(eTime, time);
 }

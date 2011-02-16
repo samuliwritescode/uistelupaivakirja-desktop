@@ -38,12 +38,12 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_time_dial_minutes_sliderMoved(int position);
+    void on_time_dial_hour_sliderMoved(int position);
     void on_trip_undo_clicked();
     void observerEvent(int type);
 
     void on_user_props_cellChanged(int row, int column);
-    void on_time_dial_minutes_valueChanged(int value);
-    void on_time_dial_hour_valueChanged(int value);
     void on_new_weather_clicked();
     void on_new_fishweather_clicked();
     void on_place_currentIndexChanged(int index);
