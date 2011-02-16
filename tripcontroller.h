@@ -36,6 +36,7 @@ public:
     QStringList getAlternatives(EUISource source);
     QList<QPair<QString, int> > getWayPointsList();
     QList<QString> getUserFields();
+    QStringList getMediaFiles();
 
 protected:
 

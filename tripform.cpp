@@ -32,6 +32,10 @@ TripForm::TripForm(QWidget *parent) :
     m_wptList->setAcceptDrops(true);
     ui->poiDockLayout->insertWidget(0, m_wptList);
 
+    m_mediaList = new MediaList();
+    m_mediaList->setAcceptDrops(true);
+    ui->horizontalLayout_10->insertWidget(0, m_mediaList);
+
     observerEvent(Controller::eTripUpdated);
     observerEvent(Controller::eTripListUpdated);
     observerEvent(Controller::eFishListUpdated);
@@ -164,6 +168,13 @@ void TripForm::updateTrip()
     ui->timeEdit->setTime(time);
     ui->time_dial_hour->setValue((time.hour()+12)%24);
     ui->time_dial_minutes->setValue((time.minute()+30)%60);
+
+    m_mediaList->clear();
+    QStringList files = m_tripController->getMediaFiles();
+    for(int loop=0; loop < files.count(); loop++)
+    {
+        m_mediaList->insertItem(loop, files.at(loop));
+    }
 
     if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
          ui->misc->setText(m_tripController->getTextValue(eMiscText));

@@ -24,10 +24,39 @@ void Fish::setLure(Lure* p_lure)
     m_lure = p_lure;
 }
 
-
 Lure* Fish::getLure()
 {
     return m_lure;
+}
+
+void Fish::addMediaFile(const QString& p_file)
+{
+    QStringList files = getProperty(FISH_MEDIAFILES).toString().split("\n", QString::SkipEmptyParts);
+    if(files.contains(p_file))
+        return;
+
+    files.append(p_file);
+    setProperty(FISH_MEDIAFILES, files.join("\n"));
+}
+
+QStringList Fish::getMediaFiles()
+{
+    return getProperty(FISH_MEDIAFILES).toString().split("\n", QString::SkipEmptyParts);
+}
+
+void Fish::removeMediaFile(const QString& p_file)
+{
+    QStringList files = getProperty(FISH_MEDIAFILES).toString().split("\n", QString::SkipEmptyParts);
+    for(int loop=0; loop < files.count(); loop++)
+    {
+        QString file = files.at(loop);
+        if(file == p_file)
+        {
+            files.removeAt(loop);
+            setProperty(FISH_MEDIAFILES, files.join("\n"));
+            break;
+        }
+    }
 }
 
 void Fish::setUserField(const QString& p_field, const QString& p_value)

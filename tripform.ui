@@ -289,7 +289,7 @@
                </size>
               </property>
               <property name="shortcut">
-               <string>Ins</string>
+               <string>Ctrl+1</string>
               </property>
               <property name="checkable">
                <bool>false</bool>
@@ -326,6 +326,9 @@
                 <height>16</height>
                </size>
               </property>
+              <property name="shortcut">
+               <string>Ctrl+2</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -339,6 +342,9 @@
               <property name="icon">
                <iconset resource="resources.qrc">
                 <normaloff>:/res/osxicon32.png</normaloff>:/res/osxicon32.png</iconset>
+              </property>
+              <property name="shortcut">
+               <string>Ctrl+3</string>
               </property>
              </widget>
             </item>
@@ -1313,16 +1319,6 @@ korkea</string>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_10">
           <item>
-           <widget class="QListWidget" name="fileslist">
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QTextEdit" name="misc"/>
           </item>
           <item>
@@ -1459,6 +1455,9 @@ p, li { white-space: pre-wrap; }
             <property name="icon">
              <iconset resource="resources.qrc">
               <normaloff>:/res/edit-undo.png</normaloff>:/res/edit-undo.png</iconset>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+Z</string>
             </property>
            </widget>
           </item>

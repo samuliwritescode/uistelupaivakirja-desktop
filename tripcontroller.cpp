@@ -287,7 +287,10 @@ void TripController::textEvent(EUISource source, const QString& value)
                                             value.split("\n").at(1));
         }
     case eWaypointsAdd: m_trip->setWayPoints(value);
-        sendNotificationToObservers(Controller::eWayPointsUpdated); ;break;
+        sendNotificationToObservers(Controller::eWayPointsUpdated);break;
+    case eMediaFileAdd: m_trip->getFish()->addMediaFile(value);
+        sendNotificationToObservers(Controller::eTripUpdated);break;
+    case eMediaFileRemove: m_trip->getFish()->removeMediaFile(value); break;
     default:  qCritical() << "Unknown text event. Cant handle this!" << source;
     }
 
@@ -464,3 +467,12 @@ QList<QString> TripController::getUserFields()
     return retval;
 }
 
+QStringList TripController::getMediaFiles()
+{
+    QStringList retval;
+    if(!m_trip) return retval;
+
+    retval = m_trip->getFish()->getMediaFiles();
+
+    return retval;
+}

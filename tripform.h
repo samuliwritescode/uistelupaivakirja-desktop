@@ -6,6 +6,7 @@
 #include "lureitem.h"
 #include "waypointitem.h"
 #include "waypointlist.h"
+#include "medialist.h"
 #include "singletons.h"
 
 namespace Ui {
@@ -35,6 +36,7 @@ private:
     LureItem* m_lureBox;
     WayPointItem* m_POIBox;
     WayPointList* m_wptList;
+    MediaList* m_mediaList;
     TripController* m_tripController;
 
 private slots:

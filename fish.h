@@ -31,6 +31,7 @@ const QString FISH_METHOD = "fish_method";
 const QString FISH_COORDINATES_LAT = "fish_coord_lat";
 const QString FISH_COORDINATES_LON = "fish_coord_lon";
 const QString FISH_USERFIELD = "fish_user";
+const QString FISH_MEDIAFILES = "fish_mediafiles";
 
 class Fish: public QObject
 {
@@ -113,6 +114,10 @@ public:
     void setUserField(const QString&, const QString&);
     QMap<QString, QString> getUserFields();
     QVariant getProperty(const QString&);
+
+    void addMediaFile(const QString&);
+    QStringList getMediaFiles();
+    void removeMediaFile(const QString&);
 
 signals:
     void FishModified();

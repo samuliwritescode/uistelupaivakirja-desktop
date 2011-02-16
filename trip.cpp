@@ -191,6 +191,11 @@ TrollingObjectItemList Trip::serializeItems()
         QList<QString> propnames = fish->getPropertyNames();
         foreach(QString propname, propnames)
         {
+            if(propname == "fish_mediafiles")
+            {
+                qDebug() << "mediafiles" << fish->getProperty(propname).toString();
+            }
+
             fishprops[propname] = fish->getProperty(propname);
         }
 
@@ -213,3 +218,4 @@ Place* Trip::getPlace()
     Place* place = Singletons::model()->getPlace(get("place").toInt());
     return place;
 }
+
