@@ -13,6 +13,8 @@ protected:
     virtual void dragEnterEvent ( QDragEnterEvent * event );
     virtual void dropEvent ( QDropEvent * event );
     virtual void dragMoveEvent(QDragMoveEvent *event);
+private:
+    bool checkFileExtension(const QString&);
 };
 
 #endif // MEDIALIST_H

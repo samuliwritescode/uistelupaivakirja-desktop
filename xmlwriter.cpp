@@ -34,7 +34,7 @@ bool XMLWriter::write(TrollingObject* p_object)
         if(iter.value().toString().isEmpty())
             continue;
         QDomElement property = m_document.createElement(iter.key());
-        QDomText text = m_document.createTextNode(iter.value().toString());       
+        QDomText text = m_document.createTextNode(iter.value().toString());
         property.appendChild(text);
         trollingObject.appendChild(property);
     }
