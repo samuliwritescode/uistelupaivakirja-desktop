@@ -384,11 +384,20 @@ QList<QMap<QString, QString> > TripController::getFishList()
     {
         QMap<QString, QString> props;
         Fish* fish = m_trip->getFish(loop);
-        QList<QString> propnames = fish->getPropertyNames();
-        foreach(QString propname, propnames)
-        {
-            props[propname] = fish->getProperty(propname).toString();
-        }
+        props[FISH_TIME] = fish->getTime().toString();
+        if(fish->getType() == Fish::eWeather)
+            props[FISH_SPECIES] = tr("säähav.");
+        else
+            props[FISH_SPECIES] = fish->getSpecies();
+        props[FISH_WEIGHT] = fish->getWeight();
+        props[FISH_LENGTH] = fish->getLength();
+        props[FISH_WEATHER] = fish->getHumanReadableWeather();
+        props[FISH_WATER_TEMP] = fish->getWaterTemp();
+        props[FISH_WIND] = fish->getHumanReadableWind();
+        props[FISH_GETTER] = fish->getGetter();
+        props[FISH_METHOD] = fish->getMethod();
+        props[FISH_AIR_TEMP] = fish->getAirTemp();
+        props[FISH_TYPE] = QString::number(fish->getType());
 
         if(fish->getLure())
             props["lure"] = fish->getLure()->getMaker();

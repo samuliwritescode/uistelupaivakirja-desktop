@@ -113,12 +113,12 @@ public:
     void setUserField(const QString&, const QString&);
     QMap<QString, QString> getUserFields();
     QVariant getProperty(const QString&);
-    QList<QString> getPropertyNames();
 
 signals:
     void FishModified();
 
 private:
+    QList<QString> getPropertyNames();
     void setDouble(const QString&, const QString&);
     void setProperty(const QString&, QVariant);
     void setType(EType type);

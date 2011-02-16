@@ -213,10 +213,10 @@ void TripForm::updateFishList()
             tr("viehe") <<
             tr("paino") <<
             tr("pituus") <<
-            tr("syvyys") <<
-            tr("ved.syv") <<
-            tr("vetonop") <<
-            tr("vap.pit");
+            tr("sää") <<
+            tr("tuuli") <<
+            tr("ilma") <<
+            tr("vesi");
 
     int selectedFish = m_tripController->getIntValue(eFishList);
     ui->fish_list->setHorizontalHeaderLabels(headers);
@@ -242,10 +242,10 @@ void TripForm::updateFishList()
          QTableWidgetItem* item5 = new QTableWidgetItem(props["lure"], loop);
          QTableWidgetItem* item6 = new QTableWidgetItem(props[FISH_WEIGHT], loop);
          QTableWidgetItem* item7 = new QTableWidgetItem(props[FISH_LENGTH], loop);
-         QTableWidgetItem* item8 = new QTableWidgetItem(props[FISH_SPOT_DEPTH], loop);
-         QTableWidgetItem* item9 = new QTableWidgetItem(props[FISH_TOTAL_DEPTH], loop);
-         QTableWidgetItem* item10 = new QTableWidgetItem(props[FISH_TROLLING_SPEED], loop);
-         QTableWidgetItem* item11 = new QTableWidgetItem(props[FISH_RELEASE_WIDTH], loop);
+         QTableWidgetItem* item8 = new QTableWidgetItem(props[FISH_WEATHER], loop);
+         QTableWidgetItem* item9 = new QTableWidgetItem(props[FISH_WIND], loop);
+         QTableWidgetItem* item10 = new QTableWidgetItem(props[FISH_AIR_TEMP], loop);
+         QTableWidgetItem* item11 = new QTableWidgetItem(props[FISH_WATER_TEMP], loop);
 
          item1->setBackgroundColor(bgcolor);
          item2->setBackgroundColor(bgcolor);
