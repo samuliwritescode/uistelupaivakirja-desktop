@@ -290,7 +290,10 @@ void TripController::textEvent(EUISource source, const QString& value)
         sendNotificationToObservers(Controller::eWayPointsUpdated);break;
     case eMediaFileAdd: m_trip->getFish()->addMediaFile(value);
         sendNotificationToObservers(Controller::eTripUpdated);break;
-    case eMediaFileRemove: m_trip->getFish()->removeMediaFile(value); break;
+    case eMediaFileRemove:
+        m_trip->getFish()->removeMediaFile(value);
+        sendNotificationToObservers(Controller::eTripUpdated);
+        break;
     default:  qCritical() << "Unknown text event. Cant handle this!" << source;
     }
 

@@ -4,6 +4,7 @@
 #include <QUrl>
 #include <QDebug>
 #include <QFileInfo>
+#include <Qmenu>
 #include "mainwindow.h"
 #include "singletons.h"
 #include "medialist.h"
@@ -14,6 +15,7 @@ MediaList::MediaList(QWidget *parent) :
     setAcceptDrops(true);
     setDragEnabled(true);
     setDropIndicatorShown(true);
+    setContextMenuPolicy(Qt::DefaultContextMenu);
     connect(this, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(openFile(QListWidgetItem*)));
 }
 
@@ -28,6 +30,21 @@ void MediaList::dragEnterEvent ( QDragEnterEvent * event )
                 return;
         }
         event->acceptProposedAction();
+    }
+}
+
+void MediaList::contextMenuEvent ( QContextMenuEvent * e )
+{
+    QMenu contextMenu(tr("Muokkaa mediatiedostoa"), this);
+    contextMenu.addAction(new QAction(tr("Poista reissusta"), this));
+    if(contextMenu.exec(mapToGlobal(e->pos())))
+    {
+        QList<QListWidgetItem*> items = selectedItems();
+        foreach(QListWidgetItem* item, items)
+        {
+            QString filename = item->data(Qt::UserRole+1).toString();
+            Singletons::tripController()->textEvent(eMediaFileRemove, filename);
+        }
     }
 }
 

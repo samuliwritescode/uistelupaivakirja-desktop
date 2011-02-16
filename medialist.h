@@ -4,6 +4,7 @@
 #include <QListWidget>
 #include <QStringList>
 #include <QListWidgetItem>
+#include <QContextMenuEvent>
 
 class MediaList : public QListWidget
 {
@@ -20,6 +21,7 @@ protected:
     virtual void dragEnterEvent ( QDragEnterEvent * event );
     virtual void dropEvent ( QDropEvent * event );
     virtual void dragMoveEvent(QDragMoveEvent *event);
+    virtual void contextMenuEvent ( QContextMenuEvent * e );
 private:
     bool checkFileExtension(const QString&);
 };
