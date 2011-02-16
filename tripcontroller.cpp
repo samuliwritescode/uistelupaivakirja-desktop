@@ -181,13 +181,10 @@ void TripController::intEvent(EUISource source, int value)
         sendNotificationToObservers(Controller::eTripUpdated);
         return; break;
     case eTrip:
-        if(value > -1)
-        {
-            m_trip = Singletons::model()->getTrip(value);
-            m_trip->selectFish(-1);
-            sendNotificationToObservers(Controller::eFishListUpdated);
-            sendNotificationToObservers(Controller::eWayPointsUpdated);
-        }
+        m_trip = Singletons::model()->getTrip(value);
+        m_trip->selectFish(-1);
+        sendNotificationToObservers(Controller::eFishListUpdated);
+        sendNotificationToObservers(Controller::eWayPointsUpdated);
         break;
     case eFishList:
         m_trip->selectFish(value);
@@ -292,6 +289,12 @@ void TripController::buttonEvent(EUISource source)
     qDebug() << "got button event" << source;
     switch(source)
     {
+    case eTripUndo:
+        {
+            int id = m_trip->getId();
+            Singletons::model()->reset(m_trip);
+            m_trip = Singletons::model()->getTrip(id);
+        }break;
     case eSaveTrip: Singletons::model()->commit(m_trip); break;
     case eNewTrip: m_trip = Singletons::model()->getTrip(); break;
     case eDeleteTrip:

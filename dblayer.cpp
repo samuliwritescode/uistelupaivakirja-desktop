@@ -31,8 +31,8 @@ QList<int> DBLayer::getIds(const QString& p_type)
     return writer.getIds(p_type);
 }
 
-bool DBLayer::loadObjects(const QString& p_type, TrollingObjectFactory* p_factory)
+bool DBLayer::loadObjects(const QString& p_type, TrollingObjectFactory* p_factory, int id)
 {
     XMLWriter writer(m_storeDir.absolutePath()+"/"+p_type+".xml");
-    return writer.loadAll(p_type, p_factory);
+    return writer.loadAll(p_type, p_factory, id);
 }

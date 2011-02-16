@@ -1386,6 +1386,17 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
+           <widget class="QToolButton" name="trip_undo">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/res/edit-undo.png</normaloff>:/res/edit-undo.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QToolButton" name="trip_save">
             <property name="toolTip">
              <string>Tallenna reissu</string>

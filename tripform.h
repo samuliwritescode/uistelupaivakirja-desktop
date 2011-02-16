@@ -38,6 +38,7 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_trip_undo_clicked();
     void observerEvent(int type);
 
     void on_user_props_cellChanged(int row, int column);

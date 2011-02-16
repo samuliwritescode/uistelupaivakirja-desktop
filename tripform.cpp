@@ -71,6 +71,7 @@ void TripForm::observerEvent(int type)
 
     ui->trip_save->setDisabled(!m_tripController->getBooleanValue(eUnsavedChanges));
     ui->trip_delete->setDisabled(!m_tripController->getBooleanValue(eTrip));
+    ui->trip_undo->setDisabled(!m_tripController->getBooleanValue(eUnsavedChanges));
     ui->groupBoxTrip->setVisible(m_tripController->getBooleanValue(eTrip));
     ui->labelCreateNewTrip->setVisible(!m_tripController->getBooleanValue(eTrip));
     ui->poiDock->setVisible(m_tripController->getBooleanValue(eTrip));
@@ -636,4 +637,9 @@ void TripForm::on_user_props_cellChanged(int row, int column)
 void TripForm::on_place_currentIndexChanged(int index)
 {
     m_tripController->intEvent(ePlaceName, ui->place->itemData(index).toInt());
+}
+
+void TripForm::on_trip_undo_clicked()
+{
+    m_tripController->buttonEvent(eTripUndo);
 }

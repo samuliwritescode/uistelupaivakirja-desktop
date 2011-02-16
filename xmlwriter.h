@@ -9,8 +9,7 @@ class XMLWriter
 public:
     XMLWriter(const QString& p_filename);
     bool write(TrollingObject* p_object);
-    bool load(TrollingObject* p_object, int p_id);
-    bool loadAll(const QString& p_type, TrollingObjectFactory* p_factory);
+    bool loadAll(const QString& p_type, TrollingObjectFactory* p_factory, int id = -1);
     void remove(TrollingObject* p_object);
     QList<int> getIds(const QString& p_type = QString());
 

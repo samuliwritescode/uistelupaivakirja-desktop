@@ -167,3 +167,21 @@ void TrollingModel::remove(TrollingObject* p_object)
 
     delete p_object;
 }
+
+void TrollingModel::reset(TrollingObject* p_object)
+{
+    if(p_object == NULL)
+        return;
+
+    m_DBLayer->loadObjects(p_object->getType(), this, p_object->getId());
+    for(int loop=0; loop < m_trollingobjects.size(); loop++)
+    {
+        if(m_trollingobjects[loop] == p_object)
+        {
+            m_trollingobjects.removeAt(loop);
+            break;
+        }
+    }
+
+    delete p_object;
+}

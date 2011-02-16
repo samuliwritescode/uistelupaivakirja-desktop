@@ -99,6 +99,7 @@ void Trip::deleteFish(int id)
     {
         Fish* fish = m_catch.at(id);
         disconnect(fish, SIGNAL(FishModified()), this, SLOT(FishModified()));
+        FishModified();
         delete fish;
         m_catch.removeAt(id);
     }

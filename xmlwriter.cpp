@@ -101,67 +101,7 @@ void XMLWriter::remove(TrollingObject* p_object)
     file.close();
 }
 
-bool XMLWriter::load(TrollingObject* p_object, int p_id)
-{     
-    if(!loadDocument())
-        return false;
-
-    QDomElement trollingObject;
-    int id = p_id;
-    if(!getTrollingObjectElement(trollingObject, id) || p_id != id)
-    {
-        qDebug() << "Cant load object from XML!";
-        return false;
-    }
-
-    QString type = trollingObject.attribute("type");
-    if(p_object->getType() != type)
-    {
-        qCritical() << "Type does not match with loaded object";
-        return false;
-    }
-
-
-    QDomNodeList propertiesnodes = trollingObject.childNodes();
-    QHash<QString, QVariant> properties;
-    for(int loop=0; loop < propertiesnodes.size(); loop++)
-    {
-        QDomNode node = propertiesnodes.at(loop);
-        if(node.isElement() && node.toElement().tagName() != "PropertyList")
-        {
-            QDomElement element = node.toElement();            
-            properties[element.tagName()] = element.text();
-            //qDebug() << "read" << element.tagName();
-        }
-        else if(node.isElement() && node.hasChildNodes() && node.toElement().tagName() == "PropertyList")
-        {
-            QList< QHash<QString, QVariant> > list;
-            QDomNodeList propertylist = node.toElement().elementsByTagName("PropertyListItem");
-            for(int loop2=0; loop2 < propertylist.size(); loop2++)
-            {
-                QHash<QString, QVariant> propertylistitem;
-                QDomNodeList listitemlist = propertylist.at(loop2).childNodes();
-                for(int loop3=0; loop3 < listitemlist.size(); loop3++)
-                {
-                    QDomNode subnode = listitemlist.at(loop3);
-                    if(subnode.isElement())
-                    {
-                       QDomElement subelement = subnode.toElement();
-                       propertylistitem[subelement.tagName()] = subelement.text();
-                       //qDebug() << "subread" << subelement.tagName();
-                    }
-                }
-                list.push_back(propertylistitem);
-            }
-            p_object->storeList(list);
-        }
-    }
-    p_object->storeProperties(properties);
-    p_object->setId(id);
-    return true;
-}
-
-bool XMLWriter::loadAll(const QString& p_type, TrollingObjectFactory* p_factory)
+bool XMLWriter::loadAll(const QString& p_type, TrollingObjectFactory* p_factory, int id /*=-1*/)
 {
     if(!loadDocument())
         return false;
@@ -185,6 +125,13 @@ bool XMLWriter::loadAll(const QString& p_type, TrollingObjectFactory* p_factory)
             {
                 qDebug() << "Skipping non expected type" << p_type;
                 continue;
+            }
+
+            if(id != -1)
+            {
+                int currId = trollingobjectelement.attribute("id").toInt();
+                if(id != currId)
+                    continue;
             }
 
             TrollingObject* object = p_factory->createTrollingObject(p_type);

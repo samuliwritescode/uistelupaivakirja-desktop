@@ -12,5 +12,6 @@
         <file>res/mainlogo64.png</file>
         <file>res/osxicon32.png</file>
         <file>res/weather-few-clouds.png</file>
+        <file>res/edit-undo.png</file>
     </qresource>
 </RCC>

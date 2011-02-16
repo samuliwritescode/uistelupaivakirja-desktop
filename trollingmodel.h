@@ -23,6 +23,7 @@ public:
     Place* getPlace(int id = -1);
     int commit(TrollingObject*);
     void remove(TrollingObject*);
+    void reset(TrollingObject*);
 
     QMap<int, Trip*> getTrips();
     QMap<int, Lure*> getLures();
