@@ -214,6 +214,7 @@ void TripController::intEvent(EUISource source, int value)
         }
 
         sendNotificationToObservers(Controller::eTripUpdated);
+        sendNotificationToObservers(Controller::eFishPropertyUpdated);
         return;
         break;
     case eWayPointSet:

@@ -21,6 +21,7 @@ Fish::EType Fish::getType()
 
 void Fish::setLure(Lure* p_lure)
 {
+    emit FishModified();
     m_lure = p_lure;
 }
 
