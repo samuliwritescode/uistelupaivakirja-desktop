@@ -17,7 +17,7 @@ MediaList::MediaList(QWidget *parent) :
     setDropIndicatorShown(true);
     setContextMenuPolicy(Qt::DefaultContextMenu);
     connect(this, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(openFile(QListWidgetItem*)));
-    m_removeAction = new QAction(tr("Poista reissuta"), this);
+    m_removeAction = new QAction(tr("Poista reissulta"), this);
     m_openAction = new QAction(tr("Avaa ulkoisessa ohjelmassa"), this);
 }
 
@@ -37,6 +37,12 @@ void MediaList::dragEnterEvent ( QDragEnterEvent * event )
 
 void MediaList::contextMenuEvent ( QContextMenuEvent * e )
 {
+    QList<QListWidgetItem*> items = selectedItems();
+    if(items.count() != 1)
+        return;
+
+    QListWidgetItem* item = items.at(0);
+
     QMenu contextMenu(tr("Muokkaa mediatiedostoa"), this);
 
     contextMenu.addAction(m_openAction);
@@ -44,20 +50,12 @@ void MediaList::contextMenuEvent ( QContextMenuEvent * e )
     QAction* action = contextMenu.exec(mapToGlobal(e->pos()));
     if(action == m_removeAction)
     {
-        QList<QListWidgetItem*> items = selectedItems();
-        foreach(QListWidgetItem* item, items)
-        {
-            QString filename = item->data(Qt::UserRole+1).toString();
-            Singletons::tripController()->textEvent(eMediaFileRemove, filename);
-        }
+        QString filename = item->data(Qt::UserRole+1).toString();
+        Singletons::tripController()->textEvent(eMediaFileRemove, filename);
     }
     else if(action == m_openAction)
     {
-        QList<QListWidgetItem*> items = selectedItems();
-        foreach(QListWidgetItem* item, items)
-        {
-            openFile( item );
-        }
+        openFile(item);
     }
 }
 
