@@ -1449,6 +1449,9 @@ p, li { white-space: pre-wrap; }
           </item>
           <item>
            <widget class="QToolButton" name="trip_undo">
+            <property name="toolTip">
+             <string>Peruuta tehdyt muutokset</string>
+            </property>
             <property name="text">
              <string/>
             </property>

@@ -88,6 +88,7 @@ void TripForm::updatePlaceList()
 {
     ui->place->clear();
     QList<QPair<QString, int> > places = Singletons::placeController()->getPlaceList();
+    qSort(places);
    for(int loop=0; loop < places.size(); loop++)
    {
        QPair<QString, int> pair = places.at(loop);

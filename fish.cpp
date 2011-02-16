@@ -249,16 +249,22 @@ void Fish::setTotalDepth(const QString& p_val)
 
 void Fish::setTrollingSpeed(const QString& p_val)
 {
+    QSettings settings;
+    settings.setValue("TrollingSpeed", p_val.toLower());
     setDouble(FISH_TROLLING_SPEED, p_val);
 }
 
 void Fish::setLineWeight(const QString& p_val)
 {
+    QSettings settings;
+    settings.setValue("LineWeight", p_val.toLower());
     setDouble(FISH_LINE_WEIGHT, p_val);
 }
 
 void Fish::setReleaseWidth(const QString& p_val)
 {
+    QSettings settings;
+    settings.setValue("ReleaseWidth", p_val.toLower());
     setDouble(FISH_RELEASE_WIDTH, p_val);
 }
 

@@ -94,6 +94,9 @@ Fish* Trip::newFish(Fish::EType type)
         fish->setSpecies(settings.value("Species").toString());
         fish->setGetter(settings.value("Getter").toString());
         fish->setMethod(settings.value("Method").toString());
+        fish->setTrollingSpeed(settings.value("TrollingSpeed").toString());
+        fish->setReleaseWidth(settings.value("ReleaseWidth").toString());
+        fish->setLineWeight(settings.value("LineWeight").toString());
     }
 
     if(type == Fish::eWeather ||
