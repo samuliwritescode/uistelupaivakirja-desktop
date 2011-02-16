@@ -95,6 +95,28 @@ Fish* Trip::newFish(Fish::EType type)
         fish->setGetter(settings.value("Getter").toString());
         fish->setMethod(settings.value("Method").toString());
     }
+
+    if(type == Fish::eWeather ||
+       type == Fish::eFishAndWeather)
+    {
+        for(int loop=m_catch.count()-1; loop >= 0; loop--)
+        {
+            Fish* weather = m_catch.at(loop);
+            if(weather->getType() == Fish::eWeather ||
+               weather->getType() == Fish::eFishAndWeather)
+            {
+                fish->setAirTemp(weather->getAirTemp());
+                fish->setWaterTemp(weather->getWaterTemp());
+                fish->setWeatherCondition(weather->getWeatherCondition());
+                fish->setWindCondition(weather->getWindCondition());
+                fish->setPressureCondition(weather->getPressureCondition());
+                fish->setWindDirection(weather->getWindDirection());
+                fish->setPressureChange(weather->getPressureChange());
+                break;
+            }
+        }
+    }
+
     fish->setTime(get("time_start").toTime());
     connect(fish, SIGNAL(FishModified()), this, SLOT(FishModified()));
     fish->setType(type);
