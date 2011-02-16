@@ -236,14 +236,14 @@ void Fish::setReleaseWidth(const QString& p_val)
 void Fish::setSpecies(const QString& p_val)
 {
     QSettings settings;
-    settings.setValue("Species", p_val);
+    settings.setValue("Species", p_val.toLower());
     setProperty(FISH_SPECIES, p_val);
 }
 
 void Fish::setMethod(const QString& p_val)
 {
     QSettings settings;
-    settings.setValue("Method", p_val);
+    settings.setValue("Method", p_val.toLower());
     setProperty(FISH_METHOD, p_val);
 }
 
