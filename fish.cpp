@@ -180,14 +180,19 @@ void Fish::setDouble(const QString& p_prop, const QString& p_value)
     }
     else
     {
-        p_value.toDouble(&bConvOk);
+        QString value = p_value;
+        value.replace(",", ".");
+        if(value == "-")
+            value = "-0";
+
+        value.toDouble(&bConvOk);
         if(bConvOk)
         {
-            setProperty(p_prop, p_value);
+            setProperty(p_prop, value);
         }
         else
         {
-            throw TrollingException("Value is not numeric: "+p_value+" property: "+p_prop);
+            throw TrollingException("Value is not numeric: "+value+" property: "+p_prop);
         }
     }
 }

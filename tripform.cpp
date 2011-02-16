@@ -129,6 +129,7 @@ void TripForm::updateTrip()
         ui->groupBoxWeather->hide();
         ui->groupBoxFish->show();
         ui->groupBoxOther->show();
+        ui->groupBoxEvent->show();
         updateFish();
     }
     else if(type == Fish::eWeather)
@@ -136,6 +137,7 @@ void TripForm::updateTrip()
         ui->groupBoxFish->hide();
         ui->groupBoxWeather->show();
         ui->groupBoxOther->show();
+        ui->groupBoxEvent->show();
         updateWeather();
     }
     else if(type == Fish::eFishAndWeather)
@@ -143,6 +145,7 @@ void TripForm::updateTrip()
         ui->groupBoxFish->show();
         ui->groupBoxWeather->show();
         ui->groupBoxOther->show();
+        ui->groupBoxEvent->show();
         updateFish();
         updateWeather();
     }
@@ -151,8 +154,15 @@ void TripForm::updateTrip()
         ui->groupBoxFish->hide();
         ui->groupBoxWeather->hide();
         ui->groupBoxOther->hide();
+        ui->groupBoxEvent->hide();
         return;
     }
+
+    m_POIBox->setText(m_tripController->getTextValue(eWayPointSet));
+    QTime time = m_tripController->getTimeValue(eTime);
+    ui->timeEdit->setTime(time);
+    ui->time_dial_hour->setValue((time.hour()+12)%24);
+    ui->time_dial_minutes->setValue((time.minute()+30)%60);
 
     if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
          ui->misc->setText(m_tripController->getTextValue(eMiscText));
@@ -290,19 +300,11 @@ void TripForm::updateFish()
     ui->trolling_speed->setText(m_tripController->getTextValue(eTrollingSpeed));
     ui->line_weight->setText(m_tripController->getTextValue(eLineWeight));
     ui->release_width->setText(m_tripController->getTextValue(eReleaseWidth));
-    ui->air_temp->setText(m_tripController->getTextValue(eAirTemp));
-    ui->water_temp->setText(m_tripController->getTextValue(eWaterTemp));
 
     ui->group->setChecked(m_tripController->getBooleanValue(eGroup));
     ui->undersize->setChecked(m_tripController->getBooleanValue(eUnderSize));
     ui->catchrelease->setChecked(m_tripController->getBooleanValue(eCatchNRelease));
     m_lureBox->setText(m_tripController->getTextValue(eLureName));
-    m_POIBox->setText(m_tripController->getTextValue(eWayPointSet));
-
-    QTime time = m_tripController->getTimeValue(eTime);
-    ui->timeEdit->setTime(time);
-    ui->time_dial_hour->setValue((time.hour()+12)%24);
-    ui->time_dial_minutes->setValue((time.minute()+30)%60);
 
     setCombo(eSpecies,  ui->species);
     setCombo(eGetter,  ui->getter);
@@ -334,6 +336,9 @@ void TripForm::updateWeather()
 
     ui->wind_direction_label->setText(m_tripController->getTextValue(eWindDirection));
     ui->pressure_change_label->setText(m_tripController->getTextValue(ePressureChange));
+
+    ui->air_temp->setText(m_tripController->getTextValue(eAirTemp));
+    ui->water_temp->setText(m_tripController->getTextValue(eWaterTemp));
 }
 
 void TripForm::setCombo(EUISource source, QComboBox* target)
