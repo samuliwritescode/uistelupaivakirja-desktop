@@ -334,27 +334,26 @@ void TripForm::updateFish()
 
 void TripForm::updateWeather()
 {
-    ui->weather_clear->setChecked(m_tripController->getBooleanValue(eWeatherClear));
-    ui->weather_halfclear->setChecked(m_tripController->getBooleanValue(eWeatherHalfClear));
-    ui->weather_overcast->setChecked(m_tripController->getBooleanValue(eWeatherOvercast));
-    ui->weather_rain->setChecked(m_tripController->getBooleanValue(eWeatherRain));
-    ui->weather_fog->setChecked(m_tripController->getBooleanValue(eWeatherFog));
+    ui->cloud_slider->blockSignals(true);
+    ui->rain_slider->blockSignals(true);
+    ui->wind_slider->blockSignals(true);
+    ui->pressure_slider->blockSignals(true);
+    ui->cloud_slider->setValue(m_tripController->getIntValue(eWeather));
+    ui->cloud_label->setText(m_tripController->getTextValue(eWeather));
+    ui->rain_slider->setValue(m_tripController->getIntValue(eRain));
+    ui->rain_label->setText(m_tripController->getTextValue(eRain));
+    ui->pressure_slider->setValue(m_tripController->getIntValue(ePressure));
+    ui->pressure_label->setText(m_tripController->getTextValue(ePressure));
+    ui->wind_slider->setValue(m_tripController->getIntValue(eWind));
+    ui->wind_label->setText(m_tripController->getTextValue(eWind));
 
-    ui->wind_calm->setChecked(m_tripController->getBooleanValue(eWindCalm));
-    ui->wind_faint->setChecked(m_tripController->getBooleanValue(eWindFaint));
-    ui->wind_moderate->setChecked(m_tripController->getBooleanValue(eWindModerate));
-    ui->wind_brisk->setChecked(m_tripController->getBooleanValue(eWindBrisk));
-    ui->wind_hard->setChecked(m_tripController->getBooleanValue(eWindHard));
-
-    ui->pressure_low->setChecked(m_tripController->getBooleanValue(ePressureLow));
-    ui->pressure_mildlow->setChecked(m_tripController->getBooleanValue(ePressureMildLow));
-    ui->pressure_normal->setChecked(m_tripController->getBooleanValue(ePressureNormal));
-    ui->pressure_mildhigh->setChecked(m_tripController->getBooleanValue(ePressureMildHigh));
-    ui->pressure_high->setChecked(m_tripController->getBooleanValue(ePressureHigh));
+    ui->cloud_slider->blockSignals(false);
+    ui->rain_slider->blockSignals(false);
+    ui->wind_slider->blockSignals(false);
+    ui->pressure_slider->blockSignals(false);
 
     ui->wind_direction->setValue(m_tripController->getIntValue(eWindDirection));
     ui->pressure_change->setValue(m_tripController->getIntValue(ePressureChange));
-
     ui->wind_direction_label->setText(m_tripController->getTextValue(eWindDirection));
     ui->pressure_change_label->setText(m_tripController->getTextValue(ePressureChange));
 
@@ -403,56 +402,6 @@ void TripForm::on_water_temp_textEdited(QString temp)
 void TripForm::on_misc_textChanged()
 {
     m_tripController->textEvent(eMiscText, ui->misc->toPlainText());
-}
-
-void TripForm::on_weather_clear_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eWeatherClear, checked);
-}
-
-void TripForm::on_weather_halfclear_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eWeatherHalfClear, checked);
-}
-
-void TripForm::on_weather_overcast_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eWeatherOvercast, checked);
-}
-
-void TripForm::on_weather_rain_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eWeatherRain, checked);
-}
-
-void TripForm::on_weather_fog_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eWeatherFog, checked);
-}
-
-void TripForm::on_wind_calm_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eWindCalm, checked);
-}
-
-void TripForm::on_wind_faint_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eWindFaint, checked);
-}
-
-void TripForm::on_wind_moderate_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eWindModerate, checked);
-}
-
-void TripForm::on_wind_brisk_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eWindBrisk, checked);
-}
-
-void TripForm::on_wind_hard_clicked(bool checked)
-{
-    m_tripController->booleanEvent(eWindHard, checked);
 }
 
 void TripForm::on_weight_textEdited(QString weight)
@@ -559,31 +508,6 @@ void TripForm::on_species_textChanged(QString value)
     m_tripController->textEvent(eSpecies, value);
 }
 
-void TripForm::on_pressure_low_clicked(bool checked)
-{
-    m_tripController->booleanEvent(ePressureLow, checked);
-}
-
-void TripForm::on_pressure_mildlow_clicked(bool checked)
-{
-   m_tripController->booleanEvent(ePressureMildLow, checked);
-}
-
-void TripForm::on_pressure_normal_clicked(bool checked)
-{
-    m_tripController->booleanEvent(ePressureNormal, checked);
-}
-
-void TripForm::on_pressure_mildhigh_clicked(bool checked)
-{
-    m_tripController->booleanEvent(ePressureMildHigh, checked);
-}
-
-void TripForm::on_pressure_high_clicked(bool checked)
-{
-    m_tripController->booleanEvent(ePressureHigh, checked);
-}
-
 void TripForm::on_group_clicked(bool checked)
 {
     m_tripController->booleanEvent(eGroup, checked);
@@ -669,4 +593,24 @@ void TripForm::on_time_dial_minutes_sliderMoved(int value)
 void TripForm::on_group_number_textEdited(QString value)
 {
     m_tripController->intEvent(eGroup, value.toInt());
+}
+
+void TripForm::on_cloud_slider_valueChanged(int position)
+{
+    m_tripController->intEvent(eWeather, position);
+}
+
+void TripForm::on_wind_slider_valueChanged(int position)
+{
+     m_tripController->intEvent(eWind, position);
+}
+
+void TripForm::on_pressure_slider_valueChanged(int position)
+{
+     m_tripController->intEvent(ePressure, position);
+}
+
+void TripForm::on_rain_slider_valueChanged(int position)
+{
+     m_tripController->intEvent(eRain, position);
 }

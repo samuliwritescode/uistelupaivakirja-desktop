@@ -30,24 +30,6 @@ bool TripController::getBooleanValue(EUISource source)
 
     switch(source)
     {
-    case eWindCalm: return m_trip->getFish()->getWindCondition() == Fish::eCalm; break;
-    case eWindFaint: return m_trip->getFish()->getWindCondition() == Fish::eFaint; break;
-    case eWindModerate: return m_trip->getFish()->getWindCondition() == Fish::eModerate; break;
-    case eWindBrisk: return m_trip->getFish()->getWindCondition() == Fish::eBrisk; break;
-    case eWindHard: return m_trip->getFish()->getWindCondition() == Fish::eHard; break;
-
-    case eWeatherClear: return m_trip->getFish()->getWeatherCondition() == Fish::eClear; break;
-    case eWeatherHalfClear: return m_trip->getFish()->getWeatherCondition() == Fish::eHalfClear; break;
-    case eWeatherOvercast: return m_trip->getFish()->getWeatherCondition() == Fish::eOvercast; break;
-    case eWeatherRain: return m_trip->getFish()->getWeatherCondition() == Fish::eRain; break;
-    case eWeatherFog: return m_trip->getFish()->getWeatherCondition() == Fish::eFog; break;
-
-    case ePressureLow: return m_trip->getFish()->getPressureCondition() == Fish::eLow; break;
-    case ePressureMildLow: return m_trip->getFish()->getPressureCondition() == Fish::eMildLow; break;
-    case ePressureNormal: return m_trip->getFish()->getPressureCondition() == Fish::eNormal; break;
-    case ePressureMildHigh: return m_trip->getFish()->getPressureCondition() == Fish::eMildHigh; break;
-    case ePressureHigh: return m_trip->getFish()->getPressureCondition() == Fish::eHigh; break;
-
     case eGroup: return m_trip->getFish()->isGroup(); break;
     case eCatchNRelease: return m_trip->getFish()->isCR(); break;
     case eUnderSize: return m_trip->getFish()->isUnderSize(); break;
@@ -78,6 +60,10 @@ int TripController::getIntValue(EUISource source)
         break;
     case eTrip: return m_trip->getId(); break;
     case eGroup: return m_trip->getFish()->getGroupAmount(); break;
+    case eWeather: return m_trip->getFish()->getWeatherCondition(); break;
+    case eRain: return m_trip->getFish()->getRainCondition(); break;
+    case ePressure: return m_trip->getFish()->getPressureCondition(); break;
+    case eWind: return m_trip->getFish()->getWindCondition(); break;
     default: qCritical() << "Unknown get int" << source; break;
     }
     return 0;
@@ -115,6 +101,10 @@ QString TripController::getTextValue(EUISource source)
         break;
     case eWindDirection: return m_trip->getFish()->getHumanReadableWindDirection();
     case ePressureChange: return m_trip->getFish()->getHumanReadablePressureChange();
+    case eWeather: return m_trip->getFish()->getHumanReadableWeather(); break;
+    case eRain: return m_trip->getFish()->getHumanReadableRain(); break;
+    case ePressure: return m_trip->getFish()->getHumanReadablePressure(); break;
+    case eWind: return m_trip->getFish()->getHumanReadableWind(); break;
     default: qCritical() << "Unknown get text" << source; break;
     }
     return QString();
@@ -143,24 +133,6 @@ void TripController::booleanEvent(EUISource source, bool value)
     qDebug() << "got bool event" << source << value;
     switch(source)
     {
-    case eWindCalm: m_trip->getFish()->setWindCondition(Fish::eCalm); break;
-    case eWindFaint: m_trip->getFish()->setWindCondition(Fish::eFaint); break;
-    case eWindModerate: m_trip->getFish()->setWindCondition(Fish::eModerate); break;
-    case eWindBrisk: m_trip->getFish()->setWindCondition(Fish::eBrisk); break;
-    case eWindHard: m_trip->getFish()->setWindCondition(Fish::eHard); break;
-
-    case eWeatherClear: m_trip->getFish()->setWeatherCondition(Fish::eClear); break;
-    case eWeatherHalfClear: m_trip->getFish()->setWeatherCondition(Fish::eHalfClear); break;
-    case eWeatherOvercast: m_trip->getFish()->setWeatherCondition(Fish::eOvercast); break;
-    case eWeatherRain: m_trip->getFish()->setWeatherCondition(Fish::eRain); break;
-    case eWeatherFog: m_trip->getFish()->setWeatherCondition(Fish::eFog); break;
-
-    case ePressureLow: m_trip->getFish()->setPressureCondition(Fish::eLow); break;
-    case ePressureMildLow: m_trip->getFish()->setPressureCondition(Fish::eMildLow); break;
-    case ePressureNormal: m_trip->getFish()->setPressureCondition(Fish::eNormal); break;
-    case ePressureMildHigh: m_trip->getFish()->setPressureCondition(Fish::eMildHigh); break;
-    case ePressureHigh: m_trip->getFish()->setPressureCondition(Fish::eHigh); break;
-
     case eGroup: m_trip->getFish()->setGroup(value); break;
     case eCatchNRelease: m_trip->getFish()->setCR(value); break;
     case eUnderSize: m_trip->getFish()->setUnderSize(value); break;
@@ -227,6 +199,18 @@ void TripController::intEvent(EUISource source, int value)
         break;
     case eGroup:
         m_trip->getFish()->setGroupAmount(value);
+        break;
+    case eWeather:
+        m_trip->getFish()->setWeatherCondition(value);
+        break;
+    case eWind:
+        m_trip->getFish()->setWindCondition(value);
+        break;
+    case ePressure:
+        m_trip->getFish()->setPressureCondition(value);
+        break;
+    case eRain:
+        m_trip->getFish()->setRainCondition(value);
         break;
     default:  qCritical() << "Unknown int event. Cant handle this!" << source;
     }

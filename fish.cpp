@@ -122,14 +122,19 @@ QList<QString> Fish::getPropertyNames()
 
 QString Fish::getHumanReadableWeather()
 {
-    EWeatherCondition weather = getWeatherCondition();
+    int weather = getWeatherCondition();
     switch(weather)
     {
-    case eClear: return QObject::tr("Selkeää");
-    case eHalfClear: return QObject::tr("Puolipilvistä");
-    case eOvercast: return QObject::tr("Pilvistä");
-    case eRain: return QObject::tr("Sadetta");
-    case eFog: return QObject::tr("Sumua");
+    case 1: return QObject::tr("Selkeää (0/8)");
+    case 2: return QObject::tr("Selkeää (1/8)");
+    case 3: return QObject::tr("Melko selkeää (2/8)");
+    case 4: return QObject::tr("Puolipilvistä (3/8)");
+    case 5: return QObject::tr("Puolipilvistä (4/8)");
+    case 6: return QObject::tr("Melko pilvistä (5/8)");
+    case 7: return QObject::tr("Melko pilvistä (6/8)");
+    case 8: return QObject::tr("Pilvistä (7/8)");
+    case 9: return QObject::tr("Pilvistä (8/8)");
+    case 10: return QObject::tr("Sumua (9/8)");
     default: break;
     }
     return QObject::tr("n/a");
@@ -137,14 +142,28 @@ QString Fish::getHumanReadableWeather()
 
 QString Fish::getHumanReadableWind()
 {
-    EWindCondition wind = getWindCondition();
+    int wind = getWindCondition();
     switch(wind)
     {
-    case eCalm: return QObject::tr("Tyyntä");
-    case eFaint: return QObject::tr("Heikkoa");
-    case eModerate: return QObject::tr("Kohtalaista");
-    case eBrisk: return QObject::tr("Navakkaa");
-    case eHard: return QObject::tr("Kovaa");
+    case 1: return QObject::tr("Tyyntä (0 m/s)");
+    case 2: return QObject::tr("Heikkoa (1 - 3 m/s)");
+    case 3: return QObject::tr("Kohtalaista (4 - 7 m/s)");
+    case 4: return QObject::tr("Navakkaa (8 - 13 m/s)");
+    case 5: return QObject::tr("Kovaa (14 - 20 m/s)");
+    default: break;
+    }
+    return QObject::tr("n/a");
+}
+
+QString Fish::getHumanReadableRain()
+{
+    int rain = getRainCondition();
+    switch(rain)
+    {
+    case 1: return QObject::tr("Pouta (<0.3 mm)");
+    case 2: return QObject::tr("Vähän sadetta (0.3 - 0.9 mm)");
+    case 3: return QObject::tr("Sadetta (1.0 - 4.4 mm)");
+    case 4: return QObject::tr("Runsasta sadetta (>4.5 mm)");
     default: break;
     }
     return QObject::tr("n/a");
@@ -152,17 +171,16 @@ QString Fish::getHumanReadableWind()
 
 QString Fish::getHumanReadablePressure()
 {
-    EPressureCondition pressure = getPressureCondition();
-    switch(pressure)
+    int pressure = getPressureCondition();
+
+    if(pressure == 0)
     {
-    case eLow: return QObject::tr("Matala");
-    case eMildLow: return QObject::tr("Melko matala");
-    case eNormal: return QObject::tr("Normaali");
-    case eMildHigh: return QObject::tr("Melko korkea");
-    case eHigh: return QObject::tr("Korkea");
-    default: break;
+        return QObject::tr("n/a");
     }
-    return QObject::tr("n/a");
+    else
+    {
+        return QString::number(pressure+940)+QObject::tr(" hPa");
+    }
 }
 
 QString Fish::getHumanReadableWindDirection()
@@ -316,7 +334,7 @@ void Fish::setTime(const QTime& p_val)
     setProperty(FISH_TIME, p_val);
 }
 
-void Fish::setWindCondition(EWindCondition p_val)
+void Fish::setWindCondition(int p_val)
 {
     setProperty(FISH_WIND, p_val);
 }
@@ -326,14 +344,19 @@ void Fish::setWindDirection(EWindDirection p_val)
     setProperty(FISH_WIND_DIRECTION, p_val);
 }
 
-void Fish::setWeatherCondition(EWeatherCondition p_val)
+void Fish::setWeatherCondition(int p_val)
 {
     setProperty(FISH_WEATHER, p_val);
 }
 
-void Fish::setPressureCondition(EPressureCondition p_val)
+void Fish::setPressureCondition(int p_val)
 {
     setProperty(FISH_PRESSURE, p_val);
+}
+
+void Fish::setRainCondition(int p_val)
+{
+    setProperty(FISH_RAIN, p_val);
 }
 
 void Fish::setPressureChange(EPressureChange p_val)
@@ -467,19 +490,24 @@ bool Fish::isCR()
        return m_properties[FISH_IS_CATCHRELEASED].toBool() == true;
 }
 
-Fish::EWindCondition Fish::getWindCondition()
+int Fish::getWindCondition()
 {
-    return static_cast<Fish::EWindCondition>(m_properties[FISH_WIND].toInt());
+    return m_properties[FISH_WIND].toInt();
 }
 
-Fish::EWeatherCondition Fish::getWeatherCondition()
+int Fish::getWeatherCondition()
 {
-    return static_cast<Fish::EWeatherCondition>(m_properties[FISH_WEATHER].toInt());
+    return m_properties[FISH_WEATHER].toInt();
 }
 
-Fish::EPressureCondition Fish::getPressureCondition()
+int Fish::getPressureCondition()
 {
-    return static_cast<Fish::EPressureCondition>(m_properties[FISH_PRESSURE].toInt());
+    return m_properties[FISH_PRESSURE].toInt();
+}
+
+int Fish::getRainCondition()
+{
+    return m_properties[FISH_RAIN].toInt();
 }
 
 Fish::EWindDirection Fish::getWindDirection()

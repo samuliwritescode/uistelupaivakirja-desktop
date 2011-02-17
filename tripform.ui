@@ -950,190 +950,73 @@
         </property>
         <item>
          <layout class="QGridLayout" name="gridLayout_4">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="weather_clear">
-            <property name="text">
-             <string>selkeää</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1">
-           <widget class="QCheckBox" name="weather_halfclear">
-            <property name="text">
-             <string>puolipilvistä</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QCheckBox" name="weather_overcast">
-            <property name="text">
-             <string>pilvistä</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QCheckBox" name="weather_rain">
-            <property name="text">
-             <string>sadetta</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QCheckBox" name="weather_fog">
-            <property name="text">
-             <string>sumua</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="wind_calm">
-            <property name="text">
-             <string>tyyni
-0-0.2m/s</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QCheckBox" name="wind_faint">
-            <property name="text">
-             <string>heikko
-0-3m/s</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QCheckBox" name="wind_moderate">
-            <property name="text">
-             <string>kohtalainen
-4-7m/s</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QCheckBox" name="wind_brisk">
-            <property name="text">
-             <string>navakka
-8-13m/s</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="4">
-           <widget class="QCheckBox" name="wind_hard">
-            <property name="text">
-             <string>kova
-14-20m/s</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="pressure_low">
-            <property name="text">
-             <string>matala</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QCheckBox" name="pressure_mildlow">
-            <property name="text">
-             <string>melko
-matala</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QCheckBox" name="pressure_normal">
-            <property name="text">
-             <string>keski</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QCheckBox" name="pressure_mildhigh">
-            <property name="text">
-             <string>melko
-korkea</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QCheckBox" name="pressure_high">
-            <property name="text">
-             <string>korkea</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="5">
-           <layout class="QHBoxLayout" name="horizontalLayout_19">
+           <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <spacer name="horizontalSpacer">
+             <widget class="QSlider" name="cloud_slider">
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>10</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>1</width>
-                <height>1</height>
-               </size>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
               </property>
-             </spacer>
+             </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_28">
+             <widget class="QLabel" name="cloud_label">
               <property name="text">
-               <string>Ilma</string>
+               <string>pilvistä (7/8)</string>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="air_temp">
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="placeholderText">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_40">
-              <property name="text">
-               <string>C</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_29">
-              <property name="text">
-               <string>Vesi</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="water_temp">
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="placeholderText">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_10">
-              <property name="text">
-               <string>C</string>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
            </layout>
           </item>
-          <item row="1" column="5">
+          <item row="1" column="1">
+           <layout class="QVBoxLayout" name="verticalLayout_13">
+            <item>
+             <widget class="QSlider" name="wind_slider">
+              <property name="maximum">
+               <number>5</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>1</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="wind_label">
+              <property name="text">
+               <string>tyyni 0-0.2 m/s</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="2">
            <layout class="QHBoxLayout" name="horizontalLayout_20">
             <item>
              <spacer name="horizontalSpacer_2">
@@ -1162,8 +1045,8 @@ korkea</string>
              <widget class="QDial" name="wind_direction">
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>50</width>
+                <height>50</height>
                </size>
               </property>
               <property name="minimum">
@@ -1210,7 +1093,40 @@ korkea</string>
             </item>
            </layout>
           </item>
-          <item row="2" column="5">
+          <item row="2" column="1">
+           <layout class="QVBoxLayout" name="verticalLayout_14">
+            <item>
+             <widget class="QSlider" name="pressure_slider">
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>130</number>
+              </property>
+              <property name="value">
+               <number>0</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="pressure_label">
+              <property name="text">
+               <string>1010 hPa</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="2">
            <layout class="QHBoxLayout" name="horizontalLayout_22">
             <item>
              <spacer name="horizontalSpacer_3">
@@ -1239,8 +1155,8 @@ korkea</string>
              <widget class="QDial" name="pressure_change">
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>50</width>
+                <height>50</height>
                </size>
               </property>
               <property name="minimum">
@@ -1282,6 +1198,158 @@ korkea</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Pilvet</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Tuuli</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Paine</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>Lämpö</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <widget class="QSlider" name="rain_slider">
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>4</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="rain_label">
+              <property name="text">
+               <string>heikko sade</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_25">
+            <property name="text">
+             <string>Sade</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <layout class="QHBoxLayout" name="horizontalLayout_19">
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>1</width>
+                <height>1</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_28">
+              <property name="text">
+               <string>Ilma</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="air_temp">
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="placeholderText">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_40">
+              <property name="text">
+               <string>C</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_13">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>1</width>
+                <height>1</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_29">
+              <property name="text">
+               <string>Vesi</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="water_temp">
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="placeholderText">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string>C</string>
               </property>
              </widget>
             </item>

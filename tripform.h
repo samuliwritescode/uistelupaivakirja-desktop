@@ -40,6 +40,10 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_rain_slider_valueChanged(int position);
+    void on_pressure_slider_valueChanged(int position);
+    void on_wind_slider_valueChanged(int position);
+    void on_cloud_slider_valueChanged(int position);
     void on_group_number_textEdited(QString );
     void on_time_dial_minutes_sliderMoved(int position);
     void on_time_dial_hour_sliderMoved(int position);
@@ -57,11 +61,6 @@ private slots:
     void on_wind_direction_valueChanged(int value);
     void on_catchrelease_clicked(bool checked);
     void on_group_clicked(bool checked);
-    void on_pressure_high_clicked(bool checked);
-    void on_pressure_mildhigh_clicked(bool checked);
-    void on_pressure_normal_clicked(bool checked);
-    void on_pressure_mildlow_clicked(bool checked);
-    void on_pressure_low_clicked(bool checked);
     void on_species_textChanged(QString );
     void on_timeEdit_timeChanged(QTime date);
     void on_release_width_textEdited(QString );
@@ -82,16 +81,6 @@ private slots:
     void on_spotdepth_textEdited(QString );
     void on_length_textEdited(QString );
     void on_weight_textEdited(QString );
-    void on_wind_hard_clicked(bool checked);
-    void on_wind_brisk_clicked(bool checked);
-    void on_wind_moderate_clicked(bool checked);
-    void on_wind_faint_clicked(bool checked);
-    void on_wind_calm_clicked(bool checked);
-    void on_weather_fog_clicked(bool checked);
-    void on_weather_rain_clicked(bool checked);
-    void on_weather_overcast_clicked(bool checked);
-    void on_weather_halfclear_clicked(bool checked);
-    void on_weather_clear_clicked(bool checked);
     void on_misc_textChanged();
     void on_water_temp_textEdited(QString );
     void on_trip_save_clicked();

@@ -19,6 +19,7 @@ const QString FISH_LINE_WEIGHT = "fish_line_weight";
 const QString FISH_RELEASE_WIDTH = "fish_release_width";
 const QString FISH_SPECIES = "fish_species";
 const QString FISH_PRESSURE = "fish_pressure";
+const QString FISH_RAIN = "fish_rain";
 const QString FISH_IS_GROUP = "fish_group";
 const QString FISH_GROUP_AMOUNT = "fish_group_amount";
 const QString FISH_IS_UNDERSIZE = "fish_undersize";
@@ -40,10 +41,7 @@ class Fish: public QObject
     friend class Trip;
 public:
 
-    enum EWindCondition{eCalm=1, eFaint, eModerate, eBrisk, eHard};
     enum EWindDirection{eSouth=1, eSouthWest, eWest, eNorthWest, eNorth, eNorthEast, eEast, eSouthEast, eNoWindDirection};
-    enum EWeatherCondition{eClear=1, eHalfClear, eOvercast, eRain, eFog};
-    enum EPressureCondition{eLow=1, eMildLow, eNormal, eMildHigh, eHigh};
     enum EPressureChange{eFastDecline=1, eModerateDecline, eSlowDecline, eNoChange, eSlowRaise, eModerateRaise, eFastRaise};
     enum EType {eNaN, eFish, eWeather, eFishAndWeather};
 
@@ -59,6 +57,7 @@ public:
     QString getHumanReadablePressure();
     QString getHumanReadableWindDirection();
     QString getHumanReadablePressureChange();
+    QString getHumanReadableRain();
 
     void setWeight(const QString&);
     void setLength(const QString&);
@@ -74,9 +73,10 @@ public:
     void setWaterTemp(const QString&);
     void setAirTemp(const QString&);
     void setCoordinates(const QString&, const QString&);
-    void setWindCondition(EWindCondition);
-    void setWeatherCondition(EWeatherCondition);
-    void setPressureCondition(EPressureCondition);
+    void setWindCondition(int);
+    void setWeatherCondition(int);
+    void setPressureCondition(int);
+    void setRainCondition(int);
     void setWindDirection(EWindDirection);
     void setPressureChange(EPressureChange);
     void setGroup(bool);
@@ -101,9 +101,10 @@ public:
     QString getCoordinatesLat();
     QString getCoordinatesLon();
     int getGroupAmount();
-    EWindCondition getWindCondition();
-    EWeatherCondition getWeatherCondition();
-    EPressureCondition getPressureCondition();
+    int getWindCondition();
+    int getWeatherCondition();
+    int getPressureCondition();
+    int getRainCondition();
     EWindDirection getWindDirection();
     EPressureChange getPressureChange();
     QTime getTime();
