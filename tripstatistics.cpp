@@ -52,7 +52,10 @@ QHash<QString, QString> TripStatistics::stats()
             if(fish->getType() == Fish::eFish ||
                fish->getType() == Fish::eFishAndWeather)
             {
-                fishCount++;
+                if(fish->isGroup() && fish->getGroupAmount() > 0)
+                    fishCount += fish->getGroupAmount();
+                else
+                    fishCount++;
             }
         }
 

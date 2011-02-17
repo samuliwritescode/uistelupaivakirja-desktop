@@ -93,8 +93,19 @@ QHash<QString, QString> FishStatistics::stats()
             if(fish->getType() == Fish::eFish ||
                fish->getType() == Fish::eFishAndWeather)
             {
+                int multiply = 0;
                 statline[COL_SPECIES] = fish->getSpecies().toLower();
-                statline[COL_WEIGHT] = fish->getWeight();
+
+                if(fish->isGroup() && fish->getGroupAmount() > 0)
+                {
+                    multiply = fish->getGroupAmount();
+                    statline[COL_WEIGHT] = QString::number(fish->getWeight().toDouble() / fish->getGroupAmount());
+                }
+                else
+                {
+                    statline[COL_WEIGHT] = fish->getWeight();
+                }
+
                 statline[COL_LENGTH] = fish->getLength();
                 statline[COL_WATERDEPTH] = fish->getTotalDepth();
                 statline[COL_LINEWEIGHT] = fish->getLineWeight();
@@ -128,7 +139,10 @@ QHash<QString, QString> FishStatistics::stats()
                     if(other->getType() == Fish::eFish ||
                        other->getType() == Fish::eFishAndWeather)
                     {
-                        fishCount++;
+                        if(other->isGroup() && other->getGroupAmount() > 0)
+                            fishCount += other->getGroupAmount();
+                        else
+                            fishCount++;
                     }
                 }
 
@@ -182,7 +196,17 @@ QHash<QString, QString> FishStatistics::stats()
                 if(bSkip)
                     continue;
 
-                statistics.push_back(statline);
+                if(multiply > 0)
+                {
+                    for(int loop=0; loop < multiply; loop++)
+                    {
+                       statistics.push_back(statline);
+                    }
+                }
+                else
+                {
+                    statistics.push_back(statline);
+                }
             }
         }
     }
