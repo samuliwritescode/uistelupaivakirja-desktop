@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml opengl
+QT       += core gui xml opengl webkit
 
 TARGET = Uistelupaivakirja
 TEMPLATE = app

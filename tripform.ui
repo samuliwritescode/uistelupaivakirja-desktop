@@ -1423,6 +1423,18 @@
       </widget>
      </item>
      <item>
+      <widget class="QGroupBox" name="groupBoxTripReport">
+       <property name="title">
+        <string>Reissuraportti</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_15">
+        <item>
+         <widget class="QWebView" name="webView"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="labelCreateNewTrip">
        <property name="text">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1717,6 +1729,13 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKit/QWebView</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>

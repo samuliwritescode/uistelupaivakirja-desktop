@@ -6,6 +6,7 @@ TripForm::TripForm(QWidget *parent) :
     ui(new Ui::TripForm)
 {
     ui->setupUi(this);
+    ui->groupBoxTripReport->hide();
 
     m_tripController = Singletons::tripController();
 
@@ -57,6 +58,7 @@ TripForm::~TripForm()
     delete m_lureBox;
     delete m_POIBox;
     delete m_wptList;
+    delete m_mediaList;
 }
 
 
@@ -86,14 +88,26 @@ void TripForm::observerEvent(int type)
 
 void TripForm::updatePlaceList()
 {
+    ui->place->blockSignals(true);
     ui->place->clear();
     QList<QPair<QString, int> > places = Singletons::placeController()->getPlaceListShort();
+    int currentPlace = m_tripController->getIntValue(ePlaceName);
     qSort(places);
-   for(int loop=0; loop < places.size(); loop++)
-   {
+    for(int loop=0; loop < places.size(); loop++)
+    {
        QPair<QString, int> pair = places.at(loop);
        ui->place->addItem(pair.first, pair.second);
-   }
+       if(currentPlace == pair.second)
+       {
+           ui->place->setCurrentIndex(loop);
+       }
+    }
+    if(currentPlace == -1)
+    {
+        ui->place->setCurrentIndex(-1);
+    }
+
+    ui->place->blockSignals(false);
 }
 
 void TripForm::updateLureList()
@@ -139,6 +153,7 @@ void TripForm::updateTrip()
 
     if(type == Fish::eFish)
     {
+        ui->groupBoxTripReport->hide();
         ui->groupBoxWeather->hide();
         ui->groupBoxFish->show();
         ui->groupBoxOther->show();
@@ -147,6 +162,7 @@ void TripForm::updateTrip()
     }
     else if(type == Fish::eWeather)
     {
+        ui->groupBoxTripReport->hide();
         ui->groupBoxFish->hide();
         ui->groupBoxWeather->show();
         ui->groupBoxOther->show();
@@ -155,6 +171,7 @@ void TripForm::updateTrip()
     }
     else if(type == Fish::eFishAndWeather)
     {
+        ui->groupBoxTripReport->hide();
         ui->groupBoxFish->show();
         ui->groupBoxWeather->show();
         ui->groupBoxOther->show();
@@ -164,6 +181,8 @@ void TripForm::updateTrip()
     }
     else
     {
+        if(m_tripController->getBooleanValue(eTrip))
+            ui->groupBoxTripReport->show();
         ui->groupBoxFish->hide();
         ui->groupBoxWeather->hide();
         ui->groupBoxOther->hide();
