@@ -25,6 +25,11 @@ void Lure::setColor(const QString& p_value)
     set("color", p_value);
 }
 
+void Lure::setLureType(const QString& p_value)
+{
+    set("lure_type", p_value);
+}
+
 void Lure::setFavorite(bool p_value)
 {
     set("favorite", p_value);
@@ -48,6 +53,11 @@ QString Lure::getSize()
 QString Lure::getColor()
 {
     return get("color").toString();
+}
+
+QString Lure::getLureType()
+{
+    return get("lure_type").toString();
 }
 
 bool Lure::getFavorite()

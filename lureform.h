@@ -2,7 +2,7 @@
 #define LUREFORM_H
 
 #include <QWidget>
-#include <QListWidgetItem>
+#include <QTableWidgetItem>
 #include <QComboBox>
 #include "singletons.h"
 
@@ -19,20 +19,22 @@ public:
     ~LureForm();
 
 private slots:
+    void on_lure_save_clicked();
+    void on_lure_undo_clicked();
+    void on_lure_type_textChanged(QString );
+    void on_lure_color_textChanged(QString );
+    void on_lure_size_textChanged(QString );
+    void on_lure_model_textChanged(QString );
+    void on_lure_manufacturer_textChanged(QString );
     void observerEvent(int type);
 
-    void on_lure_list_itemClicked(QListWidgetItem* item);
     void on_lure_list_itemSelectionChanged();
-    void on_lure_list_itemActivated(QListWidgetItem* item);
     void on_lure_favorite_clicked(bool checked);
-    void on_lure_color_textEdited(QString );
-    void on_lure_size_textEdited(QString );
-    void on_lure_model_textEdited(QString );
-    void on_lure_manufacturer_textEdited(QString );
     void on_lure_delete_clicked();
     void on_lure_new_clicked();
 
 private:
+    void setCombo(EUISource source, QComboBox* target);
     LureController* m_lureController;
     Ui::LureForm *ui;
 };

@@ -1,23 +1,38 @@
 #include "lurecontroller.h"
+#include "trollingexception.h"
 #include "singletons.h"
 
 LureController::LureController():
         m_lure(NULL)
-{
-    m_lure = Singletons::model()->getLure();
+{   
 }
 
 void LureController::buttonEvent(EUISource source)
 {
-    switch(source)
+    try
     {
-    case eLureNew:
-        Singletons::model()->commit(m_lure);
-        m_lure = Singletons::model()->getLure(); break;
-    case eLureDelete:
-        Singletons::model()->remove(m_lure);
-        m_lure = Singletons::model()->getLure(); break;
-    default: break;
+        switch(source)
+        {
+        case eLureUndo:
+            {
+                int id = m_lure->getId();
+                Singletons::model()->reset(m_lure);
+                m_lure = Singletons::model()->getLure(id);
+            } break;
+        case eLureNew:
+            m_lure = Singletons::model()->getLure();
+            break;
+        case eLureSave: Singletons::model()->commit(m_lure); break;
+        case eLureDelete:
+            Singletons::model()->remove(m_lure);
+            m_lure = NULL;
+            break;
+        default: break;
+        }
+    }
+    catch(TrollingException e)
+    {
+        showErrorMessage(e.toString());
     }
     sendNotificationToObservers(Controller::eLureUpdated);
     sendNotificationToObservers(Controller::eLureListUpdated);
@@ -31,7 +46,7 @@ void LureController::booleanEvent(EUISource source, bool value)
     case eLureFavorite: m_lure->setFavorite(value); break;
     default: break;
     }
-    sendNotificationToObservers(Controller::eLureUpdated);
+    sendNotificationToObservers(Controller::eLureInternalUpdate);
 }
 
 void LureController::textEvent(EUISource source, const QString& value)
@@ -40,25 +55,59 @@ void LureController::textEvent(EUISource source, const QString& value)
 
     switch(source)
     {
+    case eLureType: m_lure->setLureType(value); break;
     case eLureMaker: m_lure->setMaker(value);break;
     case eLureModel: m_lure->setModel(value); break;
     case eLureSize: m_lure->setSize(value); break;
     case eLureColor: m_lure->setColor(value); break;
     default: break;
     }
-    sendNotificationToObservers(Controller::eLureUpdated);
+    sendNotificationToObservers(Controller::eLureInternalUpdate);
+}
+
+void LureController::selectPlace(int value)
+{
+    if(m_lure && m_lure->isUnsaved())
+    {
+        int choice = showChoiseMessage(tr("Nykyinen viehe on tallentamatta. Haluatko tallentaa muutokset?"));
+        if(choice == MessageDisplay::eCancel)
+        {
+            sendNotificationToObservers(Controller::eLureListUpdated);
+            return;
+        }
+        else if(choice == MessageDisplay::eYes)
+        {
+            Singletons::model()->commit(m_lure);
+        }
+        else
+        {
+            Singletons::model()->reset(m_lure);
+        }
+        sendNotificationToObservers(Controller::eLureListUpdated);
+    }
+    m_lure = Singletons::model()->getLure(value);
 }
 
 void LureController::intEvent(EUISource source, int value)
 {
-    if(!m_lure) return;
-
     switch(source)
     {
-    case eLureList: m_lure = Singletons::model()->getLure(value); break;
+    case eLureList: selectPlace(value); break;
     default: break;
     }
     sendNotificationToObservers(Controller::eLureUpdated);
+}
+
+int LureController::getIntValue(EUISource source)
+{
+    if(!m_lure) return 0;
+
+    switch(source)
+    {
+    case eLureList: return m_lure->getId();
+    default: break;
+    }
+    return 0;
 }
 
 bool LureController::getBooleanValue(EUISource source)
@@ -66,6 +115,8 @@ bool LureController::getBooleanValue(EUISource source)
     if(!m_lure) return false;
     switch(source)
     {
+    case eLureList: return true; break;
+    case eUnsavedChanges: return m_lure->isUnsaved(); break;
     case eLureFavorite: return m_lure->getFavorite(); break;
     default: break;
     }
@@ -82,6 +133,7 @@ QString LureController::getTextValue(EUISource source)
     case eLureModel: return m_lure->getModel(); break;
     case eLureSize: return m_lure->getSize(); break;
     case eLureColor: return m_lure->getColor(); break;
+    case eLureType: return m_lure->getLureType(); break;
     default: break;
     }
     return QString();
@@ -101,5 +153,69 @@ QList<QPair<QString, int> > LureController::getLureList()
 
         retval.push_back(pair);
     }
+    return retval;
+}
+
+QList<QList<QString> > LureController::getLureListLong()
+{
+    QList<QList<QString> > retval;
+    QMap<int, Lure*> lurelist = Singletons::model()->getLures();
+
+    for(QMap<int, Lure*>::iterator iter = lurelist.begin(); iter != lurelist.end(); iter++)
+    {
+        Lure* lure = iter.value();
+        QList<QString> lurehash;
+        lurehash.push_back(lure->getMaker());
+        lurehash.push_back(lure->getModel());
+        lurehash.push_back(lure->getSize());
+        lurehash.push_back(lure->getColor());
+        lurehash.push_back(lure->getLureType());
+        if(lure->getFavorite())
+            lurehash.push_back(tr("suosikki"));
+        else
+            lurehash.push_back(tr(""));
+
+        lurehash.push_back(QString::number(lure->getId()));
+        retval.push_back(lurehash);
+    }
+    return retval;
+}
+
+QStringList LureController::getLureColumns()
+{
+    QStringList retval;
+    retval << tr("Valmistaja") <<
+           tr("Malli") <<
+           tr("Koko") <<
+           tr("Väri") <<
+           tr("Tyyppi");
+    return retval;
+}
+
+QStringList LureController::getAlternatives(EUISource source)
+{
+    QStringList retval;
+
+    QMap<int, Lure*> lures = Singletons::model()->getLures();
+    foreach(Lure* lure, lures)
+    {
+        QString value;
+        switch(source)
+        {
+            case eLureMaker: value = lure->getMaker(); break;
+            case eLureModel: value = lure->getModel(); break;
+            case eLureColor: value = lure->getColor(); break;
+            case eLureSize: value = lure->getSize(); break;
+            case eLureType: value = lure->getLureType(); break;
+            default: break;
+        }
+
+        if(!retval.contains(value))
+        {
+            retval.push_back(value);
+        }
+    }
+
+    retval.sort();
     return retval;
 }

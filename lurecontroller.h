@@ -15,10 +15,15 @@ public:
 
     virtual bool getBooleanValue(EUISource source);
     virtual QString getTextValue(EUISource source);
+    virtual int getIntValue(EUISource);
 
     QList<QPair<QString, int> > getLureList();
+    QList<QList<QString> > getLureListLong();
+    QStringList getLureColumns();
+    QStringList getAlternatives(EUISource source);
 
 private:
+    void selectPlace(int value);
     Lure* m_lure;
 };
 
