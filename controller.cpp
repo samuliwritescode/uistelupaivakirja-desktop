@@ -99,11 +99,11 @@ bool Controller::showConfirmationMessage(const QString& message)
     return false;
 }
 
-int Controller::showChoiseMessage(const QString& message)
+MessageDisplay::EChoices Controller::showChoiseMessage(const QString& message)
 {
     if(display())
     {
         return display()->showChoiceMessage(message);
     }
-    return 0;
+    return MessageDisplay::eCancel;
 }

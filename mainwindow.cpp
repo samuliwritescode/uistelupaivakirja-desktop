@@ -34,7 +34,7 @@ bool MainWindow::showConfirmationMessage(const QString& question)
     return false;
 }
 
-int MainWindow::showChoiceMessage(const QString& message)
+MessageDisplay::EChoices MainWindow::showChoiceMessage(const QString& message)
 {
     QMessageBox box;
     box.setIcon(QMessageBox::Question);
@@ -43,10 +43,10 @@ int MainWindow::showChoiceMessage(const QString& message)
     box.setDefaultButton(QMessageBox::Cancel);
     int res = box.exec();
     if(res == QMessageBox::Yes)
-        return 2;
+        return MessageDisplay::eYes;
     else if(res == QMessageBox::No)
-        return 1;
+        return MessageDisplay::eNo;
     else
-        return 0;
+        return MessageDisplay::eCancel;
 }
 

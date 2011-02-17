@@ -93,7 +93,7 @@ public:
     void setMessageDisplay(MessageDisplay*);
     void showErrorMessage(const QString&);
     bool showConfirmationMessage(const QString&);
-    int showChoiseMessage(const QString&);
+    MessageDisplay::EChoices showChoiseMessage(const QString&);
 
     enum ENotificationType {
         eTripUpdated,

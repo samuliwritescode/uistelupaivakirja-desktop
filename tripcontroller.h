@@ -41,6 +41,7 @@ public:
 protected:
 
 private:
+    void selectTrip(int);
     Trip* m_trip;
 
 };

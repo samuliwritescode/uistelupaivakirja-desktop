@@ -6,6 +6,9 @@ class TrollingException
 {
 public:
     TrollingException(const QString&);
+    QString toString();
+private:
+    QString m_message;
 };
 
 #endif // TROLLINGEXCEPTION_H
