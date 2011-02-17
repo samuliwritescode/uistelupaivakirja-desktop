@@ -4,7 +4,7 @@
 
 TrollingObject::TrollingObject():
         m_id(-1),
-        m_unsavedChanges(false)
+        m_unsavedChanges(true)
 {
 }
 

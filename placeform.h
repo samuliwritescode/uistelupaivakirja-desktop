@@ -2,7 +2,7 @@
 #define PLACEFORM_H
 
 #include <QWidget>
-#include <QListWidgetItem>
+#include <QTableWidgetItem>
 #include "singletons.h"
 
 namespace Ui {
@@ -18,11 +18,11 @@ public:
     ~PlaceForm();
 
 private slots:
+    void on_place_save_clicked();
+    void on_place_undo_clicked();
     void observerEvent(int type);
 
-    void on_place_list_itemClicked(QListWidgetItem* item);
     void on_place_list_itemSelectionChanged();
-    void on_place_list_itemActivated(QListWidgetItem* item);
     void on_place_delete_clicked();
     void on_place_new_clicked();
     void on_place_misc_textChanged();

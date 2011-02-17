@@ -166,9 +166,7 @@ void TripController::selectTrip(int value)
         }
         else
         {
-            int id = m_trip->getId();
             Singletons::model()->reset(m_trip);
-            m_trip = Singletons::model()->getTrip(id);
         }
 
     }

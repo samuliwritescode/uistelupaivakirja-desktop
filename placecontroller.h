@@ -15,10 +15,14 @@ public:
 
     virtual bool getBooleanValue(EUISource source);
     virtual QString getTextValue(EUISource source);
+    virtual int getIntValue(EUISource);
 
-    QList<QPair<QString, int> > getPlaceList();
+    QList<QPair<QString, int> > getPlaceListShort();
+    QList<QList<QString> > getPlaceListFull();
+    QStringList getPlaceColumns();
 
 private:
+    void selectPlace(int value);
     Place* m_place;
 };
 

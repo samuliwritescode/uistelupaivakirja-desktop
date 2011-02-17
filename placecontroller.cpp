@@ -1,5 +1,6 @@
 #include "placecontroller.h"
 #include "singletons.h"
+#include "trollingexception.h"
 
 PlaceController::PlaceController():
         m_place(NULL)
@@ -8,33 +9,52 @@ PlaceController::PlaceController():
 
 void PlaceController::buttonEvent(EUISource source)
 {
-    switch(source)
+    try
     {
-    case ePlaceNew:
-        //Singletons::model()->commit(m_place);
-        m_place = Singletons::model()->getPlace();
-        break;
-    case ePlaceDelete:
-        Singletons::model()->remove(m_place);
-        break;
-    default: qCritical() << "Dont know how to handle button event" << source; break;
+        switch(source)
+        {
+        case ePlaceUndo:
+            {
+                int id = m_place->getId();
+                Singletons::model()->reset(m_place);
+                m_place = Singletons::model()->getPlace(id);
+            }
+            break;
+        case ePlaceSave: Singletons::model()->commit(m_place); break;
+        case ePlaceNew:
+            m_place = Singletons::model()->getPlace();
+            break;
+        case ePlaceDelete:
+            Singletons::model()->remove(m_place);
+            m_place = NULL;
+            break;
+        default: qCritical() << "Dont know how to handle button event" << source; break;
+        }
+    }
+    catch(TrollingException e)
+    {
+        showErrorMessage(e.toString());
     }
 
     sendNotificationToObservers(Controller::ePlaceListUpdated);
+    sendNotificationToObservers(Controller::ePlaceUpdated);
 }
 
 void PlaceController::booleanEvent(EUISource source, bool value)
 {
+    if(!m_place) return;
+
     switch(source)
     {
     case ePlaceInvisible: m_place->setInvisible(value); break;
     default: qCritical() << "Dont know how to handle boolean event" << source; break;
     }
-    sendNotificationToObservers(Controller::ePlaceUpdated);
+    sendNotificationToObservers(ePlaceInternalUpdate);
 }
 
 void PlaceController::textEvent(EUISource source, const QString& value)
 {
+    if(!m_place) return;
 
     switch(source)
     {
@@ -43,14 +63,37 @@ void PlaceController::textEvent(EUISource source, const QString& value)
     case ePlaceMiscText: m_place->setMiscText(value); break;
     default: qCritical() << "Dont know how to handle text event" << source; break;
     }
-    sendNotificationToObservers(Controller::ePlaceListUpdated);
+    sendNotificationToObservers(ePlaceInternalUpdate);
+}
+
+void PlaceController::selectPlace(int value)
+{
+    if(m_place && m_place->isUnsaved())
+    {
+        int choice = showChoiseMessage(tr("Nykyinen kalapaikka on tallentamatta. Haluatko tallentaa muutokset?"));
+        if(choice == MessageDisplay::eCancel)
+        {
+            sendNotificationToObservers(Controller::ePlaceListUpdated);
+            return;
+        }
+        else if(choice == MessageDisplay::eYes)
+        {
+            Singletons::model()->commit(m_place);
+        }
+        else
+        {
+            Singletons::model()->reset(m_place);
+        }
+        sendNotificationToObservers(Controller::ePlaceListUpdated);
+    }
+    m_place = Singletons::model()->getPlace(value);
 }
 
 void PlaceController::intEvent(EUISource source, int value)
 {
     switch(source)
     {
-    case ePlaceList: m_place = Singletons::model()->getPlace(value); break;
+    case ePlaceList: selectPlace(value); break;
     default: qCritical() << "Dont know how to handle int event" << source; break;
     }
     sendNotificationToObservers(Controller::ePlaceUpdated);
@@ -58,9 +101,13 @@ void PlaceController::intEvent(EUISource source, int value)
 
 bool PlaceController::getBooleanValue(EUISource source)
 {
+    if(!m_place) return false;
+
     switch(source)
     {
+    case ePlaceList: return true; break;
     case ePlaceInvisible: return m_place->getInvisible(); break;
+    case eUnsavedChanges: return m_place->isUnsaved(); break;
     default: break;
     }
     return false;
@@ -68,6 +115,7 @@ bool PlaceController::getBooleanValue(EUISource source)
 
 QString PlaceController::getTextValue(EUISource source)
 {
+    if(!m_place) return QString();
     switch(source)
     {
     case ePlaceName: return m_place->getName(); break;
@@ -78,7 +126,19 @@ QString PlaceController::getTextValue(EUISource source)
     return QString();
 }
 
-QList<QPair<QString, int> > PlaceController::getPlaceList()
+int PlaceController::getIntValue(EUISource source)
+{
+    if(!m_place) return 0;
+
+    switch(source)
+    {
+    case ePlaceList: return m_place->getId();
+    default: break;
+    }
+    return 0;
+}
+
+QList<QPair<QString, int> > PlaceController::getPlaceListShort()
 {
     QList<QPair<QString, int> > retval;
     QMap<int, Place*> placelist = Singletons::model()->getPlaces();
@@ -86,6 +146,7 @@ QList<QPair<QString, int> > PlaceController::getPlaceList()
     for(QMap<int, Place*>::iterator iter = placelist.begin(); iter != placelist.end(); iter++)
     {
         Place* place = iter.value();
+
         QPair<QString, int> pair;
         pair.first = place->getName()+" "+place->getCity();
         pair.second = place->getId();
@@ -93,3 +154,35 @@ QList<QPair<QString, int> > PlaceController::getPlaceList()
     }
     return retval;
 }
+
+QList<QList<QString> > PlaceController::getPlaceListFull()
+{
+    QList<QList<QString> > retval;
+    QMap<int, Place*> placelist = Singletons::model()->getPlaces();
+
+    for(QMap<int, Place*>::iterator iter = placelist.begin(); iter != placelist.end(); iter++)
+    {
+        Place* place = iter.value();
+        QList<QString> placehash;
+        placehash.push_back(place->getName());
+        placehash.push_back(place->getCity());
+        if(place->getInvisible())
+            placehash.push_back(tr("ei näy"));
+        else
+            placehash.push_back(tr("näkyy"));
+
+        placehash.push_back(QString::number(place->getId()));
+        retval.push_back(placehash);
+    }
+    return retval;
+}
+
+QStringList PlaceController::getPlaceColumns()
+{
+    QStringList retval;
+    retval << tr("Nimi") <<
+           tr("Paikkakunta") <<
+           tr("Ei näy listassa");
+    return retval;
+}
+
