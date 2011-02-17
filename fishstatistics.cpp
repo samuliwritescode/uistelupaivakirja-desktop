@@ -123,6 +123,8 @@ QHash<QString, QString> FishStatistics::stats()
 
                 if(trip->getPlace())
                     statline[COL_PLACE] = trip->getPlace()->getName();
+                else
+                    statline[COL_PLACE] = tr("n/a");
 
                 statline[COL_DATE] = trip->getDate().toString();
                 statline[COL_YEAR] = QString::number(trip->getDate().year());
