@@ -188,7 +188,8 @@ QStringList LureController::getLureColumns()
            tr("Malli") <<
            tr("Koko") <<
            tr("Väri") <<
-           tr("Tyyppi");
+           tr("Tyyppi") <<
+           tr("Suosikki");
     return retval;
 }
 
