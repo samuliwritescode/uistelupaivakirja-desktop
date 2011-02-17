@@ -2,8 +2,19 @@
 #include "controller.h"
 
 Controller::Controller(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    m_display(NULL)
 {
+}
+
+void Controller::setMessageDisplay(MessageDisplay* p_display)
+{
+    m_display = p_display;
+}
+
+MessageDisplay* Controller::display()
+{
+    return m_display;
 }
 
 void Controller::buttonEvent(EUISource)
@@ -69,4 +80,30 @@ QString Controller::getTextValue(EUISource)
 void Controller::sendNotificationToObservers(ENotificationType type)
 {
     emit observerNotification(static_cast<int>(type));
+}
+
+void Controller::showErrorMessage(const QString& error)
+{
+    if(display())
+    {
+        display()->showErrorMessage(error);
+    }
+}
+
+bool Controller::showConfirmationMessage(const QString& message)
+{
+    if(display())
+    {
+        return display()->showConfirmationMessage(message);
+    }
+    return false;
+}
+
+int Controller::showChoiseMessage(const QString& message)
+{
+    if(display())
+    {
+        return display()->showChoiceMessage(message);
+    }
+    return 0;
 }

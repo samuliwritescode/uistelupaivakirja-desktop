@@ -7,12 +7,13 @@
 #include "lureform.h"
 #include "placeform.h"
 #include "statisticsform.h"
+#include "messagedisplay.h"
 
 namespace Ui {
     class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public MessageDisplay
 {
     Q_OBJECT
 
@@ -20,7 +21,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    static void showErrorNotification(const QString&);
+    virtual void showErrorMessage(const QString&);
+    virtual bool showConfirmationMessage(const QString&);
+    virtual int showChoiceMessage(const QString&);
 
 private:    
     Ui::MainWindow *ui;

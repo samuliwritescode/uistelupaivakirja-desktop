@@ -146,6 +146,6 @@ void MediaList::openFile( QListWidgetItem * item )
     QString filename = item->data(Qt::UserRole+1).toString();
     if(!QDesktopServices::openUrl(QUrl("file://"+filename)))
     {
-        MainWindow::showErrorNotification(tr("Tiedosto ei auennut ulkoisessa ohjelmassa"));
+        Singletons::tripController()->showErrorMessage(tr("Tiedosto ei auennut ulkoisessa ohjelmassa"));
     }
 }

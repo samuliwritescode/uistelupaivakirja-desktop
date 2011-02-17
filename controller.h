@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDate>
+#include "messagedisplay.h"
 
 enum EUISource {eTripDate,
                 eStartTime,
@@ -89,6 +90,11 @@ public:
     virtual int getIntValue(EUISource);
     virtual QString getTextValue(EUISource);
 
+    void setMessageDisplay(MessageDisplay*);
+    void showErrorMessage(const QString&);
+    bool showConfirmationMessage(const QString&);
+    int showChoiseMessage(const QString&);
+
     enum ENotificationType {
         eTripUpdated,
         eTripListUpdated,
@@ -108,11 +114,14 @@ signals:
 
 public slots:
 
-protected:
+protected:    
     virtual void sendNotificationToObservers(ENotificationType type);
     //This is an abstract class
      explicit Controller(QObject *parent = 0);
 
+private:
+     MessageDisplay* display();
+     MessageDisplay* m_display;
 };
 
 #endif // CONTROLLER_H
