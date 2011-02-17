@@ -1224,13 +1224,6 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="3">
-           <widget class="QLabel" name="label_30">
-            <property name="text">
-             <string>Lämpö</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="4">
            <layout class="QVBoxLayout" name="verticalLayout_10">
             <item>
@@ -1274,26 +1267,6 @@
           <item row="1" column="4">
            <layout class="QHBoxLayout" name="horizontalLayout_19">
             <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>1</width>
-                <height>1</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_28">
-              <property name="text">
-               <string>Ilma</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QLineEdit" name="air_temp">
               <property name="maximumSize">
                <size>
@@ -1314,7 +1287,7 @@
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_13">
+             <spacer name="horizontalSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -1326,13 +1299,17 @@
               </property>
              </spacer>
             </item>
-            <item>
-             <widget class="QLabel" name="label_29">
-              <property name="text">
-               <string>Vesi</string>
-              </property>
-             </widget>
-            </item>
+           </layout>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="label_29">
+            <property name="text">
+             <string>Vesi</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <layout class="QHBoxLayout" name="horizontalLayout_25">
             <item>
              <widget class="QLineEdit" name="water_temp">
               <property name="maximumSize">
@@ -1353,7 +1330,27 @@
               </property>
              </widget>
             </item>
+            <item>
+             <spacer name="horizontalSpacer_13">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>1</width>
+                <height>1</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
            </layout>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="label_28">
+            <property name="text">
+             <string>Ilma</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
