@@ -71,7 +71,7 @@ void TripForm::observerEvent(int type)
     case Controller::eFishListUpdated:
     case Controller::eFishPropertyUpdated: updateFishList(); break;
     case Controller::eWayPointsUpdated: updateWaypoints(); break;
-    default: qDebug() << "TripForm do not understand event" << type; break;
+    default: break;
     }
 
     ui->trip_save->setDisabled(!m_tripController->getBooleanValue(eUnsavedChanges));
@@ -115,13 +115,19 @@ void TripForm::updateTrip()
     int type = m_tripController->getIntValue(eFishType);
     ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
 
+    ui->startDial->blockSignals(true);
+    ui->endDial->blockSignals(true);
     ui->startDial->setValue((m_tripController->getIntValue(eStartTime)+12)%24);
     ui->timeStartLbl->setText(tr("aloitus klo ")+QString::number(m_tripController->getIntValue(eStartTime)));
 
     ui->endDial->setValue((m_tripController->getIntValue(eEndTime)+12)%24);
     ui->timeEndLbl->setText(tr("lopetus klo ")+QString::number(m_tripController->getIntValue(eEndTime)));
+    ui->startDial->blockSignals(false);
+    ui->endDial->blockSignals(false);
 
     int selectedPlace = m_tripController->getIntValue(ePlaceName);
+    ui->place->blockSignals(true);
+    ui->place->setCurrentIndex(-1);
     for(int loop=0; loop <  ui->place->count(); loop++)
     {
         if( ui->place->itemData(loop).toInt() == selectedPlace)
@@ -129,6 +135,7 @@ void TripForm::updateTrip()
              ui->place->setCurrentIndex(loop);
         }
     }
+    ui->place->blockSignals(false);
 
     if(type == Fish::eFish)
     {

@@ -147,6 +147,9 @@ int TrollingModel::commit(TrollingObject* object)
     if(object == NULL)
        return -2;
 
+    if(object->valid() != QString())
+        throw TrollingException(object->valid());
+
     m_DBLayer->storeObject(object);
     return object->getId();
 }

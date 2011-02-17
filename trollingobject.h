@@ -16,6 +16,7 @@ public:
     int getId();
     QString getType();
     bool isUnsaved();
+    virtual QString valid();
     virtual ~TrollingObject();
 
 protected:

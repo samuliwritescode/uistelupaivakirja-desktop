@@ -3,8 +3,7 @@
 
 PlaceController::PlaceController():
         m_place(NULL)
-{
-    m_place = Singletons::model()->getPlace();
+{    
 }
 
 void PlaceController::buttonEvent(EUISource source)
@@ -12,12 +11,11 @@ void PlaceController::buttonEvent(EUISource source)
     switch(source)
     {
     case ePlaceNew:
-        Singletons::model()->commit(m_place);
+        //Singletons::model()->commit(m_place);
         m_place = Singletons::model()->getPlace();
         break;
     case ePlaceDelete:
         Singletons::model()->remove(m_place);
-        m_place = Singletons::model()->getPlace();
         break;
     default: qCritical() << "Dont know how to handle button event" << source; break;
     }
@@ -45,6 +43,7 @@ void PlaceController::textEvent(EUISource source, const QString& value)
     case ePlaceMiscText: m_place->setMiscText(value); break;
     default: qCritical() << "Dont know how to handle text event" << source; break;
     }
+    sendNotificationToObservers(Controller::ePlaceListUpdated);
 }
 
 void PlaceController::intEvent(EUISource source, int value)

@@ -108,3 +108,8 @@ QString TrollingObject::importFile(const QString& p_filename)
 {
     return Singletons::model()->importFile(this, p_filename);
 }
+
+QString TrollingObject::valid()
+{
+    return QString();
+}

@@ -217,3 +217,40 @@ Place* Trip::getPlace()
     return place;
 }
 
+QString Trip::valid()
+{
+    if(getPlace() == NULL)
+    {
+        return tr("Reissulla ei ole kalapaikkaa");
+    }
+    else if(getTime().first.isNull())
+    {
+        return tr("Reissun aloitusaika puuttuu");
+    }
+    else if(getTime().second.isNull())
+    {
+        return tr("Reissun lopetusaika puuttuu");
+    }
+    foreach(Fish* fish, m_catch)
+    {
+        if(fish->getType() == Fish::eFish ||
+           fish->getType() == Fish::eFishAndWeather)
+        {
+            if(fish->getSpecies().isEmpty())
+            {
+                return tr("Laji puuttuu kalalta");
+            }
+
+            if(fish->isGroup() && fish->getGroupAmount() <= 0)
+            {
+                return tr("Määrittelit kalan ryhmäksi, mutta kappalemäärä ei ole positiivinen luku");
+            }
+        }
+        if(!fish->getTime().isValid())
+        {
+            return tr("Aika puuttuu kala/säätapahtumalta");
+        }
+    }
+
+    return TrollingObject::valid();
+}

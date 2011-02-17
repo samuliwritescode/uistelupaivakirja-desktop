@@ -32,6 +32,7 @@ public:
     Fish* newFish(Fish::EType type);
     void deleteFish(int);
     int getSelectedFish();
+    virtual QString valid();
 
 protected:
     int indexOfFish(Fish*);
