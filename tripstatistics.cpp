@@ -84,6 +84,10 @@ QHash<QString, QString> TripStatistics::stats()
                     bSkip=true;
                 }
             }
+            else
+            {
+                bSkip=true; //No match
+            }
         }
         if(bSkip)
             continue;

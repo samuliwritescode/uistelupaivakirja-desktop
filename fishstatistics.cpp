@@ -192,6 +192,10 @@ QHash<QString, QString> FishStatistics::stats()
                             bSkip=true;
                         }
                     }
+                    else
+                    {
+                        bSkip=true; //No match
+                    }
                 }
                 if(bSkip)
                     continue;
