@@ -61,7 +61,9 @@ QHash<QString, QString> TripStatistics::stats()
 
         QHash<QString, QString> statline;
         statline[COL_FISHCOUNT] = QString::number(fishCount);
-        statline[COL_PLACE] = trip->getPlace()->getName();
+        if(trip->getPlace())
+            statline[COL_PLACE] = trip->getPlace()->getName();
+
         statline[COL_DATE] = trip->getDate().toString();
         statline[COL_YEAR] = QString::number(trip->getDate().year());
         statline[COL_MONTH] = trip->getDate().toString("MM");
