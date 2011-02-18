@@ -150,6 +150,13 @@ QString HTMLReport::parseFish(Fish* p_fish)
     retval += trtdSection(tr("Laji"),
                           p_fish->getSpecies());
 
+    if(p_fish->isGroup())
+    {
+        retval += trtdSection(tr("Ryhmä"),
+                              norm(QString::number(p_fish->getGroupAmount()),
+                                   tr("kpl")));
+    }
+
     retval += trtdSection(tr("Viehe"),
                               parseLure(p_fish->getLure()));
 
@@ -161,7 +168,7 @@ QString HTMLReport::parseFish(Fish* p_fish)
 
     if(p_fish->isGroup())
     {
-        retval += trtdSection(tr("Paino"),
+        retval += trtdSection(tr("Keskipaino"),
                               norm(
                               QString::number(p_fish->getWeight().toDouble()/p_fish->getGroupAmount()),
                               tr("g")));
@@ -211,16 +218,7 @@ QString HTMLReport::parseFish(Fish* p_fish)
         retval += trtdSection(tr("Mediatiedostot"),
                               media);
     }
-    retval += tdSection("<hr>");
-
-    if(p_fish->isGroup())
-    {
-        QString duplicateThis = retval;
-        for(int loop=0; loop < p_fish->getGroupAmount()-1; loop++)
-        {
-            retval += duplicateThis;
-        }
-    }
+    retval += trtdSection("<hr><br>","<hr><br>");
 
     return retval;
 }
@@ -279,6 +277,7 @@ QString HTMLReport::parseWeather(Fish* p_fish)
                               media);
     }
 
+    retval += trtdSection("<hr><br>","<hr><br>");
 
     return retval;
 }
