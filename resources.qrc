@@ -15,5 +15,6 @@
         <file>res/edit-undo.png</file>
         <file>res/image-x-generic.png</file>
         <file>res/video-x-generic.png</file>
+        <file>res/style.css</file>
     </qresource>
 </RCC>

@@ -6,6 +6,7 @@
 #include <QDate>
 #include "controller.h"
 #include "trip.h"
+#include "htmlreport.h"
 
 
 
@@ -37,13 +38,14 @@ public:
     QList<QPair<QString, int> > getWayPointsList();
     QList<QString> getUserFields();
     QStringList getMediaFiles();
+    QString getTripReport();
 
 protected:
 
 private:
     void selectTrip(int);
     Trip* m_trip;
-
+    HTMLReport m_report;
 };
 
 #endif // TRIPCONTROLLER_H

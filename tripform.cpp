@@ -182,7 +182,10 @@ void TripForm::updateTrip()
     else
     {
         if(m_tripController->getBooleanValue(eTrip))
+        {
             ui->groupBoxTripReport->show();
+            ui->webView->setHtml(m_tripController->getTripReport());
+        }
         ui->groupBoxFish->hide();
         ui->groupBoxWeather->hide();
         ui->groupBoxOther->hide();

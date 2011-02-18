@@ -529,3 +529,8 @@ QStringList TripController::getMediaFiles()
 
     return retval;
 }
+
+QString TripController::getTripReport()
+{
+    return m_report.getReport(m_trip);
+}

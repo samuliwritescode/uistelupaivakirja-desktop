@@ -107,7 +107,7 @@ public:
     int getRainCondition();
     EWindDirection getWindDirection();
     EPressureChange getPressureChange();
-    QTime getTime();
+    QTime getTime() const;
     bool isGroup();
     bool isUnderSize();
     bool isCR();

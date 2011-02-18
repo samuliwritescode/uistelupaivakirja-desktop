@@ -1,0 +1,32 @@
+body 
+{
+	background-color: #CCCCCC; 
+	font-size: small;
+}
+
+table 
+{
+	font-size: small; 
+	width: 100%; 
+}
+
+td
+{
+	background-color: #EEEEEE;
+	vertical-align: top;
+}
+
+div#trip_place 
+{ 
+	font-size: x-large; 
+}
+
+div#trip_time 
+{ 
+	font-size: normal; 
+}
+
+div#trip_heading 
+{ 
+	font-size: large; 
+}

@@ -465,7 +465,7 @@ QString Fish::getCoordinatesLon()
     return m_properties[FISH_COORDINATES_LON].toString();
 }
 
-QTime Fish::getTime()
+QTime Fish::getTime() const
 {
    return m_properties[FISH_TIME].toTime();
 }

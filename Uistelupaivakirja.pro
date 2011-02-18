@@ -43,7 +43,8 @@ SOURCES += main.cpp\
     glstatwidget.cpp \
     trollingstatisticstable.cpp \
     medialist.cpp \
-    messagedisplay.cpp
+    messagedisplay.cpp \
+    htmlreport.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -77,7 +78,8 @@ HEADERS  += mainwindow.h \
     glstatwidget.h \
     trollingstatisticstable.h \
     medialist.h \
-    messagedisplay.h
+    messagedisplay.h \
+    htmlreport.h
 
 FORMS    += mainwindow.ui \
     tripform.ui \
