@@ -1,4 +1,5 @@
 #include <QFile>
+#include <QDebug>
 #include "htmlreport.h"
 #include "trip.h"
 #include "place.h"
@@ -136,7 +137,9 @@ QString HTMLReport::parseLure(Lure* p_lure)
 QString HTMLReport::parseFish(Fish* p_fish)
 {
     QString retval;
-    retval += trtdSection(p_fish->getTime().toString(),
+    retval += trtdSection(divSection("fish_time",
+                            p_fish->getTime().toString()
+                            ),
                           "");
 
     retval += trtdSection(tr("Koordinaatit"),
@@ -208,22 +211,26 @@ QString HTMLReport::parseFish(Fish* p_fish)
         retval += trtdSection(tr("Mediatiedostot"),
                               media);
     }
+    retval += tdSection("<hr>");
 
     if(p_fish->isGroup())
     {
+        QString duplicateThis = retval;
         for(int loop=0; loop < p_fish->getGroupAmount()-1; loop++)
         {
-            retval += retval;
+            retval += duplicateThis;
         }
     }
-    retval += tdSection("<hr>");
+
     return retval;
 }
 
 QString HTMLReport::parseWeather(Fish* p_fish)
 {
     QString retval;
-    retval += trtdSection(p_fish->getTime().toString(),
+    retval += trtdSection(divSection("fish_time",
+                            p_fish->getTime().toString()
+                          ),
                           "");
 
     retval += trtdSection(tr("Koordinaatit"),
@@ -323,12 +330,16 @@ QString HTMLReport::googleMapsCoords(const QString& p_lat, const QString& p_lon)
         return "-";
 
     QString retval;
-    retval += "<iframe width=\"250\" height=\"200\" frameborder=\"0\" scrolling=no marginheight=\"0\" marginwidth=\"0\"";
-    retval += "src=\"http://maps.google.fi/?ie=UTF8&amp;";
+    retval += "<a href=\"http://maps.google.fi/?ie=UTF8&amp;";
     retval += "ll="+p_lat+","+p_lon;
     retval += "&amp;q="+p_lat+","+p_lon;
-    retval += "&amp;spn=0.055964,0.145912&amp;output=embed\">";
-    retval += "</iframe><br/><small>";
+    retval += "&amp;spn=0.055964,0.145912&amp\">";
+    retval += tr("Lat: ");
+    retval += p_lat;
+    retval += " ";
+    retval += tr("Lon: ");
+    retval += p_lon;
+    retval += "</a>";
 
     return retval;
 }

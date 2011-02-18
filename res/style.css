@@ -24,9 +24,16 @@ div#trip_place
 div#trip_time 
 { 
 	font-size: normal; 
+	font-weight: normal;
 }
 
 div#trip_heading 
 { 
 	font-size: large; 
+}
+
+div#fish_time 
+{ 
+	font-size: normal; 
+	font-weight: bold;
 }
