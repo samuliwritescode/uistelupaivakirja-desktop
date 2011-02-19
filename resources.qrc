@@ -16,5 +16,6 @@
         <file>res/image-x-generic.png</file>
         <file>res/video-x-generic.png</file>
         <file>res/style.css</file>
+        <file>res/preferences-system-3.png</file>
     </qresource>
 </RCC>

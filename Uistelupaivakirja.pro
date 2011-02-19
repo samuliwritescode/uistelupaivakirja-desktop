@@ -44,7 +44,8 @@ SOURCES += main.cpp\
     trollingstatisticstable.cpp \
     medialist.cpp \
     messagedisplay.cpp \
-    htmlreport.cpp
+    htmlreport.cpp \
+    settingsform.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -79,13 +80,15 @@ HEADERS  += mainwindow.h \
     trollingstatisticstable.h \
     medialist.h \
     messagedisplay.h \
-    htmlreport.h
+    htmlreport.h \
+    settingsform.h
 
 FORMS    += mainwindow.ui \
     tripform.ui \
     lureform.ui \
     placeform.ui \
-    statisticsform.ui
+    statisticsform.ui \
+    settingsform.ui
 
 RESOURCES += \
     resources.qrc

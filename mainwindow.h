@@ -6,6 +6,7 @@
 #include "tripform.h"
 #include "lureform.h"
 #include "placeform.h"
+#include "settingsform.h"
 #include "statisticsform.h"
 #include "messagedisplay.h"
 

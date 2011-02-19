@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tripsTab->layout()->addWidget(new TripForm());
     ui->luresTab->layout()->addWidget(new LureForm());
     ui->placesTab->layout()->addWidget(new PlaceForm());
+    ui->settingsTab->layout()->addWidget(new SettingsForm());
 }
 
 MainWindow::~MainWindow()

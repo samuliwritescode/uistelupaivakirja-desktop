@@ -119,6 +119,16 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout"/>
       </widget>
+      <widget class="QWidget" name="settingsTab">
+       <attribute name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/res/preferences-system-3.png</normaloff>:/res/preferences-system-3.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Asetukset</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+      </widget>
      </widget>
     </item>
    </layout>
