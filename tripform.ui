@@ -1508,6 +1508,12 @@
         <string>Reissuraportti</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_15">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QWebView" name="webView"/>
         </item>
