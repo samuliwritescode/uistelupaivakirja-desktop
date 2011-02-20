@@ -333,7 +333,7 @@ void TripForm::updateFishList()
         ui->fish_list->selectRow(selectedFish);
 
     ui->fish_list->setSortingEnabled(true);
-    ui->fish_list->blockSignals(false);
+    ui->fish_list->blockSignals(false);    
 }
 
 void TripForm::updateWaypoints()
