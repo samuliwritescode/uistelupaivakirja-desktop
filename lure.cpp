@@ -35,6 +35,16 @@ void Lure::setFavorite(bool p_value)
     set("favorite", p_value);
 }
 
+void Lure::setNotVisible(bool p_value)
+{
+    set("notvisible", p_value);
+}
+
+void Lure::setNickName(const QString& p_value)
+{
+    set("nickname", p_value);
+}
+
 QString Lure::getMaker()
 {
     return get("maker").toString();
@@ -63,4 +73,14 @@ QString Lure::getLureType()
 bool Lure::getFavorite()
 {
     return get("favorite").toBool();
+}
+
+bool Lure::getNotVisible()
+{
+    return get("notvisible").toBool();
+}
+
+QString Lure::getNickName()
+{
+    return get("nickname").toString();
 }

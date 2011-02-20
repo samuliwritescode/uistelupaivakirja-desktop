@@ -34,6 +34,8 @@ void LureForm::observerEvent(int type)
     ui->lure_type->setDisabled(!m_lureController->getBooleanValue(eLureList));
     ui->lure_color->setDisabled(!m_lureController->getBooleanValue(eLureList));
     ui->lure_favorite->setDisabled(!m_lureController->getBooleanValue(eLureList));
+    ui->lure_notvisible->setDisabled(!m_lureController->getBooleanValue(eLureList));
+    ui->lure_nickname->setDisabled(!m_lureController->getBooleanValue(eLureList));
 
     if(type == Controller::eLureListUpdated)
     {
@@ -74,6 +76,10 @@ void LureForm::observerEvent(int type)
         setCombo(eLureColor, ui->lure_color);
         setCombo(eLureType, ui->lure_type);
         ui->lure_favorite->setChecked(m_lureController->getBooleanValue(eLureFavorite));
+        ui->lure_notvisible->setChecked(m_lureController->getBooleanValue(eLureNotVisible));
+        ui->lure_nickname->blockSignals(true);
+        ui->lure_nickname->setText(m_lureController->getTextValue(eLureNickName));
+        ui->lure_nickname->blockSignals(false);
     }
 }
 
@@ -148,4 +154,19 @@ void LureForm::on_lure_undo_clicked()
 void LureForm::on_lure_save_clicked()
 {
     m_lureController->buttonEvent(eLureSave);
+}
+
+void LureForm::on_lure_notvisible_clicked(bool checked)
+{
+    m_lureController->booleanEvent(eLureNotVisible, checked);
+}
+
+void LureForm::on_lure_nickname_textEdited(QString text)
+{
+
+}
+
+void LureForm::on_lure_nickname_textChanged(QString text)
+{
+   m_lureController->textEvent(eLureNickName, text);
 }

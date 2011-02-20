@@ -146,6 +146,8 @@ QList<QPair<QString, int> > PlaceController::getPlaceListShort()
     for(QMap<int, Place*>::iterator iter = placelist.begin(); iter != placelist.end(); iter++)
     {
         Place* place = iter.value();
+        if(place->getInvisible())
+            continue;
 
         QPair<QString, int> pair;
         pair.first = place->getName()+" "+place->getCity();

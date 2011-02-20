@@ -140,6 +140,7 @@ void TripForm::updateTrip()
     ui->endDial->blockSignals(false);
 
     int selectedPlace = m_tripController->getIntValue(ePlaceName);
+    bool bPlaceInList = false;
     ui->place->blockSignals(true);
     ui->place->setCurrentIndex(-1);
     for(int loop=0; loop <  ui->place->count(); loop++)
@@ -147,9 +148,23 @@ void TripForm::updateTrip()
         if( ui->place->itemData(loop).toInt() == selectedPlace)
         {
              ui->place->setCurrentIndex(loop);
+             bPlaceInList = true;
+             break;
         }
     }
     ui->place->blockSignals(false);
+
+    if(!bPlaceInList && selectedPlace > 0)
+    {
+        ui->place->setEditable(true);
+        ui->place->setEditText(tr("Kalapaikka ei-aktiivinen"));
+        ui->place->setStyleSheet("background: rgb(255,0,0);");
+    }
+    else
+    {
+        ui->place->setEditable(false);
+        ui->place->setStyleSheet("");
+    }
 
     if(type == Fish::eFish)
     {

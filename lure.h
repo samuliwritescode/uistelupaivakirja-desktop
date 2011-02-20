@@ -12,14 +12,18 @@ public:
     void setSize(const QString&);
     void setColor(const QString&);
     void setFavorite(bool);
+    void setNotVisible(bool);
     void setLureType(const QString&);
+    void setNickName(const QString&);
 
     QString getMaker();
     QString getModel();
     QString getSize();
     QString getColor();
     QString getLureType();
+    QString getNickName();
     bool getFavorite();
+    bool getNotVisible();
 };
 
 #endif // LURE_H

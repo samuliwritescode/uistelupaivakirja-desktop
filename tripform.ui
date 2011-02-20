@@ -1632,13 +1632,6 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="onlyBestLures">
-             <property name="text">
-              <string>Ottipelit</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QCheckBox" name="onlyFavoriteLures">
              <property name="text">
               <string>Suosikit</string>

@@ -44,6 +44,7 @@ void LureController::booleanEvent(EUISource source, bool value)
     switch(source)
     {
     case eLureFavorite: m_lure->setFavorite(value); break;
+    case eLureNotVisible: m_lure->setNotVisible(value); break;
     default: break;
     }
     sendNotificationToObservers(Controller::eLureInternalUpdate);
@@ -60,6 +61,7 @@ void LureController::textEvent(EUISource source, const QString& value)
     case eLureModel: m_lure->setModel(value); break;
     case eLureSize: m_lure->setSize(value); break;
     case eLureColor: m_lure->setColor(value); break;
+    case eLureNickName: m_lure->setNickName(value); break;
     default: break;
     }
     sendNotificationToObservers(Controller::eLureInternalUpdate);
@@ -118,6 +120,7 @@ bool LureController::getBooleanValue(EUISource source)
     case eLureList: return true; break;
     case eUnsavedChanges: return m_lure->isUnsaved(); break;
     case eLureFavorite: return m_lure->getFavorite(); break;
+    case eLureNotVisible: return m_lure->getNotVisible(); break;
     default: break;
     }
     return false;
@@ -134,6 +137,7 @@ QString LureController::getTextValue(EUISource source)
     case eLureSize: return m_lure->getSize(); break;
     case eLureColor: return m_lure->getColor(); break;
     case eLureType: return m_lure->getLureType(); break;
+    case eLureNickName: return m_lure->getNickName(); break;
     default: break;
     }
     return QString();
@@ -147,6 +151,9 @@ QList<QPair<QString, int> > LureController::getLureList()
     for(QMap<int, Lure*>::iterator iter = lurelist.begin(); iter != lurelist.end(); iter++)
     {
         Lure* lure = iter.value();
+        if(lure->getNotVisible())
+            continue;
+
         QPair<QString, int> pair;
         pair.first = lure->getMaker()+" "+lure->getModel()+" "+lure->getSize()+" "+lure->getColor();
         pair.second = lure->getId();
@@ -170,8 +177,14 @@ QList<QList<QString> > LureController::getLureListLong()
         lurehash.push_back(lure->getSize());
         lurehash.push_back(lure->getColor());
         lurehash.push_back(lure->getLureType());
+        lurehash.push_back(lure->getNickName());
         if(lure->getFavorite())
             lurehash.push_back(tr("suosikki"));
+        else
+            lurehash.push_back(tr(""));
+
+        if(lure->getNotVisible())
+            lurehash.push_back(tr("ei näy"));
         else
             lurehash.push_back(tr(""));
 
@@ -189,7 +202,9 @@ QStringList LureController::getLureColumns()
            tr("Koko") <<
            tr("Väri") <<
            tr("Tyyppi") <<
-           tr("Suosikki");
+           tr("Lempinimi") <<
+           tr("Suosikki") <<
+           tr("Näkyy");
     return retval;
 }
 
