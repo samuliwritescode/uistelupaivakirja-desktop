@@ -224,7 +224,7 @@ void TripForm::updateTrip()
     QSettings settings;
     if(settings.value("use_customfields").toBool())
     {
-        QList<QString> userValues = m_tripController->getUserFields();
+        QMap<QString, QString> userValues = m_tripController->getUserFields();
         ui->user_props->blockSignals(true);
         ui->user_props->setVisible(true);
         ui->user_props->setSortingEnabled(false);
@@ -235,12 +235,21 @@ void TripForm::updateTrip()
 
         ui->user_props->setHorizontalHeaderLabels(userHeaders);
 
-        for(int loop=0; loop < userValues.count(); loop++)
+        for(int loop=0; loop < 5; loop++)
         {
-            QString uservalue = userValues.at(loop);
+            QString key = "custom_field"+QString::number(loop);
+            QString keyname = settings.value(key).toString();
+            QString value;
 
-            ui->user_props->setItem(loop, 0, new QTableWidgetItem("arvo"));
-            ui->user_props->setItem(loop, 1, new QTableWidgetItem(uservalue));
+            if(userValues.contains(key))
+                value = userValues[key];
+
+            ui->user_props->setItem(loop, 0,
+                                    new QTableWidgetItem(keyname
+                                            )
+                                    );
+
+            ui->user_props->setItem(loop, 1, new QTableWidgetItem(value));
         }
         ui->user_props->setSortingEnabled(false);
         ui->user_props->blockSignals(false);
@@ -605,19 +614,14 @@ void TripForm::on_new_weather_clicked()
 
 void TripForm::on_user_props_cellChanged(int row, int column)
 {
-    QString name;
-    if(ui->user_props->item(row, 0))
-        name = ui->user_props->item(row, 0)->text();
-
+    QString name = "custom_field"+QString::number(row);
     QString value;
+
     if(ui->user_props->item(row, 1))
         value = ui->user_props->item(row, 1)->text();
 
     qDebug() << "nimi"<<name<<"arvo"<<value;
-    //if(!name.isEmpty())
-    {
-        m_tripController->textEvent(eUserField, QString::number(row)+"\n"+value);
-    }
+    m_tripController->textEvent(eUserField, name+"\n"+value);
 
 }
 

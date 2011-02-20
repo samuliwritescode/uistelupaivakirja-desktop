@@ -506,18 +506,12 @@ QStringList TripController::getAlternatives(EUISource source)
     return retval;
 }
 
-QList<QString> TripController::getUserFields()
+QMap<QString, QString> TripController::getUserFields()
 {
-    QList<QString> retval;
-    Fish* fish = m_trip->getFish();
-    QMap<QString, QString> userfields = fish->getUserFields();
-    int index = 0;
-    while(userfields.contains(QString::number(index)))
-    {
-        retval.push_back(userfields[QString::number(index)]);
-        index++;
-    }
-    return retval;
+    if(m_trip && m_trip->getFish())
+        return m_trip->getFish()->getUserFields();
+
+    return QMap<QString, QString>();
 }
 
 QStringList TripController::getMediaFiles()

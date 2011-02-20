@@ -36,7 +36,7 @@ public:
     QList<QMap<QString, QString> > getFishList();
     QStringList getAlternatives(EUISource source);
     QList<QPair<QString, int> > getWayPointsList();
-    QList<QString> getUserFields();
+    QMap<QString, QString> getUserFields();
     QStringList getMediaFiles();
     QString getTripReport();
 
