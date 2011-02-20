@@ -17,6 +17,13 @@ public:
 
 private:
     Ui::SettingsForm *ui;
+
+private slots:
+    void on_checkBoxUseCustomFields_clicked(bool checked);
+    void on_customFields_cellChanged(int row, int column);
+    void on_checkBoxUseSuggestions_clicked(bool checked);
+    void on_openCSSFile_clicked();
+    void on_openSaveFolder_clicked();
 };
 
 #endif // SETTINGSFORM_H

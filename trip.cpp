@@ -91,12 +91,15 @@ Fish* Trip::newFish(Fish::EType type)
     if(type == Fish::eFish ||
        type == Fish::eFishAndWeather)
     {
-        fish->setSpecies(settings.value("Species").toString());
-        fish->setGetter(settings.value("Getter").toString());
-        fish->setMethod(settings.value("Method").toString());
-        fish->setTrollingSpeed(settings.value("TrollingSpeed").toString());
-        fish->setReleaseWidth(settings.value("ReleaseWidth").toString());
-        fish->setLineWeight(settings.value("LineWeight").toString());
+        if(settings.value("use_suggestions").toBool())
+        {
+            fish->setSpecies(settings.value("Species").toString());
+            fish->setGetter(settings.value("Getter").toString());
+            fish->setMethod(settings.value("Method").toString());
+            fish->setTrollingSpeed(settings.value("TrollingSpeed").toString());
+            fish->setReleaseWidth(settings.value("ReleaseWidth").toString());
+            fish->setLineWeight(settings.value("LineWeight").toString());
+        }
     }
 
     if(type == Fish::eWeather ||

@@ -1,3 +1,4 @@
+#include <QSettings>
 #include "tripform.h"
 #include "ui_tripform.h"
 
@@ -220,25 +221,34 @@ void TripForm::updateTrip()
     if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
          ui->misc->setText(m_tripController->getTextValue(eMiscText));
 
-    QList<QString> userValues = m_tripController->getUserFields();
-    ui->user_props->blockSignals(true);
-    ui->user_props->setSortingEnabled(false);
-    ui->user_props->clear();
-    QStringList userHeaders;
-    userHeaders << tr("Parametri") <<
-                    tr("Arvo");
-
-    ui->user_props->setHorizontalHeaderLabels(userHeaders);
-
-    for(int loop=0; loop < userValues.count(); loop++)
+    QSettings settings;
+    if(settings.value("use_customfields").toBool())
     {
-        QString uservalue = userValues.at(loop);
+        QList<QString> userValues = m_tripController->getUserFields();
+        ui->user_props->blockSignals(true);
+        ui->user_props->setVisible(true);
+        ui->user_props->setSortingEnabled(false);
+        ui->user_props->clear();
+        QStringList userHeaders;
+        userHeaders << tr("Parametri") <<
+                        tr("Arvo");
 
-        ui->user_props->setItem(loop, 0, new QTableWidgetItem("arvo"));
-        ui->user_props->setItem(loop, 1, new QTableWidgetItem(uservalue));
+        ui->user_props->setHorizontalHeaderLabels(userHeaders);
+
+        for(int loop=0; loop < userValues.count(); loop++)
+        {
+            QString uservalue = userValues.at(loop);
+
+            ui->user_props->setItem(loop, 0, new QTableWidgetItem("arvo"));
+            ui->user_props->setItem(loop, 1, new QTableWidgetItem(uservalue));
+        }
+        ui->user_props->setSortingEnabled(false);
+        ui->user_props->blockSignals(false);
     }
-    ui->user_props->setSortingEnabled(false);
-    ui->user_props->blockSignals(false);
+    else
+    {
+        ui->user_props->setVisible(false);
+    }
 }
 
 void TripForm::updateTripList()
