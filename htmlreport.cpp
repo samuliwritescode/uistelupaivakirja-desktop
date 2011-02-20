@@ -1,5 +1,6 @@
 #include <QFile>
 #include <QDebug>
+#include <QSettings>
 #include "htmlreport.h"
 #include "trip.h"
 #include "place.h"
@@ -13,7 +14,12 @@ bool fishLessThan(const Fish* f1, const Fish* f2)
 HTMLReport::HTMLReport(QObject *parent) :
     QObject(parent)
 {
-    QFile stylefile(":/res/style.css");
+    QSettings settings;
+    QString styleFile = ":/res/style.css";
+    if(!settings.value("TripReportCSS").toString().isEmpty())
+        styleFile = settings.value("TripReportCSS").toString();
+
+    QFile stylefile(styleFile);
     if(stylefile.open(QIODevice::ReadOnly))
     {
         m_style = stylefile.readAll();

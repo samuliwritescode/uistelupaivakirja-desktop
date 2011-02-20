@@ -19,6 +19,7 @@ SettingsForm::SettingsForm(QWidget *parent) :
     ui->checkBoxUseCustomFields->setChecked(settings.value("use_customfields").toBool());
     ui->customFields->setEnabled(settings.value("use_customfields").toBool());
     ui->lineEditDataFolder->setText(settings.value("ProgramFolder").toString());
+    ui->lineEditCSS->setText(settings.value("TripReportCSS").toString());
 
     QString customField0 = settings.value("custom_field0").toString();
     QString customField1 = settings.value("custom_field1").toString();
@@ -68,7 +69,13 @@ void SettingsForm::on_openSaveFolder_clicked()
 
 void SettingsForm::on_openCSSFile_clicked()
 {
-
+    QSettings settings;
+    QString filename = QFileDialog::getOpenFileName(this, tr("Avaa tyylitiedosto"), "", tr("Tyylitiedostot (*.css)"));
+    if(QFile::exists(filename))
+    {
+        settings.setValue("TripReportCSS", filename);
+        ui->lineEditCSS->setText(filename);
+    }
 }
 
 void SettingsForm::on_checkBoxUseSuggestions_clicked(bool checked)
