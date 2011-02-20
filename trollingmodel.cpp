@@ -1,4 +1,5 @@
 #include <QDir>
+#include <QSettings>
 #include <QDebug>
 #include "trollingexception.h"
 #include "trollingmodel.h"
@@ -6,7 +7,8 @@
 TrollingModel::TrollingModel(QObject *parent) :
     QObject(parent)
 {
-    m_filePath = QDir::homePath()+"/uistelu/";
+    QSettings settings;
+    m_filePath = settings.value("ProgramFolder").toString();
 }
 
 void TrollingModel::initialize()
@@ -150,7 +152,10 @@ int TrollingModel::commit(TrollingObject* object)
     if(object->valid() != QString())
         throw TrollingException(object->valid());
 
-    m_DBLayer->storeObject(object);
+    if(!m_DBLayer->storeObject(object))
+    {
+        throw TrollingException(tr("En pysty tallentamaan. Katsopas, ettei levy ole täynnä tai ohjelmalla on tallennusoikeudet."));
+    }
     return object->getId();
 }
 
@@ -159,7 +164,11 @@ void TrollingModel::remove(TrollingObject* p_object)
     if(p_object == NULL)
        return;
 
-    m_DBLayer->removeObject(p_object);
+    if(p_object->getId() >= 0 && !m_DBLayer->removeObject(p_object))
+    {
+        throw TrollingException(tr("En pysty poistamaan. Katsopas, ettei levy ole täynnä tai ohjelmalla on tallennusoikeudet."));
+    }
+
     for(int loop=0; loop < m_trollingobjects.size(); loop++)
     {
         if(m_trollingobjects[loop] == p_object)

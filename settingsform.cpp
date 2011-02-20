@@ -1,4 +1,8 @@
 #include <QSettings>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QDir>
+#include <QFile>
 #include <QDebug>
 #include <QTableWidgetItem>
 #include "settingsform.h"
@@ -14,6 +18,7 @@ SettingsForm::SettingsForm(QWidget *parent) :
     ui->checkBoxUseSuggestions->setChecked(settings.value("use_suggestions").toBool());
     ui->checkBoxUseCustomFields->setChecked(settings.value("use_customfields").toBool());
     ui->customFields->setEnabled(settings.value("use_customfields").toBool());
+    ui->lineEditDataFolder->setText(settings.value("ProgramFolder").toString());
 
     QString customField0 = settings.value("custom_field0").toString();
     QString customField1 = settings.value("custom_field1").toString();
@@ -35,7 +40,30 @@ SettingsForm::~SettingsForm()
 
 void SettingsForm::on_openSaveFolder_clicked()
 {
-
+    QSettings settings;
+    QFileDialog filedlg(this);
+    filedlg.setOptions(QFileDialog::ShowDirsOnly);
+    filedlg.setDirectory(settings.value("ProgramFolder").toString());
+    if(filedlg.exec())
+    {
+        QStringList folders = filedlg.selectedFiles();
+        if(folders.size() == 1)
+        {
+            QString folder = folders.at(0);
+            QDir dir;
+            if(!dir.exists(folder))
+            {
+                QMessageBox::critical(this, tr("Ongelma"), tr("Kansiota ")+folder+tr(" ei ole olemassa. Kansiota ei voi asettaa tallennuskansioksi"));
+            }
+            else
+            {
+                settings.setValue("ProgramFolder", folder);
+                ui->lineEditDataFolder->setText(folder);
+                QMessageBox::information(this, tr("Ilmoitus"), tr("Uusi tallennuskansio on asetettu. Ohjelman täytyy nyt sulkeutua. Muista kopioida vanhasta kansiosta sisältö, jos haluat säilyttää vanhat tietosi."));
+                QCoreApplication::exit(0);
+            }
+        }
+    }
 }
 
 void SettingsForm::on_openCSSFile_clicked()
@@ -64,4 +92,11 @@ void SettingsForm::on_checkBoxUseCustomFields_clicked(bool checked)
     settings.setValue("use_customfields", checked);
 
     ui->customFields->setEnabled(checked);
+}
+
+void SettingsForm::on_clearCSS_clicked()
+{
+    QSettings settings;
+    settings.remove("TripReportCSS");
+    ui->lineEditCSS->setText(QString());
 }

@@ -12,7 +12,7 @@ public:
 
     bool storeObject(TrollingObject* p_object);
     bool loadObjects(const QString& p_type, TrollingObjectFactory* p_factory, int id = -1);
-    void removeObject(TrollingObject* p_object);
+    bool removeObject(TrollingObject* p_object);
     QList<int> getIds(const QString& p_type);
 
 private:

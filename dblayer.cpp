@@ -6,7 +6,6 @@
 DBLayer::DBLayer(const QString& p_storePath):
 m_storeDir(p_storePath)
 {
-
     if(!m_storeDir.exists("."))
     {
         m_storeDir.mkpath(".");
@@ -19,10 +18,10 @@ bool DBLayer::storeObject(TrollingObject* p_object)
     return writer.write(p_object);
 }
 
-void DBLayer::removeObject(TrollingObject* p_object)
+bool DBLayer::removeObject(TrollingObject* p_object)
 {
     XMLWriter writer(m_storeDir.absolutePath()+"/"+p_object->getType()+".xml");
-    writer.remove(p_object);
+    return writer.remove(p_object);
 }
 
 QList<int> DBLayer::getIds(const QString& p_type)
