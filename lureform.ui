@@ -36,6 +36,9 @@
        <property name="sortingEnabled">
         <bool>true</bool>
        </property>
+       <property name="columnCount">
+        <number>1</number>
+       </property>
        <attribute name="horizontalHeaderDefaultSectionSize">
         <number>70</number>
        </attribute>
@@ -48,6 +51,7 @@
        <attribute name="verticalHeaderDefaultSectionSize">
         <number>20</number>
        </attribute>
+       <column/>
       </widget>
      </item>
      <item>

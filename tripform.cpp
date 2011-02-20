@@ -36,6 +36,7 @@ TripForm::TripForm(QWidget *parent) :
     m_mediaList = new MediaList();
     m_mediaList->setAcceptDrops(true);
     ui->horizontalLayout_10->insertWidget(0, m_mediaList);
+    ui->fish_list->sortByColumn(0, Qt::AscendingOrder);
 
     observerEvent(Controller::eTripUpdated);
     observerEvent(Controller::eTripListUpdated);
@@ -333,7 +334,7 @@ void TripForm::updateFishList()
         ui->fish_list->selectRow(selectedFish);
 
     ui->fish_list->setSortingEnabled(true);
-    ui->fish_list->blockSignals(false);    
+    ui->fish_list->blockSignals(false);
 }
 
 void TripForm::updateWaypoints()

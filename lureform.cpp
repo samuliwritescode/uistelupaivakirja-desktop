@@ -7,6 +7,7 @@ LureForm::LureForm(QWidget *parent) :
 {
     ui->setupUi(this);
     m_lureController = Singletons::lureController();
+    ui->lure_list->sortByColumn(0, Qt::AscendingOrder);
 
     observerEvent(Controller::eLureListUpdated);
 

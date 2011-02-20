@@ -7,6 +7,7 @@ PlaceForm::PlaceForm(QWidget *parent) :
 {
     ui->setupUi(this);
     m_placeController = Singletons::placeController();
+    ui->place_list->sortByColumn(0, Qt::AscendingOrder);
 
     observerEvent(Controller::ePlaceListUpdated);
 
