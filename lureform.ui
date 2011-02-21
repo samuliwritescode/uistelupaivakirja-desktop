@@ -187,14 +187,14 @@
         </item>
         <item row="5" column="1">
          <widget class="QComboBox" name="lure_type">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>0</height>
-           </size>
-          </property>
           <property name="editable">
            <bool>true</bool>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContents</enum>
+          </property>
+          <property name="minimumContentsLength">
+           <number>25</number>
           </property>
          </widget>
         </item>
@@ -207,53 +207,53 @@
         </item>
         <item row="1" column="1">
          <widget class="QComboBox" name="lure_manufacturer">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>0</height>
-           </size>
-          </property>
           <property name="editable">
            <bool>true</bool>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContents</enum>
+          </property>
+          <property name="minimumContentsLength">
+           <number>25</number>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
          <widget class="QComboBox" name="lure_model">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>0</height>
-           </size>
-          </property>
           <property name="editable">
            <bool>true</bool>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContents</enum>
+          </property>
+          <property name="minimumContentsLength">
+           <number>25</number>
           </property>
          </widget>
         </item>
         <item row="3" column="1">
          <widget class="QComboBox" name="lure_size">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>0</height>
-           </size>
-          </property>
           <property name="editable">
            <bool>true</bool>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContents</enum>
+          </property>
+          <property name="minimumContentsLength">
+           <number>25</number>
           </property>
          </widget>
         </item>
         <item row="4" column="1">
          <widget class="QComboBox" name="lure_color">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>0</height>
-           </size>
-          </property>
           <property name="editable">
            <bool>true</bool>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContents</enum>
+          </property>
+          <property name="minimumContentsLength">
+           <number>25</number>
           </property>
          </widget>
         </item>
