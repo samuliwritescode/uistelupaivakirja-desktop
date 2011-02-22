@@ -115,6 +115,8 @@ QTime TripController::getTimeValue(EUISource source)
     if(!m_trip) return QTime();
     switch(source)
     {
+    case eStartTime: return m_trip->getTime().first; break;
+    case eEndTime: return m_trip->getTime().second; break;
     case eTime:
         if(m_trip->getFish()->getTime().isValid())
             return m_trip->getFish()->getTime();
@@ -184,8 +186,8 @@ void TripController::intEvent(EUISource source, int value)
     qDebug() << "got int event" << source << value;
     switch(source)
     {
-        case eStartTime: m_trip->setTime(QTime(value,0), QTime()); break;
-        case eEndTime: m_trip->setTime(QTime(), QTime(value,0)); break;
+        case eStartTime: m_trip->setTime(QTime(value,m_trip->getTime().first.minute()), QTime()); break;
+        case eEndTime: m_trip->setTime(QTime(), QTime(value, m_trip->getTime().second.minute())); break;
         case eWindDirection:
             m_trip->getFish()->setWindDirection(static_cast<Fish::EWindDirection>(value));
             sendNotificationToObservers(Controller::eTripUpdated);
@@ -284,6 +286,8 @@ void TripController::timeEvent(EUISource source, const QTime& value)
         qDebug() << "got time event" << source << value;
         switch(source)
         {
+        case eStartTime: m_trip->setTime(value, QTime()); break;
+        case eEndTime: m_trip->setTime(QTime(), value); break;
         case eTime: m_trip->getFish()->setTime(value); break;
         default:  qCritical() << "Unknown time event. Cant handle this!" << source;
         }

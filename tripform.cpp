@@ -84,7 +84,6 @@ void TripForm::observerEvent(int type)
     ui->groupBoxTrip->setVisible(m_tripController->getBooleanValue(eTrip));
     ui->labelCreateNewTrip->setVisible(!m_tripController->getBooleanValue(eTrip));
     ui->poiDock->setVisible(m_tripController->getBooleanValue(eTrip));
-    ui->mapDock->setVisible(m_tripController->getBooleanValue(eTrip));
     ui->lureDock->setVisible(m_tripController->getBooleanValue(eTrip));
 }
 
@@ -133,13 +132,18 @@ void TripForm::updateTrip()
 
     ui->startDial->blockSignals(true);
     ui->endDial->blockSignals(true);
-    ui->startDial->setValue((m_tripController->getIntValue(eStartTime)+12)%24);
-    ui->timeStartLbl->setText(tr("aloitus klo ")+QString::number(m_tripController->getIntValue(eStartTime)));
+    ui->timeEditTripStart->blockSignals(true);
+    ui->timeEditTripEnd->blockSignals(true);
 
+    ui->startDial->setValue((m_tripController->getIntValue(eStartTime)+12)%24);
+    ui->timeEditTripStart->setTime(m_tripController->getTimeValue(eStartTime));
+    ui->timeEditTripEnd->setTime(m_tripController->getTimeValue(eEndTime));
     ui->endDial->setValue((m_tripController->getIntValue(eEndTime)+12)%24);
-    ui->timeEndLbl->setText(tr("lopetus klo ")+QString::number(m_tripController->getIntValue(eEndTime)));
+
     ui->startDial->blockSignals(false);
     ui->endDial->blockSignals(false);
+    ui->timeEditTripStart->blockSignals(false);
+    ui->timeEditTripEnd->blockSignals(false);
 
     int selectedPlace = m_tripController->getIntValue(ePlaceName);
     bool bPlaceInList = false;
@@ -540,8 +544,6 @@ void TripForm::on_endDial_valueChanged(int value)
     m_tripController->intEvent(eEndTime, (value+12)%24);
 }
 
-
-
 void TripForm::on_totaldepth_textEdited(QString value)
 {
     m_tripController->textEvent(eTotalDepth, value);
@@ -672,4 +674,14 @@ void TripForm::on_pressure_slider_valueChanged(int position)
 void TripForm::on_rain_slider_valueChanged(int position)
 {
      m_tripController->intEvent(eRain, position);
+}
+
+void TripForm::on_timeEditTripStart_timeChanged(QTime time)
+{
+    m_tripController->timeEvent(eStartTime, time);
+}
+
+void TripForm::on_timeEditTripEnd_timeChanged(QTime time)
+{
+    m_tripController->timeEvent(eEndTime, time);
 }

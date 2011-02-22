@@ -40,6 +40,8 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_timeEditTripEnd_timeChanged(QTime date);
+    void on_timeEditTripStart_timeChanged(QTime date);
     void on_rain_slider_valueChanged(int position);
     void on_pressure_slider_valueChanged(int position);
     void on_wind_slider_valueChanged(int position);
