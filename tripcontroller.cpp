@@ -92,6 +92,7 @@ QString TripController::getTextValue(EUISource source)
     case eSpecies: return m_trip->getFish()->getSpecies();
     case eMethod: return m_trip->getFish()->getMethod();
     case eGetter: return m_trip->getFish()->getGetter();
+    case eTripDescription: return m_trip->getDescription();
     case eWayPointSet:
         if(!m_trip->getFish()->getCoordinatesLat().isEmpty() &&
            !m_trip->getFish()->getCoordinatesLon().isEmpty())
@@ -311,6 +312,7 @@ void TripController::textEvent(EUISource source, const QString& value)
     {
         switch(source)
         {
+        case eTripDescription: m_trip->setDescription(value); break;
         case eMiscText: m_trip->getFish()->setMiscText(value); break;
         case eWaterTemp: m_trip->getFish()->setWaterTemp(value); break;
         case eAirTemp: m_trip->getFish()->setAirTemp(value); break;

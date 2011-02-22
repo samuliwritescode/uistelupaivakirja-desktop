@@ -29,6 +29,16 @@ QDate Trip::getDate()
     return get("date").toDate();
 }
 
+QString Trip::getDescription()
+{
+    return get("description").toString();
+}
+
+void Trip::setDescription(const QString& description)
+{
+    set("description", description);
+}
+
 void Trip::setTime(const QTime& start, const QTime& end)
 {
     if(!start.isNull())

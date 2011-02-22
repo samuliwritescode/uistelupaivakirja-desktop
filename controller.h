@@ -79,7 +79,8 @@ enum EUISource {eTripDate,
                 eStatisticsByColumn,
                 eStatisticsField,
                 eTripReportShowImages,
-                eTripReportShowMaps};
+                eTripReportShowMaps,
+                eTripDescription};
 
 class Controller : public QObject
 {

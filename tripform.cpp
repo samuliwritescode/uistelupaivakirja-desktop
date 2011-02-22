@@ -7,7 +7,7 @@ TripForm::TripForm(QWidget *parent) :
     ui(new Ui::TripForm)
 {
     ui->setupUi(this);
-    ui->groupBoxTripReport->hide();
+    ui->toolBoxTrip->hide();
 
     m_tripController = Singletons::tripController();
 
@@ -38,6 +38,10 @@ TripForm::TripForm(QWidget *parent) :
     m_mediaList->setAcceptDrops(true);
     ui->horizontalLayout_10->insertWidget(0, m_mediaList);
     ui->fish_list->sortByColumn(0, Qt::AscendingOrder);
+
+    m_mediaListTrip = new MediaList();
+    m_mediaListTrip->setAcceptDrops(true);
+    ui->horizontalLayout_30->insertWidget(0, m_mediaListTrip);
 
     observerEvent(Controller::eTripUpdated);
     observerEvent(Controller::eTripListUpdated);
@@ -134,16 +138,19 @@ void TripForm::updateTrip()
     ui->endDial->blockSignals(true);
     ui->timeEditTripStart->blockSignals(true);
     ui->timeEditTripEnd->blockSignals(true);
+    ui->trip_description->blockSignals(true);
 
     ui->startDial->setValue((m_tripController->getIntValue(eStartTime)+12)%24);
     ui->timeEditTripStart->setTime(m_tripController->getTimeValue(eStartTime));
     ui->timeEditTripEnd->setTime(m_tripController->getTimeValue(eEndTime));
     ui->endDial->setValue((m_tripController->getIntValue(eEndTime)+12)%24);
+    ui->trip_description->setText(m_tripController->getTextValue(eTripDescription));
 
     ui->startDial->blockSignals(false);
     ui->endDial->blockSignals(false);
     ui->timeEditTripStart->blockSignals(false);
     ui->timeEditTripEnd->blockSignals(false);
+    ui->trip_description->blockSignals(false);
 
     int selectedPlace = m_tripController->getIntValue(ePlaceName);
     bool bPlaceInList = false;
@@ -174,7 +181,7 @@ void TripForm::updateTrip()
 
     if(type == Fish::eFish)
     {
-        ui->groupBoxTripReport->hide();
+        ui->toolBoxTrip->hide();
         ui->groupBoxWeather->hide();
         ui->groupBoxFish->show();
         ui->groupBoxOther->show();
@@ -183,7 +190,7 @@ void TripForm::updateTrip()
     }
     else if(type == Fish::eWeather)
     {
-        ui->groupBoxTripReport->hide();
+        ui->toolBoxTrip->hide();
         ui->groupBoxFish->hide();
         ui->groupBoxWeather->show();
         ui->groupBoxOther->show();
@@ -192,7 +199,7 @@ void TripForm::updateTrip()
     }
     else if(type == Fish::eFishAndWeather)
     {
-        ui->groupBoxTripReport->hide();
+        ui->toolBoxTrip->hide();
         ui->groupBoxFish->show();
         ui->groupBoxWeather->show();
         ui->groupBoxOther->show();
@@ -204,7 +211,7 @@ void TripForm::updateTrip()
     {
         if(m_tripController->getBooleanValue(eTrip))
         {
-            ui->groupBoxTripReport->show();
+            ui->toolBoxTrip->show();
             ui->webView->setHtml(m_tripController->getTripReport());
         }
         ui->groupBoxFish->hide();
@@ -701,4 +708,9 @@ void TripForm::on_tripreport_showmap_toggled(bool checked)
 {
     m_tripController->booleanEvent(eTripReportShowMaps, checked);
     ui->webView->setHtml(m_tripController->getTripReport());
+}
+
+void TripForm::on_trip_description_textChanged()
+{
+    m_tripController->textEvent(eTripDescription, ui->trip_description->toPlainText());
 }

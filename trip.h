@@ -19,6 +19,9 @@ public:
     void setTime(const QTime& start, const QTime& end);
     QPair<QTime, QTime> getTime();
 
+    QString getDescription();
+    void setDescription(const QString&);
+
     void setWayPoints(const QString&);
     QList<WayPoint> getWayPoints();
 
