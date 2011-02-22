@@ -685,3 +685,20 @@ void TripForm::on_timeEditTripEnd_timeChanged(QTime time)
 {
     m_tripController->timeEvent(eEndTime, time);
 }
+
+void TripForm::on_tripreport_back_clicked()
+{
+    ui->webView->setHtml(m_tripController->getTripReport());
+}
+
+void TripForm::on_tripreport_showimg_toggled(bool checked)
+{
+    m_tripController->booleanEvent(eTripReportShowImages, checked);
+    ui->webView->setHtml(m_tripController->getTripReport());
+}
+
+void TripForm::on_tripreport_showmap_toggled(bool checked)
+{
+    m_tripController->booleanEvent(eTripReportShowMaps, checked);
+    ui->webView->setHtml(m_tripController->getTripReport());
+}

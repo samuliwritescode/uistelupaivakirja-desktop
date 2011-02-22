@@ -12,6 +12,8 @@ class HTMLReport : public QObject
 public:
     explicit HTMLReport(QObject *parent = 0);
     QString getReport(Trip*);
+    void setShowImages(bool);
+    void setShowMaps(bool);
 
 signals:
 
@@ -30,6 +32,9 @@ private:
     QString trtdSection(const QString&, const QString&);
     QString m_style;
 
+private:
+    bool m_bShowImages;
+    bool m_bShowMaps;
 };
 
 #endif // HTMLREPORT_H

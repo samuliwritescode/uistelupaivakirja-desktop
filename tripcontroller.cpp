@@ -137,6 +137,8 @@ void TripController::booleanEvent(EUISource source, bool value)
         qDebug() << "got bool event" << source << value;
         switch(source)
         {
+        case eTripReportShowImages: m_report.setShowImages(value); break;
+        case eTripReportShowMaps: m_report.setShowMaps(value); break;
         case eGroup: m_trip->getFish()->setGroup(value); break;
         case eCatchNRelease: m_trip->getFish()->setCR(value); break;
         case eUnderSize: m_trip->getFish()->setUnderSize(value); break;

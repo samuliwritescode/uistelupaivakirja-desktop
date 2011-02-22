@@ -12,7 +12,9 @@ bool fishLessThan(const Fish* f1, const Fish* f2)
 }
 
 HTMLReport::HTMLReport(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    m_bShowImages(false),
+    m_bShowMaps(false)
 {
     QSettings settings;
     QString styleFile = ":/res/style.css";
@@ -25,6 +27,16 @@ HTMLReport::HTMLReport(QObject *parent) :
         m_style = stylefile.readAll();
         stylefile.close();
     }
+}
+
+void HTMLReport::setShowImages(bool p_show)
+{
+    m_bShowImages = p_show;
+}
+
+void HTMLReport::setShowMaps(bool p_show)
+{
+    m_bShowMaps = p_show;
 }
 
 QString HTMLReport::getReport(Trip* p_trip)
@@ -172,6 +184,16 @@ QString HTMLReport::parseFish(Fish* p_fish)
     retval += trtdSection(tr("Saaja"),
                           p_fish->getGetter());
 
+    if(p_fish->isUnderSize())
+        retval += trtdSection(tr("Alamittainen"), "on");
+    else
+        retval += trtdSection(tr("Alamittainen"), "-");
+
+    if(p_fish->isCR())
+        retval += trtdSection(tr("Vapautettu"), "on");
+    else
+        retval += trtdSection(tr("Vapautettu"), "-");
+
     if(p_fish->isGroup())
     {
         retval += trtdSection(tr("Keskipaino"),
@@ -218,7 +240,14 @@ QString HTMLReport::parseFish(Fish* p_fish)
         QString media;
         foreach(QString mediafile, p_fish->getMediaFiles())
         {
-            media += "<a href=\"file://"+mediafile+"\">"+mediafile+"</a><br>";
+            if(m_bShowImages)
+            {
+                media += "<a href=\"file://"+mediafile+"\"><img width=200 src=\"file://"+mediafile+"\"></a><br>";
+            }
+            else
+            {
+                media += "<a href=\"file://"+mediafile+"\">"+mediafile+"</a><br>";
+            }
         }
 
         retval += trtdSection(tr("Mediatiedostot"),
@@ -276,7 +305,14 @@ QString HTMLReport::parseWeather(Fish* p_fish)
         QString media;
         foreach(QString mediafile, p_fish->getMediaFiles())
         {
-            media += "<a href=\"file://"+mediafile+"\">"+mediafile+"</a><br>";
+            if(m_bShowImages)
+            {
+                media += "<a href=\"file://"+mediafile+"\"><img width=200 src=\"file://"+mediafile+"\"></a><br>";
+            }
+            else
+            {
+                media += "<a href=\"file://"+mediafile+"\">"+mediafile+"</a><br>";
+            }
         }
 
         retval += trtdSection(tr("Mediatiedostot"),
@@ -335,16 +371,26 @@ QString HTMLReport::googleMapsCoords(const QString& p_lat, const QString& p_lon)
         return "-";
 
     QString retval;
-    retval += "<a href=\"http://maps.google.fi/?ie=UTF8&amp;";
-    retval += "ll="+p_lat+","+p_lon;
-    retval += "&amp;q="+p_lat+","+p_lon;
-    retval += "&amp;spn=0.055964,0.145912&amp\">";
-    retval += tr("Lat: ");
-    retval += p_lat;
-    retval += " ";
-    retval += tr("Lon: ");
-    retval += p_lon;
-    retval += "</a>";
+    if(m_bShowMaps)
+    {
+        retval += "<iframe width=\"200\" height=\"200\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\"";
+        retval += "src=\"http://maps.google.fi/?ie=UTF8&amp;";
+        retval += "ll="+p_lat+","+p_lon;
+        retval += "&amp;q="+p_lat+","+p_lon;
+        retval += "&amp;spn=0.055964,0.145912&amp;output=embed\"></iframe>";
+    }else
+    {
+        retval += "<a href=\"http://maps.google.fi/?ie=UTF8&amp;";
+        retval += "ll="+p_lat+","+p_lon;
+        retval += "&amp;q="+p_lat+","+p_lon;
+        retval += "&amp;spn=0.055964,0.145912&amp\">";
+        retval += tr("Lat: ");
+        retval += p_lat;
+        retval += " ";
+        retval += tr("Lon: ");
+        retval += p_lon;
+        retval += "</a>";
+    }
 
     return retval;
 }

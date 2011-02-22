@@ -18,5 +18,8 @@
         <file>res/style.css</file>
         <file>res/preferences-system-3.png</file>
         <file>res/folder-open.png</file>
+        <file>res/internet-web-browser.png</file>
+        <file>res/go-first.png</file>
+        <file>res/document-save-as.png</file>
     </qresource>
 </RCC>

@@ -40,6 +40,9 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_tripreport_showmap_toggled(bool checked);
+    void on_tripreport_showimg_toggled(bool checked);
+    void on_tripreport_back_clicked();
     void on_timeEditTripEnd_timeChanged(QTime date);
     void on_timeEditTripStart_timeChanged(QTime date);
     void on_rain_slider_valueChanged(int position);
