@@ -160,6 +160,7 @@ QList<QPair<QString, int> > LureController::getLureList()
 
         retval.push_back(pair);
     }
+    qSort(retval);
     return retval;
 }
 
