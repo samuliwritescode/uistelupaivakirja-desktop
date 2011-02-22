@@ -228,6 +228,7 @@ void TripForm::updateTrip()
     ui->time_dial_minutes->setValue((time.minute()+30)%60);
 
     m_mediaList->setMediaFiles(m_tripController->getMediaFiles());
+    m_mediaListTrip->setMediaFiles(m_tripController->getMediaFilesTrip());
 
     if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
          ui->misc->setText(m_tripController->getTextValue(eMiscText));

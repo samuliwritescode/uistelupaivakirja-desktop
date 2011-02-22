@@ -37,6 +37,10 @@ public:
     int getSelectedFish();
     virtual QString valid();
 
+    void addMediaFile(const QString&);
+    QStringList getMediaFiles();
+    void removeMediaFile(const QString&);
+
 protected:
     int indexOfFish(Fish*);
 
@@ -48,8 +52,7 @@ private slots:
 
 private:
     QList<Fish*> m_catch;
-    int m_selectedFish;
-    Fish* m_nullFish;
+    int m_selectedFish;    
 };
 
 #endif // TRIP_H

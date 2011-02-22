@@ -38,6 +38,7 @@ public:
     QList<QPair<QString, int> > getWayPointsList();
     QMap<QString, QString> getUserFields();
     QStringList getMediaFiles();
+    QStringList getMediaFilesTrip();
     QString getTripReport();
 
 protected:

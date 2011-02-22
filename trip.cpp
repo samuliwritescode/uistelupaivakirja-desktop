@@ -10,13 +10,11 @@ Trip::Trip():
 {
     setType("trip");
     set("date",QDate::currentDate());
-    m_nullFish = new Fish();
 }
 
 Trip::~Trip()
 {
-    delete m_nullFish;
-    m_nullFish = NULL;
+
 }
 
 void Trip::setDate(const QDate& date)
@@ -81,7 +79,7 @@ Fish* Trip::getFish(int id)
         return m_catch.at(id);
     }
 
-    return m_nullFish;
+    return NULL;
 }
 
 int Trip::getFishCount()
@@ -266,4 +264,34 @@ QString Trip::valid()
     }
 
     return TrollingObject::valid();
+}
+
+void Trip::addMediaFile(const QString& p_file)
+{
+    QStringList files = get("mediafiles").toString().split("\n", QString::SkipEmptyParts);
+    if(files.contains(p_file))
+        return;
+
+    files.append(p_file);
+    set("mediafiles", files.join("\n"));
+}
+
+QStringList Trip::getMediaFiles()
+{
+    return get("mediafiles").toString().split("\n", QString::SkipEmptyParts);
+}
+
+void Trip::removeMediaFile(const QString& p_file)
+{
+    QStringList files = get("mediafiles").toString().split("\n", QString::SkipEmptyParts);
+    for(int loop=0; loop < files.count(); loop++)
+    {
+        QString file = files.at(loop);
+        if(file == p_file)
+        {
+            files.removeAt(loop);
+            set("mediafiles", files.join("\n"));
+            break;
+        }
+    }
 }
