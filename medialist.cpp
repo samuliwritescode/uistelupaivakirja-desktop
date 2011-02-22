@@ -9,8 +9,10 @@
 #include "singletons.h"
 #include "medialist.h"
 
-MediaList::MediaList(QWidget *parent) :
-    QListWidget(parent)
+MediaList::MediaList(int add, int remove, QWidget *parent) :
+    QListWidget(parent),
+    m_addId(add),
+    m_removeId(remove)
 {
     setAcceptDrops(true);
     setDragEnabled(true);
@@ -52,7 +54,7 @@ void MediaList::contextMenuEvent ( QContextMenuEvent * e )
     if(action == m_removeAction)
     {
         QString filename = item->data(Qt::UserRole+1).toString();
-        Singletons::tripController()->textEvent(eMediaFileRemove, filename);
+        Singletons::tripController()->textEvent(static_cast<EUISource>(m_removeId), filename);
     }
     else if(action == m_openAction)
     {
@@ -70,7 +72,7 @@ void MediaList::dropEvent ( QDropEvent * event )
             if(!checkFileExtension(url.path()))
                 return;
 
-            Singletons::tripController()->textEvent(eMediaFileAdd, url.path());
+            Singletons::tripController()->textEvent(static_cast<EUISource>(m_addId), url.path());
         }
     }
     event->acceptProposedAction();

@@ -11,7 +11,7 @@ class MediaList : public QListWidget
 {
     Q_OBJECT
 public:
-    explicit MediaList(QWidget *parent = 0);
+    explicit MediaList(int, int, QWidget *parent = 0);
 
     void setMediaFiles(QStringList);
 
@@ -29,6 +29,8 @@ private:
     bool checkFileExtension(const QString&);
     QAction* m_removeAction;
     QAction* m_openAction;
+    int m_addId;
+    int m_removeId;
 };
 
 #endif // MEDIALIST_H

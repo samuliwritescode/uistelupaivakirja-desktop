@@ -34,12 +34,12 @@ TripForm::TripForm(QWidget *parent) :
     m_wptList->setAcceptDrops(true);
     ui->poiDockLayout->insertWidget(0, m_wptList);
 
-    m_mediaList = new MediaList();
+    m_mediaList = new MediaList(eMediaFileAdd, eMediaFileRemove);
     m_mediaList->setAcceptDrops(true);
     ui->horizontalLayout_10->insertWidget(0, m_mediaList);
     ui->fish_list->sortByColumn(0, Qt::AscendingOrder);
 
-    m_mediaListTrip = new MediaList();
+    m_mediaListTrip = new MediaList(eMediaFileAddTrip, eMediaFileRemoveTrip);
     m_mediaListTrip->setAcceptDrops(true);
     ui->horizontalLayout_30->insertWidget(0, m_mediaListTrip);
 
@@ -152,6 +152,8 @@ void TripForm::updateTrip()
     ui->timeEditTripEnd->blockSignals(false);
     ui->trip_description->blockSignals(false);
 
+    m_mediaListTrip->setMediaFiles(m_tripController->getMediaFilesTrip());
+
     int selectedPlace = m_tripController->getIntValue(ePlaceName);
     bool bPlaceInList = false;
     ui->place->blockSignals(true);
@@ -227,8 +229,7 @@ void TripForm::updateTrip()
     ui->time_dial_hour->setValue((time.hour()+12)%24);
     ui->time_dial_minutes->setValue((time.minute()+30)%60);
 
-    m_mediaList->setMediaFiles(m_tripController->getMediaFiles());
-    m_mediaListTrip->setMediaFiles(m_tripController->getMediaFilesTrip());
+    m_mediaList->setMediaFiles(m_tripController->getMediaFiles());    
 
     if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
          ui->misc->setText(m_tripController->getTextValue(eMiscText));

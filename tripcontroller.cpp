@@ -31,7 +31,7 @@ bool TripController::getBooleanValue(EUISource source)
     switch(source)
     {
     case eUnsavedChanges: return m_trip->isUnsaved(); break;
-    case eTrip: return m_trip != NULL; break;
+    case eTrip: return true; break;
     default: break;
     }
 
@@ -172,14 +172,15 @@ void TripController::booleanEvent(EUISource source, bool value)
         default: break;
         }
 
-        if(!m_trip->getFish()) return;
-
-        switch(source)
+        if(m_trip->getFish())
         {
-        case eGroup: m_trip->getFish()->setGroup(value); break;
-        case eCatchNRelease: m_trip->getFish()->setCR(value); break;
-        case eUnderSize: m_trip->getFish()->setUnderSize(value); break;
-        default: break;
+            switch(source)
+            {
+            case eGroup: m_trip->getFish()->setGroup(value); break;
+            case eCatchNRelease: m_trip->getFish()->setCR(value); break;
+            case eUnderSize: m_trip->getFish()->setUnderSize(value); break;
+            default: break;
+            }
         }
     }
     catch(TrollingException e)
@@ -220,6 +221,7 @@ void TripController::selectTrip(int value)
 void TripController::intEvent(EUISource source, int value)
 {
     if(!m_trip && source != eTrip) return;
+
     try
     {
         qDebug() << "got int event" << source << value;
@@ -246,53 +248,54 @@ void TripController::intEvent(EUISource source, int value)
             default:  break;
         }
 
-        if(!m_trip->getFish()) return;
-
-        switch(source)
+        if(m_trip->getFish())
         {
-            case eWindDirection:
-                m_trip->getFish()->setWindDirection(static_cast<Fish::EWindDirection>(value));
-                sendNotificationToObservers(Controller::eTripUpdated);
-                return; break;
-            case ePressureChange:
-                m_trip->getFish()->setPressureChange(static_cast<Fish::EPressureChange>(value));
-                sendNotificationToObservers(Controller::eTripUpdated);
-                return; break;
-            case eSelectLure:
+            switch(source)
+            {
+                case eWindDirection:
+                    m_trip->getFish()->setWindDirection(static_cast<Fish::EWindDirection>(value));
+                    sendNotificationToObservers(Controller::eTripUpdated);
+                    return; break;
+                case ePressureChange:
+                    m_trip->getFish()->setPressureChange(static_cast<Fish::EPressureChange>(value));
+                    sendNotificationToObservers(Controller::eTripUpdated);
+                    return; break;
+                case eSelectLure:
 
-                if(Singletons::model()->getLure(value))
-                {
-                    m_trip->getFish()->setLure(Singletons::model()->getLure(value));
-                }
+                    if(Singletons::model()->getLure(value))
+                    {
+                        m_trip->getFish()->setLure(Singletons::model()->getLure(value));
+                    }
 
-                sendNotificationToObservers(Controller::eTripUpdated);
-                sendNotificationToObservers(Controller::eFishPropertyUpdated);
-                return;
-                break;
-            case eWayPointSet:
-                {
-                    WayPoint wpt = m_trip->getWayPoints().at(value);
-                    m_trip->getFish()->setCoordinates(QString::number(wpt.lat), QString::number(wpt.lon));
-                    m_trip->getFish()->setTime(wpt.time.time());
-                    m_trip->getFish()->setMiscText(wpt.name);
-                }
-                break;
-            case eGroup:
-                m_trip->getFish()->setGroupAmount(value);
-                break;
-            case eWeather:
-                m_trip->getFish()->setWeatherCondition(value);
-                break;
-            case eWind:
-                m_trip->getFish()->setWindCondition(value);
-                break;
-            case ePressure:
-                m_trip->getFish()->setPressureCondition(value);
-                break;
-            case eRain:
-                m_trip->getFish()->setRainCondition(value);
-                break;
-            default:  break;
+                    sendNotificationToObservers(Controller::eTripUpdated);
+                    sendNotificationToObservers(Controller::eFishPropertyUpdated);
+                    return;
+                    break;
+                case eWayPointSet:
+                    {
+                        WayPoint wpt = m_trip->getWayPoints().at(value);
+                        m_trip->getFish()->setCoordinates(QString::number(wpt.lat), QString::number(wpt.lon));
+                        m_trip->getFish()->setTime(wpt.time.time());
+                        m_trip->getFish()->setMiscText(wpt.name);
+                    }
+                    break;
+                case eGroup:
+                    m_trip->getFish()->setGroupAmount(value);
+                    break;
+                case eWeather:
+                    m_trip->getFish()->setWeatherCondition(value);
+                    break;
+                case eWind:
+                    m_trip->getFish()->setWindCondition(value);
+                    break;
+                case ePressure:
+                    m_trip->getFish()->setPressureCondition(value);
+                    break;
+                case eRain:
+                    m_trip->getFish()->setRainCondition(value);
+                    break;
+                default:  break;
+            }
         }
     }
     catch(TrollingException e)
@@ -337,12 +340,13 @@ void TripController::timeEvent(EUISource source, const QTime& value)
         default: break;
         }
 
-        if(!m_trip->getFish()) return;
-
-        switch(source)
+        if(m_trip->getFish())
         {
-        case eTime: m_trip->getFish()->setTime(value); break;
-        default: break;
+            switch(source)
+            {
+            case eTime: m_trip->getFish()->setTime(value); break;
+            default: break;
+            }
         }
     }
     catch(TrollingException e)
@@ -377,42 +381,39 @@ void TripController::textEvent(EUISource source, const QString& value)
         default: break;
         }
 
-        if(!m_trip->getFish())
+        if(m_trip->getFish())
         {
-            qDebug() << "Attempt to use NULL fish";
-            return;
-        }
-
-        switch(source)
-        {
-        case eMiscText: m_trip->getFish()->setMiscText(value); break;
-        case eWaterTemp: m_trip->getFish()->setWaterTemp(value); break;
-        case eAirTemp: m_trip->getFish()->setAirTemp(value); break;
-        case eWeight: m_trip->getFish()->setWeight(value); break;
-        case eLength: m_trip->getFish()->setLength(value); break;
-        case eSpotDepth: m_trip->getFish()->setSpotDepth(value); break;
-        case eTotalDepth: m_trip->getFish()->setTotalDepth(value); break;
-        case eTrollingSpeed:m_trip->getFish()->setTrollingSpeed(value); break;
-        case eLineWeight: m_trip->getFish()->setLineWeight(value); break;
-        case eReleaseWidth: m_trip->getFish()->setReleaseWidth(value); break;
-        case eSpecies: m_trip->getFish()->setSpecies(value); break;
-        case eMethod: m_trip->getFish()->setMethod(value); break;
-        case eGetter: m_trip->getFish()->setGetter(value); break;
-        case eUserField: {
-                if(value.split("\n").count() != 2)
-                    break;
-                m_trip->getFish()->setUserField(value.split("\n").at(0),
-                                                value.split("\n").at(1));
+            switch(source)
+            {
+            case eMiscText: m_trip->getFish()->setMiscText(value); break;
+            case eWaterTemp: m_trip->getFish()->setWaterTemp(value); break;
+            case eAirTemp: m_trip->getFish()->setAirTemp(value); break;
+            case eWeight: m_trip->getFish()->setWeight(value); break;
+            case eLength: m_trip->getFish()->setLength(value); break;
+            case eSpotDepth: m_trip->getFish()->setSpotDepth(value); break;
+            case eTotalDepth: m_trip->getFish()->setTotalDepth(value); break;
+            case eTrollingSpeed:m_trip->getFish()->setTrollingSpeed(value); break;
+            case eLineWeight: m_trip->getFish()->setLineWeight(value); break;
+            case eReleaseWidth: m_trip->getFish()->setReleaseWidth(value); break;
+            case eSpecies: m_trip->getFish()->setSpecies(value); break;
+            case eMethod: m_trip->getFish()->setMethod(value); break;
+            case eGetter: m_trip->getFish()->setGetter(value); break;
+            case eUserField: {
+                    if(value.split("\n").count() != 2)
+                        break;
+                    m_trip->getFish()->setUserField(value.split("\n").at(0),
+                                                    value.split("\n").at(1));
+                }
+                break;
+            case eMediaFileAdd:
+                m_trip->getFish()->addMediaFile(value);
+                sendNotificationToObservers(Controller::eTripUpdated);break;
+            case eMediaFileRemove:
+                m_trip->getFish()->removeMediaFile(value);
+                sendNotificationToObservers(Controller::eTripUpdated);
+                break;
+            default: break;
             }
-            break;
-        case eMediaFileAdd:
-            m_trip->getFish()->addMediaFile(value);
-            sendNotificationToObservers(Controller::eTripUpdated);break;
-        case eMediaFileRemove:
-            m_trip->getFish()->removeMediaFile(value);
-            sendNotificationToObservers(Controller::eTripUpdated);
-            break;
-        default: break;
         }
     }
     catch(TrollingException e)
