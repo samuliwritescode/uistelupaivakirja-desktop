@@ -74,6 +74,27 @@ QString HTMLReport::parseTrip(Trip* p_trip)
                          p_trip->getTime().second.toString()
                          );
 
+    retval += divSection("trip_description", p_trip->getDescription());
+
+    if(p_trip->getMediaFiles().count() > 0)
+    {
+        QString media;
+        foreach(QString mediafile, p_trip->getMediaFiles())
+        {
+            if(m_bShowImages)
+            {
+                media += "<a href=\"file://"+mediafile+"\"><img width=200 src=\"file://"+mediafile+"\"></a><br>";
+            }
+            else
+            {
+                media += "<a href=\"file://"+mediafile+"\">"+mediafile+"</a><br>";
+            }
+        }
+
+        retval += divSection("trip_media",
+                              media);
+    }
+
     retval += "<p>";
     retval += "<table><tr><td>";
     retval += parseFish(p_trip);
