@@ -136,8 +136,16 @@ QTime TripController::getTimeValue(EUISource source)
     if(!m_trip) return QTime();
     switch(source)
     {
-    case eStartTime: return m_trip->getTime().first; break;
-    case eEndTime: return m_trip->getTime().second; break;
+    case eStartTime:
+        if(m_trip->getTime().first.isValid())
+            return m_trip->getTime().first;
+        else
+            return QTime(0,0,0);
+    case eEndTime:
+        if(m_trip->getTime().second.isValid())
+            return m_trip->getTime().second;
+        else
+            return QTime(0,0,0);
     default: break;
     }
 

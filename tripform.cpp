@@ -133,14 +133,15 @@ void TripForm::updateLureList()
 void TripForm::updateTrip()
 {
     int type = m_tripController->getIntValue(eFishType);
-    ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
 
+    ui->dateEdit->blockSignals(true);
     ui->startDial->blockSignals(true);
     ui->endDial->blockSignals(true);
     ui->timeEditTripStart->blockSignals(true);
     ui->timeEditTripEnd->blockSignals(true);
     ui->trip_description->blockSignals(true);
 
+    ui->dateEdit->setDate(m_tripController->getDateValue(eTripDate));
     ui->startDial->setValue((m_tripController->getIntValue(eStartTime)+12)%24);
     ui->timeEditTripStart->setTime(m_tripController->getTimeValue(eStartTime));
     ui->timeEditTripEnd->setTime(m_tripController->getTimeValue(eEndTime));
@@ -152,6 +153,7 @@ void TripForm::updateTrip()
     ui->timeEditTripStart->blockSignals(false);
     ui->timeEditTripEnd->blockSignals(false);
     ui->trip_description->blockSignals(false);
+    ui->dateEdit->blockSignals(false);
 
     m_mediaListTrip->setMediaFiles(m_tripController->getMediaFilesTrip());
 
@@ -228,16 +230,24 @@ void TripForm::updateTrip()
         return;
     }
 
+    ui->timeEdit->blockSignals(true);
+
     m_POIBox->setText(m_tripController->getTextValue(eWayPointSet));
     QTime time = m_tripController->getTimeValue(eTime);
     ui->timeEdit->setTime(time);
     ui->time_dial_hour->setValue((time.hour()+12)%24);
     ui->time_dial_minutes->setValue((time.minute()+30)%60);
 
-    m_mediaList->setMediaFiles(m_tripController->getMediaFiles());    
+    m_mediaList->setMediaFiles(m_tripController->getMediaFiles());
 
+    ui->misc->blockSignals(true);
     if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
+    {
          ui->misc->setText(m_tripController->getTextValue(eMiscText));
+    }
+
+    ui->misc->blockSignals(false);
+    ui->timeEdit->blockSignals(false);
 
     QSettings settings;
     if(settings.value("use_customfields").toBool())

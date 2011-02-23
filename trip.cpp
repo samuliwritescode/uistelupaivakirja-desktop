@@ -51,13 +51,6 @@ QPair<QTime, QTime> Trip::getTime()
     QPair<QTime, QTime> retval;
     retval.first = get("time_start").toTime();
     retval.second = get("time_end").toTime();
-
-    if(!retval.first.isValid())
-        retval.first = QTime(0,0,0);
-
-    if(!retval.second.isValid())
-        retval.second = QTime(0,0,0);
-
     return retval;
 }
 
