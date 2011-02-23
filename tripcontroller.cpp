@@ -529,7 +529,12 @@ QList<QMap<QString, QString> > TripController::getFishList()
         if(fish->getType() == Fish::eWeather)
             props[FISH_SPECIES] = tr("säähav.");
         else
-            props[FISH_SPECIES] = fish->getSpecies();
+        {
+            if(fish->isGroup())
+                props[FISH_SPECIES] = fish->getSpecies()+"*"+QString::number(fish->getGroupAmount());
+            else
+                props[FISH_SPECIES] = fish->getSpecies();
+        }
         props[FISH_WEIGHT] = fish->getWeight();
         props[FISH_LENGTH] = fish->getLength();
         props[FISH_WEATHER] = fish->getHumanReadableWeather();
