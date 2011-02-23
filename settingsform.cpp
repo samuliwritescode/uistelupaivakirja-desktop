@@ -44,6 +44,7 @@ void SettingsForm::on_openSaveFolder_clicked()
     QSettings settings;
     QFileDialog filedlg(this);
     filedlg.setOptions(QFileDialog::ShowDirsOnly);
+    filedlg.setFileMode(QFileDialog::Directory);
     filedlg.setDirectory(settings.value("ProgramFolder").toString());
     if(filedlg.exec())
     {

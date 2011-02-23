@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
         {
             QFileDialog filedlg;
             filedlg.setOptions(QFileDialog::ShowDirsOnly);
+            filedlg.setFileMode(QFileDialog::Directory);
             if(filedlg.exec())
             {
                 QStringList folders = filedlg.selectedFiles();
