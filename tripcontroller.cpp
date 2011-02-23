@@ -91,6 +91,7 @@ QString TripController::getTextValue(EUISource source)
     switch(source)
     { 
     case eTripDescription: return m_trip->getDescription();
+    case eRouteAdd: return QObject::tr("Reittipisteitä: ")+QString::number(m_trip->getRoute().count());
     default: break;
     }
 
@@ -372,6 +373,9 @@ void TripController::textEvent(EUISource source, const QString& value)
         switch(source)
         {
         case eTripDescription: m_trip->setDescription(value); break;
+        case eRouteAdd: m_trip->setRoute(value);
+            sendNotificationToObservers(Controller::eTripUpdated);
+            break;
         case eWaypointsAdd:
             m_trip->setWayPoints(value);
             sendNotificationToObservers(Controller::eWayPointsUpdated);break;

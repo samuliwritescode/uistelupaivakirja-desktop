@@ -63,9 +63,25 @@ QList<WayPoint> Trip::getWayPoints()
 {
     if(get("waypointfile").toString().isEmpty())
         return QList<WayPoint>();
+
     GPXReader reader;
     reader.load(get("waypointfile").toString());
     return reader.getWayPoints();
+}
+
+void Trip::setRoute(const QString& p_route)
+{
+    set("routefile", importFile(p_route));
+}
+
+QList<TrackPoint> Trip::getRoute()
+{
+    if(get("routefile").toString().isEmpty())
+        return QList<TrackPoint>();
+
+    GPXReader reader;
+    reader.load(get("routefile").toString());
+    return reader.getTrackPoints();
 }
 
 Fish* Trip::getFish(int id)

@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     medialist.cpp \
     messagedisplay.cpp \
     htmlreport.cpp \
-    settingsform.cpp
+    settingsform.cpp \
+    routeitem.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -81,7 +82,8 @@ HEADERS  += mainwindow.h \
     medialist.h \
     messagedisplay.h \
     htmlreport.h \
-    settingsform.h
+    settingsform.h \
+    routeitem.h
 
 FORMS    += mainwindow.ui \
     tripform.ui \

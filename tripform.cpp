@@ -30,6 +30,10 @@ TripForm::TripForm(QWidget *parent) :
     m_POIBox->setAcceptDrops(true);
     ui->horizontalLayout_18->insertWidget(0, m_POIBox);
 
+    m_route = new RouteItem();
+    m_route->setAcceptDrops(true);
+    ui->verticalLayout_15->insertWidget(0, m_route);
+
     m_wptList = new WayPointList();
     m_wptList->setAcceptDrops(true);
     ui->poiDockLayout->insertWidget(0, m_wptList);
@@ -41,7 +45,7 @@ TripForm::TripForm(QWidget *parent) :
 
     m_mediaListTrip = new MediaList(eMediaFileAddTrip, eMediaFileRemoveTrip);
     m_mediaListTrip->setAcceptDrops(true);
-    ui->horizontalLayout_30->insertWidget(0, m_mediaListTrip);
+    ui->verticalLayout_15->insertWidget(0, m_mediaListTrip);
 
     observerEvent(Controller::eTripUpdated);
     observerEvent(Controller::eTripListUpdated);
@@ -66,6 +70,7 @@ TripForm::~TripForm()
     delete m_wptList;
     delete m_mediaList;
     delete m_mediaListTrip;
+    delete m_route;
 }
 
 
@@ -156,6 +161,7 @@ void TripForm::updateTrip()
     ui->dateEdit->blockSignals(false);
 
     m_mediaListTrip->setMediaFiles(m_tripController->getMediaFilesTrip());
+    m_route->setText(m_tripController->getTextValue(eRouteAdd));
 
     int selectedPlace = m_tripController->getIntValue(ePlaceName);
     bool bPlaceInList = false;

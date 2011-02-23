@@ -6,6 +6,7 @@
 #include "lureitem.h"
 #include "waypointitem.h"
 #include "waypointlist.h"
+#include "routeitem.h"
 #include "medialist.h"
 #include "singletons.h"
 
@@ -36,6 +37,7 @@ private:
     LureItem* m_lureBox;
     WayPointItem* m_POIBox;
     WayPointList* m_wptList;
+    RouteItem* m_route;
     MediaList* m_mediaList;
     MediaList* m_mediaListTrip;
     TripController* m_tripController;

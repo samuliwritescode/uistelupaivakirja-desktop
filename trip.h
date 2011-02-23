@@ -25,6 +25,9 @@ public:
     void setWayPoints(const QString&);
     QList<WayPoint> getWayPoints();
 
+    void setRoute(const QString&);
+    QList<TrackPoint> getRoute();
+
     void setPlace(Place*);
     Place* getPlace();
 
