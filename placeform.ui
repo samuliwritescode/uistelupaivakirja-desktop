@@ -45,6 +45,9 @@
        <attribute name="verticalHeaderVisible">
         <bool>false</bool>
        </attribute>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>20</number>
+       </attribute>
        <column/>
       </widget>
      </item>
@@ -113,12 +116,24 @@
    </item>
    <item>
     <widget class="QGroupBox" name="groupBox_2">
+     <property name="minimumSize">
+      <size>
+       <width>350</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="title">
       <string>Paikan tiedot</string>
      </property>
      <layout class="QFormLayout" name="formLayout_3">
       <property name="fieldGrowthPolicy">
-       <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+       <enum>QFormLayout::ExpandingFieldsGrow</enum>
       </property>
       <item row="0" column="0">
        <widget class="QLabel" name="label">
@@ -128,14 +143,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="place_name">
-        <property name="minimumSize">
-         <size>
-          <width>300</width>
-          <height>0</height>
-         </size>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="place_name"/>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_11">
@@ -145,14 +153,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="place_city">
-        <property name="minimumSize">
-         <size>
-          <width>300</width>
-          <height>0</height>
-         </size>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="place_city"/>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_13">
@@ -176,14 +177,7 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QTextEdit" name="place_misc">
-        <property name="minimumSize">
-         <size>
-          <width>300</width>
-          <height>0</height>
-         </size>
-        </property>
-       </widget>
+       <widget class="QTextEdit" name="place_misc"/>
       </item>
      </layout>
     </widget>

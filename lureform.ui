@@ -121,13 +121,13 @@
     <widget class="QGroupBox" name="groupBox">
      <property name="minimumSize">
       <size>
-       <width>300</width>
+       <width>350</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>300</width>
+       <width>350</width>
        <height>16777215</height>
       </size>
      </property>
@@ -138,7 +138,7 @@
       <item row="0" column="1">
        <layout class="QFormLayout" name="formLayout_5">
         <property name="fieldGrowthPolicy">
-         <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
         </property>
         <property name="rightMargin">
          <number>10</number>
@@ -187,11 +187,14 @@
         </item>
         <item row="5" column="1">
          <widget class="QComboBox" name="lure_type">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="editable">
            <bool>true</bool>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QComboBox::AdjustToContents</enum>
           </property>
           <property name="minimumContentsLength">
            <number>25</number>
@@ -207,11 +210,14 @@
         </item>
         <item row="1" column="1">
          <widget class="QComboBox" name="lure_manufacturer">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="editable">
            <bool>true</bool>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QComboBox::AdjustToContents</enum>
           </property>
           <property name="minimumContentsLength">
            <number>25</number>
@@ -220,11 +226,14 @@
         </item>
         <item row="2" column="1">
          <widget class="QComboBox" name="lure_model">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="editable">
            <bool>true</bool>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QComboBox::AdjustToContents</enum>
           </property>
           <property name="minimumContentsLength">
            <number>25</number>
@@ -233,11 +242,14 @@
         </item>
         <item row="3" column="1">
          <widget class="QComboBox" name="lure_size">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="editable">
            <bool>true</bool>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QComboBox::AdjustToContents</enum>
           </property>
           <property name="minimumContentsLength">
            <number>25</number>
@@ -246,11 +258,14 @@
         </item>
         <item row="4" column="1">
          <widget class="QComboBox" name="lure_color">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="editable">
            <bool>true</bool>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QComboBox::AdjustToContents</enum>
           </property>
           <property name="minimumContentsLength">
            <number>25</number>
