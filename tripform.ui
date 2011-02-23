@@ -126,6 +126,9 @@
             </item>
             <item>
              <widget class="QTimeEdit" name="timeEditTripStart">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
               <property name="displayFormat">
                <string>hh:mm</string>
               </property>
@@ -257,6 +260,9 @@
             </item>
             <item>
              <widget class="QTimeEdit" name="timeEditTripEnd">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
               <property name="displayFormat">
                <string>hh:mm</string>
               </property>
@@ -498,6 +504,9 @@
           </item>
           <item>
            <widget class="QTimeEdit" name="timeEdit">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
             <property name="displayFormat">
              <string>hh:mm</string>
             </property>
@@ -1618,8 +1627,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>228</width>
-          <height>37</height>
+          <width>700</width>
+          <height>69</height>
          </rect>
         </property>
         <attribute name="icon">
