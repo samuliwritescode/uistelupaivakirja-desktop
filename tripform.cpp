@@ -217,6 +217,10 @@ void TripForm::updateTrip()
             ui->toolBoxTrip->show();
             ui->webView->setHtml(m_tripController->getTripReport());
         }
+        else
+        {
+            ui->toolBoxTrip->hide();
+        }
         ui->groupBoxFish->hide();
         ui->groupBoxWeather->hide();
         ui->groupBoxOther->hide();
