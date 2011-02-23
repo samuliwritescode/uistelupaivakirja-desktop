@@ -155,13 +155,25 @@ QList<QPair<QString, int> > LureController::getLureList()
             continue;
 
         QPair<QString, int> pair;
-        pair.first = lure->getMaker()+" "+lure->getModel()+" "+lure->getSize()+" "+lure->getColor();
+        pair.first = lureName(lure);
         pair.second = lure->getId();
 
         retval.push_back(pair);
     }
     qSort(retval);
     return retval;
+}
+
+QString LureController::lureName(Lure* lure)
+{
+    if(lure)
+    {
+        return lure->getMaker()+" "+lure->getModel()+" "+lure->getSize()+" "+lure->getColor();
+    }
+    else
+    {
+        return QString();
+    }
 }
 
 QList<QList<QString> > LureController::getLureListLong()

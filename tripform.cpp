@@ -65,6 +65,7 @@ TripForm::~TripForm()
     delete m_POIBox;
     delete m_wptList;
     delete m_mediaList;
+    delete m_mediaListTrip;
 }
 
 

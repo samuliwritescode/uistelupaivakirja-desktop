@@ -21,8 +21,9 @@ public:
     QList<QList<QString> > getLureListLong();
     QStringList getLureColumns();
     QStringList getAlternatives(EUISource source);
+    QString lureName(Lure*);
 
-private:
+private:    
     void selectPlace(int value);
     Lure* m_lure;
 };

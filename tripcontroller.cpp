@@ -98,10 +98,7 @@ QString TripController::getTextValue(EUISource source)
 
     switch(source)
     {
-    case eLureName:
-        if(m_trip->getFish()->getLure())
-            return m_trip->getFish()->getLure()->getMaker();
-        break;
+    case eLureName: return Singletons::lureController()->lureName(m_trip->getFish()->getLure()); break;
     case eLength: return m_trip->getFish()->getLength();
     case eWeight: return m_trip->getFish()->getWeight();
     case eSpotDepth: return m_trip->getFish()->getSpotDepth();
@@ -533,10 +530,8 @@ QList<QMap<QString, QString> > TripController::getFishList()
         props[FISH_GETTER] = fish->getGetter();
         props[FISH_METHOD] = fish->getMethod();
         props[FISH_AIR_TEMP] = fish->getAirTemp();
-        props[FISH_TYPE] = QString::number(fish->getType());
-
-        if(fish->getLure())
-            props["lure"] = fish->getLure()->getMaker();
+        props[FISH_TYPE] = QString::number(fish->getType());        
+        props["lure"] = Singletons::lureController()->lureName(fish->getLure());
 
         retval.push_back(props);
     }
