@@ -5,6 +5,7 @@
 #include "trollingmodel.h"
 #include "locationprovider.h"
 #include "trollingexception.h"
+#include "routeinfo.h"
 
 TripController::TripController(QObject *parent) :
         Controller(parent),
@@ -91,7 +92,10 @@ QString TripController::getTextValue(EUISource source)
     switch(source)
     { 
     case eTripDescription: return m_trip->getDescription();
-    case eRouteAdd: return QObject::tr("Reittipisteitä: ")+QString::number(m_trip->getRoute().count());
+    case eRoute: {
+            RouteInfo info(m_trip);
+            return info.toString();
+    }
     default: break;
     }
 

@@ -161,7 +161,7 @@ void TripForm::updateTrip()
     ui->dateEdit->blockSignals(false);
 
     m_mediaListTrip->setMediaFiles(m_tripController->getMediaFilesTrip());
-    m_route->setText(m_tripController->getTextValue(eRouteAdd));
+    m_route->setText(m_tripController->getTextValue(eRoute));
 
     int selectedPlace = m_tripController->getIntValue(ePlaceName);
     bool bPlaceInList = false;
