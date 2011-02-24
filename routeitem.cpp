@@ -11,6 +11,7 @@ RouteItem::RouteItem(QLabel *parent) :
 {
     setMinimumSize(100,0);
     setText("");
+    setWordWrap(true);
 }
 
 RouteItem::RouteItem(const QString& text, QLabel *parent):
