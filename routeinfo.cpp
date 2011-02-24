@@ -56,13 +56,31 @@ double RouteInfo::trackDistance(int startindex, int endindex)
 
 TrackPoint RouteInfo::nearestPoint(const QDateTime& p_time)
 {
-    for(int loop=0; loop < m_trackpts.count(); loop++)
+    int count = m_trackpts.count();
+    int idx = count/2;
+    int hop = ceil(count/4);
+    int round = 2;
+    while(idx >= 0 &&
+          idx < count)
     {
-        TrackPoint pt = m_trackpts.at(loop);
-        if(abs(pt.time.secsTo(p_time)) < 60)
-        {
-            return pt;
-        }
+      TrackPoint pt = m_trackpts.at(idx);
+      if(p_time > pt.time)
+          idx += hop;
+      else
+          idx -= hop;
+
+      if(hop <= 1)
+          break;
+
+      round++;
+      hop = ceil(count/pow(2, round));
+    }
+
+    if(idx > 0 &&
+       idx < count &&
+       abs(p_time.secsTo(m_trackpts.at(idx).time)) < 60)
+    {
+        return m_trackpts.at(idx);
     }
 
     return TrackPoint();
