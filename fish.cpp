@@ -3,6 +3,7 @@
 #include "fish.h"
 #include "trip.h"
 #include "trollingexception.h"
+#include "routeinfo.h"
 
 Fish::Fish(Trip* p_parent):
         m_lure(NULL),
@@ -458,11 +459,32 @@ QString Fish::getAirTemp()
 
 QString Fish::getCoordinatesLat()
 {
+    if(m_properties[FISH_COORDINATES_LAT].toString().isEmpty())
+    {
+        RouteInfo info(m_parent);
+        QDateTime datetime(m_parent->getDate(), getTime());
+        TrackPoint pt = info.nearestPoint(datetime);
+        if(pt.lat != 0)
+        {
+            return QString::number(pt.lat);
+        }
+    }
     return m_properties[FISH_COORDINATES_LAT].toString();
 }
 
 QString Fish::getCoordinatesLon()
 {
+    if(m_properties[FISH_COORDINATES_LON].toString().isEmpty())
+    {
+        RouteInfo info(m_parent);
+        QDateTime datetime(m_parent->getDate(), getTime());
+        TrackPoint pt = info.nearestPoint(datetime);
+        if(pt.lon != 0)
+        {
+            return QString::number(pt.lon);
+        }
+    }
+
     return m_properties[FISH_COORDINATES_LON].toString();
 }
 

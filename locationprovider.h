@@ -15,6 +15,7 @@ public:
 class TrackPoint
 {
 public:
+    TrackPoint() {lat=0; lon=0; time=QDateTime();}
     double lat;
     double lon;
     QDateTime time;

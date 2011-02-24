@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <math.h>
 #include "routeinfo.h"
 #define TORADIANS (M_PI / 180.0)
@@ -51,6 +52,20 @@ double RouteInfo::trackDistance(int startindex, int endindex)
         distance += 6372.797 * 2 * atan2(sqrt(a), sqrt(1-a));
     }
     return distance;
+}
+
+TrackPoint RouteInfo::nearestPoint(const QDateTime& p_time)
+{
+    for(int loop=0; loop < m_trackpts.count(); loop++)
+    {
+        TrackPoint pt = m_trackpts.at(loop);
+        if(abs(pt.time.secsTo(p_time)) < 60)
+        {
+            return pt;
+        }
+    }
+
+    return TrackPoint();
 }
 
 double RouteInfo::trackDistance()

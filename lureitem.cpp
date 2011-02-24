@@ -11,6 +11,7 @@ LureItem::LureItem(QLabel *parent) :
 {
     setMinimumSize(100,0);
     setText("");
+    setWordWrap(true);
 }
 
 LureItem::LureItem(const QString& text, QLabel *parent):
