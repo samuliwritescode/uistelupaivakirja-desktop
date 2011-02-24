@@ -45,7 +45,7 @@ public:
     enum EPressureChange{eFastDecline=1, eModerateDecline, eSlowDecline, eNoChange, eSlowRaise, eModerateRaise, eFastRaise};
     enum EType {eNaN, eFish, eWeather, eFishAndWeather};
 
-    Fish();
+    Fish(Trip*);
 
     void setLure(Lure*);
     Lure* getLure();
@@ -129,6 +129,7 @@ private:
     void setProperty(const QString&, QVariant);
     void setType(EType type);
     Lure* m_lure;
+    Trip* m_parent;
     QHash<QString, QVariant> m_properties;
 };
 

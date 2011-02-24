@@ -111,7 +111,7 @@ void Trip::selectFish(int id)
 Fish* Trip::newFish(Fish::EType type)
 {
     QSettings settings;
-    Fish* fish = new Fish();
+    Fish* fish = new Fish(this);
     if(type == Fish::eFish ||
        type == Fish::eFishAndWeather)
     {
@@ -194,7 +194,7 @@ void Trip::constructItems(const TrollingObjectItemList& p_items)
     m_catch.clear();
     foreach(TrollingObjectItem item, p_items)
     {
-        Fish* fish = new Fish();
+        Fish* fish = new Fish(this);
         connect(fish, SIGNAL(FishModified()), this, SLOT(FishModified()));
 
         for(QHash<QString, QVariant>::iterator iter = item.begin(); iter != item.end(); iter++)

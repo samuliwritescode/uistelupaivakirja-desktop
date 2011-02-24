@@ -4,8 +4,9 @@
 #include "trip.h"
 #include "trollingexception.h"
 
-Fish::Fish():
-        m_lure(NULL)
+Fish::Fish(Trip* p_parent):
+        m_lure(NULL),
+        m_parent(p_parent)
 {
 }
 
