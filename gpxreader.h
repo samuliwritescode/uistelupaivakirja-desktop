@@ -6,7 +6,7 @@ class GPXReader: public LocationProvider
 {
 public:
     GPXReader();
-    void load(const QString& filename);
+    virtual void load(const QString& filename);
     virtual QList<WayPoint> getWayPoints();
     virtual QList<TrackPoint> getTrackPoints();
 

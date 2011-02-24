@@ -11,6 +11,8 @@ GPXReader::GPXReader()
 
 void GPXReader::load(const QString& filename)
 {
+    m_waypoints.clear();
+    m_trackpoints.clear();
     QFile file(filename);
     QDomDocument document;
     if(file.open(QIODevice::ReadOnly))

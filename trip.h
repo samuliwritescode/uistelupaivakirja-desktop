@@ -54,8 +54,10 @@ private slots:
     void FishModified();
 
 private:
+    LocationProvider* getLocationReader();
     QList<Fish*> m_catch;
-    int m_selectedFish;    
+    int m_selectedFish;
+    LocationProvider* m_reader;
 };
 
 #endif // TRIP_H

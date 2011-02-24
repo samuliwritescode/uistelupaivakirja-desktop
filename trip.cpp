@@ -10,11 +10,13 @@ Trip::Trip():
 {
     setType("trip");
     set("date",QDate::currentDate());
+    m_reader = NULL;
 }
 
 Trip::~Trip()
 {
-
+    if(m_reader)
+        delete m_reader;
 }
 
 void Trip::setDate(const QDate& date)
@@ -72,6 +74,7 @@ QList<WayPoint> Trip::getWayPoints()
 void Trip::setRoute(const QString& p_route)
 {
     set("routefile", importFile(p_route));
+    getLocationReader()->load(get("routefile").toString());
 }
 
 QList<TrackPoint> Trip::getRoute()
@@ -79,9 +82,17 @@ QList<TrackPoint> Trip::getRoute()
     if(get("routefile").toString().isEmpty())
         return QList<TrackPoint>();
 
-    GPXReader reader;
-    reader.load(get("routefile").toString());
-    return reader.getTrackPoints();
+    return getLocationReader()->getTrackPoints();
+}
+
+LocationProvider* Trip::getLocationReader()
+{
+    if(!m_reader)
+    {
+        m_reader = new GPXReader();
+        m_reader->load(get("routefile").toString());
+    }
+    return m_reader;
 }
 
 Fish* Trip::getFish(int id)
