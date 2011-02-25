@@ -9,10 +9,15 @@ GPXReader::GPXReader()
 {
 }
 
-void GPXReader::load(const QString& filename)
+void GPXReader::clear()
 {
     m_waypoints.clear();
     m_trackpoints.clear();
+}
+
+void GPXReader::load(const QString& filename)
+{
+    clear();
     QFile file(filename);
     QDomDocument document;
     if(file.open(QIODevice::ReadOnly))

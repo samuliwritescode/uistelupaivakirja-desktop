@@ -73,6 +73,13 @@ QList<WayPoint> Trip::getWayPoints()
 
 void Trip::setRoute(const QString& p_route)
 {
+    if(p_route.isEmpty())
+    {
+        set("routefile", QVariant());
+        getLocationReader()->clear();
+        return;
+    }
+
     set("routefile", importFile(p_route));
     getLocationReader()->load(get("routefile").toString());
 }

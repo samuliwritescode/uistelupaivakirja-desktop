@@ -32,7 +32,7 @@ TripForm::TripForm(QWidget *parent) :
 
     m_route = new RouteItem();
     m_route->setAcceptDrops(true);
-    ui->verticalLayout_15->insertWidget(0, m_route);
+    ui->horizontalLayout_30->insertWidget(0, m_route);
 
     m_wptList = new WayPointList();
     m_wptList->setAcceptDrops(true);
@@ -736,4 +736,14 @@ void TripForm::on_tripreport_showmap_toggled(bool checked)
 void TripForm::on_trip_description_textChanged()
 {
     m_tripController->textEvent(eTripDescription, ui->trip_description->toPlainText());
+}
+
+void TripForm::on_clear_poi_clicked()
+{
+    m_tripController->buttonEvent(eWayPointClear);
+}
+
+void TripForm::on_clear_route_clicked()
+{
+    m_tripController->buttonEvent(eRouteClear);
 }

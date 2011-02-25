@@ -7,6 +7,7 @@ class GPXReader: public LocationProvider
 public:
     GPXReader();
     virtual void load(const QString& filename);
+    virtual void clear();
     virtual QList<WayPoint> getWayPoints();
     virtual QList<TrackPoint> getTrackPoints();
 

@@ -43,6 +43,8 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_clear_route_clicked();
+    void on_clear_poi_clicked();
     void on_trip_description_textChanged();
     void on_tripreport_showmap_toggled(bool checked);
     void on_tripreport_showimg_toggled(bool checked);

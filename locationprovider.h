@@ -27,6 +27,7 @@ public:
     virtual QList<WayPoint> getWayPoints() = 0;
     virtual QList<TrackPoint> getTrackPoints() = 0;
     virtual void load(const QString& filename) = 0;
+    virtual void clear() = 0;
 
 protected:
     LocationProvider();

@@ -206,6 +206,14 @@ QString TrollingModel::importFile(TrollingObject* p_object, const QString& p_fil
     QString newPath = m_filePath+p_object->getType()+"/"+QString::number(p_object->getId())+"/";
     QString newFile = newPath+fileinfo.fileName();
     QDir dir(newPath);
+
+    if(!fileinfo.exists())
+    {
+        QString error = QObject::tr("Antamaasi tiedostoa ei löydy: ");
+        error += p_file;
+        throw TrollingException(error);
+    }
+
     if(!dir.mkpath("."))
     {
         QString error = QObject::tr("En pystynyt luomaan kansiota, jonne tallentaa antamasi tiedosto. Katso, että hakemisto ");

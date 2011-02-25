@@ -452,7 +452,7 @@ void TripController::buttonEvent(EUISource source)
                 Singletons::model()->reset(m_trip);
                 m_trip = Singletons::model()->getTrip(id);
             }break;
-        case eSaveTrip: Singletons::model()->commit(m_trip); break;
+        case eSaveTrip: Singletons::model()->commit(m_trip); break;        
         case eNewTrip: m_trip = Singletons::model()->getTrip(); break;
         case eDeleteTrip:
             Singletons::model()->remove(m_trip);
@@ -482,7 +482,23 @@ void TripController::buttonEvent(EUISource source)
             sendNotificationToObservers(Controller::eTripUpdated);
             return;
             break;
-        default:  qCritical() << "Unknown button event. Cant handle this!" << source;
+        case eRouteClear:
+            m_trip->setRoute("");
+            sendNotificationToObservers(Controller::eTripUpdated);
+            return;
+        default: break;
+        }
+
+        if(m_trip && m_trip->getFish())
+        {
+            switch(source)
+            {
+            case eWayPointClear:
+                m_trip->getFish()->setCoordinates("", "");
+                sendNotificationToObservers(Controller::eTripUpdated);
+                return;
+            default: break;
+            }
         }
     }
     catch(TrollingException e)
