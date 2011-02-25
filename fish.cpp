@@ -459,12 +459,15 @@ QString Fish::getAirTemp()
 
 QString Fish::getTrollingSpeedEstimate()
 {
-    QDateTime time(m_parent->getDate(), getTime());
-    RouteInfo info(m_parent);
-    double speed = info.speedAt(time);
-    if(speed > 0)
+    if(QSettings().value("use_routelog").toBool())
     {
-        return QString::number(speed, 'f', 1);
+        QDateTime time(m_parent->getDate(), getTime());
+        RouteInfo info(m_parent);
+        double speed = info.speedAt(time);
+        if(speed > 0)
+        {
+            return QString::number(speed, 'f', 1);
+        }
     }
 
     return QString();
@@ -474,12 +477,15 @@ QString Fish::getCoordinatesLat()
 {
     if(m_properties[FISH_COORDINATES_LAT].toString().isEmpty())
     {
-        RouteInfo info(m_parent);
-        QDateTime datetime(m_parent->getDate(), getTime());
-        TrackPoint pt = info.nearestPoint(datetime);
-        if(pt.lat != 0)
+        if(QSettings().value("use_routelog").toBool())
         {
-            return QString::number(pt.lat);
+            RouteInfo info(m_parent);
+            QDateTime datetime(m_parent->getDate(), getTime());
+            TrackPoint pt = info.nearestPoint(datetime);
+            if(pt.lat != 0)
+            {
+                return QString::number(pt.lat);
+            }
         }
     }
     return m_properties[FISH_COORDINATES_LAT].toString();
@@ -489,12 +495,15 @@ QString Fish::getCoordinatesLon()
 {
     if(m_properties[FISH_COORDINATES_LON].toString().isEmpty())
     {
-        RouteInfo info(m_parent);
-        QDateTime datetime(m_parent->getDate(), getTime());
-        TrackPoint pt = info.nearestPoint(datetime);
-        if(pt.lon != 0)
+        if(QSettings().value("use_routelog").toBool())
         {
-            return QString::number(pt.lon);
+            RouteInfo info(m_parent);
+            QDateTime datetime(m_parent->getDate(), getTime());
+            TrackPoint pt = info.nearestPoint(datetime);
+            if(pt.lon != 0)
+            {
+                return QString::number(pt.lon);
+            }
         }
     }
 

@@ -18,6 +18,7 @@ SettingsForm::SettingsForm(QWidget *parent) :
     ui->checkBoxUseSuggestions->setChecked(settings.value("use_suggestions").toBool());
     ui->checkBoxUseCustomFields->setChecked(settings.value("use_customfields").toBool());
     ui->customFields->setEnabled(settings.value("use_customfields").toBool());
+    ui->checkBoxUseRouteLog->setChecked(settings.value("use_routelog").toBool());
     ui->lineEditDataFolder->setText(settings.value("ProgramFolder").toString());
     ui->lineEditCSS->setText(settings.value("TripReportCSS").toString());
 
@@ -107,4 +108,10 @@ void SettingsForm::on_clearCSS_clicked()
     QSettings settings;
     settings.remove("TripReportCSS");
     ui->lineEditCSS->setText(QString());
+}
+
+void SettingsForm::on_checkBoxUseRouteLog_clicked(bool checked)
+{
+    QSettings settings;
+    settings.setValue("use_routelog", checked);
 }
