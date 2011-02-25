@@ -33,6 +33,7 @@ const QString FISH_COORDINATES_LAT = "fish_coord_lat";
 const QString FISH_COORDINATES_LON = "fish_coord_lon";
 const QString FISH_USERFIELD = "fish_user";
 const QString FISH_MEDIAFILES = "fish_mediafiles";
+const QString FISH_LURE = "lure";
 
 class Fish: public QObject
 {
@@ -128,7 +129,6 @@ private:
     void setDouble(const QString&, const QString&);
     void setProperty(const QString&, QVariant);
     void setType(EType type);
-    Lure* m_lure;
     Trip* m_parent;
     QHash<QString, QVariant> m_properties;
 };

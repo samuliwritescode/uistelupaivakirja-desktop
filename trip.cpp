@@ -235,9 +235,6 @@ TrollingObjectItemList Trip::serializeItems()
             fishprops[propname] = fish->getProperty(propname);
         }
 
-        if(fish->getLure())
-            fishprops["lure"] = fish->getLure()->getId();
-
         retval.push_back(fishprops);
     }
     return retval;

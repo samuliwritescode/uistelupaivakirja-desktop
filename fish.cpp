@@ -2,11 +2,11 @@
 #include <QSettings>
 #include "fish.h"
 #include "trip.h"
+#include "singletons.h"
 #include "trollingexception.h"
 #include "routeinfo.h"
 
-Fish::Fish(Trip* p_parent):
-        m_lure(NULL),
+Fish::Fish(Trip* p_parent):        
         m_parent(p_parent)
 {
 }
@@ -23,13 +23,13 @@ Fish::EType Fish::getType()
 
 void Fish::setLure(Lure* p_lure)
 {
-    emit FishModified();
-    m_lure = p_lure;
+    setProperty(FISH_LURE, p_lure->getId());
 }
 
 Lure* Fish::getLure()
 {
-    return m_lure;
+    Lure* lure = Singletons::model()->getLure(getProperty("lure").toInt());
+    return lure;
 }
 
 void Fish::addMediaFile(const QString& p_file)
