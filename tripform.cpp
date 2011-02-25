@@ -162,6 +162,7 @@ void TripForm::updateTrip()
 
     m_mediaListTrip->setMediaFiles(m_tripController->getMediaFilesTrip());
     m_route->setText(m_tripController->getTextValue(eRoute));
+    ui->clear_route->setDisabled(m_tripController->getTextValue(eRoute).isEmpty());
 
     int selectedPlace = m_tripController->getIntValue(ePlaceName);
     bool bPlaceInList = false;
@@ -239,6 +240,7 @@ void TripForm::updateTrip()
     ui->timeEdit->blockSignals(true);
 
     m_POIBox->setText(m_tripController->getTextValue(eWayPointSet));
+    ui->clear_poi->setDisabled(m_tripController->getTextValue(eWayPointSet).isEmpty());
     QTime time = m_tripController->getTimeValue(eTime);
     ui->timeEdit->setTime(time);
     ui->time_dial_hour->setValue((time.hour()+12)%24);
