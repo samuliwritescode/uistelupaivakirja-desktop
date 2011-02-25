@@ -3,7 +3,6 @@
 #include "singletons.h"
 #include "trip.h"
 #include "gpxreader.h"
-#include "routeinfo.h"
 
 Trip::Trip():
     TrollingObject(),
