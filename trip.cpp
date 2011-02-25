@@ -83,12 +83,6 @@ void Trip::setRoute(const QString& p_route)
 
     set("routefile", importFile(p_route));
     getLocationReader()->load(get("routefile").toString());
-    RouteInfo info(this);
-    if(info.startTime().daysTo(info.endTime()) < 1 && QSettings().value("use_routelog").toBool())
-    {
-        this->setDate(info.startTime().date());
-        this->setTime(info.startTime().time(), info.endTime().time());
-    }
 }
 
 QList<TrackPoint> Trip::getRoute()

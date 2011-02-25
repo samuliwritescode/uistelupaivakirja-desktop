@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QSettings>
 #include <math.h>
 #include "singletons.h"
 #include "tripcontroller.h"
@@ -381,8 +382,16 @@ void TripController::textEvent(EUISource source, const QString& value)
         switch(source)
         {
         case eTripDescription: m_trip->setDescription(value); break;
-        case eRouteAdd: m_trip->setRoute(value);
-            sendNotificationToObservers(Controller::eTripUpdated);
+        case eRouteAdd: {
+                m_trip->setRoute(value);
+                RouteInfo info(m_trip);
+                if(info.startTime().daysTo(info.endTime()) < 1 && QSettings().value("use_routelog").toBool())
+                {
+                    m_trip->setDate(info.startTime().date());
+                    m_trip->setTime(info.startTime().time(), info.endTime().time());
+                }
+                sendNotificationToObservers(Controller::eTripUpdated);
+            }
             break;
         case eWaypointsAdd:
             m_trip->setWayPoints(value);
