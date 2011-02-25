@@ -419,6 +419,7 @@ void TripForm::updateFish()
     ui->spotdepth->setText(m_tripController->getTextValue(eSpotDepth));
     ui->totaldepth->setText(m_tripController->getTextValue(eTotalDepth));
     ui->trolling_speed->setText(m_tripController->getTextValue(eTrollingSpeed));
+    ui->trolling_speed->setPlaceholderText(m_tripController->getTextValue(eTrollingSpeedEstimate));
     ui->line_weight->setText(m_tripController->getTextValue(eLineWeight));
     ui->release_width->setText(m_tripController->getTextValue(eReleaseWidth));
 

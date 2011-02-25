@@ -91,6 +91,7 @@ public:
     QString getSpotDepth();
     QString getTotalDepth();
     QString getTrollingSpeed();
+    QString getTrollingSpeedEstimate();
     QString getLineWeight();
     QString getReleaseWidth();
     QString getSpecies();

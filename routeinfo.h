@@ -13,9 +13,11 @@ public:
 
     double trackDistance();
     TrackPoint nearestPoint(const QDateTime&);
+    double speedAt(const QDateTime&);
 
 private:
     double trackDistance(int, int);
+    int nearestIndex(const QDateTime&);
     QList<TrackPoint> m_trackpts;
 };
 

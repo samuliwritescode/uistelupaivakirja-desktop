@@ -27,6 +27,19 @@ QString RouteInfo::toString()
     return retval;
 }
 
+double RouteInfo::speedAt(const QDateTime& p_time)
+{
+    int idx = nearestIndex(p_time);
+    if(idx > 1 && idx < m_trackpts.count())
+    {
+        double distance = trackDistance(idx-1, idx);
+        int time = m_trackpts[idx-1].time.secsTo(m_trackpts[idx].time);
+        return distance/time*3600;
+    }
+
+    return 0;
+}
+
 double RouteInfo::trackDistance(int startindex, int endindex)
 {
     double distance = 0;
@@ -54,7 +67,7 @@ double RouteInfo::trackDistance(int startindex, int endindex)
     return distance;
 }
 
-TrackPoint RouteInfo::nearestPoint(const QDateTime& p_time)
+int RouteInfo::nearestIndex(const QDateTime& p_time)
 {
     int count = m_trackpts.count();
     int idx = count/2;
@@ -76,8 +89,15 @@ TrackPoint RouteInfo::nearestPoint(const QDateTime& p_time)
       hop = ceil(count/pow(2, round));
     }
 
+    return idx;
+}
+
+TrackPoint RouteInfo::nearestPoint(const QDateTime& p_time)
+{
+    int idx = nearestIndex(p_time);
+
     if(idx > 0 &&
-       idx < count &&
+       idx < m_trackpts.count() &&
        abs(p_time.secsTo(m_trackpts.at(idx).time)) < 60)
     {
         return m_trackpts.at(idx);

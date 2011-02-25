@@ -109,6 +109,7 @@ QString TripController::getTextValue(EUISource source)
     case eSpotDepth: return m_trip->getFish()->getSpotDepth();
     case eTotalDepth: return m_trip->getFish()->getTotalDepth();
     case eTrollingSpeed: return m_trip->getFish()->getTrollingSpeed();
+    case eTrollingSpeedEstimate: return m_trip->getFish()->getTrollingSpeedEstimate();
     case eLineWeight: return m_trip->getFish()->getLineWeight();
     case eReleaseWidth: return m_trip->getFish()->getReleaseWidth();
     case eAirTemp: return m_trip->getFish()->getAirTemp();

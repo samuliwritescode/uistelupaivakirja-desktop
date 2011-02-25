@@ -457,6 +457,19 @@ QString Fish::getAirTemp()
     return m_properties[FISH_AIR_TEMP].toString();
 }
 
+QString Fish::getTrollingSpeedEstimate()
+{
+    QDateTime time(m_parent->getDate(), getTime());
+    RouteInfo info(m_parent);
+    double speed = info.speedAt(time);
+    if(speed > 0)
+    {
+        return QString::number(speed, 'f', 1);
+    }
+
+    return QString();
+}
+
 QString Fish::getCoordinatesLat()
 {
     if(m_properties[FISH_COORDINATES_LAT].toString().isEmpty())
