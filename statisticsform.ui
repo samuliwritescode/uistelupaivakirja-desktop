@@ -32,7 +32,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Lajittele vaakasuunnassa</string>
+        <string>Ryhmittele vaakasuunnassa</string>
        </property>
       </widget>
      </item>
@@ -42,7 +42,7 @@
      <item>
       <widget class="QCheckBox" name="checkBox3D">
        <property name="text">
-        <string>3D</string>
+        <string>pystysuunnassa</string>
        </property>
       </widget>
      </item>
@@ -82,7 +82,7 @@
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Laske tilastot</string>
+        <string>Esitä</string>
        </property>
       </widget>
      </item>
@@ -92,7 +92,7 @@
      <item>
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>kaavalla</string>
+        <string>ja näytä niiden</string>
        </property>
       </widget>
      </item>
