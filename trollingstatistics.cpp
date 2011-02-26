@@ -143,7 +143,10 @@ QHash<QString, double> TrollingStatistics::sumFields(const QList<QHash<QString, 
     for(int loop=0; loop < statistics.count(); loop++)
     {
         QHash<QString, QString> statline = statistics.at(loop);
-        retval[makeGroup(statline[m_X])] = retval[makeGroup(statline[m_X])] + statline[field].toDouble();
+        if(!statline[field].isEmpty())
+        {
+            retval[makeGroup(statline[m_X])] = retval[makeGroup(statline[m_X])] + statline[field].toDouble();
+        }
     }
     return retval;
 }
@@ -154,6 +157,9 @@ QHash<QString, double> TrollingStatistics::minMaxField(const QList<QHash<QString
     for(int loop=0; loop < statistics.count(); loop++)
     {
         QHash<QString, QString> statline = statistics.at(loop);
+        if(statline[field].isEmpty())
+            continue;
+
         double value = statline[field].toDouble();
         if(!retval.contains(makeGroup(statline[m_X])))
         {
