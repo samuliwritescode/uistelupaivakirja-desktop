@@ -215,7 +215,7 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
     qSort(retval.m_columns);
 
     //get column values
-    m_X = m_Z;
+    setX(m_Z);
     QHash<QString, QString> cols = stats();
     retval.m_rows = cols.keys();
     qSort(retval.m_rows);
@@ -224,10 +224,9 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
     {
         QString col = retval.m_rows.at(loop);
         emit progress(100*idx/cols.size());
-        m_X = y;
-        setFilterComparison(m_Z, COMPARISON_EQUAL);
+        setX(y);
+        setFilterComparison(m_Z, "internal");
         setFilterText(m_Z, col);
-        TrollingStatisticsTableRow row;
         QHash<QString, QString> stat = stats();
 
         retval.m_data.push_back(stat);
@@ -236,7 +235,7 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
     }
 
     emit progress(100);
-    m_X = y;
+    setX(y);
     m_filters = filters;
     return retval;
 }
@@ -274,8 +273,13 @@ bool TrollingStatistics::isMatch(const QHash<QString, QString>& p_statline)
                 {
                     return false;
                 }
+            } else if(iter.value().second == "internal")
+            {
+                if(makeGroup(p_statline[iter.key()]) != makeGroup(iter.value().first))
+                {
+                    return false;
+                }
             }
-
         }
     }
     return true;
