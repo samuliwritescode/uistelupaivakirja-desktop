@@ -2,6 +2,7 @@
 #define STATISTICSFORM_H
 
 #include <QWidget>
+#include <QComboBox>
 #include "singletons.h"
 
 namespace Ui {
@@ -19,11 +20,16 @@ public:
     ~StatisticsForm();
 
 private:
+    void setupCombo(QComboBox* p_combo, const QStringList& p_content);
     StatisticsController* m_statsController;
     Ui::StatisticsForm *ui;
     GLStatWidget* m_statWidget;
 
 private slots:
+    void on_checkBoxFilter_clicked(bool checked);
+    void on_lineEditFilter_textEdited(QString );
+    void on_comparisonCombo_currentIndexChanged(QString );
+    void on_filterCombo_currentIndexChanged(QString );
     void on_checkBox3D_clicked(bool checked);
     void on_byColumnCombo_currentIndexChanged(QString );
     void on_statisticsCombo_currentIndexChanged(QString );

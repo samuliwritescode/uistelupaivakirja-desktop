@@ -26,6 +26,8 @@ public:
     void setFilterComparison(const QString&, const QString&);
     void setFilterText(const QString&, const QString&);
     void clearFilter();
+    QStringList getTextComparisonOperators();
+    QStringList getNumericComparisonOperators();
 
 signals:
     void progress(int);

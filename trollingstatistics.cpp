@@ -5,7 +5,7 @@
 #define OPERATOR_COUNT tr("Määrä")
 #define OPERATOR_SUM tr("Summa")
 #define OPERATOR_MEAN tr("Keskiarvo")
-#define COMPARISON_EQUAL tr("Täsmää")
+#define COMPARISON_EQUAL tr("Yhtäsuuri")
 #define COMPARISON_INCLUDES tr("Sisältää")
 #define COMPARISON_GREATER tr("Suurempi")
 #define COMPARISON_LESS tr("Pienempi")
@@ -205,10 +205,35 @@ bool TrollingStatistics::isMatch(const QHash<QString, QString>& p_statline)
     {
         if(p_statline.contains(iter.key()))
         {
-            if(p_statline[iter.key()] != iter.value().first)
+            if(iter.value().first.isEmpty())
+                continue;
+
+            if(iter.value().second == COMPARISON_EQUAL)
             {
-                return false;
+                if(p_statline[iter.key()].toLower() != iter.value().first.toLower())
+                {
+                    return false;
+                }
+            } else if(iter.value().second == COMPARISON_INCLUDES)
+            {
+                if(!p_statline[iter.key()].toLower().contains(iter.value().first.toLower()))
+                {
+                    return false;
+                }
+            } else if(iter.value().second == COMPARISON_GREATER)
+            {
+                if(p_statline[iter.key()].toDouble() <= iter.value().first.toDouble())
+                {
+                    return false;
+                }
+            } else if(iter.value().second == COMPARISON_LESS)
+            {
+                if(p_statline[iter.key()].toDouble() >= iter.value().first.toDouble())
+                {
+                    return false;
+                }
             }
+
         }
     }
     return true;
@@ -245,4 +270,23 @@ void TrollingStatistics::setFilterText(const QString& p_field, const QString& p_
     {
         m_filters[p_field] = QPair<QString, QString>(p_text, "");
     }
+}
+
+QStringList TrollingStatistics::getTextComparisonOperators()
+{
+    QStringList retval;
+    retval << COMPARISON_EQUAL;
+    retval << COMPARISON_INCLUDES;
+    retval.sort();
+    return retval;
+}
+
+QStringList TrollingStatistics::getNumericComparisonOperators()
+{
+    QStringList retval;
+    retval << COMPARISON_EQUAL;
+    retval << COMPARISON_GREATER;
+    retval << COMPARISON_LESS;
+    retval.sort();
+    return retval;
 }

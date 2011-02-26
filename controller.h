@@ -88,6 +88,7 @@ enum EUISource {eTripDate,
                 eStatisticsFilterField,
                 eStatisticsFilterComparison,
                 eStatisticsFilterText,
+                eStatisticsFilterClear,
                 eTripReportShowImages,
                 eTripReportShowMaps,
                 eTripDescription};

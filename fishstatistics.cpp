@@ -119,6 +119,9 @@ QHash<QString, QString> FishStatistics::stats()
                 {
                     Lure* lure = fish->getLure();
                     statline[COL_LUREMANUFACTURER] = lure->getMaker();
+                } else
+                {
+                    statline[COL_LUREMANUFACTURER] = "";
                 }
 
                 if(trip->getPlace())

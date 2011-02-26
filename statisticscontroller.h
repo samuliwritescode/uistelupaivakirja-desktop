@@ -17,6 +17,7 @@ public:
     QStringList getNumericFields();
     QStringList getEngines();
     QStringList getOperators();
+    QStringList getComparisonOperators();
     QHash<QString, QString> getStats();
     TrollingStatisticsTable getStats3D();
 
@@ -25,7 +26,7 @@ signals:
 
 private:
     TrollingStatistics* m_stats;
-
+    QString m_filterField;
 };
 
 #endif // STATISTICSCONTROLLER_H

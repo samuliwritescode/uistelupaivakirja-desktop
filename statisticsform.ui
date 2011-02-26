@@ -110,14 +110,18 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QCheckBox" name="checkBoxFilter">
        <property name="text">
         <string>Rajaus</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="filterCombo"/>
+      <widget class="QComboBox" name="filterCombo">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_5">
@@ -127,7 +131,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comparisonCombo"/>
+      <widget class="QComboBox" name="comparisonCombo">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_6">
@@ -137,7 +145,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditFilter"/>
+      <widget class="QLineEdit" name="lineEditFilter">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

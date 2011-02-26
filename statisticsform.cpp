@@ -62,46 +62,33 @@ void StatisticsForm::observerEvent(int type)
         {
             ui->calculatefromfieldCombo->hide();
             ui->labelFromField->hide();
-        }
+        }        
     }
     else if(type == Controller::eStatisticsEngineUpdated)
     {
         qDebug() << "update stats engine";
-        ui->columnCombo->blockSignals(true);
-        ui->columnCombo->clear();
-        ui->byColumnCombo->blockSignals(true);
-        ui->byColumnCombo->clear();
-        QStringList fields = m_statsController->getFields();
-        for(int loop=0; loop < fields.count(); loop++)
-        {
-            ui->columnCombo->addItem(fields.at(loop));
-            ui->byColumnCombo->addItem(fields.at(loop));
-        }
-        ui->columnCombo->setCurrentIndex(-1);
-        ui->byColumnCombo->setCurrentIndex(-1);
 
-        ui->byColumnCombo->blockSignals(false);
-        ui->columnCombo->blockSignals(false);
+        setupCombo(ui->byColumnCombo, m_statsController->getFields());
+        setupCombo(ui->columnCombo, m_statsController->getFields());
+        setupCombo(ui->calculatefromfieldCombo, m_statsController->getNumericFields());
+        setupCombo(ui->unitCombo, m_statsController->getOperators());
+        ui->unitCombo->setCurrentIndex(0);
+        setupCombo(ui->filterCombo, m_statsController->getFields());
 
-        ui->calculatefromfieldCombo->blockSignals(true);
-        ui->calculatefromfieldCombo->clear();
-        QStringList numFields = m_statsController->getNumericFields();
-        for(int loop=0; loop < numFields.count(); loop++)
-        {
-            ui->calculatefromfieldCombo->addItem(numFields.at(loop));
-        }
-        ui->calculatefromfieldCombo->setCurrentIndex(-1);
-        ui->calculatefromfieldCombo->blockSignals(false);
-
-        ui->unitCombo->blockSignals(true);
-        ui->unitCombo->clear();
-        QStringList operators = m_statsController->getOperators();
-        for(int loop=0; loop < operators.count(); loop++)
-        {
-            ui->unitCombo->addItem(operators.at(loop));
-        }
-        ui->unitCombo->blockSignals(false);
+        ui->lineEditFilter->setText("");
     }
+}
+
+void StatisticsForm::setupCombo(QComboBox* p_combo, const QStringList& p_content)
+{
+    p_combo->blockSignals(true);
+    p_combo->clear();
+    for(int loop=0; loop < p_content.count(); loop++)
+    {
+        p_combo->addItem(p_content.at(loop));
+    }
+    p_combo->setCurrentIndex(-1);
+    p_combo->blockSignals(false);
 }
 
 void StatisticsForm::progressBarChanged(int value)
@@ -158,4 +145,36 @@ void StatisticsForm::on_checkBox3D_clicked(bool checked)
     ui->byColumnCombo->setVisible(checked);
     //send something to controller to get update.
     m_statsController->textEvent(eFishList, "");
+}
+
+void StatisticsForm::on_filterCombo_currentIndexChanged(QString text)
+{
+   m_statsController->textEvent(eStatisticsFilterField, text);
+   setupCombo(ui->comparisonCombo, m_statsController->getComparisonOperators());
+   ui->lineEditFilter->clear();
+}
+
+void StatisticsForm::on_comparisonCombo_currentIndexChanged(QString text)
+{
+    m_statsController->textEvent(eStatisticsFilterComparison, text);
+}
+
+void StatisticsForm::on_lineEditFilter_textEdited(QString text)
+{
+    m_statsController->textEvent(eStatisticsFilterText, text);
+}
+
+void StatisticsForm::on_checkBoxFilter_clicked(bool checked)
+{
+    if(!checked)
+    {
+        m_statsController->textEvent(eStatisticsFilterClear, "");
+        ui->filterCombo->setCurrentIndex(-1);
+        ui->comparisonCombo->setCurrentIndex(-1);
+        ui->lineEditFilter->clear();
+    }
+
+    ui->filterCombo->setDisabled(!checked);
+    ui->lineEditFilter->setDisabled(!checked);
+    ui->comparisonCombo->setDisabled(!checked);
 }

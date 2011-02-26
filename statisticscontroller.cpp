@@ -27,9 +27,12 @@ void StatisticsController::textEvent(EUISource source, const QString& value)
     case eStatisticsByColumn: m_stats->setZ(value); break;
     case eStatisticsField: m_stats->setOperand(value); break;
     case eStatisticsUnit: m_stats->setOperator(value); break;
-    case eStatisticsFilterField: break;
-    case eStatisticsFilterComparison: break;
-    case eStatisticsFilterText: break;
+    case eStatisticsFilterClear: m_stats->clearFilter(); break;
+    case eStatisticsFilterField:
+        m_stats->clearFilter();
+        m_filterField = value; break;
+    case eStatisticsFilterComparison: m_stats->setFilterComparison(m_filterField, value); break;
+    case eStatisticsFilterText: m_stats->setFilterText(m_filterField, value); break;
     case eStatistics:
         if(m_stats->getName() == value)
         {
@@ -98,4 +101,21 @@ QStringList StatisticsController::getOperators()
 {
     QStringList list = m_stats->getOperators();
     return list;
+}
+
+QStringList StatisticsController::getComparisonOperators()
+{
+    QStringList retval;
+
+    if(m_stats->getNumericFields().contains(m_filterField))
+    {
+        retval = m_stats->getNumericComparisonOperators();
+    }
+    else if(m_stats->getTextFields().contains(m_filterField))
+    {
+        retval = m_stats->getTextComparisonOperators();
+    }
+
+    qSort(retval);
+    return retval;
 }
