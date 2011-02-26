@@ -22,7 +22,7 @@ bool groupLessThan(const QString g1, const QString g2)
 
 TrollingStatistics::TrollingStatistics():
         m_operator(OPERATOR_COUNT),
-        m_doScaling(false)
+        m_doScaling(true)
 {
 }
 
