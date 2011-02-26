@@ -44,6 +44,7 @@ bool TripController::getBooleanValue(EUISource source)
     case eGroup: return m_trip->getFish()->isGroup(); break;
     case eCatchNRelease: return m_trip->getFish()->isCR(); break;
     case eUnderSize: return m_trip->getFish()->isUnderSize(); break;
+    case eDeselectFish: return true;
     default: break;
     }
 
@@ -228,8 +229,7 @@ void TripController::selectTrip(int value)
 
     }
     m_trip = Singletons::model()->getTrip(value);
-    m_trip->selectFish(-1);
-    sendNotificationToObservers(Controller::eFishListUpdated);
+    m_trip->selectFish(-1);   
     sendNotificationToObservers(Controller::eWayPointsUpdated);
 }
 
@@ -503,6 +503,11 @@ void TripController::buttonEvent(EUISource source)
         {
             switch(source)
             {
+            case eDeselectFish:
+                m_trip->selectFish(-1);
+                sendNotificationToObservers(Controller::eTripUpdated);
+                sendNotificationToObservers(Controller::eFishListUpdated);
+                return;
             case eWayPointClear:
                 m_trip->getFish()->setCoordinates("", "");
                 sendNotificationToObservers(Controller::eTripUpdated);

@@ -152,6 +152,7 @@ void TripForm::updateTrip()
     ui->timeEditTripEnd->setTime(m_tripController->getTimeValue(eEndTime));
     ui->endDial->setValue((m_tripController->getIntValue(eEndTime)+12)%24);
     ui->trip_description->setText(m_tripController->getTextValue(eTripDescription));
+    ui->go_trip->setEnabled(m_tripController->getBooleanValue(eDeselectFish));
 
     ui->startDial->blockSignals(false);
     ui->endDial->blockSignals(false);
@@ -759,4 +760,9 @@ void TripForm::on_searchLure_textEdited(QString text)
 void TripForm::on_onlyFavoriteLures_clicked(bool checked)
 {
     Singletons::lureController()->booleanEvent(eLureSearchFavorites, checked);
+}
+
+void TripForm::on_go_trip_clicked()
+{
+    m_tripController->buttonEvent(eDeselectFish);
 }

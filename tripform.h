@@ -43,6 +43,7 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_go_trip_clicked();
     void on_onlyFavoriteLures_clicked(bool checked);
     void on_searchLure_textEdited(QString );
     void on_clear_route_clicked();
