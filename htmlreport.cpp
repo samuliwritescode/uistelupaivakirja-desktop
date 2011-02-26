@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QSettings>
 #include "htmlreport.h"
+#include "routeinfo.h"
 #include "trip.h"
 #include "place.h"
 #include "fish.h"
@@ -74,7 +75,15 @@ QString HTMLReport::parseTrip(Trip* p_trip)
                          p_trip->getTime().second.toString()
                          );
 
-    retval += divSection("trip_description", p_trip->getDescription());
+    if(p_trip->getRoute().count() > 0)
+    {
+        RouteInfo info(p_trip);
+        retval += divSection("trip_distance", tr("Kuljettu matka: ")+
+                             QString::number(info.trackDistance(), 'f', 2)+
+                             tr(" km"));
+    }
+
+    retval += divSection("trip_description", p_trip->getDescription().replace("\n", "<BR>"));
 
     if(p_trip->getMediaFiles().count() > 0)
     {

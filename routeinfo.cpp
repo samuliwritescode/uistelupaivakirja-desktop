@@ -21,8 +21,8 @@ QString RouteInfo::toString()
     retval += endTime().toString("dd.MM hh:mm");
     retval += "\n";
     retval += QObject::tr("Reitin pituus: ");
-    retval += QString::number(trackDistance());
-    retval += " km";
+    retval += QString::number(trackDistance(), 'f', 2);
+    retval += QObject::tr(" km");
 
     return retval;
 }
