@@ -81,9 +81,19 @@ void GLStatWidget::paintGL()
         int indexX = 0;
         foreach(QString name, m_cols)
         {
-            double value = 5*stats[name].toDouble()/m_maxVal;
-            drawBox(indexX, 0.0, -loop, 0.4, value, stats[name].toDouble()/m_maxVal);
-            renderText(indexX, value, -loop+0.3, stats[name]);
+            double value = 0;
+            if(m_maxVal != 0)
+                value= 5*stats[name].toDouble()/m_maxVal;
+
+            if(m_maxVal != 0)
+                drawBox(indexX, 0.0, -loop, 0.4, value, stats[name].toDouble()/m_maxVal);
+            else
+                drawBox(indexX, 0.0, -loop, 0.4, value, 0);
+
+            if(stats[name].isEmpty())
+                renderText(indexX, value, -loop+0.3, "-");
+            else
+                renderText(indexX, value, -loop+0.3, stats[name]);
             //drawLine(indexX, 0.0, -loop, indexX+10, 0.0, -loop-10);
             indexX++;
         }

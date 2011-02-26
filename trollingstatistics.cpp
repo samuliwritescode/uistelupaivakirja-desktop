@@ -5,6 +5,8 @@
 #define OPERATOR_COUNT tr("Määrä")
 #define OPERATOR_SUM tr("Summa")
 #define OPERATOR_MEAN tr("Keskiarvo")
+#define OPERATOR_GREATEST tr("Suurin")
+#define OPERATOR_SMALLEST tr("Pienin")
 #define COMPARISON_EQUAL tr("Yhtäsuuri")
 #define COMPARISON_INCLUDES tr("Sisältää")
 #define COMPARISON_GREATER tr("Suurempi")
@@ -37,6 +39,8 @@ QStringList TrollingStatistics::getOperators()
     retval << OPERATOR_COUNT;
     retval << OPERATOR_SUM;
     retval << OPERATOR_MEAN;
+    retval << OPERATOR_GREATEST;
+    retval << OPERATOR_SMALLEST;
     return retval;
 }
 
@@ -53,7 +57,9 @@ void TrollingStatistics::setScaling(bool p_scale)
 bool TrollingStatistics::supportOperand()
 {
     if(m_operator == OPERATOR_MEAN ||
-       m_operator == OPERATOR_SUM)
+       m_operator == OPERATOR_SUM ||
+       m_operator == OPERATOR_GREATEST ||
+       m_operator == OPERATOR_SMALLEST)
         return true;
 
     return false;
@@ -77,6 +83,12 @@ QHash<QString, QString> TrollingStatistics::calculate(const QList<QHash<QString,
     } else if(m_operator == OPERATOR_SUM)
     {
         fishcount = sumFields(statistics, m_field);
+    } else if(m_operator == OPERATOR_GREATEST)
+    {
+        fishcount = minMaxField(statistics, m_field, false);
+    } else if(m_operator == OPERATOR_SMALLEST)
+    {
+        fishcount = minMaxField(statistics, m_field, true);
     }
 
     for(QHash<QString, double>::iterator iter= fishcount.begin(); iter!=fishcount.end(); iter++)
@@ -135,6 +147,30 @@ QHash<QString, double> TrollingStatistics::sumFields(const QList<QHash<QString, 
     }
     return retval;
 }
+
+QHash<QString, double> TrollingStatistics::minMaxField(const QList<QHash<QString, QString> >& statistics, const QString& field, bool min)
+{
+    QHash<QString, double> retval;
+    for(int loop=0; loop < statistics.count(); loop++)
+    {
+        QHash<QString, QString> statline = statistics.at(loop);
+        double value = statline[field].toDouble();
+        if(!retval.contains(makeGroup(statline[m_X])))
+        {
+            retval[makeGroup(statline[m_X])] = value;
+            continue;
+        }
+
+        if(min && value < retval[makeGroup(statline[m_X])])
+            retval[makeGroup(statline[m_X])] = value;
+
+        if(!min && value > retval[makeGroup(statline[m_X])])
+            retval[makeGroup(statline[m_X])] = value;
+
+    }
+    return retval;
+}
+
 
 QString TrollingStatistics::getX()
 {

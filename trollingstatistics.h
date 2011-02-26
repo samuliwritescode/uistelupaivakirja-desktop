@@ -36,6 +36,7 @@ protected:
     virtual QHash<QString, QString> calculate(const QList<QHash<QString, QString> >&);    
     QHash<QString, double> countFields(const QList<QHash<QString, QString> >&, const QString&);
     QHash<QString, double> sumFields(const QList<QHash<QString, QString> >&, const QString&);
+    QHash<QString, double> minMaxField(const QList<QHash<QString, QString> >&, const QString&, bool);
     QString makeGroup(const QString&);
     QString getX();
     QString getZ();
