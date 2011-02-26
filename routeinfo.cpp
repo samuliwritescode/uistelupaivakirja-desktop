@@ -108,7 +108,7 @@ TrackPoint RouteInfo::nearestPoint(const QDateTime& p_time)
 
 double RouteInfo::trackDistance()
 {
-    return trackDistance(0, m_trackpts.count());
+    return trackDistance(nearestIndex(startTime()), m_trackpts.count());
 }
 
 QDateTime RouteInfo::startTime()
