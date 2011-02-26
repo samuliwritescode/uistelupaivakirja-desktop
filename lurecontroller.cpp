@@ -3,7 +3,8 @@
 #include "singletons.h"
 
 LureController::LureController():
-        m_lure(NULL)
+        m_lure(NULL),
+        m_onlyFavorites(false)
 {   
 }
 
@@ -40,6 +41,15 @@ void LureController::buttonEvent(EUISource source)
 
 void LureController::booleanEvent(EUISource source, bool value)
 {
+    switch(source)
+    {
+    case eLureSearchFavorites:
+        m_onlyFavorites = value;
+        sendNotificationToObservers(Controller::eLureListUpdated);
+        return;
+    default: break;
+    }
+
     if(!m_lure) return;
     switch(source)
     {
@@ -52,6 +62,15 @@ void LureController::booleanEvent(EUISource source, bool value)
 
 void LureController::textEvent(EUISource source, const QString& value)
 {
+    switch(source)
+    {
+    case eLureSearch:
+        m_searchString = value;
+        sendNotificationToObservers(Controller::eLureListUpdated);
+        return;
+    default: break;
+    }
+
     if(!m_lure) return;
 
     switch(source)
@@ -158,10 +177,35 @@ QList<QPair<QString, int> > LureController::getLureList()
         pair.first = lureName(lure);
         pair.second = lure->getId();
 
-        retval.push_back(pair);
+        if(match(lure))
+        {
+            retval.push_back(pair);
+        }
     }
     qSort(retval);
     return retval;
+}
+
+bool LureController::match(Lure* lure)
+{
+    if(m_searchString.isEmpty() && !m_onlyFavorites)
+        return true;
+
+    QString lurename = lureName(lure);
+    bool bMatch = true;
+
+    if(!m_searchString.isEmpty() &&
+       !lurename.toLower().contains(m_searchString.toLower()))
+    {
+        bMatch = false;
+    }
+
+    if(m_onlyFavorites && !lure->getFavorite())
+    {
+        bMatch = false;
+    }
+
+    return bMatch;
 }
 
 QString LureController::lureName(Lure* lure)

@@ -750,3 +750,13 @@ void TripForm::on_clear_route_clicked()
 {
     m_tripController->buttonEvent(eRouteClear);
 }
+
+void TripForm::on_searchLure_textEdited(QString text)
+{
+    Singletons::lureController()->textEvent(eLureSearch, text);
+}
+
+void TripForm::on_onlyFavoriteLures_clicked(bool checked)
+{
+    Singletons::lureController()->booleanEvent(eLureSearchFavorites, checked);
+}

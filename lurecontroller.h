@@ -23,9 +23,12 @@ public:
     QStringList getAlternatives(EUISource source);
     QString lureName(Lure*);
 
-private:    
+private:
+    bool match(Lure*);
     void selectPlace(int value);
     Lure* m_lure;
+    bool m_onlyFavorites;
+    QString m_searchString;
 };
 
 #endif // LURECONTROLLER_H
