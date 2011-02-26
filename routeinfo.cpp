@@ -114,7 +114,20 @@ double RouteInfo::trackDistance()
 QDateTime RouteInfo::startTime()
 {
     if(m_trackpts.count() > 0)
+    {
+        //This is workaround hack for such event that
+        //route log has older log. Filter it out by traversing
+        //through and ignoring beginning if there is gap over
+        //one hour.
+        for(int loop=0; loop < m_trackpts.count()-1; loop++)
+        {
+           if(m_trackpts[loop].time.secsTo(m_trackpts[loop+1].time) < 3600)
+               continue;
+
+           return m_trackpts[loop+1].time;
+        }
         return m_trackpts.first().time;
+    }
 
     return QDateTime();
 }
