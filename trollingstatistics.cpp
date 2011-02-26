@@ -19,8 +19,8 @@ TrollingStatistics::TrollingStatistics():
 }
 
 void TrollingStatistics::setX(const QString& p_y)
-{
-    m_X = p_y;
+{    
+    m_X = p_y;    
 }
 
 void TrollingStatistics::setZ(const QString& p_z)
@@ -217,6 +217,8 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
     //get column values
     setX(m_Z);
     QHash<QString, QString> cols = stats();
+    setX(y);
+
     retval.m_rows = cols.keys();
     qSort(retval.m_rows);
     int idx = 0;
@@ -224,7 +226,7 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
     {
         QString col = retval.m_rows.at(loop);
         emit progress(100*idx/cols.size());
-        setX(y);
+
         setFilterComparison(m_Z, "internal");
         setFilterText(m_Z, col);
         QHash<QString, QString> stat = stats();
@@ -235,7 +237,6 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
     }
 
     emit progress(100);
-    setX(y);
     m_filters = filters;
     return retval;
 }
