@@ -81,12 +81,15 @@ QStringList StatisticsController::getFields()
 {
     QStringList list = m_stats->getTextFields();
     list.append(m_stats->getNumericFields());
+    list.sort();
     return list;
 }
 
 QStringList StatisticsController::getNumericFields()
 {
-    return m_stats->getNumericFields();
+    QStringList list = m_stats->getNumericFields();
+    list.sort();
+    return list;
 }
 
 QStringList StatisticsController::getEngines()
@@ -116,6 +119,6 @@ QStringList StatisticsController::getComparisonOperators()
         retval = m_stats->getTextComparisonOperators();
     }
 
-    qSort(retval);
+    retval.sort();
     return retval;
 }

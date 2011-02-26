@@ -49,7 +49,6 @@ QStringList FishStatistics::getTextFields()
     retval << COL_WINDDIR;
     retval << COL_PRESSURE;
     retval << COL_PRESSURECHANGE;
-    retval.sort();
     return retval;
 }
 
@@ -63,7 +62,6 @@ QStringList FishStatistics::getNumericFields()
     retval << COL_RELEASELENGTH;
     retval << COL_SPOTDEPTH;
     retval << COL_TEMP;
-    retval.sort();
     return retval;
 }
 
