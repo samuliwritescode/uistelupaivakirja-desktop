@@ -85,15 +85,20 @@ void GLStatWidget::paintGL()
             if(m_maxVal != 0)
                 value= 5*stats[name].toDouble()/m_maxVal;
 
+            double textPos = value;
+            if(textPos < 0)
+                textPos -= 0.3;
+
             if(m_maxVal != 0)
                 drawBox(indexX, 0.0, -loop, 0.4, value, stats[name].toDouble()/m_maxVal);
             else
                 drawBox(indexX, 0.0, -loop, 0.4, value, 0);
 
             if(stats[name].isEmpty())
-                renderText(indexX, value, -loop+0.3, "-");
+                renderText(indexX, textPos, -loop+0.3, "-");
             else
-                renderText(indexX, value, -loop+0.3, stats[name]);
+                renderText(indexX, textPos, -loop+0.3, stats[name]);
+
             //drawLine(indexX, 0.0, -loop, indexX+10, 0.0, -loop-10);
             indexX++;
         }
@@ -144,6 +149,11 @@ void GLStatWidget::setCols(const QList<QString>& p_cols)
 
 void GLStatWidget::drawBox(GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLfloat h, GLfloat color)
 {
+    if(h < 0)
+    {
+        h = -h;
+        y -= h;
+    }
 
     GLfloat vertices[] =
     {
@@ -165,13 +175,13 @@ void GLStatWidget::drawBox(GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLfloat h
         0,0,-1,     0,0,-1,     0,0,-1,     0,0,-1
      };
 
-    GLfloat r1 = color;
-    GLfloat g1 = 1.0-color;
-    GLfloat b1 = 0.0;
+    GLfloat r1 = color>0?color:0;
+    GLfloat g1 = color>0?1.0-color:1.0;
+    GLfloat b1 = color>0?0.0:0.0;
 
     GLfloat r2 = 0.0;
-    GLfloat g2 = 1.0;
-    GLfloat b2 = 0.0;
+    GLfloat g2 = color>0?1.0:1.0+color;
+    GLfloat b2 = color>0?0.0:-color;
 
     GLfloat colors[] =
     {
