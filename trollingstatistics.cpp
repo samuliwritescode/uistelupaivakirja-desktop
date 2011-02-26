@@ -14,7 +14,7 @@
 
 TrollingStatistics::TrollingStatistics():
         m_operator(OPERATOR_COUNT),
-        m_doScaling(false)
+        m_doScaling(true)
 {
 }
 
@@ -98,9 +98,9 @@ QHash<QString, QString> TrollingStatistics::calculate(const QList<QHash<QString,
     return retval;
 }
 
-QString TrollingStatistics::makeGroup(const QString& p_value)
+QString TrollingStatistics::makeGroup(const QString& p_value, const QString& p_field)
 {
-    if(!m_doScaling)
+    if(!m_doScaling || !getNumericFields().contains(p_field))
         return p_value;
 
     bool bCanConvert = false;
@@ -131,7 +131,7 @@ QHash<QString, double> TrollingStatistics::countFields(const QList<QHash<QString
         QHash<QString, QString> statline = statistics.at(loop);
         if(!statline[field].isEmpty())
         {
-            retval[makeGroup(statline[m_X])]++;
+            retval[makeGroup(statline[m_X], m_X)]++;
         }
     }
     return retval;
@@ -145,7 +145,7 @@ QHash<QString, double> TrollingStatistics::sumFields(const QList<QHash<QString, 
         QHash<QString, QString> statline = statistics.at(loop);
         if(!statline[field].isEmpty())
         {
-            retval[makeGroup(statline[m_X])] = retval[makeGroup(statline[m_X])] + statline[field].toDouble();
+            retval[makeGroup(statline[m_X], m_X)] = retval[makeGroup(statline[m_X], m_X)] + statline[field].toDouble();
         }
     }
     return retval;
@@ -161,17 +161,17 @@ QHash<QString, double> TrollingStatistics::minMaxField(const QList<QHash<QString
             continue;
 
         double value = statline[field].toDouble();
-        if(!retval.contains(makeGroup(statline[m_X])))
+        if(!retval.contains(makeGroup(statline[m_X], m_X)))
         {
-            retval[makeGroup(statline[m_X])] = value;
+            retval[makeGroup(statline[m_X], m_X)] = value;
             continue;
         }
 
-        if(min && value < retval[makeGroup(statline[m_X])])
-            retval[makeGroup(statline[m_X])] = value;
+        if(min && value < retval[makeGroup(statline[m_X], m_X)])
+            retval[makeGroup(statline[m_X], m_X)] = value;
 
-        if(!min && value > retval[makeGroup(statline[m_X])])
-            retval[makeGroup(statline[m_X])] = value;
+        if(!min && value > retval[makeGroup(statline[m_X], m_X)])
+            retval[makeGroup(statline[m_X], m_X)] = value;
 
     }
     return retval;
@@ -276,7 +276,7 @@ bool TrollingStatistics::isMatch(const QHash<QString, QString>& p_statline)
                 }
             } else if(iter.value().second == "internal")
             {
-                if(makeGroup(p_statline[iter.key()]) != makeGroup(iter.value().first))
+                if(makeGroup(p_statline[iter.key()], iter.key()) != makeGroup(iter.value().first, iter.key()))
                 {
                     return false;
                 }
