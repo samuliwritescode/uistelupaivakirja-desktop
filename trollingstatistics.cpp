@@ -5,6 +5,10 @@
 #define OPERATOR_COUNT tr("Määrä")
 #define OPERATOR_SUM tr("Summa")
 #define OPERATOR_MEAN tr("Keskiarvo")
+#define COMPARISON_EQUAL tr("Täsmää")
+#define COMPARISON_INCLUDES tr("Sisältää")
+#define COMPARISON_GREATER tr("Suurempi")
+#define COMPARISON_LESS tr("Pienempi")
 
 TrollingStatistics::TrollingStatistics():
         m_operator(OPERATOR_COUNT),
@@ -160,7 +164,7 @@ bool TrollingStatistics::isScaling()
 TrollingStatisticsTable TrollingStatistics::stats3D()
 {
     TrollingStatisticsTable retval;
-    QHash<QString, QString> filters = m_filters;
+    QHash<QString, QPair<QString, QString> > filters = m_filters;
     QString y = m_X;
     emit progress(0);
 
@@ -179,7 +183,8 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
         QString col = retval.m_rows.at(loop);
         emit progress(100*idx/cols.size());
         m_X = y;
-        m_filters[m_Z] = col;
+        setFilterComparison(m_Z, COMPARISON_EQUAL);
+        setFilterText(m_Z, col);
         TrollingStatisticsTableRow row;
         QHash<QString, QString> stat = stats();
 
@@ -192,4 +197,52 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
     m_X = y;
     m_filters = filters;
     return retval;
+}
+
+bool TrollingStatistics::isMatch(const QHash<QString, QString>& p_statline)
+{
+    for(QHash<QString, QPair<QString, QString> >::iterator iter = m_filters.begin(); iter != m_filters.end(); iter++)
+    {
+        if(p_statline.contains(iter.key()))
+        {
+            if(p_statline[iter.key()] != iter.value().first)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+void TrollingStatistics::clearFilter()
+{
+    m_filters.clear();
+}
+
+void TrollingStatistics::setFilterComparison(const QString& p_field, const QString& p_compare)
+{
+    if(m_filters.contains(p_field))
+    {
+        QPair<QString, QString> filter = m_filters[p_field];
+        filter.second = p_compare;
+        m_filters[p_field] = filter;
+    }
+    else
+    {
+        m_filters[p_field] = QPair<QString, QString>("", p_compare);
+    }
+}
+
+void TrollingStatistics::setFilterText(const QString& p_field, const QString& p_text)
+{
+    if(m_filters.contains(p_field))
+    {
+        QPair<QString, QString> filter = m_filters[p_field];
+        filter.first = p_text;
+        m_filters[p_field] = filter;
+    }
+    else
+    {
+        m_filters[p_field] = QPair<QString, QString>(p_text, "");
+    }
 }

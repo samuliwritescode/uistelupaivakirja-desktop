@@ -27,6 +27,9 @@ void StatisticsController::textEvent(EUISource source, const QString& value)
     case eStatisticsByColumn: m_stats->setZ(value); break;
     case eStatisticsField: m_stats->setOperand(value); break;
     case eStatisticsUnit: m_stats->setOperator(value); break;
+    case eStatisticsFilterField: break;
+    case eStatisticsFilterComparison: break;
+    case eStatisticsFilterText: break;
     case eStatistics:
         if(m_stats->getName() == value)
         {

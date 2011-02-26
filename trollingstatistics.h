@@ -23,13 +23,15 @@ public:
     void setOperand(const QString&);
     void setOperator(const QString&);
     void setScaling(bool);
+    void setFilterComparison(const QString&, const QString&);
+    void setFilterText(const QString&, const QString&);
+    void clearFilter();
 
 signals:
     void progress(int);
 
 protected:
-    virtual QHash<QString, QString> calculate(const QList<QHash<QString, QString> >&);
-    QHash<QString, QString> m_filters;
+    virtual QHash<QString, QString> calculate(const QList<QHash<QString, QString> >&);    
     QHash<QString, double> countFields(const QList<QHash<QString, QString> >&, const QString&);
     QHash<QString, double> sumFields(const QList<QHash<QString, QString> >&, const QString&);
     QString makeGroup(const QString&);
@@ -38,8 +40,10 @@ protected:
     QString getField();
     QString getOperator();
     bool isScaling();
+    bool isMatch(const QHash<QString, QString>&);
 
 private:
+    QHash<QString, QPair<QString, QString> > m_filters;
     QString m_X;
     QString m_Z;
     QString m_field;

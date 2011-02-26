@@ -186,22 +186,7 @@ QHash<QString, QString> FishStatistics::stats()
                 statline[COL_PRESSURE] = fish->getHumanReadablePressure();
                 statline[COL_PRESSURECHANGE] = fish->getHumanReadablePressureChange();
 
-                bool bSkip = false;
-                for(QHash<QString, QString>::iterator iter = m_filters.begin(); iter != m_filters.end(); iter++)
-                {
-                    if(statline.contains(iter.key()))
-                    {
-                        if(statline[iter.key()] != iter.value())
-                        {
-                            bSkip=true;
-                        }
-                    }
-                    else
-                    {
-                        bSkip=true; //No match
-                    }
-                }
-                if(bSkip)
+                if(!isMatch(statline))
                     continue;
 
                 if(multiply > 0)

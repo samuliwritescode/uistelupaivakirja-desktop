@@ -78,23 +78,9 @@ QHash<QString, QString> TripStatistics::stats()
 
         statline[tr("Aikaa per kala")] = QString::number(statline[COL_TRIPLEN].toDouble() / fishCount);
 
-        bool bSkip = false;
-        for(QHash<QString, QString>::iterator iter = m_filters.begin(); iter != m_filters.end(); iter++)
-        {
-            if(statline.contains(iter.key()))
-            {
-                if(statline[iter.key()] != iter.value())
-                {
-                    bSkip=true;
-                }
-            }
-            else
-            {
-                bSkip=true; //No match
-            }
-        }
-        if(bSkip)
+        if(!isMatch(statline))
             continue;
+
         statistics.push_back(statline);
     }
 
