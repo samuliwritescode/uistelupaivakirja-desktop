@@ -12,9 +12,17 @@
 #define COMPARISON_GREATER tr("Suurempi")
 #define COMPARISON_LESS tr("Pienempi")
 
+bool groupLessThan(const QString g1, const QString g2)
+{
+   QString val1 = g1.mid(0, g1.indexOf("-", 1));
+   QString val2 = g2.mid(0, g2.indexOf("-", 1));
+   return val1.toDouble() < val2.toDouble();
+}
+
+
 TrollingStatistics::TrollingStatistics():
         m_operator(OPERATOR_COUNT),
-        m_doScaling(true)
+        m_doScaling(false)
 {
 }
 
@@ -212,7 +220,10 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
 
     QHash<QString, QString> allPossible = stats();
     retval.m_columns = allPossible.keys();
-    qSort(retval.m_columns);
+    if(m_doScaling && getNumericFields().contains(m_X))
+        qSort(retval.m_columns.begin(), retval.m_columns.end(), groupLessThan);
+    else
+        qSort(retval.m_columns);
 
     //get column values
     setX(m_Z);
@@ -220,7 +231,11 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
     setX(y);
 
     retval.m_rows = cols.keys();
-    qSort(retval.m_rows);
+    if(m_doScaling && getNumericFields().contains(m_Z))
+        qSort(retval.m_rows.begin(), retval.m_rows.end(), groupLessThan);
+    else
+        qSort(retval.m_rows);
+
     int idx = 0;
     for(int loop=0; loop < retval.m_rows.count(); loop++)
     {
