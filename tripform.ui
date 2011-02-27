@@ -2077,23 +2077,23 @@ p, li { white-space: pre-wrap; }
   <tabstop>trolling_speed</tabstop>
   <tabstop>line_weight</tabstop>
   <tabstop>release_width</tabstop>
-  <tabstop>cloud_slider</tabstop>
-  <tabstop>rain_slider</tabstop>
   <tabstop>wind_slider</tabstop>
   <tabstop>wind_direction</tabstop>
+  <tabstop>air_temp</tabstop>
+  <tabstop>cloud_slider</tabstop>
   <tabstop>pressure_slider</tabstop>
   <tabstop>pressure_change</tabstop>
+  <tabstop>water_temp</tabstop>
+  <tabstop>rain_slider</tabstop>
   <tabstop>misc</tabstop>
-  <tabstop>trip_description</tabstop>
+  <tabstop>user_props</tabstop>
   <tabstop>searchLure</tabstop>
   <tabstop>onlyFavoriteLures</tabstop>
-  <tabstop>del_fish</tabstop>
-  <tabstop>time_dial_minutes</tabstop>
   <tabstop>startDial</tabstop>
   <tabstop>time_dial_hour</tabstop>
   <tabstop>endDial</tabstop>
   <tabstop>clear_poi</tabstop>
-  <tabstop>user_props</tabstop>
+  <tabstop>time_dial_minutes</tabstop>
   <tabstop>clear_route</tabstop>
   <tabstop>fish_list</tabstop>
   <tabstop>tripreport_back</tabstop>
@@ -2103,6 +2103,15 @@ p, li { white-space: pre-wrap; }
   <tabstop>trip_delete</tabstop>
   <tabstop>trip_list</tabstop>
   <tabstop>small_lure_list</tabstop>
+  <tabstop>go_trip</tabstop>
+  <tabstop>new_fish</tabstop>
+  <tabstop>new_weather</tabstop>
+  <tabstop>new_fishweather</tabstop>
+  <tabstop>trip_description</tabstop>
+  <tabstop>del_fish</tabstop>
+  <tabstop>trip_new</tabstop>
+  <tabstop>trip_undo</tabstop>
+  <tabstop>trip_save</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>
