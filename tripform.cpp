@@ -332,6 +332,7 @@ void TripForm::updateFishList()
             tr("paino") <<
             tr("pituus") <<
             tr("nopeus") <<
+            tr("syvyys") <<
             tr("pilvet") <<
             tr("tuuli") <<
             tr("sade") <<
@@ -363,11 +364,12 @@ void TripForm::updateFishList()
          QTableWidgetItem* item6 = new QTableWidgetItem(props[FISH_WEIGHT], loop);
          QTableWidgetItem* item7 = new QTableWidgetItem(props[FISH_LENGTH], loop);
          QTableWidgetItem* item8 = new QTableWidgetItem(props[FISH_TROLLING_SPEED], loop);
-         QTableWidgetItem* item9 = new QTableWidgetItem(props[FISH_WEATHER], loop);
-         QTableWidgetItem* item10 = new QTableWidgetItem(props[FISH_WIND], loop);
-         QTableWidgetItem* item11 = new QTableWidgetItem(props[FISH_RAIN], loop);
-         QTableWidgetItem* item12 = new QTableWidgetItem(props[FISH_AIR_TEMP], loop);
-         QTableWidgetItem* item13 = new QTableWidgetItem(props[FISH_WATER_TEMP], loop);
+         QTableWidgetItem* item9 = new QTableWidgetItem(props[FISH_SPOT_DEPTH], loop);
+         QTableWidgetItem* item10 = new QTableWidgetItem(props[FISH_WEATHER], loop);
+         QTableWidgetItem* item11 = new QTableWidgetItem(props[FISH_WIND], loop);
+         QTableWidgetItem* item12 = new QTableWidgetItem(props[FISH_RAIN], loop);
+         QTableWidgetItem* item13 = new QTableWidgetItem(props[FISH_AIR_TEMP], loop);
+         QTableWidgetItem* item14 = new QTableWidgetItem(props[FISH_WATER_TEMP], loop);
 
          item1->setBackgroundColor(bgcolor);
          item2->setBackgroundColor(bgcolor);
@@ -382,6 +384,7 @@ void TripForm::updateFishList()
          item11->setBackgroundColor(bgcolor);
          item12->setBackgroundColor(bgcolor);
          item13->setBackgroundColor(bgcolor);
+         item14->setBackgroundColor(bgcolor);
 
          ui->fish_list->setItem(loop, 0, item1);
          ui->fish_list->setItem(loop, 1, item2);
@@ -396,6 +399,7 @@ void TripForm::updateFishList()
          ui->fish_list->setItem(loop, 10, item11);
          ui->fish_list->setItem(loop, 11, item12);
          ui->fish_list->setItem(loop, 12, item13);
+         ui->fish_list->setItem(loop, 13, item14);
     }
 
     if(selectedFish >= 0)

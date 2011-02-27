@@ -316,7 +316,7 @@
              <bool>false</bool>
             </property>
             <property name="columnCount">
-             <number>13</number>
+             <number>14</number>
             </property>
             <attribute name="horizontalHeaderDefaultSectionSize">
              <number>52</number>
@@ -330,6 +330,7 @@
             <attribute name="verticalHeaderDefaultSectionSize">
              <number>20</number>
             </attribute>
+            <column/>
             <column/>
             <column/>
             <column/>
@@ -1659,7 +1660,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>734</width>
+          <width>800</width>
           <height>76</height>
          </rect>
         </property>
