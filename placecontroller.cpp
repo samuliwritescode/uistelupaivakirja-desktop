@@ -25,8 +25,11 @@ void PlaceController::buttonEvent(EUISource source)
             m_place = Singletons::model()->getPlace();
             break;
         case ePlaceDelete:
-            Singletons::model()->remove(m_place);
-            m_place = NULL;
+            if(showConfirmationMessage(tr("Poistetaanko kalapaikka?")))
+            {
+                Singletons::model()->remove(m_place);
+                m_place = NULL;
+            }
             break;
         default: qCritical() << "Dont know how to handle button event" << source; break;
         }

@@ -465,8 +465,11 @@ void TripController::buttonEvent(EUISource source)
         case eSaveTrip: Singletons::model()->commit(m_trip); break;        
         case eNewTrip: m_trip = Singletons::model()->getTrip(); break;
         case eDeleteTrip:
-            Singletons::model()->remove(m_trip);
-            m_trip = NULL;
+            if(showConfirmationMessage(tr("Poistetaanko reissu?")))
+            {
+                Singletons::model()->remove(m_trip);
+                m_trip = NULL;
+            }
             break;
         case eNewFish:
             m_trip->newFish(Fish::eFish);

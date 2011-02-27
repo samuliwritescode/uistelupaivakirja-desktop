@@ -25,8 +25,11 @@ void LureController::buttonEvent(EUISource source)
             break;
         case eLureSave: Singletons::model()->commit(m_lure); break;
         case eLureDelete:
-            Singletons::model()->remove(m_lure);
-            m_lure = NULL;
+            if(showConfirmationMessage(tr("Poistetaanko viehe?")))
+            {
+                Singletons::model()->remove(m_lure);
+                m_lure = NULL;
+            }
             break;
         default: break;
         }
