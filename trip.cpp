@@ -130,10 +130,10 @@ Fish* Trip::newFish(Fish::EType type)
 {
     QSettings settings;
     Fish* fish = new Fish(this);
-    if(type == Fish::eFish ||
-       type == Fish::eFishAndWeather)
+    if(settings.value("use_suggestions").toBool())
     {
-        if(settings.value("use_suggestions").toBool())
+        if(type == Fish::eFish ||
+           type == Fish::eFishAndWeather)
         {
             fish->setSpecies(settings.value("Species").toString());
             fish->setGetter(settings.value("Getter").toString());
@@ -142,12 +142,9 @@ Fish* Trip::newFish(Fish::EType type)
             fish->setReleaseWidth(settings.value("ReleaseWidth").toString());
             fish->setLineWeight(settings.value("LineWeight").toString());
         }
-    }
 
-    if(type == Fish::eWeather ||
-       type == Fish::eFishAndWeather)
-    {
-        if(settings.value("use_suggestions").toBool())
+        if(type == Fish::eWeather ||
+           type == Fish::eFishAndWeather)
         {
             for(int loop=m_catch.count()-1; loop >= 0; loop--)
             {
