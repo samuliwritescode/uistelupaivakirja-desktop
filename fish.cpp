@@ -147,11 +147,16 @@ QString Fish::getHumanReadableWind()
     int wind = getWindCondition();
     switch(wind)
     {
-    case 1: return QObject::tr("Tyyntä (0 m/s)");
-    case 2: return QObject::tr("Heikkoa (1 - 3 m/s)");
-    case 3: return QObject::tr("Kohtalaista (4 - 7 m/s)");
-    case 4: return QObject::tr("Navakkaa (8 - 13 m/s)");
-    case 5: return QObject::tr("Kovaa (14 - 20 m/s)");
+    case 1: return QObject::tr("Tyyntä (< 0.2 m/s)");
+    case 2: return QObject::tr("Hyvin heikko (0.3 – 1.5 m/s)");
+    case 3: return QObject::tr("Heikkoa (1.6 – 3.3 m/s)");
+    case 4: return QObject::tr("Kohtalaista (3.4 – 5.4 m/s)");
+    case 5: return QObject::tr("Kohtalaista (5.5 – 7.9 m/s)");
+    case 6: return QObject::tr("Navakkaa (8.0 – 10.7 m/s)");
+    case 7: return QObject::tr("Navakkaa (10.8 – 13.8 m/s)");
+    case 8: return QObject::tr("Kovaa (13.9 – 17.1 m/s)");
+    case 9: return QObject::tr("Kovaa (17.2 – 20.7 m/s)");
+    case 10: return QObject::tr("Myrskyä (> 20.8 m/s)");
     default: break;
     }
     return QObject::tr("n/a");

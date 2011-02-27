@@ -89,6 +89,7 @@ void LureForm::setCombo(EUISource source, QComboBox* target)
     QStringList valuelist = m_lureController->getAlternatives(source);
     QString currentValue = m_lureController->getTextValue(source);
     target->blockSignals(true);
+    target->clear();
     foreach(QString value, valuelist)
     {
         if(target->findText(value) == -1)
