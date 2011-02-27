@@ -1113,45 +1113,6 @@
           <property name="spacing">
            <number>0</number>
           </property>
-          <item row="0" column="1">
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QSlider" name="cloud_slider">
-              <property name="focusPolicy">
-               <enum>Qt::WheelFocus</enum>
-              </property>
-              <property name="minimum">
-               <number>0</number>
-              </property>
-              <property name="maximum">
-               <number>10</number>
-              </property>
-              <property name="pageStep">
-               <number>1</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="tickPosition">
-               <enum>QSlider::TicksBelow</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="cloud_label">
-              <property name="text">
-               <string>pilvistä (7/8)</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
           <item row="1" column="1">
            <layout class="QVBoxLayout" name="verticalLayout_13">
             <property name="spacing">
@@ -1193,6 +1154,12 @@
           </item>
           <item row="1" column="2">
            <layout class="QHBoxLayout" name="horizontalLayout_20">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>10</number>
+            </property>
             <item>
              <spacer name="horizontalSpacer_2">
               <property name="orientation">
@@ -1248,13 +1215,13 @@
              <widget class="QLabel" name="wind_direction_label">
               <property name="minimumSize">
                <size>
-                <width>100</width>
+                <width>90</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>100</width>
+                <width>90</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -1263,6 +1230,39 @@
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_28">
+              <property name="text">
+               <string>Ilma</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="air_temp">
+              <property name="minimumSize">
+               <size>
+                <width>50</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="placeholderText">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_40">
+              <property name="text">
+               <string>C</string>
               </property>
              </widget>
             </item>
@@ -1309,6 +1309,12 @@
           </item>
           <item row="2" column="2">
            <layout class="QHBoxLayout" name="horizontalLayout_22">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>10</number>
+            </property>
             <item>
              <spacer name="horizontalSpacer_3">
               <property name="orientation">
@@ -1364,13 +1370,13 @@
              <widget class="QLabel" name="pressure_change_label">
               <property name="minimumSize">
                <size>
-                <width>100</width>
+                <width>90</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>100</width>
+                <width>90</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -1382,123 +1388,21 @@
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_12">
-            <property name="text">
-             <string>Pilvet</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Tuuli</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>Paine</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <layout class="QVBoxLayout" name="verticalLayout_10">
-            <property name="spacing">
-             <number>0</number>
-            </property>
             <item>
-             <widget class="QSlider" name="rain_slider">
-              <property name="focusPolicy">
-               <enum>Qt::WheelFocus</enum>
-              </property>
-              <property name="minimum">
-               <number>0</number>
-              </property>
-              <property name="maximum">
-               <number>4</number>
-              </property>
-              <property name="pageStep">
-               <number>1</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="tickPosition">
-               <enum>QSlider::TicksBelow</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="rain_label">
+             <widget class="QLabel" name="label_29">
               <property name="text">
-               <string>heikko sade</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
+               <string>Vesi</string>
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item row="0" column="3">
-           <widget class="QLabel" name="label_25">
-            <property name="text">
-             <string>Sade</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="4">
-           <layout class="QHBoxLayout" name="horizontalLayout_19">
-            <item>
-             <widget class="QLineEdit" name="air_temp">
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="placeholderText">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_40">
-              <property name="text">
-               <string>C</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>1</width>
-                <height>1</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="2" column="3">
-           <widget class="QLabel" name="label_29">
-            <property name="text">
-             <string>Vesi</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <layout class="QHBoxLayout" name="horizontalLayout_25">
             <item>
              <widget class="QLineEdit" name="water_temp">
+              <property name="minimumSize">
+               <size>
+                <width>50</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>50</width>
@@ -1517,25 +1421,119 @@
               </property>
              </widget>
             </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Tuuli</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Paine</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <layout class="QHBoxLayout" name="horizontalLayout_19">
             <item>
-             <spacer name="horizontalSpacer_13">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <property name="spacing">
+               <number>0</number>
               </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>1</width>
-                <height>1</height>
-               </size>
+              <item>
+               <widget class="QSlider" name="cloud_slider">
+                <property name="focusPolicy">
+                 <enum>Qt::WheelFocus</enum>
+                </property>
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>10</number>
+                </property>
+                <property name="pageStep">
+                 <number>1</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="tickPosition">
+                 <enum>QSlider::TicksBelow</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="cloud_label">
+                <property name="text">
+                 <string>pilvistä (7/8)</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="4">
+           <layout class="QHBoxLayout" name="horizontalLayout_25">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_10">
+              <property name="spacing">
+               <number>0</number>
               </property>
-             </spacer>
+              <item>
+               <widget class="QSlider" name="rain_slider">
+                <property name="focusPolicy">
+                 <enum>Qt::WheelFocus</enum>
+                </property>
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>4</number>
+                </property>
+                <property name="pageStep">
+                 <number>1</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="tickPosition">
+                 <enum>QSlider::TicksBelow</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="rain_label">
+                <property name="text">
+                 <string>heikko sade</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
           <item row="1" column="3">
-           <widget class="QLabel" name="label_28">
+           <widget class="QLabel" name="label_12">
             <property name="text">
-             <string>Ilma</string>
+             <string>Pilvet</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="label_25">
+            <property name="text">
+             <string>Sade</string>
             </property>
            </widget>
           </item>
@@ -2103,10 +2101,8 @@ p, li { white-space: pre-wrap; }
   <tabstop>rain_slider</tabstop>
   <tabstop>wind_slider</tabstop>
   <tabstop>wind_direction</tabstop>
-  <tabstop>air_temp</tabstop>
   <tabstop>pressure_slider</tabstop>
   <tabstop>pressure_change</tabstop>
-  <tabstop>water_temp</tabstop>
   <tabstop>misc</tabstop>
   <tabstop>trip_description</tabstop>
   <tabstop>searchLure</tabstop>
