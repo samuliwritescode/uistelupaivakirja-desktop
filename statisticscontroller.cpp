@@ -61,14 +61,6 @@ void StatisticsController::textEvent(EUISource source, const QString& value)
     sendNotificationToObservers(Controller::eStatisticsUpdated);
 }
 
-QHash<QString, QString> StatisticsController::getStats()
-{
-    if(m_stats)
-        return m_stats->stats();
-
-    return QHash<QString, QString>();
-}
-
 TrollingStatisticsTable StatisticsController::getStats3D()
 {
     if(m_stats)

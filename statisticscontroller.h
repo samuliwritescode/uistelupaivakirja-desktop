@@ -18,7 +18,6 @@ public:
     QStringList getEngines();
     QStringList getOperators();
     QStringList getComparisonOperators();
-    QHash<QString, QString> getStats();
     TrollingStatisticsTable getStats3D();
 
 signals:

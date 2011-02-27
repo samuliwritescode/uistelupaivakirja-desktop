@@ -33,24 +33,12 @@ void StatisticsForm::observerEvent(int type)
 {
     if(type == Controller::eStatisticsUpdated)
     {
-        if(ui->checkBox3D->isChecked())
+        TrollingStatisticsTable stats = m_statsController->getStats3D();
+        m_statWidget->setCols(stats.m_columns);
+        m_statWidget->clearStat();
+        for(int loop=0; loop < stats.m_data.count(); loop++)
         {
-            TrollingStatisticsTable stats = m_statsController->getStats3D();
-            m_statWidget->setCols(stats.m_columns);
-            m_statWidget->clearStat();
-            for(int loop=0; loop < stats.m_data.count(); loop++)
-            {
-                m_statWidget->addStat(stats.m_data.at(loop), stats.m_rows.at(loop));
-            }
-        }
-        else
-        {
-            QHash<QString, QString> stats = m_statsController->getStats();
-            QList<QString> cols = stats.keys();
-            qSort(cols);
-            m_statWidget->setCols(cols);
-            m_statWidget->clearStat();
-            m_statWidget->addStat(stats, "");
+            m_statWidget->addStat(stats.m_data.at(loop), stats.m_rows.at(loop));
         }
 
         if(m_statsController->getBooleanValue(eStatisticsUnit))
@@ -144,7 +132,15 @@ void StatisticsForm::on_checkBox3D_clicked(bool checked)
 {
     ui->byColumnCombo->setVisible(checked);
     //send something to controller to get update.
-    m_statsController->textEvent(eFishList, "");
+    if(checked)
+    {
+       m_statsController->textEvent(eFishList, "");
+    }
+    else //reset Z when 3D is not on.
+    {
+        m_statsController->textEvent(eStatisticsByColumn, "");
+        ui->byColumnCombo->setCurrentIndex(-1);
+    }
 }
 
 void StatisticsForm::on_filterCombo_currentIndexChanged(QString text)

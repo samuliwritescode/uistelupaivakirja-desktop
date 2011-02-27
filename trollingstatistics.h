@@ -11,7 +11,6 @@ class TrollingStatistics: public QObject
 public:
     TrollingStatistics();
 
-    virtual QHash<QString, QString> stats() = 0;
     virtual QStringList getTextFields() = 0;
     virtual QStringList getNumericFields() = 0;
     virtual QStringList getOperators();
@@ -33,6 +32,7 @@ signals:
     void progress(int);
 
 protected:
+    virtual QHash<QString, QString> stats() = 0;
     virtual QHash<QString, QString> calculate(const QList<QHash<QString, QString> >&);    
     QHash<QString, double> countFields(const QList<QHash<QString, QString> >&, const QString&);
     QHash<QString, double> sumFields(const QList<QHash<QString, QString> >&, const QString&);
@@ -46,6 +46,7 @@ protected:
     bool isMatch(const QHash<QString, QString>&);
 
 private:
+    void sort(QList<QString>*);
     QHash<QString, QPair<QString, QString> > m_filters;
     QString m_X;
     QString m_Z;

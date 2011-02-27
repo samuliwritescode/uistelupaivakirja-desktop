@@ -211,6 +211,14 @@ bool TrollingStatistics::isScaling()
     return m_doScaling;
 }
 
+void TrollingStatistics::sort(QList<QString>* p_list)
+{
+    if(m_doScaling && getNumericFields().contains(m_X))
+        qSort(p_list->begin(), p_list->end(), groupLessThan);
+    else
+        qSort(*p_list);
+}
+
 TrollingStatisticsTable TrollingStatistics::stats3D()
 {
     TrollingStatisticsTable retval;
@@ -220,21 +228,22 @@ TrollingStatisticsTable TrollingStatistics::stats3D()
 
     QHash<QString, QString> allPossible = stats();
     retval.m_columns = allPossible.keys();
-    if(m_doScaling && getNumericFields().contains(m_X))
-        qSort(retval.m_columns.begin(), retval.m_columns.end(), groupLessThan);
-    else
-        qSort(retval.m_columns);
+    sort(&retval.m_columns);
+
+    if(m_Z.isEmpty())
+    {
+        retval.m_rows.push_back("");
+        retval.m_data.push_back(allPossible);
+        emit progress(100);
+        return retval;
+    }
 
     //get column values
     setX(m_Z);
     QHash<QString, QString> cols = stats();
-    setX(y);
-
     retval.m_rows = cols.keys();
-    if(m_doScaling && getNumericFields().contains(m_Z))
-        qSort(retval.m_rows.begin(), retval.m_rows.end(), groupLessThan);
-    else
-        qSort(retval.m_rows);
+    sort(&retval.m_rows);
+    setX(y);
 
     int idx = 0;
     for(int loop=0; loop < retval.m_rows.count(); loop++)
