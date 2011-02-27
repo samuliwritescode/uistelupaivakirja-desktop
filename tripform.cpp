@@ -327,12 +327,14 @@ void TripForm::updateFishList()
     headers << tr("aika") <<
             tr("laji") <<
             tr("tapa") <<
-            //tr("saaja") <<
+            tr("saaja") <<
             tr("viehe") <<
             tr("paino") <<
             tr("pituus") <<
-            tr("sää") <<
+            tr("nopeus") <<
+            tr("pilvet") <<
             tr("tuuli") <<
+            tr("sade") <<
             tr("ilma") <<
             tr("vesi");
 
@@ -348,7 +350,7 @@ void TripForm::updateFishList()
          switch(props[FISH_TYPE].toInt())
          {
          case Fish::eFish: bgcolor = QColor::fromRgb(255,255,255); break;
-         case Fish::eWeather: bgcolor = QColor::fromRgb(255,245,220); break;
+         case Fish::eWeather: bgcolor = QColor::fromRgb(255,225,200); break;
          case Fish::eFishAndWeather: bgcolor = QColor::fromRgb(230,230,255); break;
          default: bgcolor = QColor::fromRgb(255,255,255); break;
          }
@@ -356,14 +358,16 @@ void TripForm::updateFishList()
          QTableWidgetItem* item1 = new QTableWidgetItem(format(props[FISH_TIME]), loop);
          QTableWidgetItem* item2 = new QTableWidgetItem(format(props[FISH_SPECIES]), loop);
          QTableWidgetItem* item3 = new QTableWidgetItem(props[FISH_METHOD], loop);
-         //QTableWidgetItem* item4 = new QTableWidgetItem(props[FISH_GETTER], loop);
-         QTableWidgetItem* item4 = new QTableWidgetItem(props["lure"], loop);
-         QTableWidgetItem* item5 = new QTableWidgetItem(props[FISH_WEIGHT], loop);
-         QTableWidgetItem* item6 = new QTableWidgetItem(props[FISH_LENGTH], loop);
-         QTableWidgetItem* item7 = new QTableWidgetItem(props[FISH_WEATHER], loop);
-         QTableWidgetItem* item8 = new QTableWidgetItem(props[FISH_WIND], loop);
-         QTableWidgetItem* item9 = new QTableWidgetItem(props[FISH_AIR_TEMP], loop);
-         QTableWidgetItem* item10 = new QTableWidgetItem(props[FISH_WATER_TEMP], loop);
+         QTableWidgetItem* item4 = new QTableWidgetItem(props[FISH_GETTER], loop);
+         QTableWidgetItem* item5 = new QTableWidgetItem(props["lure"], loop);
+         QTableWidgetItem* item6 = new QTableWidgetItem(props[FISH_WEIGHT], loop);
+         QTableWidgetItem* item7 = new QTableWidgetItem(props[FISH_LENGTH], loop);
+         QTableWidgetItem* item8 = new QTableWidgetItem(props[FISH_TROLLING_SPEED], loop);
+         QTableWidgetItem* item9 = new QTableWidgetItem(props[FISH_WEATHER], loop);
+         QTableWidgetItem* item10 = new QTableWidgetItem(props[FISH_WIND], loop);
+         QTableWidgetItem* item11 = new QTableWidgetItem(props[FISH_RAIN], loop);
+         QTableWidgetItem* item12 = new QTableWidgetItem(props[FISH_AIR_TEMP], loop);
+         QTableWidgetItem* item13 = new QTableWidgetItem(props[FISH_WATER_TEMP], loop);
 
          item1->setBackgroundColor(bgcolor);
          item2->setBackgroundColor(bgcolor);
@@ -375,7 +379,9 @@ void TripForm::updateFishList()
          item8->setBackgroundColor(bgcolor);
          item9->setBackgroundColor(bgcolor);
          item10->setBackgroundColor(bgcolor);
-         //item11->setBackgroundColor(bgcolor);
+         item11->setBackgroundColor(bgcolor);
+         item12->setBackgroundColor(bgcolor);
+         item13->setBackgroundColor(bgcolor);
 
          ui->fish_list->setItem(loop, 0, item1);
          ui->fish_list->setItem(loop, 1, item2);
@@ -387,7 +393,9 @@ void TripForm::updateFishList()
          ui->fish_list->setItem(loop, 7, item8);
          ui->fish_list->setItem(loop, 8, item9);
          ui->fish_list->setItem(loop, 9, item10);
-        // ui->fish_list->setItem(loop, 10, item11);
+         ui->fish_list->setItem(loop, 10, item11);
+         ui->fish_list->setItem(loop, 11, item12);
+         ui->fish_list->setItem(loop, 12, item13);
     }
 
     if(selectedFish >= 0)

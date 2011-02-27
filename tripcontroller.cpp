@@ -584,22 +584,29 @@ QList<QMap<QString, QString> > TripController::getFishList()
         Fish* fish = m_trip->getFish(loop);
         props[FISH_TIME] = fish->getTime().toString("HH:mm");
         if(fish->getType() == Fish::eWeather)
-            props[FISH_SPECIES] = tr("säähav.");
+        {
+            props[FISH_SPECIES] = tr("<sää>");
+        }
         else
         {
             if(fish->isGroup())
-                props[FISH_SPECIES] = fish->getSpecies()+"*"+QString::number(fish->getGroupAmount());
+                props[FISH_SPECIES] = QString::number(fish->getGroupAmount())+"*"+fish->getSpecies();
             else
                 props[FISH_SPECIES] = fish->getSpecies();
         }
+
         props[FISH_WEIGHT] = fish->getWeight();
         props[FISH_LENGTH] = fish->getLength();
-        props[FISH_WEATHER] = fish->getHumanReadableWeather();
+        props[FISH_WEATHER] = fish->getShortHumanReadableWeather();
         props[FISH_WATER_TEMP] = fish->getWaterTemp();
-        props[FISH_WIND] = fish->getHumanReadableWind();
+        props[FISH_WIND] = fish->getShortHumanReadableWindDirection()+fish->getShortHumanReadableWind();
         props[FISH_GETTER] = fish->getGetter();
         props[FISH_METHOD] = fish->getMethod();
         props[FISH_AIR_TEMP] = fish->getAirTemp();
+        props[FISH_PRESSURE] = fish->getHumanReadablePressure();
+        props[FISH_TOTAL_DEPTH] = fish->getTotalDepth();
+        props[FISH_SPOT_DEPTH] = fish->getSpotDepth();
+        props[FISH_RAIN] = fish->getShortHumanReadableRain();
         props[FISH_TYPE] = QString::number(fish->getType());        
         props["lure"] = Singletons::lureController()->lureName(fish->getLure());
 

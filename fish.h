@@ -59,6 +59,10 @@ public:
     QString getHumanReadableWindDirection();
     QString getHumanReadablePressureChange();
     QString getHumanReadableRain();
+    QString getShortHumanReadableWeather();
+    QString getShortHumanReadableWind();
+    QString getShortHumanReadableWindDirection();
+    QString getShortHumanReadableRain();
 
     void setWeight(const QString&);
     void setLength(const QString&);

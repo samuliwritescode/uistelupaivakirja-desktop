@@ -122,6 +122,26 @@ QList<QString> Fish::getPropertyNames()
     return m_properties.keys();
 }
 
+QString Fish::getShortHumanReadableWeather()
+{
+    int weather = getWeatherCondition();
+    switch(weather)
+    {
+    case 1: return QObject::tr("0/8");
+    case 2: return QObject::tr("1/8");
+    case 3: return QObject::tr("2/8");
+    case 4: return QObject::tr("3/8");
+    case 5: return QObject::tr("4/8");
+    case 6: return QObject::tr("5/8");
+    case 7: return QObject::tr("6/8");
+    case 8: return QObject::tr("7/8");
+    case 9: return QObject::tr("8/8");
+    case 10: return QObject::tr("9/8");
+    default: break;
+    }
+    return QObject::tr("");
+}
+
 QString Fish::getHumanReadableWeather()
 {
     int weather = getWeatherCondition();
@@ -141,6 +161,27 @@ QString Fish::getHumanReadableWeather()
     }
     return QObject::tr("n/a");
 }
+
+QString Fish::getShortHumanReadableWind()
+{
+    int wind = getWindCondition();
+    switch(wind)
+    {
+    case 1: return QObject::tr("<0.2");
+    case 2: return QObject::tr("0.3–1.5");
+    case 3: return QObject::tr("1.6–3.3");
+    case 4: return QObject::tr("3.4–5.4");
+    case 5: return QObject::tr("5.5–7.9");
+    case 6: return QObject::tr("8.0–0.7");
+    case 7: return QObject::tr("10.8-13.8");
+    case 8: return QObject::tr("13.9–17.1");
+    case 9: return QObject::tr("17.2–20.7");
+    case 10: return QObject::tr(">20.8");
+    default: break;
+    }
+    return QObject::tr("");
+}
+
 
 QString Fish::getHumanReadableWind()
 {
@@ -176,6 +217,20 @@ QString Fish::getHumanReadableRain()
     return QObject::tr("n/a");
 }
 
+QString Fish::getShortHumanReadableRain()
+{
+    int rain = getRainCondition();
+    switch(rain)
+    {
+    case 1: return QObject::tr("<0.3");
+    case 2: return QObject::tr("0.3-0.9");
+    case 3: return QObject::tr("1.0-4.4");
+    case 4: return QObject::tr(">4.5");
+    default: break;
+    }
+    return QObject::tr("");
+}
+
 QString Fish::getHumanReadablePressure()
 {
     int pressure = getPressureCondition();
@@ -188,6 +243,25 @@ QString Fish::getHumanReadablePressure()
     {
         return QString::number(pressure+940)+QObject::tr(" hPa");
     }
+}
+
+QString Fish::getShortHumanReadableWindDirection()
+{
+    EWindDirection direction = getWindDirection();
+    switch(direction)
+    {
+    case eNoWindDirection: return QObject::tr("-");
+    case eSouth: return QObject::tr("E");
+    case eSouthWest: return QObject::tr("SW");
+    case eWest: return QObject::tr("W");
+    case eNorthWest: return QObject::tr("NW");
+    case eNorth: return QObject::tr("N");
+    case eNorthEast: return QObject::tr("NE");
+    case eEast: return QObject::tr("E");
+    case eSouthEast: return QObject::tr("SE");
+    default: break;
+    }
+    return QObject::tr("");
 }
 
 QString Fish::getHumanReadableWindDirection()
