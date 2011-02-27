@@ -335,6 +335,9 @@
            <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,0,0,0">
             <item>
              <widget class="QToolButton" name="go_trip">
+              <property name="toolTip">
+               <string>Reissun tietoihin</string>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -677,6 +680,9 @@
             </property>
             <item>
              <widget class="QCheckBox" name="group">
+              <property name="focusPolicy">
+               <enum>Qt::WheelFocus</enum>
+              </property>
               <property name="text">
                <string>könttä</string>
               </property>
@@ -730,6 +736,9 @@
             </property>
             <item>
              <widget class="QCheckBox" name="catchrelease">
+              <property name="focusPolicy">
+               <enum>Qt::WheelFocus</enum>
+              </property>
               <property name="text">
                <string>CR</string>
               </property>
@@ -737,6 +746,9 @@
             </item>
             <item>
              <widget class="QCheckBox" name="undersize">
+              <property name="focusPolicy">
+               <enum>Qt::WheelFocus</enum>
+              </property>
               <property name="text">
                <string>alamit</string>
               </property>
@@ -1102,6 +1114,9 @@
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
              <widget class="QSlider" name="cloud_slider">
+              <property name="focusPolicy">
+               <enum>Qt::WheelFocus</enum>
+              </property>
               <property name="minimum">
                <number>0</number>
               </property>
@@ -1135,6 +1150,9 @@
            <layout class="QVBoxLayout" name="verticalLayout_13">
             <item>
              <widget class="QSlider" name="wind_slider">
+              <property name="focusPolicy">
+               <enum>Qt::WheelFocus</enum>
+              </property>
               <property name="maximum">
                <number>5</number>
               </property>
@@ -1245,6 +1263,9 @@
            <layout class="QVBoxLayout" name="verticalLayout_14">
             <item>
              <widget class="QSlider" name="pressure_slider">
+              <property name="focusPolicy">
+               <enum>Qt::WheelFocus</enum>
+              </property>
               <property name="minimum">
                <number>0</number>
               </property>
@@ -1376,6 +1397,9 @@
            <layout class="QVBoxLayout" name="verticalLayout_10">
             <item>
              <widget class="QSlider" name="rain_slider">
+              <property name="focusPolicy">
+               <enum>Qt::WheelFocus</enum>
+              </property>
               <property name="minimum">
                <number>0</number>
               </property>
@@ -1969,6 +1993,9 @@ p, li { white-space: pre-wrap; }
            </item>
            <item>
             <widget class="QCheckBox" name="onlyFavoriteLures">
+             <property name="focusPolicy">
+              <enum>Qt::WheelFocus</enum>
+             </property>
              <property name="text">
               <string>Suosikit</string>
              </property>
@@ -2037,6 +2064,62 @@ p, li { white-space: pre-wrap; }
    <header>QtWebKit/QWebView</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>dateEdit</tabstop>
+  <tabstop>place</tabstop>
+  <tabstop>timeEditTripStart</tabstop>
+  <tabstop>timeEditTripEnd</tabstop>
+  <tabstop>timeEdit</tabstop>
+  <tabstop>species</tabstop>
+  <tabstop>getter</tabstop>
+  <tabstop>method</tabstop>
+  <tabstop>group</tabstop>
+  <tabstop>group_number</tabstop>
+  <tabstop>catchrelease</tabstop>
+  <tabstop>undersize</tabstop>
+  <tabstop>weight</tabstop>
+  <tabstop>length</tabstop>
+  <tabstop>spotdepth</tabstop>
+  <tabstop>totaldepth</tabstop>
+  <tabstop>trolling_speed</tabstop>
+  <tabstop>line_weight</tabstop>
+  <tabstop>release_width</tabstop>
+  <tabstop>cloud_slider</tabstop>
+  <tabstop>rain_slider</tabstop>
+  <tabstop>wind_slider</tabstop>
+  <tabstop>wind_direction</tabstop>
+  <tabstop>air_temp</tabstop>
+  <tabstop>pressure_slider</tabstop>
+  <tabstop>pressure_change</tabstop>
+  <tabstop>water_temp</tabstop>
+  <tabstop>misc</tabstop>
+  <tabstop>trip_description</tabstop>
+  <tabstop>searchLure</tabstop>
+  <tabstop>onlyFavoriteLures</tabstop>
+  <tabstop>new_fishweather</tabstop>
+  <tabstop>del_fish</tabstop>
+  <tabstop>time_dial_minutes</tabstop>
+  <tabstop>startDial</tabstop>
+  <tabstop>new_weather</tabstop>
+  <tabstop>time_dial_hour</tabstop>
+  <tabstop>endDial</tabstop>
+  <tabstop>clear_poi</tabstop>
+  <tabstop>user_props</tabstop>
+  <tabstop>clear_route</tabstop>
+  <tabstop>fish_list</tabstop>
+  <tabstop>tripreport_back</tabstop>
+  <tabstop>tripreport_showimg</tabstop>
+  <tabstop>tripreport_showmap</tabstop>
+  <tabstop>webView</tabstop>
+  <tabstop>trip_new</tabstop>
+  <tabstop>trip_undo</tabstop>
+  <tabstop>trip_save</tabstop>
+  <tabstop>trip_delete</tabstop>
+  <tabstop>trip_list</tabstop>
+  <tabstop>go_trip</tabstop>
+  <tabstop>new_fish</tabstop>
+  <tabstop>small_lure_list</tabstop>
+ </tabstops>
  <resources>
   <include location="resources.qrc"/>
  </resources>
