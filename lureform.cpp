@@ -101,8 +101,9 @@ void LureForm::setCombo(EUISource source, QComboBox* target)
 }
 
 void LureForm::on_lure_new_clicked()
-{
+{    
     m_lureController->buttonEvent(eLureNew);
+    ui->lure_manufacturer->setFocus();
 }
 
 void LureForm::on_lure_delete_clicked()

@@ -58,6 +58,9 @@
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QToolButton" name="lure_new">
+         <property name="toolTip">
+          <string>Uusi viehe</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -65,10 +68,16 @@
           <iconset resource="resources.qrc">
            <normaloff>:/res/document-new.png</normaloff>:/res/document-new.png</iconset>
          </property>
+         <property name="shortcut">
+          <string>Ctrl+N</string>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QToolButton" name="lure_undo">
+         <property name="toolTip">
+          <string>Peruuta muutokset</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -76,10 +85,16 @@
           <iconset resource="resources.qrc">
            <normaloff>:/res/edit-undo.png</normaloff>:/res/edit-undo.png</iconset>
          </property>
+         <property name="shortcut">
+          <string>Ctrl+Z</string>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QToolButton" name="lure_save">
+         <property name="toolTip">
+          <string>Tallenna viehe</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -87,16 +102,25 @@
           <iconset resource="resources.qrc">
            <normaloff>:/res/document-save.png</normaloff>:/res/document-save.png</iconset>
          </property>
+         <property name="shortcut">
+          <string>Ctrl+S</string>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QToolButton" name="lure_delete">
+         <property name="toolTip">
+          <string>Poista viehe</string>
+         </property>
          <property name="text">
           <string/>
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
            <normaloff>:/res/edit-cut.png</normaloff>:/res/edit-cut.png</iconset>
+         </property>
+         <property name="shortcut">
+          <string>Ctrl+X</string>
          </property>
         </widget>
        </item>
@@ -180,6 +204,9 @@
         </item>
         <item row="7" column="1">
          <widget class="QCheckBox" name="lure_favorite">
+          <property name="focusPolicy">
+           <enum>Qt::WheelFocus</enum>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -281,6 +308,9 @@
         </item>
         <item row="8" column="1">
          <widget class="QCheckBox" name="lure_notvisible">
+          <property name="focusPolicy">
+           <enum>Qt::WheelFocus</enum>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -303,6 +333,21 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lure_manufacturer</tabstop>
+  <tabstop>lure_model</tabstop>
+  <tabstop>lure_size</tabstop>
+  <tabstop>lure_color</tabstop>
+  <tabstop>lure_type</tabstop>
+  <tabstop>lure_nickname</tabstop>
+  <tabstop>lure_favorite</tabstop>
+  <tabstop>lure_notvisible</tabstop>
+  <tabstop>lure_new</tabstop>
+  <tabstop>lure_undo</tabstop>
+  <tabstop>lure_save</tabstop>
+  <tabstop>lure_delete</tabstop>
+  <tabstop>lure_list</tabstop>
+ </tabstops>
  <resources>
   <include location="resources.qrc"/>
  </resources>
