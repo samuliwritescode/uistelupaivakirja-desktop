@@ -244,8 +244,12 @@ void TripForm::updateTrip()
     ui->clear_poi->setDisabled(m_tripController->getTextValue(eWayPointSet).isEmpty());
     QTime time = m_tripController->getTimeValue(eTime);
     ui->timeEdit->setTime(time);
+    ui->time_dial_hour->blockSignals(true);
+    ui->time_dial_minutes->blockSignals(true);
     ui->time_dial_hour->setValue((time.hour()+12)%24);
     ui->time_dial_minutes->setValue((time.minute()+30)%60);
+    ui->time_dial_hour->blockSignals(false);
+    ui->time_dial_minutes->blockSignals(false);
 
     m_mediaList->setMediaFiles(m_tripController->getMediaFiles());
 
@@ -671,20 +675,6 @@ void TripForm::on_trip_undo_clicked()
     m_tripController->buttonEvent(eTripUndo);
 }
 
-void TripForm::on_time_dial_hour_sliderMoved(int value)
-{
-    QTime time;
-    time.setHMS((value+12)%24, ui->timeEdit->time().minute(), 0);
-    m_tripController->timeEvent(eTime, time);
-}
-
-void TripForm::on_time_dial_minutes_sliderMoved(int value)
-{
-    QTime time;
-    time.setHMS(ui->timeEdit->time().hour(), (value+30)%60, 0);
-    m_tripController->timeEvent(eTime, time);
-}
-
 void TripForm::on_group_number_textEdited(QString value)
 {
     m_tripController->intEvent(eGroup, value.toInt());
@@ -765,4 +755,18 @@ void TripForm::on_onlyFavoriteLures_clicked(bool checked)
 void TripForm::on_go_trip_clicked()
 {
     m_tripController->buttonEvent(eDeselectFish);
+}
+
+void TripForm::on_time_dial_hour_valueChanged(int value)
+{
+    QTime time;
+    time.setHMS((value+12)%24, ui->timeEdit->time().minute(), 0);
+    m_tripController->timeEvent(eTime, time);
+}
+
+void TripForm::on_time_dial_minutes_valueChanged(int value)
+{
+    QTime time;
+    time.setHMS(ui->timeEdit->time().hour(), (value+30)%60, 0);
+    m_tripController->timeEvent(eTime, time);
 }

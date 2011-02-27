@@ -43,6 +43,8 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_time_dial_minutes_valueChanged(int value);
+    void on_time_dial_hour_valueChanged(int value);
     void on_go_trip_clicked();
     void on_onlyFavoriteLures_clicked(bool checked);
     void on_searchLure_textEdited(QString );
@@ -59,8 +61,6 @@ private slots:
     void on_wind_slider_valueChanged(int position);
     void on_cloud_slider_valueChanged(int position);
     void on_group_number_textEdited(QString );
-    void on_time_dial_minutes_sliderMoved(int position);
-    void on_time_dial_hour_sliderMoved(int position);
     void on_trip_undo_clicked();
     void observerEvent(int type);
 
