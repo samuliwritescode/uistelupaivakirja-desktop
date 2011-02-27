@@ -1966,7 +1966,7 @@ p, li { white-space: pre-wrap; }
         </size>
        </property>
        <property name="features">
-        <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+        <set>QDockWidget::AllDockWidgetFeatures</set>
        </property>
        <property name="windowTitle">
         <string>Vieheet</string>
@@ -2035,7 +2035,7 @@ p, li { white-space: pre-wrap; }
         </size>
        </property>
        <property name="features">
-        <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+        <set>QDockWidget::AllDockWidgetFeatures</set>
        </property>
        <property name="windowTitle">
         <string>Reittipisteet</string>
