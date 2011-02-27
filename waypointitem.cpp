@@ -11,6 +11,7 @@ WayPointItem::WayPointItem(QLabel *parent) :
 {
     setMinimumSize(100,0);
     setText("");
+    setAlignment(Qt::AlignCenter);
 }
 
 WayPointItem::WayPointItem(const QString& text, QLabel *parent):

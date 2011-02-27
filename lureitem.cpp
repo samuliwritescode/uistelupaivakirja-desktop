@@ -12,6 +12,7 @@ LureItem::LureItem(QLabel *parent) :
     setMinimumSize(100,0);
     setText("");
     setWordWrap(true);
+    setAlignment(Qt::AlignCenter);
 }
 
 LureItem::LureItem(const QString& text, QLabel *parent):
