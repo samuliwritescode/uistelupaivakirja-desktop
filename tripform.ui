@@ -345,6 +345,9 @@
                <iconset resource="resources.qrc">
                 <normaloff>:/res/reissu.png</normaloff>:/res/reissu.png</iconset>
               </property>
+              <property name="shortcut">
+               <string>Esc</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -1658,8 +1661,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>734</width>
-          <height>76</height>
+          <width>245</width>
+          <height>45</height>
          </rect>
         </property>
         <attribute name="icon">
