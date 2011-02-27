@@ -147,20 +147,23 @@ Fish* Trip::newFish(Fish::EType type)
     if(type == Fish::eWeather ||
        type == Fish::eFishAndWeather)
     {
-        for(int loop=m_catch.count()-1; loop >= 0; loop--)
+        if(settings.value("use_suggestions").toBool())
         {
-            Fish* weather = m_catch.at(loop);
-            if(weather->getType() == Fish::eWeather ||
-               weather->getType() == Fish::eFishAndWeather)
+            for(int loop=m_catch.count()-1; loop >= 0; loop--)
             {
-                fish->setAirTemp(weather->getAirTemp());
-                fish->setWaterTemp(weather->getWaterTemp());
-                fish->setWeatherCondition(weather->getWeatherCondition());
-                fish->setWindCondition(weather->getWindCondition());
-                fish->setPressureCondition(weather->getPressureCondition());
-                fish->setWindDirection(weather->getWindDirection());
-                fish->setPressureChange(weather->getPressureChange());
-                break;
+                Fish* weather = m_catch.at(loop);
+                if(weather->getType() == Fish::eWeather ||
+                   weather->getType() == Fish::eFishAndWeather)
+                {
+                    fish->setAirTemp(weather->getAirTemp());
+                    fish->setWaterTemp(weather->getWaterTemp());
+                    fish->setWeatherCondition(weather->getWeatherCondition());
+                    fish->setWindCondition(weather->getWindCondition());
+                    fish->setPressureCondition(weather->getPressureCondition());
+                    fish->setWindDirection(weather->getWindDirection());
+                    fish->setPressureChange(weather->getPressureChange());
+                    break;
+                }
             }
         }
     }
