@@ -636,6 +636,7 @@ QStringList TripController::getAlternatives(EUISource source)
         }
     }
 
+    retval.sort();
     return retval;
 }
 
