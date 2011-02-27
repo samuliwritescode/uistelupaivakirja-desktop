@@ -63,6 +63,9 @@
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <widget class="QToolButton" name="place_new">
+       <property name="toolTip">
+        <string>Uusi kalapaikka</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -70,10 +73,16 @@
         <iconset resource="resources.qrc">
          <normaloff>:/res/document-new.png</normaloff>:/res/document-new.png</iconset>
        </property>
+       <property name="shortcut">
+        <string>Ctrl+N</string>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QToolButton" name="place_undo">
+       <property name="toolTip">
+        <string>Peru muutokset</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -81,10 +90,16 @@
         <iconset resource="resources.qrc">
          <normaloff>:/res/edit-undo.png</normaloff>:/res/edit-undo.png</iconset>
        </property>
+       <property name="shortcut">
+        <string>Ctrl+Z</string>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QToolButton" name="place_save">
+       <property name="toolTip">
+        <string>Tallenna</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -92,16 +107,25 @@
         <iconset resource="resources.qrc">
          <normaloff>:/res/document-save.png</normaloff>:/res/document-save.png</iconset>
        </property>
+       <property name="shortcut">
+        <string>Ctrl+S</string>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QToolButton" name="place_delete">
+       <property name="toolTip">
+        <string>Poista</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
         <iconset resource="resources.qrc">
          <normaloff>:/res/edit-cut.png</normaloff>:/res/edit-cut.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Ctrl+X</string>
        </property>
       </widget>
      </item>
@@ -170,6 +194,9 @@
       </item>
       <item row="2" column="1">
        <widget class="QCheckBox" name="place_invisible">
+        <property name="focusPolicy">
+         <enum>Qt::WheelFocus</enum>
+        </property>
         <property name="text">
          <string/>
         </property>

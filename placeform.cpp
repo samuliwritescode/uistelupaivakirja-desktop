@@ -104,6 +104,7 @@ void PlaceForm::on_place_misc_textChanged()
 void PlaceForm::on_place_new_clicked()
 {
     m_placeController->buttonEvent(ePlaceNew);
+    ui->place_name->setFocus();
 }
 
 void PlaceForm::on_place_delete_clicked()
