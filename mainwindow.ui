@@ -83,7 +83,14 @@
        <attribute name="title">
         <string>Tilastot</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+       </layout>
       </widget>
       <widget class="QWidget" name="tripsTab">
        <attribute name="icon">
@@ -94,7 +101,19 @@
         <string>Kalareissut</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_24">
-        <property name="margin">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
+        <property name="bottomMargin">
          <number>10</number>
         </property>
        </layout>
@@ -107,7 +126,14 @@
        <attribute name="title">
         <string>Vieheet</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_30"/>
+       <layout class="QHBoxLayout" name="horizontalLayout_30">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+       </layout>
       </widget>
       <widget class="QWidget" name="placesTab">
        <attribute name="icon">
@@ -117,7 +143,14 @@
        <attribute name="title">
         <string>Kalapaikat</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout"/>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+       </layout>
       </widget>
       <widget class="QWidget" name="settingsTab">
        <attribute name="icon">
@@ -127,7 +160,14 @@
        <attribute name="title">
         <string>Asetukset</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+       </layout>
       </widget>
      </widget>
     </item>
