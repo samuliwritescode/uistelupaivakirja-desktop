@@ -167,16 +167,16 @@ QString Fish::getShortHumanReadableWind()
     int wind = getWindCondition();
     switch(wind)
     {
-    case 1: return QObject::tr("<0.2");
-    case 2: return QObject::tr("0.3–1.5");
-    case 3: return QObject::tr("1.6–3.3");
-    case 4: return QObject::tr("3.4–5.4");
-    case 5: return QObject::tr("5.5–7.9");
-    case 6: return QObject::tr("8.0–0.7");
-    case 7: return QObject::tr("10.8-13.8");
-    case 8: return QObject::tr("13.9–17.1");
-    case 9: return QObject::tr("17.2–20.7");
-    case 10: return QObject::tr(">20.8");
+    case 1: return QObject::tr("0");
+    case 2: return QObject::tr("1");
+    case 3: return QObject::tr("2");
+    case 4: return QObject::tr("3");
+    case 5: return QObject::tr("4");
+    case 6: return QObject::tr("5");
+    case 7: return QObject::tr("6");
+    case 8: return QObject::tr("7");
+    case 9: return QObject::tr("8");
+    case 10: return QObject::tr("9");
     default: break;
     }
     return QObject::tr("");

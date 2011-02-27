@@ -33,6 +33,12 @@
      </property>
      <item>
       <widget class="QGroupBox" name="groupBoxTrip">
+       <property name="minimumSize">
+        <size>
+         <width>800</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="title">
         <string>Kalareissu ja tapahtumat</string>
        </property>
@@ -1169,19 +1175,6 @@
              <number>10</number>
             </property>
             <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>1</width>
-                <height>1</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="QLabel" name="label_19">
               <property name="text">
                <string>Suunta</string>
@@ -1323,19 +1316,6 @@
             <property name="rightMargin">
              <number>10</number>
             </property>
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>1</width>
-                <height>1</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
             <item>
              <widget class="QLabel" name="label_18">
               <property name="text">
@@ -1632,7 +1612,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>719</width>
+          <width>785</width>
           <height>88</height>
          </rect>
         </property>
