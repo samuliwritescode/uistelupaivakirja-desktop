@@ -9,6 +9,8 @@
 #define OPERATOR_SMALLEST tr("Pienin")
 #define COMPARISON_EQUAL tr("Yhtäsuuri")
 #define COMPARISON_INCLUDES tr("Sisältää")
+#define COMPARISON_NOTEQUAL tr("Erisuuri")
+#define COMPARISON_NOTINCLUDES tr("Ei sisällä")
 #define COMPARISON_GREATER tr("Suurempi")
 #define COMPARISON_LESS tr("Pienempi")
 
@@ -298,6 +300,18 @@ bool TrollingStatistics::isMatch(const QHash<QString, QString>& p_statline)
                 {
                     return false;
                 }
+            } else if(iter.value().second == COMPARISON_NOTEQUAL)
+            {
+                if(p_statline[iter.key()].toLower() == iter.value().first.toLower())
+                {
+                    return false;
+                }
+            } else if(iter.value().second == COMPARISON_NOTINCLUDES)
+            {
+                if(p_statline[iter.key()].toLower().contains(iter.value().first.toLower()))
+                {
+                    return false;
+                }
             } else if(iter.value().second == "internal")
             {
                 if(makeGroup(p_statline[iter.key()], iter.key()) != makeGroup(iter.value().first, iter.key()))
@@ -348,6 +362,8 @@ QStringList TrollingStatistics::getTextComparisonOperators()
     QStringList retval;
     retval << COMPARISON_EQUAL;
     retval << COMPARISON_INCLUDES;
+    retval << COMPARISON_NOTEQUAL;
+    retval << COMPARISON_NOTINCLUDES;
     retval.sort();
     return retval;
 }
@@ -356,6 +372,7 @@ QStringList TrollingStatistics::getNumericComparisonOperators()
 {
     QStringList retval;
     retval << COMPARISON_EQUAL;
+    retval << COMPARISON_NOTEQUAL;
     retval << COMPARISON_GREATER;
     retval << COMPARISON_LESS;
     retval.sort();
