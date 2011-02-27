@@ -171,8 +171,9 @@ QList<QList<QString> > PlaceController::getPlaceListFull()
         if(place->getInvisible())
             placehash.push_back(tr("ei näy"));
         else
-            placehash.push_back(tr("näkyy"));
+            placehash.push_back(tr(""));
 
+        placehash.push_back(place->getMiscText());
         placehash.push_back(QString::number(place->getId()));
         retval.push_back(placehash);
     }
@@ -184,7 +185,8 @@ QStringList PlaceController::getPlaceColumns()
     QStringList retval;
     retval << tr("Nimi") <<
            tr("Paikkakunta") <<
-           tr("Ei näy listassa");
+           tr("Näkyy") <<
+           tr("Muuta");
     return retval;
 }
 
