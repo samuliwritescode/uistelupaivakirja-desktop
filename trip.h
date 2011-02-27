@@ -31,7 +31,7 @@ public:
     void setPlace(Place*);
     Place* getPlace();
 
-    int getFishCount();
+    int getFishCount(Fish::EType type = Fish::eNaN);
     Fish* getFish(int id = -1);
 
     void selectFish(int);

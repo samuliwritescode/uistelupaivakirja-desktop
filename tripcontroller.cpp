@@ -553,6 +553,18 @@ QMap<QString, int> TripController::getTripList()
             name += "-1";
         }
 
+        int fishcount = trip->getFishCount(Fish::eFish)+
+                        trip->getFishCount(Fish::eFishAndWeather);
+        if(fishcount == 0)
+            name += tr(", MP");
+        else if(fishcount == 1)
+            name += tr(", 1 kala");
+        else
+        {
+            name += ", "+QString::number(fishcount);
+            name += tr(" kalaa");
+        }
+
         if(trip->getId() < 0)
             name = tr("tallentamaton uusi reissu");
 

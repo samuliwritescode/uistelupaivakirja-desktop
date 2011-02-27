@@ -116,9 +116,24 @@ Fish* Trip::getFish(int id)
     return NULL;
 }
 
-int Trip::getFishCount()
+int Trip::getFishCount(Fish::EType type)
 {
-    return m_catch.size();
+    if(type == Fish::eNaN)
+        return m_catch.size();
+
+    int count = 0;
+    for(int loop=0; loop < m_catch.count(); loop++)
+    {
+        Fish::EType fishtype = m_catch.at(loop)->getType();
+        if(fishtype == type)
+        {
+            if(m_catch.at(loop)->isGroup())
+                count += m_catch.at(loop)->getGroupAmount();
+            else
+                count++;
+        }
+    }
+    return count;
 }
 
 void Trip::selectFish(int id)
