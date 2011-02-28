@@ -352,7 +352,7 @@ void TripForm::updateFishList()
          {
          case Fish::eFish: bgcolor = QColor::fromRgb(255,255,255); break;
          case Fish::eWeather: bgcolor = QColor::fromRgb(255,225,200); break;
-         case Fish::eFishAndWeather: bgcolor = QColor::fromRgb(230,230,255); break;
+         case Fish::eFishAndWeather: bgcolor = QColor::fromRgb(200,200,255); break;
          default: bgcolor = QColor::fromRgb(255,255,255); break;
          }
 
