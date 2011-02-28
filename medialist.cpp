@@ -4,7 +4,7 @@
 #include <QUrl>
 #include <QDebug>
 #include <QFileInfo>
-#include <Qmenu>
+#include <QMenu>
 #include "mainwindow.h"
 #include "singletons.h"
 #include "medialist.h"
