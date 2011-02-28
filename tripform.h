@@ -44,8 +44,7 @@ private:
 
 private slots:
     void on_time_dial_minutes_valueChanged(int value);
-    void on_time_dial_hour_valueChanged(int value);
-    void on_go_trip_clicked();
+    void on_time_dial_hour_valueChanged(int value);    
     void on_onlyFavoriteLures_clicked(bool checked);
     void on_searchLure_textEdited(QString );
     void on_clear_route_clicked();

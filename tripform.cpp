@@ -7,7 +7,7 @@ TripForm::TripForm(QWidget *parent) :
     ui(new Ui::TripForm)
 {
     ui->setupUi(this);
-    ui->toolBoxTrip->hide();
+    ui->tabWidgetTrip->hide();
 
     m_tripController = Singletons::tripController();
 
@@ -151,8 +151,7 @@ void TripForm::updateTrip()
     ui->timeEditTripStart->setTime(m_tripController->getTimeValue(eStartTime));
     ui->timeEditTripEnd->setTime(m_tripController->getTimeValue(eEndTime));
     ui->endDial->setValue((m_tripController->getIntValue(eEndTime)+12)%24);
-    ui->trip_description->setText(m_tripController->getTextValue(eTripDescription));
-    ui->go_trip->setEnabled(m_tripController->getBooleanValue(eDeselectFish));
+    ui->trip_description->setPlainText(m_tripController->getTextValue(eTripDescription));
 
     ui->startDial->blockSignals(false);
     ui->endDial->blockSignals(false);
@@ -194,7 +193,6 @@ void TripForm::updateTrip()
 
     if(type == Fish::eFish)
     {
-        ui->toolBoxTrip->hide();
         ui->groupBoxWeather->hide();
         ui->groupBoxFish->show();
         ui->groupBoxOther->show();
@@ -203,7 +201,6 @@ void TripForm::updateTrip()
     }
     else if(type == Fish::eWeather)
     {
-        ui->toolBoxTrip->hide();
         ui->groupBoxFish->hide();
         ui->groupBoxWeather->show();
         ui->groupBoxOther->show();
@@ -212,7 +209,6 @@ void TripForm::updateTrip()
     }
     else if(type == Fish::eFishAndWeather)
     {
-        ui->toolBoxTrip->hide();
         ui->groupBoxFish->show();
         ui->groupBoxWeather->show();
         ui->groupBoxOther->show();
@@ -224,12 +220,12 @@ void TripForm::updateTrip()
     {
         if(m_tripController->getBooleanValue(eTrip))
         {
-            ui->toolBoxTrip->show();
+            ui->tabWidgetTrip->show();
             ui->webView->setHtml(m_tripController->getTripReport());
         }
         else
         {
-            ui->toolBoxTrip->hide();
+            ui->tabWidgetTrip->hide();
         }
         ui->groupBoxFish->hide();
         ui->groupBoxWeather->hide();
@@ -256,7 +252,7 @@ void TripForm::updateTrip()
     ui->misc->blockSignals(true);
     if( ui->misc->toPlainText() != m_tripController->getTextValue(eMiscText))
     {
-         ui->misc->setText(m_tripController->getTextValue(eMiscText));
+         ui->misc->setPlainText(m_tripController->getTextValue(eMiscText));
     }
 
     ui->misc->blockSignals(false);
@@ -565,6 +561,7 @@ void TripForm::on_trip_delete_clicked()
 void TripForm::on_trip_new_clicked()
 {
     m_tripController->buttonEvent(eNewTrip);
+    ui->tabWidgetTrip->setCurrentIndex(1);
 }
 
 void TripForm::on_trip_list_itemActivated(QListWidgetItem* item)
@@ -762,11 +759,6 @@ void TripForm::on_searchLure_textEdited(QString text)
 void TripForm::on_onlyFavoriteLures_clicked(bool checked)
 {
     Singletons::lureController()->booleanEvent(eLureSearchFavorites, checked);
-}
-
-void TripForm::on_go_trip_clicked()
-{
-    m_tripController->buttonEvent(eDeselectFish);
 }
 
 void TripForm::on_time_dial_hour_valueChanged(int value)

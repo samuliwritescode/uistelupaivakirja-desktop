@@ -71,7 +71,7 @@ void PlaceForm::observerEvent(int type)
 
         ui->place_name->setText( m_placeController->getTextValue(ePlaceName) );
         ui->place_city->setText( m_placeController->getTextValue(ePlaceCity) );
-        ui->place_misc->setText( m_placeController->getTextValue(ePlaceMiscText) );
+        ui->place_misc->setPlainText( m_placeController->getTextValue(ePlaceMiscText) );
         ui->place_invisible->setChecked(m_placeController->getBooleanValue(ePlaceInvisible));
 
         ui->place_name->blockSignals(false);
