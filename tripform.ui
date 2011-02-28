@@ -2124,6 +2124,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>place</tabstop>
   <tabstop>timeEditTripStart</tabstop>
   <tabstop>timeEditTripEnd</tabstop>
+  <tabstop>trip_description</tabstop>
   <tabstop>timeEdit</tabstop>
   <tabstop>species</tabstop>
   <tabstop>getter</tabstop>
@@ -2147,21 +2148,10 @@ p, li { white-space: pre-wrap; }
   <tabstop>pressure_change</tabstop>
   <tabstop>water_temp</tabstop>
   <tabstop>rain_slider</tabstop>
+  <tabstop>misc</tabstop>
   <tabstop>user_props</tabstop>
   <tabstop>searchLure</tabstop>
   <tabstop>onlyFavoriteLures</tabstop>
-  <tabstop>startDial</tabstop>
-  <tabstop>time_dial_hour</tabstop>
-  <tabstop>endDial</tabstop>
-  <tabstop>clear_poi</tabstop>
-  <tabstop>time_dial_minutes</tabstop>
-  <tabstop>clear_route</tabstop>
-  <tabstop>tripreport_back</tabstop>
-  <tabstop>tripreport_showimg</tabstop>
-  <tabstop>tripreport_showmap</tabstop>
-  <tabstop>trip_delete</tabstop>
-  <tabstop>trip_list</tabstop>
-  <tabstop>small_lure_list</tabstop>
   <tabstop>new_fish</tabstop>
   <tabstop>new_weather</tabstop>
   <tabstop>new_fishweather</tabstop>
@@ -2169,6 +2159,21 @@ p, li { white-space: pre-wrap; }
   <tabstop>trip_new</tabstop>
   <tabstop>trip_undo</tabstop>
   <tabstop>trip_save</tabstop>
+  <tabstop>trip_delete</tabstop>
+  <tabstop>trip_list</tabstop>
+  <tabstop>small_lure_list</tabstop>
+  <tabstop>endDial</tabstop>
+  <tabstop>clear_poi</tabstop>
+  <tabstop>time_dial_minutes</tabstop>
+  <tabstop>clear_route</tabstop>
+  <tabstop>tripreport_back</tabstop>
+  <tabstop>tripreport_showimg</tabstop>
+  <tabstop>tripreport_showmap</tabstop>
+  <tabstop>fish_list</tabstop>
+  <tabstop>webView</tabstop>
+  <tabstop>tabWidgetTrip</tabstop>
+  <tabstop>time_dial_hour</tabstop>
+  <tabstop>startDial</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>
