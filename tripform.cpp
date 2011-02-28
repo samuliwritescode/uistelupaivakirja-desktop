@@ -160,6 +160,10 @@ void TripForm::updateTrip()
     ui->trip_description->blockSignals(false);
     ui->dateEdit->blockSignals(false);
 
+    ui->trip_short_label->setText(m_tripController->getDateValue(eTripDate).toString("dd.MM.yyyy ")+
+                                    m_tripController->getTextValue(ePlaceName)
+                                  );
+
     m_mediaListTrip->setMediaFiles(m_tripController->getMediaFilesTrip());
     m_route->setText(m_tripController->getTextValue(eRoute));
     ui->clear_route->setDisabled(m_tripController->getTextValue(eRoute).isEmpty());

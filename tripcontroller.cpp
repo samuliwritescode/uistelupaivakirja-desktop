@@ -98,6 +98,12 @@ QString TripController::getTextValue(EUISource source)
             RouteInfo info(m_trip);
             return info.toString();
     }
+    case ePlaceName:
+        if(m_trip->getPlace())
+            return m_trip->getPlace()->getName();
+        else
+            return QString();
+        break;
     default: break;
     }
 
