@@ -1887,8 +1887,14 @@ p, li { white-space: pre-wrap; }
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
          <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
+         <verstretch>1</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>300</height>
+        </size>
        </property>
        <property name="maximumSize">
         <size>
@@ -2103,7 +2109,7 @@ p, li { white-space: pre-wrap; }
         </size>
        </property>
        <property name="features">
-        <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+        <set>QDockWidget::AllDockWidgetFeatures</set>
        </property>
        <property name="windowTitle">
         <string>Reittipisteet</string>
