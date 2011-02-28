@@ -94,6 +94,7 @@ void GLStatWidget::paintGL()
             else
                 drawBox(indexX, 0.0, -loop, 0.4, value, 0);
 
+            qglColor(QColor::fromRgb(0,0,0));
             if(stats[name].isEmpty())
                 renderText(indexX, textPos, -loop+0.3, "-");
             else
