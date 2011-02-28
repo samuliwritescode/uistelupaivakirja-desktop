@@ -9,9 +9,10 @@
 RouteItem::RouteItem(QLabel *parent) :
     QLabel(parent)
 {
-    setMinimumSize(100,0);
+    setMinimumSize(200,0);
     setText("");
     setWordWrap(true);
+    setAlignment(Qt::AlignCenter);
 }
 
 RouteItem::RouteItem(const QString& text, QLabel *parent):
