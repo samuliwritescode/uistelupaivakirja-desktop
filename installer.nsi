@@ -38,6 +38,7 @@ Section "Uistelupäiväkirja (required)"
   ; Put file there
   File "release\Uistelupaivakirja.exe"
   File "lib\libgcc_s_dw2-1.dll"
+  File "lib\libstdc++-6.dll"
   File "lib\mingwm10.dll"
   File "lib\phonon4.dll"
   File "lib\QtCore4.dll"
