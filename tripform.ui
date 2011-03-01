@@ -918,7 +918,7 @@
                    <enum>Qt::WheelFocus</enum>
                   </property>
                   <property name="text">
-                   <string>könttä</string>
+                   <string>joukko</string>
                   </property>
                  </widget>
                 </item>
