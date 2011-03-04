@@ -81,10 +81,19 @@ QMap<int, Trip*> TrollingModel::getTrips()
 
 TrollingObject* TrollingModel::getTrollingObject(const QString& type, int id)
 {
+    if(id == 0)
+        return NULL;
+
+    if(m_fasterHash.contains(id) && m_fasterHash[id]->getType() == type)
+    {
+        return m_fasterHash[id];
+    }
+
     foreach(TrollingObject* object, m_trollingobjects)
     {
         if(object->getType() == type && object->getId() == id)
         {
+            m_fasterHash[id] = object;
             return object;
         }
     }
@@ -178,6 +187,12 @@ void TrollingModel::remove(TrollingObject* p_object)
         }
     }
 
+    if(m_fasterHash.contains(p_object->getId()) &&
+       m_fasterHash[p_object->getId()] == p_object)
+    {
+        m_fasterHash.remove(p_object->getId());
+    }
+
     delete p_object;
 }
 
@@ -194,6 +209,12 @@ void TrollingModel::reset(TrollingObject* p_object)
             m_trollingobjects.removeAt(loop);
             break;
         }
+    }
+
+    if(m_fasterHash.contains(p_object->getId()) &&
+       m_fasterHash[p_object->getId()] == p_object)
+    {
+        m_fasterHash.remove(p_object->getId());
     }
 
     delete p_object;

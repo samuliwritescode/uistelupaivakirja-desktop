@@ -39,6 +39,7 @@ public slots:
 private:
     TrollingObject* getTrollingObject(const QString&, int);
     QList<TrollingObject*> m_trollingobjects;
+    QHash<int, TrollingObject*> m_fasterHash;
     DBLayer* m_DBLayer;
     QString m_filePath;
 };
