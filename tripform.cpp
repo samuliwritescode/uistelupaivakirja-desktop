@@ -89,6 +89,7 @@ void TripForm::observerEvent(int type)
     }
 
     ui->trip_save->setDisabled(!m_tripController->getBooleanValue(eUnsavedChanges));
+    ui->sync_mobile->setDisabled(m_tripController->getBooleanValue(eUnsavedChanges));
     ui->trip_delete->setDisabled(!m_tripController->getBooleanValue(eTrip));
     ui->trip_undo->setDisabled(!m_tripController->getBooleanValue(eUnsavedChanges));
     ui->groupBoxTrip->setVisible(m_tripController->getBooleanValue(eTrip));
@@ -777,4 +778,9 @@ void TripForm::on_time_dial_minutes_valueChanged(int value)
     QTime time;
     time.setHMS(ui->timeEdit->time().hour(), (value+30)%60, 0);
     m_tripController->timeEvent(eTime, time);
+}
+
+void TripForm::on_sync_mobile_clicked()
+{
+
 }

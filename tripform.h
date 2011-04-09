@@ -43,6 +43,7 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_sync_mobile_clicked();
     void on_time_dial_minutes_valueChanged(int value);
     void on_time_dial_hour_valueChanged(int value);    
     void on_onlyFavoriteLures_clicked(bool checked);

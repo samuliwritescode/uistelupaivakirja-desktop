@@ -21,5 +21,6 @@
         <file>res/internet-web-browser.png</file>
         <file>res/go-first.png</file>
         <file>res/document-save-as.png</file>
+        <file>res/mail-send-receive.png</file>
     </qresource>
 </RCC>
