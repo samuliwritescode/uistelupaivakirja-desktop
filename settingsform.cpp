@@ -20,6 +20,7 @@ SettingsForm::SettingsForm(QWidget *parent) :
     ui->customFields->setEnabled(settings.value("use_customfields").toBool());
     ui->checkBoxUseRouteLog->setChecked(settings.value("use_routelog").toBool());
     ui->lineEditDataFolder->setText(settings.value("ProgramFolder").toString());
+    ui->mobileFolder->setText(settings.value("MobileFolder").toString());
     ui->lineEditCSS->setText(settings.value("TripReportCSS").toString());
 
     QString customField0 = settings.value("custom_field0").toString();
@@ -114,4 +115,31 @@ void SettingsForm::on_checkBoxUseRouteLog_clicked(bool checked)
 {
     QSettings settings;
     settings.setValue("use_routelog", checked);
+}
+
+void SettingsForm::on_openMobileFolder_clicked()
+{
+    QSettings settings;
+    QFileDialog filedlg(this);
+    filedlg.setOptions(QFileDialog::ShowDirsOnly);
+    filedlg.setFileMode(QFileDialog::Directory);
+    filedlg.setDirectory(settings.value("MobileFolder").toString());
+    if(filedlg.exec())
+    {
+        QStringList folders = filedlg.selectedFiles();
+        if(folders.size() == 1)
+        {
+            QString folder = folders.at(0);
+            QDir dir(folder);
+            if(dir.mkpath("uistelu/"))
+            {
+                settings.setValue("MobileFolder", folder);
+                ui->mobileFolder->setText(folder);
+            }
+            else
+            {
+                 QMessageBox::critical(this, tr("Ongelma"), tr("Kansioon ")+folder+tr(" ei voi kirjoittaa. En voi käyttää hakemistoa."));
+            }
+        }
+    }
 }
