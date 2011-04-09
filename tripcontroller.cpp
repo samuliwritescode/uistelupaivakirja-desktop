@@ -557,10 +557,7 @@ QMap<QString, int> TripController::getTripList()
             name += ", ";
             name += trip->getPlace()->getName();
         }
-        while(retval.contains(name))
-        {
-            name += "-1";
-        }
+
 
         int fishcount = trip->getFishCount(Fish::eFish)+
                         trip->getFishCount(Fish::eFishAndWeather);
@@ -576,6 +573,11 @@ QMap<QString, int> TripController::getTripList()
 
         if(trip->getId() < 0)
             name = tr("tallentamaton uusi reissu");
+
+        while(retval.contains(name))
+        {
+            name += "#"+QString::number(trip->getId());
+        }
 
         retval[name] = trip->getId();        
     }

@@ -273,11 +273,6 @@ bool XMLWriter::loadDocument()
             return false;
         }
     }
-    else
-    {
-        qDebug() << "cant open document" << m_filename;
-        return false;
-    }
 
     file.close();
     return true;

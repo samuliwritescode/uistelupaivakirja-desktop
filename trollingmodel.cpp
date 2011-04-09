@@ -1,8 +1,11 @@
 #include <QDir>
 #include <QSettings>
 #include <QDebug>
+#include <QStringList>
 #include "trollingexception.h"
 #include "trollingmodel.h"
+#include "singletons.h"
+#include "alternative.h"
 
 TrollingModel::TrollingModel(QObject *parent) :
     QObject(parent)
@@ -57,21 +60,24 @@ void TrollingModel::syncMobile()
     {
         QFile::remove(memCard+"/uistelu/lure.xml");
         QFile::remove(memCard+"/uistelu/place.xml");
+        QFile::remove(memCard+"/uistelu/spinneritems.xml");
         if(!QFile::copy(m_filePath+"/database/lure.xml", memCard+"/uistelu/lure.xml"))
         {
-            qDebug() << "Cant copy" << m_filePath+"/database/lure.xml"<< " to memcard " << memCard+"/uistelu/lure.xml";
+            throw new TrollingException(tr("En kykene kopioimaan viehekantaa muistikortille. Tarkista ettei kortti ole kirjoitussuojattu"));
         }
 
         if(!QFile::copy(m_filePath+"/database/place.xml", memCard+"/uistelu/place.xml"))
         {
-            qDebug() << "Cant copy" << m_filePath+"/database/place.xml"<< " to memcard " << memCard+"/uistelu/place.xml";
+             throw new TrollingException(tr("En kykene kopioimaan paikkakantaa muistikortille. Tarkista ettei kortti ole kirjoitussuojattu"));
         }
 
         DBLayer dblayerMobile(memCard+"/uistelu/");
+
         foreach(TrollingObject* object, m_trollingobjectsmobile)
         {
             delete object;
         }
+
         m_trollingobjectsmobile.clear();
 
         m_readFromMobile = true;
@@ -93,10 +99,29 @@ void TrollingModel::syncMobile()
             qDebug() << "setting id to mobile trip" << maxId;
             object->setId(maxId);
             m_trollingobjects.push_back(object);
+            m_DBLayer->storeObject(object);
         }
         m_trollingobjectsmobile.clear();
 
-        //dblayerMobile.storeObject()
+        QFile::remove(memCard+"/uistelu/trip.xml");
+
+        QStringList specielist = Singletons::tripController()->getAlternatives(eSpecies);
+        QStringList getterlist = Singletons::tripController()->getAlternatives(eGetter);
+        QStringList methodlist = Singletons::tripController()->getAlternatives(eMethod);
+        foreach(QString string, specielist)
+        {
+            dblayerMobile.storeObject(&Alternative("species", string));
+        }
+
+        foreach(QString string, getterlist)
+        {
+            dblayerMobile.storeObject(&Alternative("getter", string));
+        }
+
+        foreach(QString string, methodlist)
+        {
+            dblayerMobile.storeObject(&Alternative("method", string));
+        }
     }
     else
     {
