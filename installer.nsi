@@ -83,6 +83,17 @@ Section "Uninstall"
   ; Remove files and uninstaller
   Delete $INSTDIR\Uistelupaivakirja.nsi
   Delete $INSTDIR\uninstall.exe
+  Delete $INSTDIR\Uistelupaivakirja.exe
+  Delete $INSTDIR\libgcc_s_dw2-1.dll
+  Delete $INSTDIR\libstdc++-6.dll
+  Delete $INSTDIR\mingwm10.dll
+  Delete $INSTDIR\phonon4.dll
+  Delete $INSTDIR\QtCore4.dll
+  Delete $INSTDIR\QtGui4.dll
+  Delete $INSTDIR\QtNetwork4.dll
+  Delete $INSTDIR\QtOpenGl4.dll
+  Delete $INSTDIR\QtWebKit4.dll
+  Delete $INSTDIR\QtXml4.dll
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\Uistelupaivakirja\*.*"
