@@ -7,6 +7,7 @@
 TrollingModel::TrollingModel(QObject *parent) :
     QObject(parent)
 {
+    m_readFromMobile = false;
     QSettings settings;
     m_filePath = settings.value("ProgramFolder").toString();
 }
@@ -30,6 +31,11 @@ TrollingObject* TrollingModel::createTrollingObject(const QString& p_type)
     } else if(p_type == Trip().getType())
     {
         object = new Trip();
+        if(m_readFromMobile)
+        {
+            m_trollingobjectsmobile.push_back(object);
+            return object;
+        }
     } else if(p_type == Place().getType())
     {
         object = new Place();
@@ -41,6 +47,61 @@ TrollingObject* TrollingModel::createTrollingObject(const QString& p_type)
     }
 
     return object;
+}
+
+void TrollingModel::syncMobile()
+{
+    QSettings settings;
+    QString memCard = settings.value("MobileFolder").toString();
+    if(!memCard.isEmpty())
+    {
+        QFile::remove(memCard+"/uistelu/lure.xml");
+        QFile::remove(memCard+"/uistelu/place.xml");
+        if(!QFile::copy(m_filePath+"/database/lure.xml", memCard+"/uistelu/lure.xml"))
+        {
+            qDebug() << "Cant copy" << m_filePath+"/database/lure.xml"<< " to memcard " << memCard+"/uistelu/lure.xml";
+        }
+
+        if(!QFile::copy(m_filePath+"/database/place.xml", memCard+"/uistelu/place.xml"))
+        {
+            qDebug() << "Cant copy" << m_filePath+"/database/place.xml"<< " to memcard " << memCard+"/uistelu/place.xml";
+        }
+
+        DBLayer dblayerMobile(memCard+"/uistelu/");
+        foreach(TrollingObject* object, m_trollingobjectsmobile)
+        {
+            delete object;
+        }
+        m_trollingobjectsmobile.clear();
+
+        m_readFromMobile = true;
+        dblayerMobile.loadObjects(Trip().getType(), this);
+        m_readFromMobile = false;
+        int maxId = 1;
+        foreach(TrollingObject* object, m_trollingobjects)
+        {
+            if(object->getType() == Trip().getType() &&
+               object->getId() > maxId)
+            {
+                maxId = object->getId();
+            }
+        }
+
+        foreach(TrollingObject* object, m_trollingobjectsmobile)
+        {
+            maxId++;
+            qDebug() << "setting id to mobile trip" << maxId;
+            object->setId(maxId);
+            m_trollingobjects.push_back(object);
+        }
+        m_trollingobjectsmobile.clear();
+
+        //dblayerMobile.storeObject()
+    }
+    else
+    {
+        throw new TrollingException(tr("Muistikortin sijaintia ei ole asetettu. Aseta se ensin asetusvälilehdellä."));
+    }
 }
 
 TrollingModel::~TrollingModel()

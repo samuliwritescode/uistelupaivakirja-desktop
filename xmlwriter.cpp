@@ -217,6 +217,8 @@ bool XMLWriter::getTrollingObjectElement(QDomElement& p_element, int& p_id)
             QString id = element.attribute("id");
             if(id.toInt() == p_id)
             {
+                if(maxId < p_id)
+                    root.setAttribute("MaxId", QString::number(p_id));
                 p_element = element;
                 return true;
             }
@@ -271,6 +273,12 @@ bool XMLWriter::loadDocument()
             return false;
         }
     }
+    else
+    {
+        qDebug() << "cant open document" << m_filename;
+        return false;
+    }
+
     file.close();
     return true;
 }

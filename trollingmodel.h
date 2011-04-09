@@ -29,6 +29,7 @@ public:
     QMap<int, Lure*> getLures();
     QMap<int, Place*> getPlaces();
     void initialize();
+    void syncMobile();
     virtual TrollingObject* createTrollingObject(const QString& p_type);
     QString importFile(TrollingObject*, const QString&);
 
@@ -39,9 +40,11 @@ public slots:
 private:
     TrollingObject* getTrollingObject(const QString&, int);
     QList<TrollingObject*> m_trollingobjects;
+    QList<TrollingObject*> m_trollingobjectsmobile;
     QHash<int, TrollingObject*> m_fasterHash;
     DBLayer* m_DBLayer;
     QString m_filePath;
+    bool m_readFromMobile;
 };
 
 #endif // TROLLINGMODEL_H

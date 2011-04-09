@@ -462,6 +462,9 @@ void TripController::buttonEvent(EUISource source)
     {
         switch(source)
         {
+        case eMobileSync:
+            Singletons::model()->syncMobile();
+            break;
         case eTripUndo:
             {
                 int id = m_trip->getId();

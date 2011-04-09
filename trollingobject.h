@@ -12,6 +12,7 @@ typedef QList<TrollingObjectItem> TrollingObjectItemList;
 class TrollingObject: public QObject
 {
     friend class XMLWriter;
+    friend class TrollingModel;
 public:
     int getId();
     QString getType();

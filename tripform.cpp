@@ -782,5 +782,5 @@ void TripForm::on_time_dial_minutes_valueChanged(int value)
 
 void TripForm::on_sync_mobile_clicked()
 {
-
+    m_tripController->buttonEvent(eMobileSync);
 }
