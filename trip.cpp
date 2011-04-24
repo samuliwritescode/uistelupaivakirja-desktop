@@ -174,6 +174,7 @@ Fish* Trip::newFish(Fish::EType type)
                     fish->setPressureCondition(weather->getPressureCondition());
                     fish->setWindDirection(weather->getWindDirection());
                     fish->setPressureChange(weather->getPressureChange());
+                    fish->setRainCondition(weather->getRainCondition());
                     break;
                 }
             }
