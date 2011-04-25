@@ -174,10 +174,42 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="lure_manufacturer">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+          <property name="minimumContentsLength">
+           <number>25</number>
+          </property>
+         </widget>
+        </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_46">
           <property name="text">
            <string>Malli</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="lure_model">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+          <property name="minimumContentsLength">
+           <number>25</number>
           </property>
          </widget>
         </item>
@@ -188,32 +220,8 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_48">
-          <property name="text">
-           <string>Väri</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Suosikki</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="1">
-         <widget class="QCheckBox" name="lure_favorite">
-          <property name="focusPolicy">
-           <enum>Qt::WheelFocus</enum>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QComboBox" name="lure_type">
+        <item row="3" column="1">
+         <widget class="QComboBox" name="lure_size">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -235,8 +243,8 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QComboBox" name="lure_manufacturer">
+        <item row="5" column="1">
+         <widget class="QComboBox" name="lure_type">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -251,39 +259,24 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QComboBox" name="lure_model">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="editable">
-           <bool>true</bool>
-          </property>
-          <property name="minimumContentsLength">
-           <number>25</number>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Lempinimi</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QComboBox" name="lure_size">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="editable">
-           <bool>true</bool>
-          </property>
-          <property name="minimumContentsLength">
-           <number>25</number>
+        <item row="6" column="1">
+         <widget class="QLineEdit" name="lure_nickname"/>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="label_48">
+          <property name="text">
+           <string>Väritysnimi</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
+        <item row="7" column="1">
          <widget class="QComboBox" name="lure_color">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -300,13 +293,55 @@
          </widget>
         </item>
         <item row="8" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>selkä-kylki-vatsa</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QComboBox" name="lure_back">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="lure_side">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="lure_belly">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="12" column="0">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>Suosikki</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
            <string>Ei näy listassa</string>
           </property>
          </widget>
         </item>
-        <item row="8" column="1">
+        <item row="13" column="1">
          <widget class="QCheckBox" name="lure_notvisible">
           <property name="focusPolicy">
            <enum>Qt::WheelFocus</enum>
@@ -316,15 +351,68 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_3">
+        <item row="12" column="1">
+         <widget class="QCheckBox" name="lure_favorite">
+          <property name="focusPolicy">
+           <enum>Qt::WheelFocus</enum>
+          </property>
           <property name="text">
-           <string>Lempinimi</string>
+           <string/>
           </property>
          </widget>
         </item>
-        <item row="6" column="1">
-         <widget class="QLineEdit" name="lure_nickname"/>
+        <item row="10" column="1">
+         <widget class="QComboBox" name="lure_class">
+          <property name="editable">
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string/>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>luomu</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>voimakaskontrastinen luomu</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>ärsytysväri</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>voimakas ärsytysväri</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QComboBox" name="lure_contrast">
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Kontrastiväri</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Väritysluokka</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -337,7 +425,6 @@
   <tabstop>lure_manufacturer</tabstop>
   <tabstop>lure_model</tabstop>
   <tabstop>lure_size</tabstop>
-  <tabstop>lure_color</tabstop>
   <tabstop>lure_type</tabstop>
   <tabstop>lure_nickname</tabstop>
   <tabstop>lure_favorite</tabstop>

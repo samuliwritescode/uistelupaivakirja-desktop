@@ -37,6 +37,11 @@ void LureForm::observerEvent(int type)
     ui->lure_favorite->setDisabled(!m_lureController->getBooleanValue(eLureList));
     ui->lure_notvisible->setDisabled(!m_lureController->getBooleanValue(eLureList));
     ui->lure_nickname->setDisabled(!m_lureController->getBooleanValue(eLureList));
+    ui->lure_back->setDisabled(!m_lureController->getBooleanValue(eLureList));
+    ui->lure_side->setDisabled(!m_lureController->getBooleanValue(eLureList));
+    ui->lure_belly->setDisabled(!m_lureController->getBooleanValue(eLureList));
+    ui->lure_class->setDisabled(!m_lureController->getBooleanValue(eLureList));
+    ui->lure_contrast->setDisabled(!m_lureController->getBooleanValue(eLureList));
 
     if(type == Controller::eLureListUpdated)
     {
@@ -76,6 +81,16 @@ void LureForm::observerEvent(int type)
         setCombo(eLureSize, ui->lure_size);
         setCombo(eLureColor, ui->lure_color);
         setCombo(eLureType, ui->lure_type);
+        setCombo(eLureColorBack, ui->lure_back);
+        setCombo(eLureColorSide, ui->lure_side);
+        setCombo(eLureColorBelly, ui->lure_belly);
+        //setCombo(eLureColorClass, ui->lure_class);
+        setCombo(eLureColorContrast, ui->lure_contrast);
+
+        QString colorclass = m_lureController->getTextValue(eLureColorClass);
+        int colorindex = ui->lure_class->findText(colorclass);
+        ui->lure_class->setCurrentIndex(colorindex);
+
         ui->lure_favorite->setChecked(m_lureController->getBooleanValue(eLureFavorite));
         ui->lure_notvisible->setChecked(m_lureController->getBooleanValue(eLureNotVisible));
         ui->lure_nickname->blockSignals(true);
@@ -164,12 +179,37 @@ void LureForm::on_lure_notvisible_clicked(bool checked)
     m_lureController->booleanEvent(eLureNotVisible, checked);
 }
 
-void LureForm::on_lure_nickname_textEdited(QString text)
+void LureForm::on_lure_nickname_textChanged(QString text)
+{
+   m_lureController->textEvent(eLureNickName, text);
+}
+
+void LureForm::on_lure_back_textChanged(QString text)
+{
+    m_lureController->textEvent(eLureColorBack, text);
+}
+
+void LureForm::on_lure_side_textChanged(QString text)
+{
+    m_lureController->textEvent(eLureColorSide, text);
+}
+
+void LureForm::on_lure_belly_textChanged(QString text)
+{
+    m_lureController->textEvent(eLureColorBelly, text);
+}
+
+void LureForm::on_lure_class_textChanged(QString text)
 {
 
 }
 
-void LureForm::on_lure_nickname_textChanged(QString text)
+void LureForm::on_lure_contrast_textChanged(QString text)
 {
-   m_lureController->textEvent(eLureNickName, text);
+    m_lureController->textEvent(eLureColorContrast, text);
+}
+
+void LureForm::on_lure_class_currentIndexChanged(QString text)
+{
+    m_lureController->textEvent(eLureColorClass, text);
 }

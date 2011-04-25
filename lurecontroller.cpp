@@ -83,6 +83,11 @@ void LureController::textEvent(EUISource source, const QString& value)
     case eLureModel: m_lure->setModel(value); break;
     case eLureSize: m_lure->setSize(value); break;
     case eLureColor: m_lure->setColor(value); break;
+    case eLureColorBack: m_lure->setColorBack(value); break;
+    case eLureColorSide: m_lure->setColorSide(value); break;
+    case eLureColorBelly: m_lure->setColorBelly(value); break;
+    case eLureColorClass: m_lure->setColorClass(value); break;
+    case eLureColorContrast: m_lure->setColorContrast(value); break;
     case eLureNickName: m_lure->setNickName(value); break;
     default: break;
     }
@@ -158,6 +163,11 @@ QString LureController::getTextValue(EUISource source)
     case eLureModel: return m_lure->getModel(); break;
     case eLureSize: return m_lure->getSize(); break;
     case eLureColor: return m_lure->getColor(); break;
+    case eLureColorBack: return m_lure->getColorBack(); break;
+    case eLureColorBelly: return m_lure->getColorBelly(); break;
+    case eLureColorSide: return m_lure->getColorSide(); break;
+    case eLureColorClass: return m_lure->getColorClass(); break;
+    case eLureColorContrast: return m_lure->getColorContrast(); break;
     case eLureType: return m_lure->getLureType(); break;
     case eLureNickName: return m_lure->getNickName(); break;
     default: break;
@@ -236,6 +246,11 @@ QList<QList<QString> > LureController::getLureListLong()
         lurehash.push_back(lure->getModel());
         lurehash.push_back(lure->getSize());
         lurehash.push_back(lure->getColor());
+        lurehash.push_back(lure->getColorBack());
+        lurehash.push_back(lure->getColorSide());
+        lurehash.push_back(lure->getColorBelly());
+        lurehash.push_back(lure->getColorContrast());
+        lurehash.push_back(lure->getColorClass());
         lurehash.push_back(lure->getLureType());
         lurehash.push_back(lure->getNickName());
         if(lure->getFavorite())
@@ -261,6 +276,11 @@ QStringList LureController::getLureColumns()
            tr("Malli") <<
            tr("Koko") <<
            tr("Väri") <<
+           tr("Selkä") <<
+           tr("Kylki") <<
+           tr("Vatsa") <<
+           tr("Kontrasti") <<
+           tr("Luokka") <<
            tr("Tyyppi") <<
            tr("Lempinimi") <<
            tr("Suosikki") <<
@@ -281,6 +301,11 @@ QStringList LureController::getAlternatives(EUISource source)
             case eLureMaker: value = lure->getMaker(); break;
             case eLureModel: value = lure->getModel(); break;
             case eLureColor: value = lure->getColor(); break;
+            case eLureColorBack: value = lure->getColorBack(); break;
+            case eLureColorBelly: value = lure->getColorBelly(); break;
+            case eLureColorSide: value = lure->getColorSide(); break;
+            //case eLureColorClass: value = lure->getColorClass(); break;
+            case eLureColorContrast: value = lure->getColorContrast(); break;
             case eLureSize: value = lure->getSize(); break;
             case eLureType: value = lure->getLureType(); break;
             default: break;

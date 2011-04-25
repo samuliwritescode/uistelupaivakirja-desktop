@@ -19,8 +19,13 @@ public:
     ~LureForm();
 
 private slots:
+    void on_lure_class_currentIndexChanged(QString );
+    void on_lure_contrast_textChanged(QString );
+    void on_lure_class_textChanged(QString );
+    void on_lure_belly_textChanged(QString );
+    void on_lure_side_textChanged(QString );
+    void on_lure_back_textChanged(QString );
     void on_lure_nickname_textChanged(QString );
-    void on_lure_nickname_textEdited(QString );
     void on_lure_notvisible_clicked(bool checked);
     void on_lure_save_clicked();
     void on_lure_undo_clicked();

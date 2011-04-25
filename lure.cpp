@@ -25,6 +25,31 @@ void Lure::setColor(const QString& p_value)
     set("color", p_value);
 }
 
+void Lure::setColorBack(const QString& p_value)
+{
+    set("color_back", p_value);
+}
+
+void Lure::setColorSide(const QString& p_value)
+{
+    set("color_side", p_value);
+}
+
+void Lure::setColorBelly(const QString& p_value)
+{
+    set("color_belly", p_value);
+}
+
+void Lure::setColorClass(const QString& p_value)
+{
+    set("color_class", p_value);
+}
+
+void Lure::setColorContrast(const QString& p_value)
+{
+    set("color_contrast", p_value);
+}
+
 void Lure::setLureType(const QString& p_value)
 {
     set("lure_type", p_value);
@@ -63,6 +88,31 @@ QString Lure::getSize()
 QString Lure::getColor()
 {
     return get("color").toString();
+}
+
+QString Lure::getColorBack()
+{
+    return get("color_back").toString();
+}
+
+QString Lure::getColorSide()
+{
+    return get("color_side").toString();
+}
+
+QString Lure::getColorBelly()
+{
+    return get("color_belly").toString();
+}
+
+QString Lure::getColorClass()
+{
+    return get("color_class").toString();
+}
+
+QString Lure::getColorContrast()
+{
+    return get("color_contrast").toString();
 }
 
 QString Lure::getLureType()
