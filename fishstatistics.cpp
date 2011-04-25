@@ -11,7 +11,18 @@
 #define COL_GETTER tr("Saaja")
 #define COL_METHOD tr("Kalastustapa")
 #define COL_LUREMANUFACTURER tr("Uistinvalmistaja")
+#define COL_LURETYPE tr("Uistintyyppi")
+#define COL_LURESIZE tr("Uistinkoko")
+#define COL_LUREMODEL tr("Uistinmalli")
+#define COL_LURECOLOR tr("Uistinväri")
+#define COL_LURECOLORBACK tr("Uistinväri(selkä)")
+#define COL_LURECOLORSIDE tr("Uistinväri(kylki)")
+#define COL_LURECOLORBELLY tr("Uistinväri(vatsa)")
+#define COL_LURECOLORCONTRAST tr("Uistinväri(kontrasti)")
+#define COL_LURECOLORCLASS tr("Uistinväri(luokka)")
+#define COL_LURE tr("Uistin")
 #define COL_PLACE tr("Kalapaikka")
+#define COL_PLACE_CITY tr("Kalapaikka(kunta)")
 #define COL_DATE tr("Päiväys")
 #define COL_YEAR tr("Vuosi")
 #define COL_MONTH tr("Kuukausi")
@@ -39,7 +50,17 @@ QStringList FishStatistics::getTextFields()
     retval << COL_GETTER;
     retval << COL_METHOD;
     retval << COL_LUREMANUFACTURER;
+    retval << COL_LURECOLOR;
+    retval << COL_LURECOLORBACK;
+    retval << COL_LURECOLORSIDE;
+    retval << COL_LURECOLORBELLY;
+    retval << COL_LURECOLORCLASS;
+    retval << COL_LURECOLORCONTRAST;
+    retval << COL_LURESIZE;
+    retval << COL_LUREMODEL;
+    retval << COL_LURE;
     retval << COL_PLACE;
+    retval << COL_PLACE_CITY;
     retval << COL_DATE;
     retval << COL_YEAR;
     retval << COL_MONTH;
@@ -117,15 +138,43 @@ QHash<QString, QString> FishStatistics::stats()
                 {
                     Lure* lure = fish->getLure();
                     statline[COL_LUREMANUFACTURER] = lure->getMaker();
+                    statline[COL_LURECOLOR] = lure->getColor();
+                    statline[COL_LURECOLORBACK] = lure->getColorBack();
+                    statline[COL_LURECOLORBELLY] = lure->getColorBelly();
+                    statline[COL_LURECOLORSIDE] = lure->getColorSide();
+                    statline[COL_LURECOLORCLASS] = lure->getColorClass();
+                    statline[COL_LURECOLORCONTRAST] = lure->getColorContrast();
+                    statline[COL_LURESIZE] = lure->getSize();
+                    statline[COL_LUREMODEL] = lure->getModel();
+                    statline[COL_LURE] = lure->getMaker()+" "+
+                                         lure->getNickName()+" "+
+                                         lure->getSize()+" "+
+                                         lure->getColor()+" "+
+                                         lure->getLureType();
                 } else
                 {
-                    statline[COL_LUREMANUFACTURER] = "";
+                    statline[COL_LUREMANUFACTURER] = tr("n/a");
+                    statline[COL_LURECOLOR] = tr("n/a");
+                    statline[COL_LURECOLORBACK] = tr("n/a");
+                    statline[COL_LURECOLORBELLY] = tr("n/a");
+                    statline[COL_LURECOLORSIDE] = tr("n/a");
+                    statline[COL_LURECOLORCLASS] = tr("n/a");
+                    statline[COL_LURECOLORCONTRAST] = tr("n/a");
+                    statline[COL_LURESIZE] = tr("n/a");
+                    statline[COL_LUREMODEL] = tr("n/a");
+                    statline[COL_LURE] = tr("n/a");
                 }
 
                 if(trip->getPlace())
+                {
                     statline[COL_PLACE] = trip->getPlace()->getName();
+                    statline[COL_PLACE_CITY] = trip->getPlace()->getCity();
+                }
                 else
+                {
                     statline[COL_PLACE] = tr("n/a");
+                    statline[COL_PLACE_CITY] = tr("n/a");
+                }
 
                 statline[COL_DATE] = trip->getDate().toString();
                 statline[COL_YEAR] = QString::number(trip->getDate().year());
