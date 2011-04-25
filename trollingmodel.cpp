@@ -58,17 +58,22 @@ void TrollingModel::syncMobile()
     QString memCard = settings.value("MobileFolder").toString();
     if(!memCard.isEmpty())
     {
+        if(!QDir().exists(memCard))
+        {
+            throw TrollingException(tr("Muistikorttia ei löydy. Tarkista puhelimen kytkentä."));
+        }
+
         QFile::remove(memCard+"/uistelu/lure.xml");
         QFile::remove(memCard+"/uistelu/place.xml");
         QFile::remove(memCard+"/uistelu/spinneritems.xml");
         if(!QFile::copy(m_filePath+"/database/lure.xml", memCard+"/uistelu/lure.xml"))
         {
-            throw new TrollingException(tr("En kykene kopioimaan viehekantaa muistikortille. Tarkista ettei kortti ole kirjoitussuojattu"));
+            throw TrollingException(tr("En kykene kopioimaan viehekantaa muistikortille. Tarkista ettei kortti ole kirjoitussuojattu"));
         }
 
         if(!QFile::copy(m_filePath+"/database/place.xml", memCard+"/uistelu/place.xml"))
         {
-             throw new TrollingException(tr("En kykene kopioimaan paikkakantaa muistikortille. Tarkista ettei kortti ole kirjoitussuojattu"));
+             throw TrollingException(tr("En kykene kopioimaan paikkakantaa muistikortille. Tarkista ettei kortti ole kirjoitussuojattu"));
         }
 
         DBLayer dblayerMobile(memCard+"/uistelu/");
@@ -125,7 +130,7 @@ void TrollingModel::syncMobile()
     }
     else
     {
-        throw new TrollingException(tr("Muistikortin sijaintia ei ole asetettu. Aseta se ensin asetusvälilehdellä."));
+        throw TrollingException(tr("Muistikortin sijaintia ei ole asetettu. Aseta se ensin asetusvälilehdellä."));
     }
 }
 
