@@ -89,7 +89,9 @@ void LureForm::observerEvent(int type)
 
         QString colorclass = m_lureController->getTextValue(eLureColorClass);
         int colorindex = ui->lure_class->findText(colorclass);
+        ui->lure_class->blockSignals(true);
         ui->lure_class->setCurrentIndex(colorindex);
+        ui->lure_class->blockSignals(false);
 
         ui->lure_favorite->setChecked(m_lureController->getBooleanValue(eLureFavorite));
         ui->lure_notvisible->setChecked(m_lureController->getBooleanValue(eLureNotVisible));
