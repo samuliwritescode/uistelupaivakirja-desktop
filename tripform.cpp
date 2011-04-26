@@ -1,4 +1,5 @@
 #include <QSettings>
+#include <QFileDialog>
 #include "tripform.h"
 #include "ui_tripform.h"
 
@@ -159,7 +160,7 @@ void TripForm::updateTrip()
     ui->timeEditTripStart->blockSignals(false);
     ui->timeEditTripEnd->blockSignals(false);
     ui->trip_description->blockSignals(false);
-    ui->dateEdit->blockSignals(false);
+    ui->dateEdit->blockSignals(false);    
 
     ui->trip_short_label->setText(m_tripController->getDateValue(eTripDate).toString("dd.MM.yyyy ")+
                                     m_tripController->getTextValue(ePlaceName)
@@ -421,6 +422,8 @@ void TripForm::updateWaypoints()
         item->setData(Qt::UserRole+2,  pair.second);
         m_wptList->insertItem(0, item);
     }
+
+    ui->routept_clear->setEnabled(m_tripController->getWayPointsList().count() > 0);
 }
 
 void TripForm::updateFish()
@@ -783,4 +786,27 @@ void TripForm::on_time_dial_minutes_valueChanged(int value)
 void TripForm::on_sync_mobile_clicked()
 {
     m_tripController->buttonEvent(eMobileSync);
+}
+
+void TripForm::on_add_route_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this, tr("Avaa reittiloki"), "", tr("Reittilokit (*.gpx)"));
+    if(QFile::exists(filename))
+    {
+        m_tripController->textEvent(eRouteAdd, filename);
+    }
+}
+
+void TripForm::on_routept_open_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this, tr("Avaa reittipistetiedosto"), "", tr("Reittipisteet (*.gpx)"));
+    if(QFile::exists(filename))
+    {
+        m_tripController->textEvent(eWaypointsAdd, filename);
+    }
+}
+
+void TripForm::on_routept_clear_clicked()
+{
+    m_tripController->textEvent(eWaypointsAdd, "");
 }

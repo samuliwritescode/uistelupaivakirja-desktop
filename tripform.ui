@@ -457,18 +457,46 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_5">
               <item>
-               <widget class="QToolButton" name="clear_route">
-                <property name="toolTip">
-                 <string>Poista reittiloki</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="resources.qrc">
-                  <normaloff>:/res/edit-clear.png</normaloff>:/res/edit-clear.png</iconset>
-                </property>
-               </widget>
+               <layout class="QHBoxLayout" name="horizontalLayout_15">
+                <item>
+                 <spacer name="horizontalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>1</width>
+                    <height>1</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="add_route">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="resources.qrc">
+                    <normaloff>:/res/folder-open.png</normaloff>:/res/folder-open.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="clear_route">
+                  <property name="toolTip">
+                   <string>Poista reittiloki</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="resources.qrc">
+                    <normaloff>:/res/edit-clear.png</normaloff>:/res/edit-clear.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>
@@ -2139,10 +2167,55 @@ p, li { white-space: pre-wrap; }
         <string>Reittipisteet</string>
        </property>
        <widget class="QWidget" name="poiDockWidget">
-        <layout class="QVBoxLayout" name="verticalLayout_12">
+        <layout class="QHBoxLayout" name="horizontalLayout_30">
+         <property name="spacing">
+          <number>1</number>
+         </property>
          <property name="margin">
           <number>5</number>
          </property>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QToolButton" name="routept_open">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resources.qrc">
+               <normaloff>:/res/folder-open.png</normaloff>:/res/folder-open.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="routept_clear">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resources.qrc">
+               <normaloff>:/res/edit-clear.png</normaloff>:/res/edit-clear.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
          <item>
           <layout class="QVBoxLayout" name="poiDockLayout">
            <property name="spacing">
@@ -2211,7 +2284,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>endDial</tabstop>
   <tabstop>clear_poi</tabstop>
   <tabstop>time_dial_minutes</tabstop>
-  <tabstop>clear_route</tabstop>
   <tabstop>tripreport_back</tabstop>
   <tabstop>tripreport_showimg</tabstop>
   <tabstop>tripreport_showmap</tabstop>

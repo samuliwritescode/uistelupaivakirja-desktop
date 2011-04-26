@@ -630,6 +630,9 @@ QList<QMap<QString, QString> > TripController::getFishList()
 QList<QPair<QString, int> > TripController::getWayPointsList()
 {
     QList<QPair<QString, int> > retval;
+    if(!m_trip)
+        return retval;
+
     QList<WayPoint> waypoints = m_trip->getWayPoints();
     for(int loop=0; loop < waypoints.count(); loop++)
     {

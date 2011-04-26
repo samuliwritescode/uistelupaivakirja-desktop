@@ -43,6 +43,9 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_routept_clear_clicked();
+    void on_routept_open_clicked();
+    void on_add_route_clicked();
     void on_sync_mobile_clicked();
     void on_time_dial_minutes_valueChanged(int value);
     void on_time_dial_hour_valueChanged(int value);    
