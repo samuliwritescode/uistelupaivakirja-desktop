@@ -153,16 +153,16 @@ QHash<QString, QString> FishStatistics::stats()
                                          lure->getLureType();
                 } else
                 {
-                    statline[COL_LUREMANUFACTURER] = tr("n/a");
-                    statline[COL_LURECOLOR] = tr("n/a");
-                    statline[COL_LURECOLORBACK] = tr("n/a");
-                    statline[COL_LURECOLORBELLY] = tr("n/a");
-                    statline[COL_LURECOLORSIDE] = tr("n/a");
-                    statline[COL_LURECOLORCLASS] = tr("n/a");
-                    statline[COL_LURECOLORCONTRAST] = tr("n/a");
-                    statline[COL_LURESIZE] = tr("n/a");
-                    statline[COL_LUREMODEL] = tr("n/a");
-                    statline[COL_LURE] = tr("n/a");
+                    statline[COL_LUREMANUFACTURER] = "";
+                    statline[COL_LURECOLOR] = "";
+                    statline[COL_LURECOLORBACK] = "";
+                    statline[COL_LURECOLORBELLY] = "";
+                    statline[COL_LURECOLORSIDE] = "";
+                    statline[COL_LURECOLORCLASS] = "";
+                    statline[COL_LURECOLORCONTRAST] = "";
+                    statline[COL_LURESIZE] = "";
+                    statline[COL_LUREMODEL] = "";
+                    statline[COL_LURE] = "";
                 }
 
                 if(trip->getPlace())
@@ -172,8 +172,8 @@ QHash<QString, QString> FishStatistics::stats()
                 }
                 else
                 {
-                    statline[COL_PLACE] = tr("n/a");
-                    statline[COL_PLACE_CITY] = tr("n/a");
+                    statline[COL_PLACE] = "";
+                    statline[COL_PLACE_CITY] = "";
                 }
 
                 statline[COL_DATE] = trip->getDate().toString();
