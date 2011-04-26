@@ -470,6 +470,7 @@ void TripController::buttonEvent(EUISource source)
                 int id = m_trip->getId();
                 Singletons::model()->reset(m_trip);
                 m_trip = Singletons::model()->getTrip(id);
+                sendNotificationToObservers(Controller::eWayPointsUpdated);
             }break;
         case eSaveTrip: Singletons::model()->commit(m_trip); break;        
         case eNewTrip: m_trip = Singletons::model()->getTrip(); break;
