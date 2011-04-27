@@ -82,6 +82,14 @@ void Controller::sendNotificationToObservers(ENotificationType type)
     emit observerNotification(static_cast<int>(type));
 }
 
+void Controller::showNotificationMessage(const QString& notify)
+{
+    if(display())
+    {
+        display()->showNotificationMessage(notify);
+    }
+}
+
 void Controller::showErrorMessage(const QString& error)
 {
     if(display())

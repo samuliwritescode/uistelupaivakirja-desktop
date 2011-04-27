@@ -29,7 +29,7 @@ public:
     QMap<int, Lure*> getLures();
     QMap<int, Place*> getPlaces();
     void initialize();
-    void syncMobile();
+    int syncMobile();
     virtual TrollingObject* createTrollingObject(const QString& p_type);
     QString importFile(TrollingObject*, const QString&);
 

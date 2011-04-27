@@ -123,6 +123,7 @@ public:
     void setMessageDisplay(MessageDisplay*);
     void showErrorMessage(const QString&);
     bool showConfirmationMessage(const QString&);
+    void showNotificationMessage(const QString& notify);
     MessageDisplay::EChoices showChoiseMessage(const QString&);
 
     enum ENotificationType {

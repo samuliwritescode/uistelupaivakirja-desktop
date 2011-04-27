@@ -463,7 +463,10 @@ void TripController::buttonEvent(EUISource source)
         switch(source)
         {
         case eMobileSync:
-            Singletons::model()->syncMobile();
+            {
+                int added = Singletons::model()->syncMobile();
+                showNotificationMessage(tr("Lisätty ")+QString::number(added)+tr(" uutta reissua"));
+            }
             break;
         case eTripUndo:
             {

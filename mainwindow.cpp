@@ -22,6 +22,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::showNotificationMessage(const QString& notify)
+{
+    QMessageBox::information(this, tr("Ilmoitus"), notify);
+}
 
 void MainWindow::showErrorMessage(const QString& error)
 {

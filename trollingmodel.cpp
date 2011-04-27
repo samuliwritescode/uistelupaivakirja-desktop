@@ -52,8 +52,9 @@ TrollingObject* TrollingModel::createTrollingObject(const QString& p_type)
     return object;
 }
 
-void TrollingModel::syncMobile()
+int TrollingModel::syncMobile()
 {
+    int syncedobjects = 0;
     QSettings settings;
     QString memCard = settings.value("MobileFolder").toString();
     if(!memCard.isEmpty())
@@ -105,6 +106,7 @@ void TrollingModel::syncMobile()
 
         foreach(TrollingObject* object, m_trollingobjectsmobile)
         {
+            syncedobjects++;
             maxId++;
             qDebug() << "setting id to mobile trip" << maxId;
             object->setId(maxId);
@@ -137,6 +139,8 @@ void TrollingModel::syncMobile()
     {
         throw TrollingException(tr("Muistikortin sijaintia ei ole asetettu. Aseta se ensin asetusvälilehdellä."));
     }
+
+    return syncedobjects;
 }
 
 TrollingModel::~TrollingModel()
