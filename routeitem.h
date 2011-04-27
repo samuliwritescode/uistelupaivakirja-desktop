@@ -2,6 +2,7 @@
 #define ROUTEITEM_H
 
 #include <QLabel>
+#include <QUrl>
 
 class RouteItem : public QLabel
 {
@@ -10,6 +11,7 @@ public:
     explicit RouteItem(QLabel *parent = 0);
     explicit RouteItem(const QString& text, QLabel *parent = 0);
     virtual void setText(const QString &);
+    void insertFile(const QUrl& file);
 
 signals:
 

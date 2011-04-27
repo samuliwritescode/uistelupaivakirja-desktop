@@ -36,14 +36,19 @@ void WayPointList::dropEvent ( QDropEvent * event )
         QList<QUrl> urls = event->mimeData()->urls();
         foreach(QUrl url, urls)
         {
-            if(!url.path().endsWith("gpx"))
-                return;
-
-            qDebug() << "drop"<<url.path();
-            Singletons::tripController()->textEvent(eWaypointsAdd, url.path());
+            insertFile(url);
         }
     }
     event->acceptProposedAction();
+}
+
+void WayPointList::insertFile(const QUrl& url)
+{
+    if(!url.path().endsWith("gpx"))
+        return;
+
+    qDebug() << "drop"<<url.path();
+    Singletons::tripController()->textEvent(eWaypointsAdd, url.path());
 }
 
 void WayPointList::dragMoveEvent(QDragMoveEvent *event)

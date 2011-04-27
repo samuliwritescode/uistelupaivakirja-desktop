@@ -43,13 +43,18 @@ void RouteItem::dropEvent ( QDropEvent * event )
         QList<QUrl> urls = event->mimeData()->urls();
         foreach(QUrl url, urls)
         {
-            if(!url.path().endsWith("gpx"))
-                return;
-
-            Singletons::tripController()->textEvent(eRouteAdd, url.path());
+            insertFile(url);
         }
     }
     event->acceptProposedAction();
+}
+
+void RouteItem::insertFile(const QUrl& url)
+{
+    if(!url.path().endsWith("gpx"))
+        return;
+
+    Singletons::tripController()->textEvent(eRouteAdd, url.path());
 }
 
 void RouteItem::dragMoveEvent(QDragMoveEvent *event)

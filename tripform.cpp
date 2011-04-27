@@ -793,7 +793,7 @@ void TripForm::on_add_route_clicked()
     QString filename = QFileDialog::getOpenFileName(this, tr("Avaa reittiloki"), "", tr("Reittilokit (*.gpx)"));
     if(QFile::exists(filename))
     {
-        m_tripController->textEvent(eRouteAdd, filename);
+        m_route->insertFile(QUrl(filename));
     }
 }
 
@@ -802,7 +802,7 @@ void TripForm::on_routept_open_clicked()
     QString filename = QFileDialog::getOpenFileName(this, tr("Avaa reittipistetiedosto"), "", tr("Reittipisteet (*.gpx)"));
     if(QFile::exists(filename))
     {
-        m_tripController->textEvent(eWaypointsAdd, filename);
+        m_wptList->insertFile(QUrl(filename));
     }
 }
 
