@@ -484,6 +484,9 @@
                 </item>
                 <item>
                  <widget class="QToolButton" name="trip_file_add">
+                  <property name="toolTip">
+                   <string>Lisää mediatiedosto</string>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
@@ -516,6 +519,9 @@
                 </item>
                 <item>
                  <widget class="QToolButton" name="add_route">
+                  <property name="toolTip">
+                   <string>Lisää reittilokitiedosto</string>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
@@ -1840,6 +1846,9 @@
              <layout class="QHBoxLayout" name="horizontalLayout_10">
               <item>
                <widget class="QToolButton" name="fish_file_add">
+                <property name="toolTip">
+                 <string>Lisää mediatiedosto</string>
+                </property>
                 <property name="text">
                  <string/>
                 </property>
@@ -2235,6 +2244,9 @@ p, li { white-space: pre-wrap; }
            </property>
            <item>
             <widget class="QToolButton" name="routept_open">
+             <property name="toolTip">
+              <string>Lisää reittipistetiedosto</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -2246,6 +2258,9 @@ p, li { white-space: pre-wrap; }
            </item>
            <item>
             <widget class="QToolButton" name="routept_clear">
+             <property name="toolTip">
+              <string>Tyhjennä reittipisteet</string>
+             </property>
              <property name="text">
               <string/>
              </property>
