@@ -63,6 +63,11 @@ void TrollingModel::syncMobile()
             throw TrollingException(tr("Muistikorttia ei löydy. Tarkista puhelimen kytkentä."));
         }
 
+        if(!QDir().exists(memCard+"/uistelu/"))
+        {
+            QDir().mkpath(memCard+"/uistelu/");
+        }
+
         QFile::remove(memCard+"/uistelu/lure.xml");
         QFile::remove(memCard+"/uistelu/place.xml");
         QFile::remove(memCard+"/uistelu/spinneritems.xml");
