@@ -46,7 +46,7 @@ TripForm::TripForm(QWidget *parent) :
 
     m_mediaListTrip = new MediaList(eMediaFileAddTrip, eMediaFileRemoveTrip);
     m_mediaListTrip->setAcceptDrops(true);
-    ui->verticalLayout_15->insertWidget(0, m_mediaListTrip);
+    ui->verticalLayout_15->insertWidget(1, m_mediaListTrip);
 
     observerEvent(Controller::eTripUpdated);
     observerEvent(Controller::eTripListUpdated);
@@ -809,4 +809,14 @@ void TripForm::on_routept_open_clicked()
 void TripForm::on_routept_clear_clicked()
 {
     m_tripController->textEvent(eWaypointsAdd, "");
+}
+
+void TripForm::on_trip_file_add_clicked()
+{
+    m_mediaListTrip->insertMediaFile();
+}
+
+void TripForm::on_fish_file_add_clicked()
+{
+    m_mediaList->insertMediaFile();
 }

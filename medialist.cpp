@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <QMenu>
+#include <QFileDialog>
 #include "mainwindow.h"
 #include "singletons.h"
 #include "medialist.h"
@@ -76,6 +77,15 @@ void MediaList::dropEvent ( QDropEvent * event )
         }
     }
     event->acceptProposedAction();
+}
+
+void MediaList::insertMediaFile()
+{
+    QString filename = QFileDialog::getOpenFileName(this, tr("Avaa mediatiedosto"), "", tr("Mediatiedostot (*.avi *.mov *.wmv *.mpg *.jpg *.png *.jpeg)"));
+    if(QFile::exists(filename) && checkFileExtension(filename))
+    {
+        Singletons::tripController()->textEvent(static_cast<EUISource>(m_addId), filename);
+    }
 }
 
 void MediaList::dragMoveEvent(QDragMoveEvent *event)

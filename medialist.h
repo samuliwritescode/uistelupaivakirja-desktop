@@ -14,6 +14,7 @@ public:
     explicit MediaList(int, int, QWidget *parent = 0);
 
     void setMediaFiles(QStringList);
+    void insertMediaFile();
 
 private slots:
     void openFile( QListWidgetItem * item );
