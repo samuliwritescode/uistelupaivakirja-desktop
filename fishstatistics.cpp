@@ -50,6 +50,7 @@ QStringList FishStatistics::getTextFields()
     retval << COL_GETTER;
     retval << COL_METHOD;
     retval << COL_LUREMANUFACTURER;
+    retval << COL_LURETYPE;
     retval << COL_LURECOLOR;
     retval << COL_LURECOLORBACK;
     retval << COL_LURECOLORSIDE;
@@ -138,6 +139,7 @@ QHash<QString, QString> FishStatistics::stats()
                 {
                     Lure* lure = fish->getLure();
                     statline[COL_LUREMANUFACTURER] = lure->getMaker();
+                    statline[COL_LURETYPE] = lure->getLureType();
                     statline[COL_LURECOLOR] = lure->getColor();
                     statline[COL_LURECOLORBACK] = lure->getColorBack();
                     statline[COL_LURECOLORBELLY] = lure->getColorBelly();
