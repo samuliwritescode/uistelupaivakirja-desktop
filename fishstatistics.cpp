@@ -29,6 +29,7 @@
 #define COL_YEARMONTH tr("Vuosi ja kk")
 #define COL_TRIPLENGTH tr("Reissun pituus")
 #define COL_TEMP tr("Lämpötila")
+#define COL_TEMPWATER tr("Veden lämpötila")
 #define COL_WEATHER tr("Säätila")
 #define COL_WIND tr("Tuuli")
 #define COL_WINDDIR tr("Tuulen suunta")
@@ -84,6 +85,7 @@ QStringList FishStatistics::getNumericFields()
     retval << COL_RELEASELENGTH;
     retval << COL_SPOTDEPTH;
     retval << COL_TEMP;
+    retval << COL_TEMPWATER;
     return retval;
 }
 
@@ -232,11 +234,12 @@ QHash<QString, QString> FishStatistics::stats()
                 }
 
                 statline[COL_TEMP] = fish->getAirTemp();
+                statline[COL_TEMPWATER] = fish->getWaterTemp();
                 statline[COL_WEATHER] = fish->getHumanReadableWeather();
                 statline[COL_WIND] = fish->getHumanReadableWind();
                 statline[COL_WINDDIR] = fish->getHumanReadableWindDirection();
                 statline[COL_PRESSURE] = fish->getHumanReadablePressure();
-                statline[COL_PRESSURECHANGE] = fish->getHumanReadablePressureChange();
+                statline[COL_PRESSURECHANGE] = fish->getHumanReadablePressureChange();                
 
                 if(!isMatch(statline))
                     continue;
