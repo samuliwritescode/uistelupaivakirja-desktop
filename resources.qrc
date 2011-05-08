@@ -22,5 +22,6 @@
         <file>res/go-first.png</file>
         <file>res/document-save-as.png</file>
         <file>res/mail-send-receive.png</file>
+        <file>res/network-wireless.png</file>
     </qresource>
 </RCC>

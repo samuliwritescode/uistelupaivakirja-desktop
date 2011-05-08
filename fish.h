@@ -44,7 +44,7 @@ public:
 
     enum EWindDirection{eSouth=1, eSouthWest, eWest, eNorthWest, eNorth, eNorthEast, eEast, eSouthEast, eNoWindDirection};
     enum EPressureChange{eFastDecline=1, eModerateDecline, eSlowDecline, eNoChange, eSlowRaise, eModerateRaise, eFastRaise};
-    enum EType {eNaN, eFish, eWeather, eFishAndWeather};
+    enum EType {eNaN, eFish, eWeather, eFishAndWeather, ePOI};
 
     Fish(Trip*);
 

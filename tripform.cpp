@@ -222,6 +222,13 @@ void TripForm::updateTrip()
         updateFish();
         updateWeather();
     }
+    else if(type == Fish::ePOI)
+    {
+        ui->groupBoxFish->hide();
+        ui->groupBoxWeather->hide();
+        ui->groupBoxOther->show();
+        ui->groupBoxEvent->show();
+    }
     else
     {
         if(m_tripController->getBooleanValue(eTrip))
@@ -355,6 +362,7 @@ void TripForm::updateFishList()
          case Fish::eFish: bgcolor = QColor::fromRgb(255,255,255); break;
          case Fish::eWeather: bgcolor = QColor::fromRgb(255,225,200); break;
          case Fish::eFishAndWeather: bgcolor = QColor::fromRgb(200,200,255); break;
+         case Fish::ePOI: bgcolor = QColor::fromRgb(200,200,200); break;
          default: bgcolor = QColor::fromRgb(255,255,255); break;
          }
 
@@ -819,4 +827,9 @@ void TripForm::on_trip_file_add_clicked()
 void TripForm::on_fish_file_add_clicked()
 {
     m_mediaList->insertMediaFile();
+}
+
+void TripForm::on_new_poi_clicked()
+{
+    m_tripController->buttonEvent(eNewPOI);
 }

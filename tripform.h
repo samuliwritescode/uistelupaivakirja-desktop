@@ -43,6 +43,7 @@ private:
     TripController* m_tripController;
 
 private slots:
+    void on_new_poi_clicked();
     void on_fish_file_add_clicked();
     void on_trip_file_add_clicked();
     void on_routept_clear_clicked();

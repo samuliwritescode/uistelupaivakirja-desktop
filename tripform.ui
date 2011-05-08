@@ -579,7 +579,7 @@
              <number>1</number>
             </property>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_31" stretch="0,0,0,0,0,0">
+             <layout class="QHBoxLayout" name="horizontalLayout_31" stretch="0,0,0,0,0,0,0">
               <property name="spacing">
                <number>5</number>
               </property>
@@ -681,6 +681,23 @@
                 </property>
                 <property name="shortcut">
                  <string>Ctrl+3</string>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonTextBesideIcon</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="new_poi">
+                <property name="toolTip">
+                 <string>Lisää POI (Point of Interest)</string>
+                </property>
+                <property name="text">
+                 <string>POI</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/res/network-wireless.png</normaloff>:/res/network-wireless.png</iconset>
                 </property>
                 <property name="toolButtonStyle">
                  <enum>Qt::ToolButtonTextBesideIcon</enum>

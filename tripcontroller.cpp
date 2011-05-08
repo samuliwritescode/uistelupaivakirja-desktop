@@ -502,6 +502,12 @@ void TripController::buttonEvent(EUISource source)
             sendNotificationToObservers(Controller::eTripUpdated);
             return;
             break;
+        case eNewPOI:
+            m_trip->newFish(Fish::ePOI);
+            sendNotificationToObservers(Controller::eFishListUpdated);
+            sendNotificationToObservers(Controller::eTripUpdated);
+            return;
+            break;
         case eDeleteFish:
             m_trip->deleteFish(m_trip->getSelectedFish());
             sendNotificationToObservers(Controller::eFishListUpdated);
@@ -601,6 +607,10 @@ QList<QMap<QString, QString> > TripController::getFishList()
         if(fish->getType() == Fish::eWeather)
         {
             props[FISH_SPECIES] = tr("<sää>");
+        }
+        else if(fish->getType() == Fish::ePOI)
+        {
+            props[FISH_SPECIES] = tr("<POI>");
         }
         else
         {
