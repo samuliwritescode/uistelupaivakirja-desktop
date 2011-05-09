@@ -83,7 +83,7 @@ QString HTMLReport::parseTrip(Trip* p_trip)
                              tr(" km"));
     }
 
-    retval += divSection("trip_description", p_trip->getDescription().replace("\n", "<BR>"));
+    retval += divSection("trip_description", p_trip->getDescription().replace("\n", "<BR>")+parsePOI(p_trip));
 
     if(p_trip->getMediaFiles().count() > 0)
     {
@@ -123,7 +123,7 @@ QString HTMLReport::parseFish(Trip* p_trip)
     for(int loop=0; loop < p_trip->getFishCount(); loop++)
     {
         Fish* fish = p_trip->getFish(loop);
-        if(fish->getType() == Fish::eWeather)
+        if(fish->getType() == Fish::eWeather || fish->getType() == Fish::ePOI)
             continue;
 
         fishes.push_back(fish);
@@ -139,6 +139,37 @@ QString HTMLReport::parseFish(Trip* p_trip)
     return retval;
 }
 
+QString HTMLReport::parsePOI(Trip* p_trip)
+{
+    QString retval;
+
+    QList<Fish*> fishes;
+    for(int loop=0; loop < p_trip->getFishCount(); loop++)
+    {
+        Fish* fish = p_trip->getFish(loop);
+        if(fish->getType() != Fish::ePOI)
+            continue;
+
+        fishes.push_back(fish);
+    }
+
+    if(fishes.count() == 0)
+        return retval;
+
+    retval += "<P>";
+    retval += divSection("trip_heading", tr("POIt"));
+    retval += "<table>";
+
+    qSort(fishes.begin(), fishes.end(), fishLessThan);
+    foreach(Fish* fish, fishes)
+    {
+        retval += parsePOI(fish);
+    }
+
+    retval += "</table></P>";
+    return retval;
+}
+
 QString HTMLReport::parseWeather(Trip* p_trip)
 {
     QString retval;
@@ -149,7 +180,7 @@ QString HTMLReport::parseWeather(Trip* p_trip)
     for(int loop=0; loop < p_trip->getFishCount(); loop++)
     {
         Fish* fish = p_trip->getFish(loop);
-        if(fish->getType() != Fish::eWeather)
+        if(fish->getType() == Fish::eFish || fish->getType() == Fish::ePOI)
             continue;
 
         weathers.push_back(fish);
@@ -328,6 +359,46 @@ QString HTMLReport::parseWeather(Fish* p_fish)
                           tr("C")));
 
     retval += trtdSection(tr("Muuta"),
+                          p_fish->getMiscText());
+
+    if(p_fish->getMediaFiles().count() > 0)
+    {
+        QString media;
+        foreach(QString mediafile, p_fish->getMediaFiles())
+        {
+            if(m_bShowImages)
+            {
+                media += "<a href=\"file://"+mediafile+"\"><img width=200 src=\"file://"+mediafile+"\"></a><br>";
+            }
+            else
+            {
+                media += "<a href=\"file://"+mediafile+"\">"+mediafile+"</a><br>";
+            }
+        }
+
+        retval += trtdSection(tr("Mediatiedostot"),
+                              media);
+    }
+
+    retval += trtdSection("<hr><br>","<hr><br>");
+
+    return retval;
+}
+
+QString HTMLReport::parsePOI(Fish* p_fish)
+{
+    QString retval;
+    retval += trtdSection(divSection("fish_time",
+                            p_fish->getTime().toString()
+                          ),
+                          "");
+
+    retval += trtdSection(tr("Koordinaatit"),
+                          googleMapsCoords(p_fish->getCoordinatesLat(),
+                                           p_fish->getCoordinatesLon())
+                          );
+
+    retval += trtdSection(tr("Kuvaus"),
                           p_fish->getMiscText());
 
     if(p_fish->getMediaFiles().count() > 0)

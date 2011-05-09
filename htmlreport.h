@@ -24,8 +24,10 @@ private:
     QString parseTrip(Trip*);
     QString parseFish(Fish*);
     QString parseFish(Trip*);
+    QString parsePOI(Trip*);
+    QString parsePOI(Fish*);
     QString parseWeather(Trip*);
-    QString parseWeather(Fish*);
+    QString parseWeather(Fish*);    
     QString googleMapsCoords(const QString&, const QString&);
     QString divSection(const QString&, const QString&);
     QString tdSection(const QString&);
