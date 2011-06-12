@@ -427,13 +427,19 @@
   <tabstop>lure_size</tabstop>
   <tabstop>lure_type</tabstop>
   <tabstop>lure_nickname</tabstop>
+  <tabstop>lure_color</tabstop>
+  <tabstop>lure_back</tabstop>
+  <tabstop>lure_side</tabstop>
+  <tabstop>lure_belly</tabstop>
+  <tabstop>lure_contrast</tabstop>
+  <tabstop>lure_class</tabstop>
   <tabstop>lure_favorite</tabstop>
   <tabstop>lure_notvisible</tabstop>
+  <tabstop>lure_list</tabstop>
   <tabstop>lure_new</tabstop>
   <tabstop>lure_undo</tabstop>
-  <tabstop>lure_save</tabstop>
   <tabstop>lure_delete</tabstop>
-  <tabstop>lure_list</tabstop>
+  <tabstop>lure_save</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>
