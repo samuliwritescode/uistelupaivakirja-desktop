@@ -121,7 +121,14 @@ QHash<QString, QString> FishStatistics::stats()
                 if(fish->isGroup() && fish->getGroupAmount() > 0)
                 {
                     multiply = fish->getGroupAmount();
-                    statline[COL_WEIGHT] = QString::number(fish->getWeight().toDouble() / fish->getGroupAmount());
+                    if(!fish->getWeight().isEmpty())
+                    {
+                        statline[COL_WEIGHT] = QString::number(fish->getWeight().toDouble() / fish->getGroupAmount());
+                    }
+                    else
+                    {
+                        statline[COL_WEIGHT] = "";
+                    }
                 }
                 else
                 {
