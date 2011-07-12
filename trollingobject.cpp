@@ -35,9 +35,13 @@ void TrollingObject::storeList(TrollingObjectItemList p_list)
     constructItems(p_list);
 }
 
-QHash<QString, QVariant> TrollingObject::getProperties()
+void TrollingObject::setSaved()
 {
     m_unsavedChanges = false;
+}
+
+QHash<QString, QVariant> TrollingObject::getProperties()
+{
     return m_properties;
 }
 
@@ -112,4 +116,22 @@ QString TrollingObject::importFile(const QString& p_filename)
 QString TrollingObject::valid()
 {
     return QString();
+}
+
+bool TrollingObject::operator==(const TrollingObject& other)
+{
+    TrollingObject& compTo = const_cast<TrollingObject&>(other);
+    if(getType() != compTo.getType())
+        return false;
+
+    if(getId() != compTo.getId())
+        return false;
+
+    if(getProperties() != compTo.getProperties())
+        return false;
+
+    if(getList() != compTo.getList())
+        return false;
+
+    return true;
 }

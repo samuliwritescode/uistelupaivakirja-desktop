@@ -120,7 +120,7 @@ public:
 
     void setUserField(const QString&, const QString&);
     QMap<QString, QString> getUserFields();
-    QVariant getProperty(const QString&);
+    QVariant getProperty(const QString&) const;
 
     void addMediaFile(const QString&);
     QStringList getMediaFiles();

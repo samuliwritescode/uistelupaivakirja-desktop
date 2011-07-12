@@ -6,141 +6,78 @@
 #include "trollingmodel.h"
 #include "singletons.h"
 #include "alternative.h"
+#include "simpletrollingobjectfactory.h"
 
 TrollingModel::TrollingModel(QObject *parent) :
     QObject(parent)
 {
-    m_readFromMobile = false;
+    m_factory.setPushToCollection(&m_trollingobjects);
     QSettings settings;
-    m_filePath = settings.value("ProgramFolder").toString();
+    m_filePath = settings.value("ProgramFolder").toString();       
 }
 
 void TrollingModel::initialize()
 {
     m_DBLayer = new DBLayer(m_filePath+"/database");
+    connect(m_DBLayer, SIGNAL(storeSignal(int, QString)), &m_journal, SLOT(addJournal(int, QString)));
+
     qDebug() << "start loading";
-    m_DBLayer->loadObjects(Lure().getType(), this);
-    m_DBLayer->loadObjects(Trip().getType(), this);
-    m_DBLayer->loadObjects(Place().getType(), this);
+    m_DBLayer->loadObjects(Lure().getType(), &m_factory);
+    m_DBLayer->loadObjects(Trip().getType(), &m_factory);
+    m_DBLayer->loadObjects(Place().getType(), &m_factory);
     qDebug() << "finished loading";
 }
 
-TrollingObject* TrollingModel::createTrollingObject(const QString& p_type)
+void TrollingModel::importTrollingObject(TrollingObject* object)
 {
-    TrollingObject* object = NULL;
-    if(p_type == Lure().getType())
+    //Must not be already in trollingobjects
+    if(!m_trollingobjects.contains(object))
     {
-        object = new Lure();
-    } else if(p_type == Trip().getType())
-    {
-        object = new Trip();
-        if(m_readFromMobile)
+        TrollingObject* prev = getTrollingObject(object->getType(), object->getId());
+        m_DBLayer->storeObject(object);
+        if(prev != NULL)
         {
-            m_trollingobjectsmobile.push_back(object);
-            return object;
+            reset(prev);
         }
-    } else if(p_type == Place().getType())
-    {
-        object = new Place();
+        else
+        {
+            m_DBLayer->loadObjects(object->getType(), &m_factory, object->getId());
+        }
     }
-
-    if(object)
-    {
-        m_trollingobjects.push_back(object);
-    }
-
-    return object;
 }
 
-int TrollingModel::syncMobile()
+int TrollingModel::getMaxId(const QString& type)
 {
-    int syncedobjects = 0;
-    QSettings settings;
-    QString memCard = settings.value("MobileFolder").toString();
-    if(!memCard.isEmpty())
+    int maxId = 1;
+    foreach(TrollingObject* object, m_trollingobjects)
     {
-        if(!QDir().exists(memCard))
+        if(object->getType() == type &&
+           object->getId() > maxId)
         {
-            throw TrollingException(tr("Muistikorttia ei löydy. Tarkista puhelimen kytkentä."));
-        }
-
-        if(!QDir().exists(memCard+"/uistelu/"))
-        {
-            QDir().mkpath(memCard+"/uistelu/");
-        }
-
-        QFile::remove(memCard+"/uistelu/lure.xml");
-        QFile::remove(memCard+"/uistelu/place.xml");
-        QFile::remove(memCard+"/uistelu/spinneritems.xml");
-        if(!QFile::copy(m_filePath+"/database/lure.xml", memCard+"/uistelu/lure.xml"))
-        {
-            throw TrollingException(tr("En kykene kopioimaan viehekantaa muistikortille. Tarkista ettei kortti ole kirjoitussuojattu"));
-        }
-
-        if(!QFile::copy(m_filePath+"/database/place.xml", memCard+"/uistelu/place.xml"))
-        {
-             throw TrollingException(tr("En kykene kopioimaan paikkakantaa muistikortille. Tarkista ettei kortti ole kirjoitussuojattu"));
-        }
-
-        DBLayer dblayerMobile(memCard+"/uistelu/");
-
-        foreach(TrollingObject* object, m_trollingobjectsmobile)
-        {
-            delete object;
-        }
-
-        m_trollingobjectsmobile.clear();
-
-        m_readFromMobile = true;
-        dblayerMobile.loadObjects(Trip().getType(), this);
-        m_readFromMobile = false;
-        int maxId = 1;
-        foreach(TrollingObject* object, m_trollingobjects)
-        {
-            if(object->getType() == Trip().getType() &&
-               object->getId() > maxId)
-            {
-                maxId = object->getId();
-            }
-        }
-
-        foreach(TrollingObject* object, m_trollingobjectsmobile)
-        {
-            syncedobjects++;
-            maxId++;
-            qDebug() << "setting id to mobile trip" << maxId;
-            object->setId(maxId);
-            m_trollingobjects.push_back(object);
-            m_DBLayer->storeObject(object);
-        }
-        m_trollingobjectsmobile.clear();
-
-        QFile::remove(memCard+"/uistelu/trip.xml");
-
-        QStringList specielist = Singletons::tripController()->getAlternatives(eSpecies);
-        QStringList getterlist = Singletons::tripController()->getAlternatives(eGetter);
-        QStringList methodlist = Singletons::tripController()->getAlternatives(eMethod);
-        foreach(QString string, specielist)
-        {
-            dblayerMobile.storeObject(&Alternative("species", string));
-        }
-
-        foreach(QString string, getterlist)
-        {
-            dblayerMobile.storeObject(&Alternative("getter", string));
-        }
-
-        foreach(QString string, methodlist)
-        {
-            dblayerMobile.storeObject(&Alternative("method", string));
+            maxId = object->getId();
         }
     }
-    else
-    {
-        throw TrollingException(tr("Muistikortin sijaintia ei ole asetettu. Aseta se ensin asetusvälilehdellä."));
-    }
+    return maxId;
+}
 
-    return syncedobjects;
+bool TrollingModel::inJournal(int id, const QString& type)
+{
+    return m_journal.inJournal(id, type);
+}
+
+int TrollingModel::getRevision(const QString& type)
+{
+    return m_DBLayer->getRevision(type);
+}
+
+void TrollingModel::setRevision(const QString& type, int revision)
+{
+    m_DBLayer->setRevision(revision, type);
+}
+
+Synchronizer* TrollingModel::getSynchronizer()
+{
+    return &m_synchronizer;
 }
 
 TrollingModel::~TrollingModel()
@@ -161,6 +98,9 @@ Trip* TrollingModel::getTrip(int id)
         m_trollingobjects.push_back(trip);
         return trip;
     }
+
+    if(getTrollingObject(Trip().getType(), id) == NULL)
+        qDebug() << "will get NULL trip" << QString::number(id);
 
     return reinterpret_cast<Trip*>(getTrollingObject("trip", id));
 }
@@ -265,6 +205,7 @@ int TrollingModel::commit(TrollingObject* object)
     {
         throw TrollingException(tr("En pysty tallentamaan. Katsopas, ettei levy ole täynnä tai ohjelmalla on tallennusoikeudet."));
     }
+    m_synchronizer.upload();
     return object->getId();
 }
 
@@ -301,12 +242,12 @@ void TrollingModel::reset(TrollingObject* p_object)
     if(p_object == NULL)
         return;
 
-    m_DBLayer->loadObjects(p_object->getType(), this, p_object->getId());
+    m_DBLayer->loadObjects(p_object->getType(), &m_factory, p_object->getId());
     for(int loop=0; loop < m_trollingobjects.size(); loop++)
     {
         if(m_trollingobjects[loop] == p_object)
         {
-            m_trollingobjects.removeAt(loop);
+            m_trollingobjects.removeAt(loop);           
             break;
         }
     }

@@ -13,12 +13,14 @@ class TrollingObject: public QObject
 {
     friend class XMLWriter;
     friend class TrollingModel;
+    friend class Synchronizer;
 public:
     int getId();
     QString getType();
     bool isUnsaved();
     virtual QString valid();
     virtual ~TrollingObject();
+    bool operator==(const TrollingObject& other);
 
 protected:
     QString importFile(const QString& p_filename);
@@ -40,6 +42,7 @@ private:
     QHash<QString, QVariant> getProperties();
     TrollingObjectItemList getList();
     void setId(int p_id);
+    void setSaved();
 
     int m_id;
     QString m_type;

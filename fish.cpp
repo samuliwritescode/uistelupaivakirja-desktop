@@ -18,7 +18,7 @@ void Fish::setType(EType type)
 
 Fish::EType Fish::getType()
 {
-    return static_cast<EType>(m_properties[FISH_TYPE].toInt());
+    return static_cast<EType>(getProperty(FISH_TYPE).toInt());
 }
 
 void Fish::setLure(Lure* p_lure)
@@ -103,9 +103,12 @@ QMap<QString, QString> Fish::getUserFields()
     return retval;
 }
 
-QVariant Fish::getProperty(const QString& p_prop)
+QVariant Fish::getProperty(const QString& p_prop) const
 {
-    return m_properties[p_prop];
+    if(m_properties.contains(p_prop))
+        return m_properties[p_prop];
+    else
+        return QVariant();
 }
 
 void Fish::setProperty(const QString& p_prop, QVariant p_value)
@@ -473,67 +476,67 @@ void Fish::setUnderSize(bool p_val)
 
 QString Fish::getWeight()
 {
-    return m_properties[FISH_WEIGHT].toString();
+    return getProperty(FISH_WEIGHT).toString();
 }
 
 QString Fish::getLength()
 {
-    return m_properties[FISH_LENGTH].toString();
+    return getProperty(FISH_LENGTH).toString();
 }
 
 QString Fish::getSpotDepth()
 {
-    return m_properties[FISH_SPOT_DEPTH].toString();
+    return getProperty(FISH_SPOT_DEPTH).toString();
 }
 
 QString Fish::getTotalDepth()
 {
-    return m_properties[FISH_TOTAL_DEPTH].toString();
+    return getProperty(FISH_TOTAL_DEPTH).toString();
 }
 
 QString Fish::getTrollingSpeed()
 {
-    return m_properties[FISH_TROLLING_SPEED].toString();
+    return getProperty(FISH_TROLLING_SPEED).toString();
 }
 
 QString Fish::getLineWeight()
 {
-    return m_properties[FISH_LINE_WEIGHT].toString();
+    return getProperty(FISH_LINE_WEIGHT).toString();
 }
 
 QString Fish::getReleaseWidth()
 {
-    return m_properties[FISH_RELEASE_WIDTH].toString();
+    return getProperty(FISH_RELEASE_WIDTH).toString();
 }
 
 QString Fish::getSpecies()
 {
-    return m_properties[FISH_SPECIES].toString();
+    return getProperty(FISH_SPECIES).toString();
 }
 
 QString Fish::getMethod()
 {
-    return m_properties[FISH_METHOD].toString();
+    return getProperty(FISH_METHOD).toString();
 }
 
 QString Fish::getGetter()
 {
-    return m_properties[FISH_GETTER].toString();
+    return getProperty(FISH_GETTER).toString();
 }
 
 QString Fish::getMiscText()
 {
-    return m_properties[FISH_MISC_TEXT].toString();
+    return getProperty(FISH_MISC_TEXT).toString();
 }
 
 QString Fish::getWaterTemp()
 {
-    return m_properties[FISH_WATER_TEMP].toString();
+    return getProperty(FISH_WATER_TEMP).toString();
 }
 
 QString Fish::getAirTemp()
 {
-    return m_properties[FISH_AIR_TEMP].toString();
+    return getProperty(FISH_AIR_TEMP).toString();
 }
 
 QString Fish::getTrollingSpeedEstimate()
@@ -554,7 +557,7 @@ QString Fish::getTrollingSpeedEstimate()
 
 QString Fish::getCoordinatesLat()
 {
-    if(m_properties[FISH_COORDINATES_LAT].toString().isEmpty())
+    if(getProperty(FISH_COORDINATES_LAT).toString().isEmpty())
     {
         if(QSettings().value("use_routelog").toBool())
         {
@@ -567,12 +570,12 @@ QString Fish::getCoordinatesLat()
             }
         }
     }
-    return m_properties[FISH_COORDINATES_LAT].toString();
+    return getProperty(FISH_COORDINATES_LAT).toString();
 }
 
 QString Fish::getCoordinatesLon()
 {
-    if(m_properties[FISH_COORDINATES_LON].toString().isEmpty())
+    if(getProperty(FISH_COORDINATES_LON).toString().isEmpty())
     {
         if(QSettings().value("use_routelog").toBool())
         {
@@ -586,60 +589,60 @@ QString Fish::getCoordinatesLon()
         }
     }
 
-    return m_properties[FISH_COORDINATES_LON].toString();
+    return getProperty(FISH_COORDINATES_LON).toString();
 }
 
 QTime Fish::getTime() const
-{
-   return m_properties[FISH_TIME].toTime();
+{    
+    return getProperty(FISH_TIME).toTime();
 }
 
 bool Fish::isGroup()
 {
-    return m_properties[FISH_IS_GROUP].toBool() == true;
+    return getProperty(FISH_IS_GROUP).toBool() == true;
 }
 
 int Fish::getGroupAmount()
 {
-    return m_properties[FISH_GROUP_AMOUNT].toInt();
+    return getProperty(FISH_GROUP_AMOUNT).toInt();
 }
 
 bool Fish::isUnderSize()
 {
-       return m_properties[FISH_IS_UNDERSIZE].toBool() == true;
+    return getProperty(FISH_IS_UNDERSIZE).toBool() == true;
 }
 
 bool Fish::isCR()
 {
-       return m_properties[FISH_IS_CATCHRELEASED].toBool() == true;
+    return getProperty(FISH_IS_CATCHRELEASED).toBool() == true;
 }
 
 int Fish::getWindCondition()
 {
-    return m_properties[FISH_WIND].toInt();
+    return getProperty(FISH_WIND).toInt();
 }
 
 int Fish::getWeatherCondition()
 {
-    return m_properties[FISH_WEATHER].toInt();
+    return getProperty(FISH_WEATHER).toInt();
 }
 
 int Fish::getPressureCondition()
 {
-    return m_properties[FISH_PRESSURE].toInt();
+    return getProperty(FISH_PRESSURE).toInt();
 }
 
 int Fish::getRainCondition()
 {
-    return m_properties[FISH_RAIN].toInt();
+    return getProperty(FISH_RAIN).toInt();
 }
 
 Fish::EWindDirection Fish::getWindDirection()
 {
-   return static_cast<Fish::EWindDirection>(m_properties[FISH_WIND_DIRECTION].toInt());
+   return static_cast<Fish::EWindDirection>(getProperty(FISH_WIND_DIRECTION).toInt());
 }
 
 Fish::EPressureChange Fish::getPressureChange()
 {
-    return static_cast<Fish::EPressureChange>(m_properties[FISH_PRESSURE_CHANGE].toInt());
+    return static_cast<Fish::EPressureChange>(getProperty(FISH_PRESSURE_CHANGE).toInt());
 }

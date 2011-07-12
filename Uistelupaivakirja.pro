@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml opengl webkit
+QT       += core gui xml opengl webkit network
 
 TARGET = Uistelupaivakirja
 TEMPLATE = app
@@ -48,7 +48,11 @@ SOURCES += main.cpp\
     settingsform.cpp \
     routeitem.cpp \
     routeinfo.cpp \
-    alternative.cpp
+    alternative.cpp \
+    serverinterface.cpp \
+    simpletrollingobjectfactory.cpp \
+    transactionjournal.cpp \
+    synchronizer.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -87,7 +91,11 @@ HEADERS  += mainwindow.h \
     settingsform.h \
     routeitem.h \
     routeinfo.h \
-    alternative.h
+    alternative.h \
+    serverinterface.h \
+    simpletrollingobjectfactory.h \
+    transactionjournal.h \
+    synchronizer.h
 
 FORMS    += mainwindow.ui \
     tripform.ui \

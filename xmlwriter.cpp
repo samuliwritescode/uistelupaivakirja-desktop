@@ -27,6 +27,7 @@ bool XMLWriter::write(TrollingObject* p_object)
 
     trollingObject.setAttribute("type", p_object->getType());
 
+    p_object->setSaved();
     QHashIterator<QString, QVariant> iter(p_object->getProperties());
     while( iter.hasNext() )
     {
@@ -60,13 +61,7 @@ bool XMLWriter::write(TrollingObject* p_object)
     }
     trollingObject.appendChild(listelement);
 
-    QFile file(m_filename);
-    if(!file.open(QIODevice::WriteOnly))
-        return false;
-
-    file.write(m_document.toByteArray());
-    file.close();
-    return true;
+    return saveDocument();
 }
 
 void XMLWriter::clearNodeContents(QDomNode& p_node)
@@ -93,13 +88,7 @@ bool XMLWriter::remove(TrollingObject* p_object)
     clearNodeContents(trollingObject);
     trollingObject.parentNode().removeChild(trollingObject);
 
-    QFile file(m_filename);
-    if(!file.open(QIODevice::WriteOnly))
-        return false;
-
-    file.write(m_document.toByteArray());
-    file.close();
-    return true;
+    return saveDocument();
 }
 
 bool XMLWriter::loadAll(const QString& p_type, TrollingObjectFactory* p_factory, int id /*=-1*/)
@@ -274,6 +263,45 @@ bool XMLWriter::loadDocument()
         }
     }
 
+    file.close();
+    return true;
+}
+
+int XMLWriter::getRevision()
+{
+    int retval = 0;
+    if(!loadDocument())
+        return retval;
+
+    if(m_document.elementsByTagName("TrollingObjects").count() == 1)
+    {
+        QDomElement element = m_document.elementsByTagName("TrollingObjects").at(0).toElement();
+        retval = element.attribute("revision").toInt();
+    }
+
+    return retval;
+}
+
+void XMLWriter::setRevision(int revision)
+{
+    if(!loadDocument())
+        return;
+
+    if(m_document.elementsByTagName("TrollingObjects").count() == 1)
+    {
+        QDomElement element = m_document.elementsByTagName("TrollingObjects").at(0).toElement();
+        element.setAttribute("revision", revision);
+        saveDocument();
+    }
+}
+
+bool XMLWriter::saveDocument()
+{
+    QFile file(m_filename);
+    if(!file.open(QIODevice::WriteOnly))
+        return false;
+
+    file.write(m_document.toByteArray());
     file.close();
     return true;
 }

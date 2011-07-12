@@ -10,9 +10,13 @@
 #include "place.h"
 #include "trollingobjectfactory.h"
 #include "trollingobject.h"
+#include "simpletrollingobjectfactory.h"
 #include "dblayer.h"
+#include "serverinterface.h"
+#include "transactionjournal.h"
+#include "synchronizer.h"
 
-class TrollingModel : public QObject, public TrollingObjectFactory
+class TrollingModel : public QObject
 {
     Q_OBJECT
 public:
@@ -29,22 +33,28 @@ public:
     QMap<int, Lure*> getLures();
     QMap<int, Place*> getPlaces();
     void initialize();
-    int syncMobile();
-    virtual TrollingObject* createTrollingObject(const QString& p_type);
+
+    void importTrollingObject(TrollingObject*);
+
     QString importFile(TrollingObject*, const QString&);
+    int getRevision(const QString&);
+    void setRevision(const QString&, int);
+    bool inJournal(int, const QString&);
+    Synchronizer* getSynchronizer();
 
 signals:
 
-public slots:
-
 private:
+    int getMaxId(const QString& type);
+
+    SimpleTrollingObjectFactory m_factory;
     TrollingObject* getTrollingObject(const QString&, int);
-    QList<TrollingObject*> m_trollingobjects;
-    QList<TrollingObject*> m_trollingobjectsmobile;
+    QList<TrollingObject*> m_trollingobjects;   
     QHash<int, TrollingObject*> m_fasterHash;
     DBLayer* m_DBLayer;
     QString m_filePath;
-    bool m_readFromMobile;
+    TransactionJournal m_journal;
+    Synchronizer m_synchronizer;
 };
 
 #endif // TROLLINGMODEL_H
