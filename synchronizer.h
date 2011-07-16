@@ -14,10 +14,13 @@ public:
     int syncMobile();
 
 signals:
+    void downloadDone();
+    void uploadDone();
 
 public slots:
     void syncServer(const QString& folder);
     void upload();
+    void download();
 
 private:
     int generateId(const QMap<int, Trip*>& trips);

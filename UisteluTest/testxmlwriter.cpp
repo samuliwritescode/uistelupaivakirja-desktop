@@ -3,19 +3,7 @@
 #include "singletons.h"
 #include "trollingmodel.h"
 #include "synchronizer.h"
-
-class TestXMLWriter : public QObject
-{
-    Q_OBJECT
-
-public:
-    TestXMLWriter();
-
-private Q_SLOTS:
-    void initTestCase();
-    void cleanupTestCase();
-    void testGetting();
-};
+#include "testxmlwriter.h"
 
 TestXMLWriter::TestXMLWriter()
 {
@@ -38,5 +26,5 @@ void TestXMLWriter::testGetting()
     QVERIFY2(true, "Failure");
 }
 
-#include "testxmlwriter.moc"
+//#include "testxmlwriter.moc"
 

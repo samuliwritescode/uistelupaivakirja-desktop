@@ -10,6 +10,11 @@ Synchronizer::Synchronizer(QObject *parent) :
     QObject(parent)
 {
     connect(&m_server, SIGNAL(checkoutDone(QString)), this, SLOT(syncServer(QString)));
+    connect(&m_server, SIGNAL(commitDone()), this, SIGNAL(uploadDone()));
+}
+
+void Synchronizer::download()
+{
     m_server.checkout();
 }
 
@@ -86,6 +91,7 @@ void Synchronizer::syncServer(const QString& folder)
     {
         delete object;
     }
+    emit downloadDone();
 }
 
 int Synchronizer::generateId(const QMap<int, Trip*>& trips)

@@ -1,7 +1,7 @@
 #include <QtTest/QtTest>
 #include <QtCore/QCoreApplication>
-#include "UisteluTest/testserverinterface.cpp"
-#include "UisteluTest/testxmlwriter.cpp"
+#include "UisteluTest/testserverinterface.h"
+#include "UisteluTest/testxmlwriter.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +12,6 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Uistelupaivakirja");
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     retval += QTest::qExec(&TestServerInterface(), argc, argv);
-    retval += QTest::qExec(&TestXMLWriter(), argc, argv);
+   // retval += QTest::qExec(&TestXMLWriter(), argc, argv);
     return retval;
 }
