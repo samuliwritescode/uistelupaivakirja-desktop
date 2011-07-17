@@ -20,6 +20,7 @@ protected:
     void clearNodeContents(QDomNode& p_node);
     bool loadDocument();
     bool saveDocument();
+    bool writeNullFile();
 
 private:
     QString m_filename;

@@ -12,16 +12,23 @@ public:
 private slots:
     void initTestCase();
     void cleanupTestCase();
-    void testSetting();
-    void testGetting();
+    //void test01Basic_data();
+    void test01Basic();
+    void test01MultipleGets();
 
 public slots:
     void getDone();
     void setDone();
+    void error(const QString&);
+    void expectError(const QString&);
 
 private:
     void waitForSignal(QObject*, const char*);
+    void doSet(bool expectError, bool isData);
+    void clearServer();
+    void clearDatabase();
 
 private:
     QSettings settings;
+    QString path;
 };

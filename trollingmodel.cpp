@@ -20,6 +20,7 @@ void TrollingModel::initialize()
 {
     m_DBLayer = new DBLayer(m_filePath+"/database");
     connect(m_DBLayer, SIGNAL(storeSignal(int, QString)), &m_journal, SLOT(addJournal(int, QString)));
+    connect(&m_synchronizer, SIGNAL(uploadDone()), this, SLOT(resetJournal()));
 
     qDebug() << "start loading";
     m_DBLayer->loadObjects(Lure().getType(), &m_factory);
@@ -58,6 +59,11 @@ int TrollingModel::getMaxId(const QString& type)
         }
     }
     return maxId;
+}
+
+void TrollingModel::resetJournal()
+{
+    m_journal.resetJournal();
 }
 
 bool TrollingModel::inJournal(int id, const QString& type)
@@ -205,7 +211,7 @@ int TrollingModel::commit(TrollingObject* object)
     {
         throw TrollingException(tr("En pysty tallentamaan. Katsopas, ettei levy ole täynnä tai ohjelmalla on tallennusoikeudet."));
     }
-    m_synchronizer.upload();
+    //m_synchronizer.upload();
     return object->getId();
 }
 

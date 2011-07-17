@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QStringList>
 
 class ServerInterface : public QObject
 {
@@ -16,23 +17,26 @@ public:
 signals:
     void checkoutDone(const QString& folder);
     void commitDone();
+    void error(const QString& message);
 
 public slots:
-    void loginDone();
     void sentXMLDone();
     void getXMLDone();
+    void sendXML();
+    void getXML();
 
 private:
-    void login();
-    void sendXML(const QString& file);
-    void getXML();
+    void login(const char*);
+    bool checkError();
 
 private:
     QNetworkAccessManager manager;
     QNetworkReply* reply;
+    QStringList m_getDoc;
     QString m_serverAddr;
     QString m_username;
     QString m_password;
+    QString m_serverPath;
 };
 
 #endif // SERVERINTERFACE_H

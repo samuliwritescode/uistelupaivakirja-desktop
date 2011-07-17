@@ -262,9 +262,30 @@ bool XMLWriter::loadDocument()
             return false;
         }
     }
+    else if(!QFile::exists(m_filename))
+    {
+        writeNullFile();
+    }
+    else
+    {
+        qDebug() << "file cannot be opened" << m_filename;
+        return false;
+    }
 
     file.close();
     return true;
+}
+
+bool XMLWriter::writeNullFile()
+{
+    QFile file(m_filename);
+    if(file.open(QIODevice::WriteOnly))
+    {
+        file.write("<TrollingObjects MaxId=\"1\" />");
+        file.close();
+        return true;
+    }
+    return false;
 }
 
 int XMLWriter::getRevision()

@@ -44,6 +44,9 @@ public:
 
 signals:
 
+private slots:
+    void resetJournal();
+
 private:
     int getMaxId(const QString& type);
 

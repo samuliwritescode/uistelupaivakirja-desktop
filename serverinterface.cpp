@@ -15,29 +15,33 @@ ServerInterface::ServerInterface(QObject *parent) :
     m_serverAddr = "http://localhost:8080/uistelu/";
     m_username = "cape";
     m_password = "kek";
+    m_serverPath = "/Users/cape/uistelu/server/";
+    reply = NULL;
 }
 
 void ServerInterface::commit()
 {
-    sendXML("/Users/cape/uistelu/database/trip.xml");
+    if(reply == NULL)
+        login(SLOT(sendXML()));
+    else
+        emit error("replies in progress");
 }
 
 void ServerInterface::checkout()
 {
-    login();
+    if(reply == NULL)
+        login(SLOT(getXML()));
+    else
+        emit error("replies in progress");
 }
 
-void ServerInterface::sendXML(const QString& file)
+void ServerInterface::login(const char* slot)
 {
-    QNetworkRequest req(QUrl(m_serverAddr+"trips"));
-    QFile* xml = new QFile(file);
-    xml->open(QIODevice::ReadOnly);
-    reply = manager.post(req, xml);
-    connect(reply, SIGNAL(finished()), this, SLOT(sentXMLDone()));
-}
+    m_getDoc.clear();
+    m_getDoc.append("trip");
+    m_getDoc.append("place");
+    m_getDoc.append("lure");
 
-void ServerInterface::login()
-{
     QString connectionstring = m_serverAddr;
     connectionstring += "login?";
     connectionstring += "j_username=";
@@ -47,63 +51,98 @@ void ServerInterface::login()
     QUrl connectionurl(connectionstring);
     QNetworkRequest req(connectionurl);
     reply = manager.get(req);
-    connect(reply, SIGNAL(finished()), this, SLOT(loginDone()));
+    connect(reply, SIGNAL(finished()), this, slot);
 }
 
-void ServerInterface::loginDone()
+bool ServerInterface::checkError()
 {
     disconnect(reply, SIGNAL(finished()));
     if(reply->error() == 0)
     {
-        getXML();
-        //sendXML("/Users/cape/uistelu/database/trip.xml");
+        return true;
     }
     else
     {
-        qCritical() << "Cannot login";
+        reply->deleteLater();
+        qDebug() << "network replied with an error" << reply->errorString();
+        qDebug() << reply->readAll();
+        emit error("network replied with error");
+        reply = NULL;
+        return false;
     }
 }
 
 void ServerInterface::getXML()
 {
-    QNetworkRequest req(QUrl(m_serverAddr+"trips"));
-    reply = manager.get(req);
-    connect(reply, SIGNAL(finished()), this, SLOT(getXMLDone()));
+    reply->deleteLater();
+    if(checkError())
+    {
+        QString doctype = m_getDoc.first();
+        QNetworkRequest req(QUrl(m_serverAddr+doctype+"s"));
+        reply = manager.get(req);
+        connect(reply, SIGNAL(finished()), this, SLOT(getXMLDone()));
+    }
 }
 
 void ServerInterface::getXMLDone()
 {
-    disconnect(reply, SIGNAL(finished()));
-    if(reply->error() == 0)
+    disconnect(reply, SIGNAL(finished()), this, SLOT(getXMLDone()));
+    reply->deleteLater();
+    if(checkError())
     {
-        QFile saveTo("/Users/cape/uistelu/server/trip.xml");
+        QString doctype = m_getDoc.first();
+        m_getDoc.removeFirst();
+        QFile saveTo(m_serverPath+doctype+".xml");
         saveTo.open(QIODevice::WriteOnly);
         saveTo.write(reply->readAll());
         saveTo.close();
-        qDebug() << "trips got";
-        emit checkoutDone("/Users/cape/uistelu/server/");
-    }
-    else
-    {
-        qDebug() << "trips cannot be get";
-        qDebug() << "status: " << reply->error();
+        qDebug() << "got doc" << doctype;
+        if(m_getDoc.isEmpty())
+        {
+            reply = NULL;
+            emit checkoutDone(m_serverPath);
+        }
+        else
+        {
+            getXML();
+        }
     }
 }
 
+void ServerInterface::sendXML()
+{
+    reply->deleteLater();
+    if(checkError())
+    {
+        QSettings settings;
+        QString path = settings.value("ProgramFolder").toString();
+        QString doctype = m_getDoc.first();
+        QNetworkRequest req(QUrl(m_serverAddr+doctype+"s"));
+        QFile* xml = new QFile(path+"/database/"+doctype+".xml");
+        xml->open(QIODevice::ReadOnly);
+        reply = manager.post(req, xml);
+        connect(reply, SIGNAL(finished()), this, SLOT(sentXMLDone()));
+    }
+}
 
 void ServerInterface::sentXMLDone()
 {
-    disconnect(reply, SIGNAL(finished()));
-    if(reply->error() == 0)
+    disconnect(reply, SIGNAL(finished()), this, SLOT(sentXMLDone()));
+    reply->deleteLater();
+    if(checkError())
     {
-        qDebug() << "trips sent: " << reply->readAll();
-        emit commitDone();
-    }
-    else
-    {
-        qDebug() << "trips cannot be sent";
-        qDebug() << "status: " << reply->error();
-        qDebug() << "response: " << reply->readAll();
+        QString doctype = m_getDoc.first();
+        m_getDoc.removeFirst();
+        qDebug() << doctype << "sent: " << reply->readAll();
+        if(m_getDoc.isEmpty())
+        {
+            reply = NULL;
+            emit commitDone();
+        }
+        else
+        {
+            sendXML();
+        }
     }
 
 }

@@ -16,6 +16,7 @@ public:
 signals:
     void downloadDone();
     void uploadDone();
+    void error(const QString&);
 
 public slots:
     void syncServer(const QString& folder);
@@ -23,9 +24,10 @@ public slots:
     void download();
 
 private:
-    int generateId(const QMap<int, Trip*>& trips);
     bool contains(QList<TrollingObject*> list, int id);
     ServerInterface m_server;
+
+    void syncServerImpl(QMap<int, TrollingObject*>& objectsLocal, const QString& folder, const QString& type);
 
 };
 
