@@ -80,6 +80,7 @@ void SynchronizerController::uploadDone()
 void SynchronizerController::error(const QString& error)
 {
     showErrorMessage(tr("Palvelinsynkronointi antoi virheen: ")+error);
+    m_timer.start();
 }
 
 QStringList SynchronizerController::trollingObjectToStringList(const QList<TrollingObject*>& objects)

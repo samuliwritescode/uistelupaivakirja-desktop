@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QSettings>
+#include <QMutexLocker>
 #include "dblayer.h"
 #include "trip.h"
 #include "simpletrollingobjectfactory.h"
@@ -12,6 +13,7 @@
 ServerInterface::ServerInterface(QObject *parent) :
     QObject(parent)
 {    
+    connect(this, SIGNAL(consume()), this, SLOT(run()), Qt::QueuedConnection);
     QSettings settings;
     m_serverAddr = settings.value("ServiceAddress").toString();
     m_username = settings.value("ServiceUsername").toString();
@@ -19,23 +21,35 @@ ServerInterface::ServerInterface(QObject *parent) :
 
     QString path = settings.value("ProgramFolder").toString();
     m_serverPath = path+"/server/";
-    reply = NULL;
+    m_reply = NULL;
 }
 
 void ServerInterface::commit()
 {
-    if(reply == NULL)
-        login(SLOT(sendXML()));
-    else
-        emit error("replies in progress");
+    QMutexLocker lock(&m_mutex);
+    m_requests.enqueue(SLOT(sendXML()));
+    emit consume();
 }
 
 void ServerInterface::checkout()
 {
-    if(reply == NULL)
-        login(SLOT(getXML()));
-    else
-        emit error("replies in progress");
+    QMutexLocker lock(&m_mutex);
+    m_requests.enqueue(SLOT(getXML()));
+    emit consume();
+}
+
+void ServerInterface::run()
+{
+    qDebug() << "run";
+    QMutexLocker lock(&m_mutex);
+
+    if(m_requests.size() > 0)
+    {
+       if(m_reply == NULL)
+       {
+           login(m_requests.dequeue());
+       }
+    }
 }
 
 void ServerInterface::login(const char* slot)
@@ -53,56 +67,58 @@ void ServerInterface::login(const char* slot)
     connectionstring += m_password;
     QUrl connectionurl(connectionstring);
     QNetworkRequest req(connectionurl);
-    reply = manager.get(req);
-    connect(reply, SIGNAL(finished()), this, slot);
+    m_reply = manager.get(req);
+    connect(m_reply, SIGNAL(finished()), this, slot);
 }
 
 bool ServerInterface::checkError()
 {
-    disconnect(reply, SIGNAL(finished()));
-    if(reply->error() == 0)
+    disconnect(m_reply, SIGNAL(finished()));
+    if(m_reply->error() == 0)
     {
         return true;
     }
     else
     {
-        reply->deleteLater();
-        qDebug() << "network replied with an error" << reply->errorString();
-        qDebug() << reply->readAll();
+        m_reply->deleteLater();
+        qDebug() << "network replied with an error" << m_reply->errorString();
+        qDebug() << m_reply->readAll();
         emit error("network replied with error");
-        reply = NULL;
+        m_reply = NULL;
+        emit consume();
         return false;
     }
 }
 
 void ServerInterface::getXML()
 {
-    reply->deleteLater();
+    m_reply->deleteLater();
     if(checkError())
     {
         QString doctype = m_getDoc.first();
         QNetworkRequest req(QUrl(m_serverAddr+doctype+"s"));
-        reply = manager.get(req);
-        connect(reply, SIGNAL(finished()), this, SLOT(getXMLDone()));
+        m_reply = manager.get(req);
+        connect(m_reply, SIGNAL(finished()), this, SLOT(getXMLDone()));
     }
 }
 
 void ServerInterface::getXMLDone()
 {
-    disconnect(reply, SIGNAL(finished()), this, SLOT(getXMLDone()));
-    reply->deleteLater();
+    disconnect(m_reply, SIGNAL(finished()), this, SLOT(getXMLDone()));
+    m_reply->deleteLater();
     if(checkError())
     {
         QString doctype = m_getDoc.first();
         m_getDoc.removeFirst();
         QFile saveTo(m_serverPath+doctype+".xml");
         saveTo.open(QIODevice::WriteOnly);
-        saveTo.write(reply->readAll());
+        saveTo.write(m_reply->readAll());
         saveTo.close();
         qDebug() << "got doc" << doctype;
         if(m_getDoc.isEmpty())
         {
-            reply = NULL;
+            m_reply = NULL;
+            emit consume();
             emit checkoutDone(m_serverPath);
         }
         else
@@ -114,7 +130,7 @@ void ServerInterface::getXMLDone()
 
 void ServerInterface::sendXML()
 {
-    reply->deleteLater();
+    m_reply->deleteLater();
     if(checkError())
     {
         QSettings settings;
@@ -123,23 +139,24 @@ void ServerInterface::sendXML()
         QNetworkRequest req(QUrl(m_serverAddr+doctype+"s"));
         QFile* xml = new QFile(path+"/database/"+doctype+".xml");
         xml->open(QIODevice::ReadOnly);
-        reply = manager.post(req, xml);
-        connect(reply, SIGNAL(finished()), this, SLOT(sentXMLDone()));
+        m_reply = manager.post(req, xml);
+        connect(m_reply, SIGNAL(finished()), this, SLOT(sentXMLDone()));
     }
 }
 
 void ServerInterface::sentXMLDone()
 {
-    disconnect(reply, SIGNAL(finished()), this, SLOT(sentXMLDone()));
-    reply->deleteLater();
+    disconnect(m_reply, SIGNAL(finished()), this, SLOT(sentXMLDone()));
+    m_reply->deleteLater();
     if(checkError())
     {
         QString doctype = m_getDoc.first();
         m_getDoc.removeFirst();
-        qDebug() << doctype << "sent: " << reply->readAll();
+        qDebug() << doctype << "sent: " << m_reply->readAll();
         if(m_getDoc.isEmpty())
         {
-            reply = NULL;
+            m_reply = NULL;
+            emit consume();
             emit commitDone();
         }
         else

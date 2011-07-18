@@ -5,6 +5,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QStringList>
+#include <QQueue>
+#include <QMutex>
 
 class ServerInterface : public QObject
 {
@@ -18,6 +20,7 @@ signals:
     void checkoutDone(const QString& folder);
     void commitDone();
     void error(const QString& message);
+    void consume();
 
 public slots:
     void sentXMLDone();
@@ -25,18 +28,23 @@ public slots:
     void sendXML();
     void getXML();
 
+private slots:
+    void run();
+
 private:
     void login(const char*);
     bool checkError();
 
 private:
     QNetworkAccessManager manager;
-    QNetworkReply* reply;
+    QNetworkReply* m_reply;
     QStringList m_getDoc;
     QString m_serverAddr;
     QString m_username;
     QString m_password;
     QString m_serverPath;
+    QQueue<const char*> m_requests;
+    QMutex m_mutex;
 };
 
 #endif // SERVERINTERFACE_H
