@@ -64,3 +64,22 @@ void MainWindow::showStatusMessage(const QString& message, bool stay)
         ui->statusBar->showMessage(message, 10000);
 
 }
+
+void MainWindow::closeEvent (QCloseEvent* event)
+{
+    bool unsavedTrip = Singletons::tripController()->getBooleanValue(eUnsavedChanges);
+    bool unsavedLure = Singletons::lureController()->getBooleanValue(eUnsavedChanges);
+    bool unsavedPlace = Singletons::placeController()->getBooleanValue(eUnsavedChanges);
+
+    if(unsavedLure || unsavedPlace || unsavedTrip)
+    {
+        if(showConfirmationMessage(tr("Sinulla on tallentamattomia muutoksia. Suljetaanko ohjelma silti?")))
+        {
+            event->accept();
+        }
+        else
+        {
+            event->ignore();
+        }
+    }
+}

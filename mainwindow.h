@@ -27,6 +27,7 @@ public:
     virtual EChoices showChoiceMessage(const QString&);
     virtual void showNotificationMessage(const QString&);
     virtual void showStatusMessage(const QString&, bool);
+    virtual void closeEvent (QCloseEvent* event);
 
 private:    
     Ui::MainWindow *ui;
