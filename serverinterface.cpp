@@ -11,11 +11,14 @@
 
 ServerInterface::ServerInterface(QObject *parent) :
     QObject(parent)
-{
-    m_serverAddr = "http://localhost:8080/uistelu/";
-    m_username = "cape";
-    m_password = "kek";
-    m_serverPath = "/Users/cape/uistelu/server/";
+{    
+    QSettings settings;
+    m_serverAddr = settings.value("ServiceAddress").toString();
+    m_username = settings.value("ServiceUsername").toString();
+    m_password = settings.value("ServicePassword").toString();;
+
+    QString path = settings.value("ProgramFolder").toString();
+    m_serverPath = path+"/server/";
     reply = NULL;
 }
 
