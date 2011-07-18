@@ -39,9 +39,7 @@ void TrollingModel::importTrollingObject(TrollingObject* object)
         m_DBLayer->storeObject(object);
         if(prev != NULL)
         {
-            ReloadingTrollingObjectFactory fakeFactory;
-            fakeFactory.setTarget(prev);
-            m_DBLayer->loadObjects(prev->getType(), &fakeFactory, prev->getId());
+            reset(prev);
         }
         else
         {
@@ -215,6 +213,8 @@ int TrollingModel::commit(TrollingObject* object)
         throw TrollingException(tr("En pysty tallentamaan. Katsopas, ettei levy ole täynnä tai ohjelmalla on tallennusoikeudet."));
     }
 
+    reset(object);
+
     emit save();
     return object->getId();
 }
@@ -253,23 +253,9 @@ void TrollingModel::reset(TrollingObject* p_object)
     if(p_object == NULL)
         return;
 
-    m_DBLayer->loadObjects(p_object->getType(), &m_factory, p_object->getId());
-    for(int loop=0; loop < m_trollingobjects.size(); loop++)
-    {
-        if(m_trollingobjects[loop] == p_object)
-        {
-            m_trollingobjects.removeAt(loop);           
-            break;
-        }
-    }
-
-    if(m_fasterHash.contains(p_object->getId()) &&
-       m_fasterHash[p_object->getId()] == p_object)
-    {
-        m_fasterHash.remove(p_object->getId());
-    }
-
-    delete p_object;
+    ReloadingTrollingObjectFactory fakeFactory;
+    fakeFactory.setTarget(p_object);
+    m_DBLayer->loadObjects(p_object->getType(), &fakeFactory, p_object->getId());
 }
 
 QString TrollingModel::importFile(TrollingObject* p_object, const QString& p_file)
