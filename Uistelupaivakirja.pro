@@ -54,7 +54,8 @@ SOURCES += main.cpp\
     transactionjournal.cpp \
     revisiondialog.cpp \
     synchronizer.cpp \
-    synchronizercontroller.cpp
+    synchronizercontroller.cpp \
+    reloadingtrollingobjectfactory.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -99,7 +100,8 @@ HEADERS  += mainwindow.h \
     transactionjournal.h \
     synchronizer.h \
     revisiondialog.h \
-    synchronizercontroller.h
+    synchronizercontroller.h \
+    reloadingtrollingobjectfactory.h
 
 FORMS    += mainwindow.ui \
     tripform.ui \

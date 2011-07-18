@@ -17,6 +17,12 @@ Trip::~Trip()
 {
     if(m_reader)
         delete m_reader;
+
+    foreach(Fish* fish, m_catch)
+    {
+        delete fish;
+    }
+    m_catch.clear();
 }
 
 void Trip::setDate(const QDate& date)
@@ -225,6 +231,11 @@ void Trip::FishModified()
 
 void Trip::constructItems(const TrollingObjectItemList& p_items)
 {
+    foreach(Fish* fish, m_catch)
+    {
+        delete fish;
+    }
+
     m_catch.clear();
     foreach(TrollingObjectItem item, p_items)
     {
@@ -359,3 +370,4 @@ QString Trip::toString()
 
     return name;
 }
+

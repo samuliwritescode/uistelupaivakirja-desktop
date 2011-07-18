@@ -7,6 +7,7 @@
 #include "singletons.h"
 #include "alternative.h"
 #include "simpletrollingobjectfactory.h"
+#include "reloadingtrollingobjectfactory.h"
 
 TrollingModel::TrollingModel(QObject *parent) :
     QObject(parent)
@@ -38,7 +39,9 @@ void TrollingModel::importTrollingObject(TrollingObject* object)
         m_DBLayer->storeObject(object);
         if(prev != NULL)
         {
-            reset(prev);
+            ReloadingTrollingObjectFactory fakeFactory;
+            fakeFactory.setTarget(prev);
+            m_DBLayer->loadObjects(prev->getType(), &fakeFactory, prev->getId());
         }
         else
         {
