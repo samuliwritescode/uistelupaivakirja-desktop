@@ -2,6 +2,7 @@
 #define DBLAYER_H
 #include <QObject>
 #include <QString>
+#include <QMutex>
 #include <QDir>
 #include "trollingobject.h"
 #include "trollingobjectfactory.h"
@@ -25,6 +26,7 @@ signals:
 
 private:
     QDir m_storeDir;
+    QMutex m_mutex;
 };
 
 #endif // DBLAYER_H

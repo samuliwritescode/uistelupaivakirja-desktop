@@ -1,5 +1,6 @@
 #include <QDir>
 #include <QDebug>
+#include <QMutexLocker>
 #include "dblayer.h"
 #include "xmlwriter.h"
 
@@ -20,6 +21,7 @@ DBLayer::~DBLayer()
 
 bool DBLayer::storeObject(TrollingObject* p_object)
 {
+    QMutexLocker lock(&m_mutex);
     XMLWriter writer(m_storeDir.absolutePath()+"/"+p_object->getType()+".xml");
     bool bOk = writer.write(p_object);
     if(bOk)
@@ -31,30 +33,35 @@ bool DBLayer::storeObject(TrollingObject* p_object)
 
 bool DBLayer::removeObject(TrollingObject* p_object)
 {
+    QMutexLocker lock(&m_mutex);
     XMLWriter writer(m_storeDir.absolutePath()+"/"+p_object->getType()+".xml");
     return writer.remove(p_object);
 }
 
 QList<int> DBLayer::getIds(const QString& p_type)
 {
+    QMutexLocker lock(&m_mutex);
     XMLWriter writer(m_storeDir.absolutePath()+"/"+p_type+".xml");
     return writer.getIds(p_type);
 }
 
 bool DBLayer::loadObjects(const QString& p_type, TrollingObjectFactory* p_factory, int id)
 {
+    QMutexLocker lock(&m_mutex);
     XMLWriter writer(m_storeDir.absolutePath()+"/"+p_type+".xml");
     return writer.loadAll(p_type, p_factory, id);
 }
 
 void DBLayer::setRevision(int revision, const QString& p_type)
 {
+   QMutexLocker lock(&m_mutex);
    XMLWriter writer(m_storeDir.absolutePath()+"/"+p_type+".xml");
    writer.setRevision(revision);
 }
 
 int DBLayer::getRevision(const QString& p_type)
 {
+    QMutexLocker lock(&m_mutex);
     XMLWriter writer(m_storeDir.absolutePath()+"/"+p_type+".xml");
     return writer.getRevision();
 }
