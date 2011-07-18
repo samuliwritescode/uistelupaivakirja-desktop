@@ -19,6 +19,9 @@ private:
     Ui::SettingsForm *ui;
 
 private slots:
+    void on_lineEditPassword_textEdited(QString );
+    void on_lineEditUsername_textEdited(QString );
+    void on_lineEditServerAddr_textEdited(QString );
     void on_openMobileFolder_clicked();
     void on_checkBoxUseRouteLog_clicked(bool checked);
     void on_clearCSS_clicked();

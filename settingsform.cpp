@@ -23,6 +23,10 @@ SettingsForm::SettingsForm(QWidget *parent) :
     ui->mobileFolder->setText(settings.value("MobileFolder").toString());
     ui->lineEditCSS->setText(settings.value("TripReportCSS").toString());
 
+    ui->lineEditServerAddr->setText(settings.value("ServiceAddress").toString());
+    ui->lineEditUsername->setText(settings.value("ServiceUsername").toString());
+    ui->lineEditPassword->setText(settings.value("ServicePassword").toString());
+
     QString customField0 = settings.value("custom_field0").toString();
     QString customField1 = settings.value("custom_field1").toString();
     QString customField2 = settings.value("custom_field2").toString();
@@ -142,4 +146,22 @@ void SettingsForm::on_openMobileFolder_clicked()
             }
         }
     }
+}
+
+void SettingsForm::on_lineEditServerAddr_textEdited(QString serverAddr)
+{
+    QSettings settings;
+    settings.setValue("ServiceAddress", serverAddr);
+}
+
+void SettingsForm::on_lineEditUsername_textEdited(QString username)
+{
+    QSettings settings;
+    settings.setValue("ServiceUsername", username);
+}
+
+void SettingsForm::on_lineEditPassword_textEdited(QString password)
+{
+    QSettings settings;
+    settings.setValue("ServicePassword", password);
 }
