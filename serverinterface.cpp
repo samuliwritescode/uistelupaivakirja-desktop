@@ -82,8 +82,8 @@ bool ServerInterface::checkError()
     {
         m_reply->deleteLater();
         qDebug() << "network replied with an error" << m_reply->errorString();
-        qDebug() << m_reply->readAll();
-        emit error("network replied with error");
+        QString errorstr = m_reply->readAll();
+        emit error(errorstr);
         m_reply = NULL;
         emit consume();
         return false;

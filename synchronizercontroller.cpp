@@ -61,6 +61,10 @@ void SynchronizerController::downloadDone()
             sendNotificationToObservers(Controller::eTripListUpdated);
             sendNotificationToObservers(Controller::eLureListUpdated);
             sendNotificationToObservers(Controller::ePlaceListUpdated);
+
+            sendNotificationToObservers(Controller::eTripUpdated);
+            sendNotificationToObservers(Controller::eLureUpdated);
+            sendNotificationToObservers(Controller::ePlaceUpdated);
         }
     }
 
@@ -79,8 +83,17 @@ void SynchronizerController::uploadDone()
 
 void SynchronizerController::error(const QString& error)
 {
-    showErrorMessage(tr("Palvelinsynkronointi antoi virheen: ")+error);
-    m_timer.start();
+    if(error.contains("Cannot commit. Conflict with revision"))
+    {
+        qDebug() << "need getting fresh revision";
+        m_sync->download();
+    }
+    else if(!m_timer.isActive())
+    {
+        showErrorMessage(tr("Palvelinsynkronointi antoi virheen: "));
+        qDebug() << "timer not active";
+        m_timer.start();
+    }
 }
 
 QStringList SynchronizerController::trollingObjectToStringList(const QList<TrollingObject*>& objects)

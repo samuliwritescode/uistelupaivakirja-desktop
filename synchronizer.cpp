@@ -10,7 +10,6 @@ Synchronizer::Synchronizer(QObject *parent) :
     QObject(parent)
 {
     connect(&m_server, SIGNAL(checkoutDone(QString)), this, SLOT(populate(QString)));
-    //connect(&m_server, SIGNAL(checkoutDone(QString)), this, SIGNAL(downloadDone()));
     connect(&m_server, SIGNAL(commitDone()), this, SIGNAL(uploadDone()));
     connect(&m_server, SIGNAL(error(const QString&)), this, SIGNAL(error(const QString&)));
 }
