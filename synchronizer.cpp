@@ -132,7 +132,11 @@ void Synchronizer::saveChanges(const QList<TrollingObject*>& changes)
     foreach(QString type, m_revisions.keys())
     {
         int serverRevision = m_revisions[type];
-        model->setRevision(type, serverRevision);
+        int oldRevision = model->getRevision(type);
+        if(serverRevision != oldRevision)
+        {
+            model->setRevision(type, serverRevision);
+        }
     }
     deleteAndClear();
 }
