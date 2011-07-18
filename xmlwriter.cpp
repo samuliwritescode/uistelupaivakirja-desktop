@@ -28,32 +28,32 @@ bool XMLWriter::write(TrollingObject* p_object)
     trollingObject.setAttribute("type", p_object->getType());
 
     p_object->setSaved();
-    QHashIterator<QString, QVariant> iter(p_object->getProperties());
+    QHashIterator<QString, QString> iter(p_object->getProperties());
     while( iter.hasNext() )
     {
         iter.next();
-        if(iter.value().toString().isEmpty())
+        if(iter.value().isEmpty())
             continue;
         QDomElement property = m_document.createElement(iter.key());
-        QDomText text = m_document.createTextNode(iter.value().toString());
+        QDomText text = m_document.createTextNode(iter.value());
         property.appendChild(text);
         trollingObject.appendChild(property);
     }
 
-    QList< QHash<QString, QVariant> > list = p_object->getList();
+    QList< QHash<QString, QString> > list = p_object->getList();
     QDomElement listelement = m_document.createElement("PropertyList");
     for(int loop=0; loop < list.size(); loop++)
     {
         QDomElement listItem = m_document.createElement("PropertyListItem");
-        QHash<QString, QVariant> subProperty = list.at(loop);
-        QHashIterator<QString, QVariant> iter(subProperty);
+        QHash<QString, QString> subProperty = list.at(loop);
+        QHashIterator<QString, QString> iter(subProperty);
         while( iter.hasNext() )
         {
             iter.next();
-            if(iter.value().toString().isEmpty())
+            if(iter.value().isEmpty())
                 continue;
             QDomElement property = m_document.createElement(iter.key());
-            QDomText text = m_document.createTextNode(iter.value().toString());
+            QDomText text = m_document.createTextNode(iter.value());
             property.appendChild(text);
             listItem.appendChild(property);
         }
@@ -110,7 +110,7 @@ bool XMLWriter::loadAll(const QString& p_type, TrollingObjectFactory* p_factory,
         {
             QDomElement trollingobjectelement = trollingobjectsnodelist.at(loop0).toElement();
             QDomNodeList propertiesnodes = trollingobjectelement.childNodes();
-            QHash<QString, QVariant> properties;
+            QHash<QString, QString> properties;
             if(trollingobjectelement.attribute("type") != p_type)
             {
                 qDebug() << "Skipping non expected type" << p_type;
@@ -138,11 +138,11 @@ bool XMLWriter::loadAll(const QString& p_type, TrollingObjectFactory* p_factory,
                 }
                 else if(node.isElement() && node.hasChildNodes() && node.toElement().tagName() == "PropertyList")
                 {
-                    QList< QHash<QString, QVariant> > list;
+                    QList< QHash<QString, QString> > list;
                     QDomNodeList propertylist = node.toElement().elementsByTagName("PropertyListItem");
                     for(int loop2=0; loop2 < propertylist.size(); loop2++)
                     {
-                        QHash<QString, QVariant> propertylistitem;
+                        QHash<QString, QString> propertylistitem;
                         QDomNodeList listitemlist = propertylist.at(loop2).childNodes();
                         for(int loop3=0; loop3 < listitemlist.size(); loop3++)
                         {

@@ -242,7 +242,7 @@ void Trip::constructItems(const TrollingObjectItemList& p_items)
         Fish* fish = new Fish(this);
         connect(fish, SIGNAL(FishModified()), this, SLOT(FishModified()));
 
-        for(QHash<QString, QVariant>::iterator iter = item.begin(); iter != item.end(); iter++)
+        for(QHash<QString, QString>::iterator iter = item.begin(); iter != item.end(); iter++)
         {
             fish->m_properties[iter.key()] = iter.value();
         }
@@ -266,7 +266,7 @@ TrollingObjectItemList Trip::serializeItems()
         QList<QString> propnames = fish->getPropertyNames();
         foreach(QString propname, propnames)
         {
-            fishprops[propname] = fish->getProperty(propname);
+            fishprops[propname] = fish->getProperty(propname).toString();
         }
 
         retval.push_back(fishprops);

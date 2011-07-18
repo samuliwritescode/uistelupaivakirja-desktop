@@ -6,7 +6,7 @@
 #include <QVariant>
 #include "xmlwriter.h"
 
-typedef QHash<QString, QVariant> TrollingObjectItem;
+typedef QHash<QString, QString> TrollingObjectItem;
 typedef QList<TrollingObjectItem> TrollingObjectItemList;
 
 class TrollingObject: public QObject
@@ -38,16 +38,16 @@ protected:
 
 private:
     //XMLWriter will call these
-    void storeProperties(QHash<QString, QVariant> p_properties);
+    void storeProperties(QHash<QString, QString> p_properties);
     void storeList(TrollingObjectItemList p_list);
-    QHash<QString, QVariant> getProperties();
+    QHash<QString, QString> getProperties();
     TrollingObjectItemList getList();
     void setId(int p_id);
     void setSaved();
 
     int m_id;
     QString m_type;
-    QHash<QString, QVariant> m_properties;
+    QHash<QString, QString> m_properties;
     bool m_unsavedChanges;
 };
 

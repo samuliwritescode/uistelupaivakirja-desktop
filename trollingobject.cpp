@@ -13,7 +13,7 @@ TrollingObject::~TrollingObject()
 
 }
 
-void TrollingObject::storeProperties(QHash<QString, QVariant> p_properties)
+void TrollingObject::storeProperties(QHash<QString, QString> p_properties)
 {
     m_properties = p_properties;
     m_unsavedChanges = false;
@@ -40,7 +40,7 @@ void TrollingObject::setSaved()
     m_unsavedChanges = false;
 }
 
-QHash<QString, QVariant> TrollingObject::getProperties()
+QHash<QString, QString> TrollingObject::getProperties()
 {
     return m_properties;
 }
@@ -77,7 +77,7 @@ void TrollingObject::set(const QString& p_property, QVariant p_value)
     else if(m_properties[p_property] != p_value)
         setUnsaved();
 
-    m_properties[p_property] = p_value;
+    m_properties[p_property] = p_value.toString();
 }
 
 bool TrollingObject::isUnsaved()
@@ -88,7 +88,7 @@ bool TrollingObject::isUnsaved()
 QVariant TrollingObject::get(const QString& p_property)
 {
     if(m_properties.contains(p_property))
-        return m_properties[p_property];
+        return QVariant(m_properties[p_property]);
     else
         return QVariant();
 }
@@ -101,7 +101,7 @@ void TrollingObject::setUnsaved()
 QStringList TrollingObject::getKeys()
 {
     QStringList retval;
-    for(QHash<QString, QVariant>::Iterator iter = m_properties.begin(); iter != m_properties.end(); iter++)
+    for(QHash<QString, QString>::Iterator iter = m_properties.begin(); iter != m_properties.end(); iter++)
     {
         retval << iter.key();
     }
