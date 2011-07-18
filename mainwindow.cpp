@@ -56,3 +56,11 @@ MessageDisplay::EChoices MainWindow::showChoiceMessage(const QString& message)
         return MessageDisplay::eCancel;
 }
 
+void MainWindow::showStatusMessage(const QString& message, bool stay)
+{
+    if(stay)
+        ui->statusBar->showMessage(message);
+    else
+        ui->statusBar->showMessage(message, 10000);
+
+}

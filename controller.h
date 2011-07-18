@@ -126,6 +126,7 @@ public:
     bool showConfirmationMessage(const QString&);
     void showNotificationMessage(const QString& notify);
     MessageDisplay::EChoices showChoiseMessage(const QString&);
+    void showStatusMessage(const QString&, bool);
 
     enum ENotificationType {
         eTripUpdated,

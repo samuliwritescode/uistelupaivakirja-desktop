@@ -115,3 +115,11 @@ MessageDisplay::EChoices Controller::showChoiseMessage(const QString& message)
     }
     return MessageDisplay::eCancel;
 }
+
+void Controller::showStatusMessage(const QString& message, bool stay)
+{
+    if(display())
+    {
+        display()->showStatusMessage(message, stay);
+    }
+}

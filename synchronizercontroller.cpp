@@ -20,7 +20,7 @@ SynchronizerController::SynchronizerController(QObject *parent) :
 
 void SynchronizerController::checkUpdates()
 {
-    qDebug() << "timer fire";
+    showStatusMessage(tr("Tutkitaan onko palvelimella päivityksiä tietokantaan"), true);
     m_sync->download();
 }
 
@@ -68,17 +68,21 @@ void SynchronizerController::downloadDone()
         }
     }
 
+    m_timer.setInterval(60000);
     m_timer.start();
+    showStatusMessage(tr("Tietokanta synkronoitu palvelimen kanssa"), false);
 }
 
 void SynchronizerController::uploadChanges()
 {
+    showStatusMessage(tr("Tietokannan synkronointi palvelun kanssa käynnissä"), true);
     m_sync->upload();
 }
 
 void SynchronizerController::uploadDone()
 {
-    showNotificationMessage(tr("Lähetetty"));
+    showStatusMessage(tr("Tietokanta lähetetty palvelimelle"), false);
+    m_sync->download();
 }
 
 void SynchronizerController::error(const QString& error)
@@ -92,8 +96,10 @@ void SynchronizerController::error(const QString& error)
     {
         showErrorMessage(tr("Palvelinsynkronointi antoi virheen: "));
         qDebug() << "timer not active";
+        m_timer.setInterval(10000);
         m_timer.start();
     }
+    showStatusMessage(tr("Palvelimen kanssa oli ongelmia. Yritetään uudelleen"), false);
 }
 
 QStringList SynchronizerController::trollingObjectToStringList(const QList<TrollingObject*>& objects)

@@ -26,6 +26,7 @@ public:
     virtual bool showConfirmationMessage(const QString&);
     virtual EChoices showChoiceMessage(const QString&);
     virtual void showNotificationMessage(const QString&);
+    virtual void showStatusMessage(const QString&, bool);
 
 private:    
     Ui::MainWindow *ui;

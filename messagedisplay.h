@@ -10,6 +10,7 @@ public:
     virtual bool showConfirmationMessage(const QString&) = 0;
     virtual EChoices showChoiceMessage(const QString&) = 0;
     virtual void showNotificationMessage(const QString&) = 0;
+    virtual void showStatusMessage(const QString&, bool) = 0;
 protected:
     MessageDisplay();
 };
