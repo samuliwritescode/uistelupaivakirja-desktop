@@ -20,6 +20,7 @@ public:
     bool isUnsaved();
     virtual QString valid();
     virtual ~TrollingObject();
+    virtual QString toString();
     bool operator==(const TrollingObject& other);
 
 protected:

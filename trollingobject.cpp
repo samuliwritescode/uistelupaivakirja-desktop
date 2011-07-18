@@ -21,12 +21,12 @@ void TrollingObject::storeProperties(QHash<QString, QVariant> p_properties)
 
 void TrollingObject::constructItems(const TrollingObjectItemList&)
 {
-    qWarning() << "NULL implementation of TrollingObject::constructItems()";
+    //qWarning() << "NULL implementation of TrollingObject::constructItems()";
 }
 
 TrollingObjectItemList TrollingObject::serializeItems()
 {
-    qWarning() << "NULL implementation of TrollingObject::serializeItems()";
+    //qWarning() << "NULL implementation of TrollingObject::serializeItems()";
     return TrollingObjectItemList();
 }
 
@@ -116,6 +116,15 @@ QString TrollingObject::importFile(const QString& p_filename)
 QString TrollingObject::valid()
 {
     return QString();
+}
+
+QString TrollingObject::toString()
+{
+    QString retval;
+    retval += QString::number(getId());
+    retval += " ";
+    retval += getType();
+    return retval;
 }
 
 bool TrollingObject::operator==(const TrollingObject& other)

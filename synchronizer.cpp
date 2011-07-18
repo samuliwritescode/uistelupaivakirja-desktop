@@ -9,7 +9,8 @@
 Synchronizer::Synchronizer(QObject *parent) :
     QObject(parent)
 {
-    connect(&m_server, SIGNAL(checkoutDone(QString)), this, SLOT(syncServer(QString)));
+    connect(&m_server, SIGNAL(checkoutDone(QString)), this, SLOT(populate(QString)));
+    //connect(&m_server, SIGNAL(checkoutDone(QString)), this, SIGNAL(downloadDone()));
     connect(&m_server, SIGNAL(commitDone()), this, SIGNAL(uploadDone()));
     connect(&m_server, SIGNAL(error(const QString&)), this, SIGNAL(error(const QString&)));
 }
@@ -24,101 +25,206 @@ void Synchronizer::upload()
     m_server.commit();
 }
 
-void Synchronizer::syncServer(const QString& folder)
+void Synchronizer::populate(const QString& folder)
 {
     TrollingModel* model = Singletons::model();
-    QMap<int, TrollingObject*> objects;
+    deleteAndClear();
+    determineRevisions(folder);
 
-    foreach(Trip* trip, model->getTrips())
-        objects[trip->getId()] = trip;
+    QStringList types;
+    types << Trip().getType();
+    types << Lure().getType();
+    types << Place().getType();
 
-    syncServerImpl(objects, folder, Trip().getType());
-
-    objects.clear();
-    foreach(Lure* lure, model->getLures())
-        objects[lure->getId()] = lure;
-
-    syncServerImpl(objects, folder, Lure().getType());
-
-    objects.clear();
-    foreach(Place* place, model->getPlaces())
-        objects[place->getId()] = place;
-
-    syncServerImpl(objects, folder, Place().getType());
+    foreach(QString type, types)
+    {
+        int serverRevision = m_revisions[type];
+        int localRevision = model->getRevision(type);
+        if(serverRevision != localRevision)
+        {
+            determineChanges(getLocalObjects(type), getRemoteObjects(type, folder));
+        }
+    }
 
     emit downloadDone();
 }
 
-void Synchronizer::syncServerImpl(QMap<int, TrollingObject*>& objectsLocal, const QString& folder, const QString& type)
+void Synchronizer::deleteAndClear()
+{
+    foreach(TrollingObject* o, m_added)
+    {
+        delete o;
+    }
+
+    foreach(TrollingObject* o, m_overwritten)
+    {
+        delete o;
+    }
+
+    foreach(TrollingObject* o, m_conflicting)
+    {
+        delete o;
+    }
+
+    m_added.clear();
+    m_deleted.clear();
+    m_overwritten.clear();
+    m_conflicting.clear();
+    m_revisions.clear();
+}
+
+QList<TrollingObject*> Synchronizer::getChanges(EChangeType type)
+{
+    QList<TrollingObject*> retval;
+
+    switch(type)
+    {
+    case eAdded: retval += m_added; break;
+    case eRemoved: retval += m_deleted; break;
+    case eModified: retval += m_overwritten; break;
+    case eConflicting: retval += m_conflicting; break;
+    default: break;
+    }
+
+    return retval;
+}
+
+void Synchronizer::saveChanges(const QList<TrollingObject*>& changes)
 {
     TrollingModel* model = Singletons::model();
-    DBLayer dbServer(folder);
-
-    QList<TrollingObject*> objectsRemote;
-    SimpleTrollingObjectFactory factory;
-    factory.setPushToCollection(&objectsRemote);
-    dbServer.loadObjects(type, &factory);
-
-    int serverRevision = dbServer.getRevision(type);
-    int localRevision = model->getRevision(type);
-    if(serverRevision != localRevision || true)
+    foreach(TrollingObject* o, m_added)
     {
-        qDebug() << "now ready to merge" << type;
-
-        //Check what are removed
-        foreach(int objid, objectsLocal.keys())
+        if(contains(m_added, o->getId()))
         {
-            if(!contains(objectsRemote, objid))
-            {
-                qDebug() << "remove" << type << QString::number(objid);
-                model->remove(objectsLocal[objid]);
-            }
+            qDebug() << "adding new";
+            o->setId(-1);
+            model->importTrollingObject(o);
         }
+    }
 
-        //Check what are modified or new
-        foreach(TrollingObject* o, objectsRemote)
+    foreach(TrollingObject* o, m_conflicting)
+    {
+        if(contains(m_conflicting, o->getId()))
         {
-            if(objectsLocal.contains(o->getId()))
-            {
-                TrollingObject* trip = objectsLocal[o->getId()];
-                if(!(*trip == *o))
-                {
-                    qDebug() << type << "are different: "+QString::number(trip->getId());
-                    qDebug() << QString::number(trip->getId()) << "id" << QString::number(o->getId());
-                    qDebug() << trip->getType() << "type" << o->getType();
-                    if(model->inJournal(trip->getId(), trip->getType()) || trip->isUnsaved())
-                    {
-                        qDebug() << "unsynched trip. need to create new";
-                        if(model->inJournal(trip->getId(), trip->getType()))
-                            qDebug() << "is in journal";
-                        o->setId(-1);
-                        model->importTrollingObject(o);
-                    }
-                    else
-                    {
-                        qDebug() << "modified" << type << ". override from server";
-                        model->importTrollingObject(o);
-                    }
-                }
-            }
-            else
-            {
-                qDebug() << "create new" << type << "old id was" << QString::number(o->getId());
-                o->setId(-1);
-                model->importTrollingObject(o);
-            }
+            qDebug() << "adding conflicting";
+            o->setId(-1);
+            model->importTrollingObject(o);
         }
+    }
 
+    foreach(TrollingObject* o, m_deleted)
+    {
+        if(contains(m_deleted, o->getId()))
+        {
+           qDebug() << "removing";
+           model->remove(o);
+        }
+    }
+
+    foreach(TrollingObject* o, m_overwritten)
+    {
+        if(contains(m_overwritten, o->getId()))
+        {
+            qDebug() << "replacing";
+            model->importTrollingObject(o);
+        }
+    }
+
+    foreach(QString type, m_revisions.keys())
+    {
+        int serverRevision = m_revisions[type];
         model->setRevision(type, serverRevision);
     }
-    else
+    deleteAndClear();
+}
+
+QList<TrollingObject*> Synchronizer::getRemoteObjects(const QString& type, const QString& folder)
+{
+    QList<TrollingObject*> retval;
+    DBLayer dbServer(folder);
+    SimpleTrollingObjectFactory factory;
+    factory.setPushToCollection(&retval);
+    dbServer.loadObjects(type, &factory);
+
+    return retval;
+}
+
+QMap<int, TrollingObject*> Synchronizer::getLocalObjects(const QString& type)
+{
+    QMap<int, TrollingObject*> retval;
+    TrollingModel* model = Singletons::model();
+
+    if(type == Trip().getType())
     {
-        qDebug() << "No need to merge. Revisions are match";
+        foreach(Trip* trip, model->getTrips())
+        {
+            retval[trip->getId()] = trip;
+        }
+    } else if(type == Lure().getType())
+    {
+        foreach(Lure* lure, model->getLures())
+        {
+            retval[lure->getId()] = lure;
+        }
+    } else if(type == Place().getType())
+    {
+        foreach(Place* place, model->getPlaces())
+        {
+            retval[place->getId()] = place;
+        }
     }
 
-    foreach(TrollingObject* object, objectsRemote)
+    return retval;
+}
+
+void Synchronizer::determineRevisions(const QString& remoteFolder)
+{
+    DBLayer dbServer(remoteFolder);
+    m_revisions[Trip().getType()] = dbServer.getRevision(Trip().getType());
+    m_revisions[Place().getType()] = dbServer.getRevision(Place().getType());
+    m_revisions[Lure().getType()] = dbServer.getRevision(Lure().getType());
+}
+
+void Synchronizer::determineChanges(QMap<int, TrollingObject*> objectsLocal, QList<TrollingObject*>  objectsRemote)
+{
+    TrollingModel* model = Singletons::model();
+
+    //Check what are removed
+    foreach(int objid, objectsLocal.keys())
     {
-        delete object;
+        if(!contains(objectsRemote, objid))
+        {
+            m_deleted.append(objectsLocal[objid]);
+        }
+    }
+
+    //Check what are modified or new
+    foreach(TrollingObject* o, objectsRemote)
+    {
+        if(objectsLocal.contains(o->getId()))
+        {
+            TrollingObject* trip = objectsLocal[o->getId()];
+            if(!(*trip == *o))
+            {
+                if(model->inJournal(trip->getId(), trip->getType()) || trip->isUnsaved())
+                {
+                    m_conflicting.append(o);
+                    continue;
+                }
+                else
+                {
+                    m_overwritten.append(o);
+                    continue;
+                }
+            }
+        }
+        else
+        {
+            m_added.append(o);
+            continue;
+        }
+
+        delete o;
     }
 }
 

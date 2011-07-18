@@ -159,7 +159,7 @@ void TestServerInterface::test01MultipleGets()
     waitForSignal(sync, SIGNAL(downloadDone()));
     int tripBefore = Singletons::model()->getTrips().count();
 
-    for(int loop=0; loop < 10; loop++)
+    for(int loop=0; loop < 4; loop++)
     {
         sync->download();
         waitForSignal(sync, SIGNAL(downloadDone()));
@@ -190,6 +190,18 @@ void TestServerInterface::getDone()
     QVERIFY(QFile::exists(path+"/server/trip.xml"));
     QVERIFY(QFile::exists(path+"/server/place.xml"));
     QVERIFY(QFile::exists(path+"/server/lure.xml"));
+
+    QList<TrollingObject*> changes = Singletons::model()->getSynchronizer()->getChanges(Synchronizer::eModified);
+    changes += Singletons::model()->getSynchronizer()->getChanges(Synchronizer::eAdded);
+    changes += Singletons::model()->getSynchronizer()->getChanges(Synchronizer::eRemoved);
+    changes += Singletons::model()->getSynchronizer()->getChanges(Synchronizer::eConflicting);
+
+    foreach(TrollingObject* o, changes)
+    {
+        qDebug() << o->getId() << "differs" << o->getType();
+    }
+
+    Singletons::model()->getSynchronizer()->saveChanges(changes);
     DBLayer dbserver(path+"/server/");
     DBLayer dblocal(path+"/database/");
 
