@@ -556,17 +556,7 @@ QMap<QString, int> TripController::getTripList()
     for(QMap<int, Trip*>::iterator iter = trips.begin(); iter!=trips.end(); iter++)
     {
         Trip* trip = iter.value();
-        QString name = trip->getDate().toString("yyyy-MM-dd");
-        name += " ";
-        name += trip->getTime().first.toString("HH");
-        name += "-";
-        name +=trip->getTime().second.toString("HH");
-
-        if(trip->getPlace())
-        {
-            name += ", ";
-            name += trip->getPlace()->getName();
-        }
+        QString name = trip->toString();
 
 
         int fishcount = trip->getFishCount(Fish::eFish)+

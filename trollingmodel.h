@@ -43,6 +43,7 @@ public:
     Synchronizer* getSynchronizer();
 
 signals:
+    void save();
 
 private slots:
     void resetJournal();

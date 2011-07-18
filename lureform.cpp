@@ -12,12 +12,13 @@ LureForm::LureForm(QWidget *parent) :
     observerEvent(Controller::eLureListUpdated);
 
     connect(m_lureController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
-
+    connect(Singletons::syncController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
 }
 
 LureForm::~LureForm()
 {
     disconnect(m_lureController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
+    disconnect(Singletons::syncController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
     delete ui;
 }
 

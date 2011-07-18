@@ -10,6 +10,7 @@ public:
     void setCity(const QString&);
     void setMiscText(const QString&);
     void setInvisible(bool);
+    virtual QString toString();
 
     QString getName();
     QString getCity();

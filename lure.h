@@ -20,6 +20,7 @@ public:
     void setNotVisible(bool);
     void setLureType(const QString&);
     void setNickName(const QString&);
+    virtual QString toString();
 
     QString getMaker();
     QString getModel();

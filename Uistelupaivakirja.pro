@@ -52,7 +52,9 @@ SOURCES += main.cpp\
     serverinterface.cpp \
     simpletrollingobjectfactory.cpp \
     transactionjournal.cpp \
-    synchronizer.cpp
+    revisiondialog.cpp \
+    synchronizer.cpp \
+    synchronizercontroller.cpp
 
 HEADERS  += mainwindow.h \
     lureitem.h \
@@ -95,14 +97,17 @@ HEADERS  += mainwindow.h \
     serverinterface.h \
     simpletrollingobjectfactory.h \
     transactionjournal.h \
-    synchronizer.h
+    synchronizer.h \
+    revisiondialog.h \
+    synchronizercontroller.h
 
 FORMS    += mainwindow.ui \
     tripform.ui \
     lureform.ui \
     placeform.ui \
     statisticsform.ui \
-    settingsform.ui
+    settingsform.ui \
+    revisiondialog.ui
 
 RESOURCES += \
     resources.qrc

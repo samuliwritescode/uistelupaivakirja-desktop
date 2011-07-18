@@ -40,7 +40,7 @@ void Synchronizer::populate(const QString& folder)
     {
         int serverRevision = m_revisions[type];
         int localRevision = model->getRevision(type);
-        if(serverRevision != localRevision)
+        if(serverRevision != 0 && serverRevision != localRevision)
         {
             determineChanges(getLocalObjects(type), getRemoteObjects(type, folder));
         }
@@ -94,7 +94,7 @@ void Synchronizer::saveChanges(const QList<TrollingObject*>& changes)
     TrollingModel* model = Singletons::model();
     foreach(TrollingObject* o, m_added)
     {
-        if(contains(m_added, o->getId()))
+        if(contains(changes, o->getId()))
         {
             qDebug() << "adding new";
             o->setId(-1);
@@ -104,7 +104,7 @@ void Synchronizer::saveChanges(const QList<TrollingObject*>& changes)
 
     foreach(TrollingObject* o, m_conflicting)
     {
-        if(contains(m_conflicting, o->getId()))
+        if(contains(changes, o->getId()))
         {
             qDebug() << "adding conflicting";
             o->setId(-1);
@@ -114,7 +114,7 @@ void Synchronizer::saveChanges(const QList<TrollingObject*>& changes)
 
     foreach(TrollingObject* o, m_deleted)
     {
-        if(contains(m_deleted, o->getId()))
+        if(contains(changes, o->getId()))
         {
            qDebug() << "removing";
            model->remove(o);
@@ -123,7 +123,7 @@ void Synchronizer::saveChanges(const QList<TrollingObject*>& changes)
 
     foreach(TrollingObject* o, m_overwritten)
     {
-        if(contains(m_overwritten, o->getId()))
+        if(contains(changes, o->getId()))
         {
             qDebug() << "replacing";
             model->importTrollingObject(o);

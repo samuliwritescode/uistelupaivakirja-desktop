@@ -153,7 +153,7 @@ QList<QPair<QString, int> > PlaceController::getPlaceListShort()
             continue;
 
         QPair<QString, int> pair;
-        pair.first = place->getName()+" "+place->getCity();
+        pair.first = place->toString();
         pair.second = place->getId();
         retval.push_back(pair);
     }

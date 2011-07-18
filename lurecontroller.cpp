@@ -225,7 +225,7 @@ QString LureController::lureName(Lure* lure)
 {
     if(lure)
     {
-        return lure->getMaker()+" "+lure->getModel()+" "+lure->getSize()+" "+lure->getColor();
+        return lure->toString();
     }
     else
     {

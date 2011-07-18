@@ -5,6 +5,7 @@ TripController* Singletons::s_tripController = NULL;
 PlaceController* Singletons::s_placeController = NULL;
 LureController* Singletons::s_lureController = NULL;
 StatisticsController* Singletons::s_statsController = NULL;
+SynchronizerController* Singletons::s_syncController = NULL;
 
 TrollingModel* Singletons::model()
 {
@@ -47,6 +48,14 @@ StatisticsController* Singletons::statsController()
         s_statsController = new StatisticsController();
 
     return s_statsController;
+}
+
+SynchronizerController* Singletons::syncController()
+{
+    if(!s_syncController)
+        s_syncController = new SynchronizerController();
+
+    return s_syncController;
 }
 
 Singletons::Singletons()

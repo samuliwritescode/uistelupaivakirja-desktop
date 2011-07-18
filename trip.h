@@ -43,6 +43,7 @@ public:
     void addMediaFile(const QString&);
     QStringList getMediaFiles();
     void removeMediaFile(const QString&);
+    virtual QString toString();
 
 protected:
     int indexOfFish(Fish*);

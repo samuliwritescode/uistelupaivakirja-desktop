@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     Singletons::tripController()->setMessageDisplay(this);
     Singletons::placeController()->setMessageDisplay(this);
     Singletons::lureController()->setMessageDisplay(this);
+    Singletons::syncController()->setMessageDisplay(this);
     ui->statsTab->layout()->addWidget(new StatisticsForm());
     ui->tripsTab->layout()->addWidget(new TripForm());
     ui->luresTab->layout()->addWidget(new LureForm());

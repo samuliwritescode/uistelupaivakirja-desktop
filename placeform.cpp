@@ -12,11 +12,13 @@ PlaceForm::PlaceForm(QWidget *parent) :
     observerEvent(Controller::ePlaceListUpdated);
 
     connect(m_placeController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
+    connect(Singletons::syncController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
 }
 
 PlaceForm::~PlaceForm()
 {
     disconnect(m_placeController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
+    disconnect(Singletons::syncController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
     delete ui;
 }
 

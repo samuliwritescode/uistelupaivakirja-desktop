@@ -211,7 +211,8 @@ int TrollingModel::commit(TrollingObject* object)
     {
         throw TrollingException(tr("En pysty tallentamaan. Katsopas, ettei levy ole täynnä tai ohjelmalla on tallennusoikeudet."));
     }
-    //m_synchronizer.upload();
+
+    emit save();
     return object->getId();
 }
 
@@ -241,6 +242,7 @@ void TrollingModel::remove(TrollingObject* p_object)
     }
 
     delete p_object;
+    emit save();
 }
 
 void TrollingModel::reset(TrollingObject* p_object)

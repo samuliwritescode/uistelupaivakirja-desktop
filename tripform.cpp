@@ -58,6 +58,7 @@ TripForm::TripForm(QWidget *parent) :
 
     connect(Singletons::lureController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
     connect(Singletons::placeController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
+    connect(Singletons::syncController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
 }
 
 TripForm::~TripForm()
@@ -65,6 +66,7 @@ TripForm::~TripForm()
     disconnect(m_tripController, SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
     disconnect(Singletons::lureController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
     disconnect(Singletons::placeController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
+    disconnect(Singletons::syncController(), SIGNAL(observerNotification(int)), this, SLOT(observerEvent(int)));
     delete ui;
     delete m_lureBox;
     delete m_POIBox;

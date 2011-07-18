@@ -134,3 +134,8 @@ QString Lure::getNickName()
 {
     return get("nickname").toString();
 }
+
+QString Lure::toString()
+{
+    return getMaker()+" "+getModel()+" "+getSize()+" "+getColor();
+}

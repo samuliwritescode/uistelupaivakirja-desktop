@@ -6,6 +6,7 @@
 #include "placecontroller.h"
 #include "lurecontroller.h"
 #include "statisticscontroller.h"
+#include "synchronizercontroller.h"
 
 class Singletons
 {
@@ -15,6 +16,7 @@ public:
     static PlaceController* placeController();
     static LureController* lureController();
     static StatisticsController* statsController();
+    static SynchronizerController* syncController();
 private:
     Singletons();
     static TrollingModel* s_model;
@@ -22,6 +24,7 @@ private:
     static PlaceController* s_placeController;
     static LureController* s_lureController;
     static StatisticsController* s_statsController;
+    static SynchronizerController* s_syncController;
 };
 
 #endif // SINGLETONS_H

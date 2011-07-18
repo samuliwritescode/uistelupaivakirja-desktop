@@ -44,3 +44,8 @@ bool Place::getInvisible()
 {
     return get("invisible").toBool();
 }
+
+QString Place::toString()
+{
+    return getName()+" "+getCity();
+}

@@ -342,3 +342,20 @@ void Trip::removeMediaFile(const QString& p_file)
         }
     }
 }
+
+QString Trip::toString()
+{
+    QString name = getDate().toString("yyyy-MM-dd");
+    name += " ";
+    name += getTime().first.toString("HH");
+    name += "-";
+    name += getTime().second.toString("HH");
+
+    if(getPlace())
+    {
+        name += ", ";
+        name += getPlace()->getName();
+    }
+
+    return name;
+}

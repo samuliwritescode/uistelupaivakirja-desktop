@@ -15,10 +15,11 @@ TEMPLATE = app
 
 SOURCES += UisteluTest/testserverinterface.cpp \
     UisteluTest/testxmlwriter.cpp \
-    UisteluTest/testmain.cpp \
+    UisteluTest/testmain.cpp
 
 HEADERS += UisteluTest/testserverinterface.h \
-    UisteluTest/testxmlwriter.h \
+    UisteluTest/testxmlwriter.h
+
 
 SOURCES -= main.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
