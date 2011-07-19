@@ -4,32 +4,27 @@
 #include "synchronizercontroller.h"
 #include "revisiondialog.h"
 
-const int WAIT_BETWEEN_DOWNLOADS = 60000;
-const int WAIT_AFTER_FAILURE = 10000;
+
 
 SynchronizerController::SynchronizerController(QObject *parent) :
     Controller(parent)
 {
     m_sync = Singletons::model()->getSynchronizer();
-    m_timer.setSingleShot(true);
-    m_timer.setInterval(0);
-    connect(&m_timer, SIGNAL(timeout()), this, SLOT(checkUpdates()));
     connect(m_sync, SIGNAL(downloadDone()), this, SLOT(downloadDone()));
     connect(m_sync, SIGNAL(uploadDone()), this, SLOT(uploadDone()));
     connect(m_sync, SIGNAL(error(QString)), this, SLOT(error(QString)));
     connect(Singletons::model(), SIGNAL(save()), this, SLOT(uploadChanges()));
-    m_timer.start();
 }
 
 void SynchronizerController::checkUpdates()
 {
     showStatusMessage(tr("Tutkitaan onko palvelimella päivityksiä tietokantaan"), true);
-    m_sync->download();
+    //m_sync->download();
 }
 
 void SynchronizerController::downloadDone()
 {
-    m_timer.stop();
+    qDebug() << "got download done";
     QList<TrollingObject*> changesAdded = m_sync->getChanges(Synchronizer::eAdded);
     QList<TrollingObject*> changesModified = m_sync->getChanges(Synchronizer::eModified);
     QList<TrollingObject*> changesRemoved = m_sync->getChanges(Synchronizer::eRemoved);
@@ -72,8 +67,6 @@ void SynchronizerController::downloadDone()
         }
     }
 
-    m_timer.setInterval(WAIT_BETWEEN_DOWNLOADS);
-    m_timer.start();
     showStatusMessage(tr("Tietokanta synkronoitu palvelimen kanssa"), false);
 }
 
@@ -86,7 +79,7 @@ void SynchronizerController::uploadChanges()
 void SynchronizerController::uploadDone()
 {
     showStatusMessage(tr("Tietokanta lähetetty palvelimelle"), false);
-    m_sync->download();
+    //m_sync->download();
 }
 
 void SynchronizerController::error(const QString& error)
@@ -94,14 +87,7 @@ void SynchronizerController::error(const QString& error)
     if(error.contains("Cannot commit. Conflict with revision"))
     {
         qDebug() << "need getting fresh revision";
-        m_sync->download();
-    }
-    else if(!m_timer.isActive())
-    {
-        showErrorMessage(tr("Palvelinsynkronointi antoi virheen: "));
-        qDebug() << "timer not active";
-        m_timer.setInterval(WAIT_AFTER_FAILURE);
-        m_timer.start();
+       // m_sync->download();
     }
     showStatusMessage(tr("Palvelimen kanssa oli ongelmia. Yritetään uudelleen"), false);
 }

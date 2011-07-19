@@ -6,22 +6,91 @@
 #include "singletons.h"
 #include "alternative.h"
 
+const int WAIT_BETWEEN_DOWNLOADS = 60000;
+
 Synchronizer::Synchronizer(QObject *parent) :
     QObject(parent)
 {
-    connect(&m_server, SIGNAL(checkoutDone(QString)), this, SLOT(populate(QString)));
+    connect(&m_timer, SIGNAL(timeout()), this, SLOT(run()));
+    connect(&m_server, SIGNAL(checkoutDone(QString)), this, SIGNAL(downloadDone()));
+    connect(&m_server, SIGNAL(checkoutDone(QString)), this, SLOT(checkoutDone(QString)));
     connect(&m_server, SIGNAL(commitDone()), this, SIGNAL(uploadDone()));
-    connect(&m_server, SIGNAL(error(const QString&)), this, SIGNAL(error(const QString&)));
+    connect(&m_server, SIGNAL(error(QString)), this, SLOT(handleError(QString)));
+    connect(&m_server, SIGNAL(commitFile(QString,int)), this, SLOT(uploadFile(QString,int)));
+    m_timer.setInterval(0);
+    m_timer.setSingleShot(true);
+    m_timer.start();
+}
+
+void Synchronizer::run()
+{
+    if(m_realms.count() > 0)
+    {
+        QMap<QString, QByteArray> realm = m_realms.last();
+        qDebug() << "commiting";
+        if(m_server.commit(realm.keys(), realm.values()))
+        {
+            m_realms.clear();
+        }
+    }
+    else
+    {
+        download();
+    }
+
+    m_timer.setInterval(WAIT_BETWEEN_DOWNLOADS);
+    m_timer.start();
 }
 
 void Synchronizer::download()
 {
-    m_server.checkout();
+    QStringList types;
+    types << Trip().getType();
+    types << Lure().getType();
+    types << Place().getType();
+    if(!m_server.checkout(types))
+    {
+        qDebug() << "busy";
+    }
 }
 
 void Synchronizer::upload()
 {
-    m_server.commit();
+    QStringList types;
+    types << Trip().getType();
+    types << Lure().getType();
+    types << Place().getType();
+    QMap<QString, QByteArray> realm;
+
+    foreach(QString doctype, types)
+    {
+        QSettings settings;
+        QString path = settings.value("ProgramFolder").toString();
+        QFile xml(path+"/database/"+doctype+".xml");
+        if(xml.open(QIODevice::ReadOnly))
+        {
+            realm[doctype] = xml.readAll();
+            xml.close();
+        }
+    }
+
+    m_realms.append(realm);
+}
+
+void Synchronizer::uploadFile(const QString& type, int revision)
+{
+    qDebug() << type << "new revision is" << revision;
+    Singletons::model()->setRevision(type, revision);
+}
+
+void Synchronizer::checkoutDone(const QString& folder)
+{
+    populate(folder);
+}
+
+void Synchronizer::handleError(const QString& errorstr)
+{
+    emit error(errorstr);
 }
 
 void Synchronizer::populate(const QString& folder)

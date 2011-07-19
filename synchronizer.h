@@ -2,6 +2,7 @@
 #define SYNCHRONIZER_H
 
 #include <QObject>
+#include <QTimer>
 #include "trollingobject.h"
 #include "serverinterface.h"
 class Trip;
@@ -28,7 +29,6 @@ public:
     void saveChanges(const QList<TrollingObject*>&);
     int syncMobile();
 
-
 signals:
     void downloadDone();
     void uploadDone();
@@ -36,25 +36,31 @@ signals:
 
 public slots:
     void upload();
-    void download();
 
 private slots:
-    void populate(const QString&);
+    void run();
+    void download();
+    void uploadFile(const QString&, int);
+    void checkoutDone(const QString&);
+    void handleError(const QString&);
 
 private:
+    void populate(const QString&);
     void deleteAndClear();
     QMap<int, TrollingObject*> getLocalObjects(const QString&);
     QList<TrollingObject*> getRemoteObjects(const QString&, const QString&);
     bool contains(QList<TrollingObject*> list, int id);
-    ServerInterface m_server;
     void determineChanges(QMap<int, TrollingObject*> objectsLocal, QList<TrollingObject*> objectsRemote);
     void determineRevisions(const QString& remoteFolder);
+    ServerInterface m_server;
     QList<TrollingObject*> m_deleted;
     QList<TrollingObject*> m_added;
     QList<TrollingObject*> m_overwritten;
     QList<TrollingObject*> m_conflicting;
     QMap<QString, int> m_revisions;
-
+    QList<QMap<QString, QByteArray> > m_realms;
+    QTimer m_timer;
+    int m_ticket;
 };
 
 #endif // SYNCHRONIZER_H

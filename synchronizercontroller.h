@@ -23,7 +23,7 @@ public slots:
 private:
     QString getTypeName(const QString&);
     QStringList trollingObjectToStringList(const QList<TrollingObject*>& objects);
-    QTimer m_timer;
+
     Synchronizer* m_sync;
 
 };

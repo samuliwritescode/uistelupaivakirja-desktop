@@ -13,23 +13,20 @@ class ServerInterface : public QObject
     Q_OBJECT
 public:
     explicit ServerInterface(QObject *parent = 0);
-    void commit();
-    void checkout();
+    bool commit(QStringList, QList<QByteArray>);
+    bool checkout(QStringList);
 
 signals:
-    void checkoutDone(const QString& folder);
+    void checkoutDone(const QString&);
+    void commitFile(const QString&, int);
     void commitDone();
-    void error(const QString& message);
-    void consume();
+    void error(const QString&);
 
 public slots:
     void sentXMLDone();
     void getXMLDone();
     void sendXML();
     void getXML();
-
-private slots:
-    void run();
 
 private:
     void login(const char*);
@@ -39,11 +36,11 @@ private:
     QNetworkAccessManager manager;
     QNetworkReply* m_reply;
     QStringList m_getDoc;
+    QList<QByteArray> m_getData;
     QString m_serverAddr;
     QString m_username;
     QString m_password;
     QString m_serverPath;
-    QQueue<const char*> m_requests;
     QMutex m_mutex;
 };
 

@@ -4,6 +4,8 @@
 #include <QNetworkRequest>
 #include <QDebug>
 #include <QFile>
+#include <QDomDocument>
+#include <QDomElement>
 #include <QSettings>
 #include <QMutexLocker>
 #include "dblayer.h"
@@ -12,8 +14,7 @@
 
 ServerInterface::ServerInterface(QObject *parent) :
     QObject(parent)
-{    
-    connect(this, SIGNAL(consume()), this, SLOT(run()), Qt::QueuedConnection);
+{        
     QSettings settings;
     m_serverAddr = settings.value("ServiceAddress").toString();
     m_username = settings.value("ServiceUsername").toString();
@@ -24,41 +25,36 @@ ServerInterface::ServerInterface(QObject *parent) :
     m_reply = NULL;
 }
 
-void ServerInterface::commit()
+bool ServerInterface::commit(QStringList docs, QList<QByteArray> data)
 {
-    QMutexLocker lock(&m_mutex);
-    m_requests.enqueue(SLOT(sendXML()));
-    emit consume();
-}
-
-void ServerInterface::checkout()
-{
-    QMutexLocker lock(&m_mutex);
-    m_requests.enqueue(SLOT(getXML()));
-    emit consume();
-}
-
-void ServerInterface::run()
-{
-    qDebug() << "run";
-    QMutexLocker lock(&m_mutex);
-
-    if(m_requests.size() > 0)
+    if(m_reply == NULL)
     {
-       if(m_reply == NULL)
-       {
-           login(m_requests.dequeue());
-       }
+        m_getDoc = docs;
+        m_getData = data;
+        login(SLOT(sendXML()));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ServerInterface::checkout(QStringList docs)
+{
+    if(m_reply == NULL)
+    {
+        m_getDoc = docs;
+        login(SLOT(getXML()));
+        return true;
+    }else
+    {
+        return false;
     }
 }
 
 void ServerInterface::login(const char* slot)
 {
-    m_getDoc.clear();
-    m_getDoc.append("trip");
-    m_getDoc.append("place");
-    m_getDoc.append("lure");
-
     QString connectionstring = m_serverAddr;
     connectionstring += "login?";
     connectionstring += "j_username=";
@@ -83,9 +79,8 @@ bool ServerInterface::checkError()
         m_reply->deleteLater();
         qDebug() << "network replied with an error" << m_reply->errorString();
         QString errorstr = m_reply->readAll();
-        emit error(errorstr);
         m_reply = NULL;
-        emit consume();
+        emit error(errorstr);
         return false;
     }
 }
@@ -118,7 +113,6 @@ void ServerInterface::getXMLDone()
         if(m_getDoc.isEmpty())
         {
             m_reply = NULL;
-            emit consume();
             emit checkoutDone(m_serverPath);
         }
         else
@@ -133,13 +127,15 @@ void ServerInterface::sendXML()
     m_reply->deleteLater();
     if(checkError())
     {
-        QSettings settings;
+        /*QSettings settings;
         QString path = settings.value("ProgramFolder").toString();
+        */
         QString doctype = m_getDoc.first();
+        //QByteArray data = m_getData.first();
         QNetworkRequest req(QUrl(m_serverAddr+doctype+"s"));
-        QFile* xml = new QFile(path+"/database/"+doctype+".xml");
-        xml->open(QIODevice::ReadOnly);
-        m_reply = manager.post(req, xml);
+        //QFile* xml = new QFile(path+"/database/"+doctype+".xml");
+        //xml->open(QIODevice::ReadOnly);
+        m_reply = manager.post(req, m_getData.first());
         connect(m_reply, SIGNAL(finished()), this, SLOT(sentXMLDone()));
     }
 }
@@ -152,11 +148,28 @@ void ServerInterface::sentXMLDone()
     {
         QString doctype = m_getDoc.first();
         m_getDoc.removeFirst();
-        qDebug() << doctype << "sent: " << m_reply->readAll();
+        m_getData.removeFirst();
+        QByteArray response = m_reply->readAll();
+
+
+        QDomDocument doc;
+
+        if(doc.setContent(response))
+        {
+            QDomNodeList list = doc.elementsByTagName("TransactionTicket");
+            if(list.count() == 1 &&
+               list.at(0).isElement() &&
+               list.at(0).hasChildNodes())
+            {
+                QDomElement element = list.at(0).toElement();
+                QString text = element.childNodes().at(0).toText().nodeValue();
+                emit commitFile(doctype, text.toInt());
+            }
+        }
+
         if(m_getDoc.isEmpty())
         {
             m_reply = NULL;
-            emit consume();
             emit commitDone();
         }
         else
