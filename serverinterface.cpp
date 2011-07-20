@@ -79,6 +79,7 @@ bool ServerInterface::checkError()
         m_reply->deleteLater();
         qDebug() << "network replied with an error" << m_reply->errorString();
         QString errorstr = m_reply->readAll();
+        qDebug() << "content: " << errorstr;
         m_reply = NULL;
         emit error(errorstr);
         return false;
@@ -127,15 +128,10 @@ void ServerInterface::sendXML()
     m_reply->deleteLater();
     if(checkError())
     {
-        /*QSettings settings;
-        QString path = settings.value("ProgramFolder").toString();
-        */
         QString doctype = m_getDoc.first();
-        //QByteArray data = m_getData.first();
         QNetworkRequest req(QUrl(m_serverAddr+doctype+"s"));
-        //QFile* xml = new QFile(path+"/database/"+doctype+".xml");
-        //xml->open(QIODevice::ReadOnly);
-        m_reply = manager.post(req, m_getData.first());
+        req.setHeader(QNetworkRequest::ContentTypeHeader, "text/xml");
+        m_reply = manager.put(req, m_getData.first());
         connect(m_reply, SIGNAL(finished()), this, SLOT(sentXMLDone()));
     }
 }
