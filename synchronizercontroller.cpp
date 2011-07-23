@@ -67,7 +67,7 @@ void SynchronizerController::downloadDone()
         }
     }
 
-    showStatusMessage(tr("Tietokanta synkronoitu palvelimen kanssa"), false);
+    showStatusMessage(tr("Katsottu päivitykset palvelusta"), false);
 }
 
 void SynchronizerController::uploadChanges()
@@ -78,18 +78,13 @@ void SynchronizerController::uploadChanges()
 
 void SynchronizerController::uploadDone()
 {
-    showStatusMessage(tr("Tietokanta lähetetty palvelimelle"), false);
+    showStatusMessage(tr("Tietokanta synkronoitu palvelun kanssa"), false);
     //m_sync->download();
 }
 
 void SynchronizerController::error(const QString& error)
 {
-    if(error.contains("Cannot commit. Conflict with revision"))
-    {
-        qDebug() << "need getting fresh revision";
-       // m_sync->download();
-    }
-    showStatusMessage(tr("Palvelimen kanssa oli ongelmia. Yritetään uudelleen"), false);
+    showStatusMessage(tr("Palvelun kanssa oli ongelmia. Yritetään uudelleen hetken kuluttua"), false);
 }
 
 QStringList SynchronizerController::trollingObjectToStringList(const QList<TrollingObject*>& objects)

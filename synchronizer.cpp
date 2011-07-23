@@ -7,6 +7,8 @@
 #include "alternative.h"
 
 const int WAIT_BETWEEN_DOWNLOADS = 60000;
+const int WAIT_AFTER_FAILURE = 5000;
+const int WAIT_AFTER_MODIFY = 5000;
 
 Synchronizer::Synchronizer(QObject *parent) :
     QObject(parent)
@@ -32,6 +34,10 @@ void Synchronizer::run()
         {
             m_realms.clear();
         }
+        else
+        {
+            setTimerForFailure();
+        }
     }
     else
     {
@@ -39,6 +45,13 @@ void Synchronizer::run()
     }
 
     m_timer.setInterval(WAIT_BETWEEN_DOWNLOADS);
+    m_timer.start();
+}
+
+void Synchronizer::setTimerForFailure()
+{
+    m_timer.stop();
+    m_timer.setInterval(WAIT_AFTER_FAILURE);
     m_timer.start();
 }
 
@@ -75,6 +88,9 @@ void Synchronizer::upload()
     }
 
     m_realms.append(realm);
+    m_timer.stop();
+    m_timer.setInterval(WAIT_AFTER_MODIFY);
+    m_timer.start();
 }
 
 void Synchronizer::uploadFile(const QString& type, int revision)
@@ -90,7 +106,15 @@ void Synchronizer::checkoutDone(const QString& folder)
 
 void Synchronizer::handleError(const QString& errorstr)
 {
-    emit error(errorstr);
+    //This I can recover.
+    if(errorstr.contains("Cannot commit. Conflict with revision"))
+    {
+        qDebug() << "need getting fresh revision";
+        setTimerForFailure();
+    }else
+    {
+        emit error(errorstr);
+    }
 }
 
 void Synchronizer::populate(const QString& folder)

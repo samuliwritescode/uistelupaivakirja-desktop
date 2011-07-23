@@ -45,6 +45,7 @@ private slots:
     void handleError(const QString&);
 
 private:
+    void setTimerForFailure();
     void populate(const QString&);
     void deleteAndClear();
     QMap<int, TrollingObject*> getLocalObjects(const QString&);
