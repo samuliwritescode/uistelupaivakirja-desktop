@@ -35,6 +35,7 @@
 #define COL_WINDDIR tr("Tuulen suunta")
 #define COL_PRESSURE tr("Ilmanpaine")
 #define COL_PRESSURECHANGE tr("Ilmanpaineen muutos")
+#define COL_SPEED tr("Vetonopeus")
 
 #define OPERATOR_FISHPERTIME tr("Kalaa tunnissa")
 
@@ -86,6 +87,7 @@ QStringList FishStatistics::getNumericFields()
     retval << COL_SPOTDEPTH;
     retval << COL_TEMP;
     retval << COL_TEMPWATER;
+    retval << COL_SPEED;
     return retval;
 }
 
@@ -135,6 +137,7 @@ QHash<QString, QString> FishStatistics::stats()
                     statline[COL_WEIGHT] = fish->getWeight();
                 }
 
+                statline[COL_SPEED] = fish->getTrollingSpeed().isEmpty()?fish->getTrollingSpeedEstimate():fish->getTrollingSpeed();
                 statline[COL_LENGTH] = fish->getLength();
                 statline[COL_WATERDEPTH] = fish->getTotalDepth();
                 statline[COL_LINEWEIGHT] = fish->getLineWeight();
