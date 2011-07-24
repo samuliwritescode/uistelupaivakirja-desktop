@@ -2,7 +2,7 @@
 
 Alternative::Alternative(const QString& type, const QString& value)
 {
-    setType("spinneritems");
+    setType("spinneritem");
     set("type", type);
     set("value", value);
 }

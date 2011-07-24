@@ -358,7 +358,7 @@ int Synchronizer::syncMobile()
 
         QFile::remove(memCard+"/uistelu/lure.xml");
         QFile::remove(memCard+"/uistelu/place.xml");
-        QFile::remove(memCard+"/uistelu/spinneritems.xml");
+        QFile::remove(memCard+"/uistelu/spinneritem.xml");
         if(!QFile::copy(filePath+"/database/lure.xml", memCard+"/uistelu/lure.xml"))
         {
             throw TrollingException(tr("En kykene kopioimaan viehekantaa muistikortille. Tarkista ettei kortti ole kirjoitussuojattu"));
