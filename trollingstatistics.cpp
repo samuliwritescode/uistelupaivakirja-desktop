@@ -119,9 +119,6 @@ QString TrollingStatistics::makeGroup(const QString& p_value, const QString& p_f
     if(!bCanConvert)
         return p_value;
 
-    if(value < 1 && value > 0)
-        return "0-1";
-
     int log = log10(value);
     int start = floor(value/pow(10,log))*pow(10,log);
     int end = start+pow(10,log);
