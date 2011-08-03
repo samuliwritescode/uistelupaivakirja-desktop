@@ -92,7 +92,7 @@ void ServerInterface::getXML()
     if(checkError())
     {
         QString doctype = m_getDoc.first();
-        QNetworkRequest req(QUrl(m_serverAddr+"/"+doctype+"s"));
+        QNetworkRequest req(QUrl(m_serverAddr+"/"+doctype));
         m_reply = manager.get(req);
         connect(m_reply, SIGNAL(finished()), this, SLOT(getXMLDone()));
     }
@@ -129,7 +129,7 @@ void ServerInterface::sendXML()
     if(checkError())
     {
         QString doctype = m_getDoc.first();
-        QNetworkRequest req(QUrl(m_serverAddr+"/"+doctype+"s"));
+        QNetworkRequest req(QUrl(m_serverAddr+"/"+doctype));
         req.setHeader(QNetworkRequest::ContentTypeHeader, "text/xml");
         m_reply = manager.put(req, m_getData.first());
         connect(m_reply, SIGNAL(finished()), this, SLOT(sentXMLDone()));
