@@ -1,5 +1,5 @@
 #!/bin/sh
-qmake -spec macx-g++ -config release
+qmake -makefile -spec macx-g++ -config release Uistelupaivakirja.pro
 rm -rf Uistelupaivakirja.app
 rm -rf Uistelupaivakirja.dmg
 make clean
