@@ -9,12 +9,10 @@ public:
     explicit FishStatistics(QObject *parent = 0);    
     virtual QStringList getTextFields();
     virtual QStringList getNumericFields();
-    virtual QStringList getOperators();
     virtual QString getName();
 
 protected:
-    virtual QHash<QString, QString> stats();
-    virtual QHash<QString, QString> calculate(const QList<QHash<QString, QString> >&);
+    virtual QHash<QString, QString> stats();    
 
 signals:
 

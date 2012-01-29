@@ -8,6 +8,10 @@
 #define COL_YEARMONTH tr("Vuosi ja kk")
 #define COL_TRIPLEN tr("Reissun pituus")
 
+
+#define OPERATOR_FISHPERTIME tr("Kalaa tunnissa")
+#define OPERATOR_TIMEPERFISH tr("Tuntia per kala")
+
 TripStatistics::TripStatistics(QObject *) :
     TrollingStatistics()
 {
@@ -31,6 +35,14 @@ QStringList TripStatistics::getNumericFields()
     retval << COL_FISHCOUNT;
     retval << COL_TRIPLEN;
     retval.sort();
+    return retval;
+}
+
+QStringList TripStatistics::getOperators()
+{
+    QStringList retval = TrollingStatistics::getOperators();
+    retval << OPERATOR_FISHPERTIME;
+    retval << OPERATOR_TIMEPERFISH;
     return retval;
 }
 
@@ -86,4 +98,32 @@ QHash<QString, QString> TripStatistics::stats()
 
     return calculate(statistics);
 
+}
+
+QHash<QString, QString> TripStatistics::calculate(const QList<QHash<QString, QString> >& statistics)
+{
+    if(getOperator() == OPERATOR_FISHPERTIME ||
+       getOperator() == OPERATOR_TIMEPERFISH)
+    {
+        QHash<QString, QString> retval;
+        QHash<QString, double> triptime = sumFields(statistics, COL_TRIPLEN);
+        QHash<QString, double> fishcount = sumFields(statistics, COL_FISHCOUNT);
+        for(QHash<QString, double>::iterator iter = triptime.begin(); iter != triptime.end(); iter++)
+        {
+            fishcount[iter.key()] = fishcount[iter.key()] / triptime[iter.key()];
+            if(getOperator() == OPERATOR_TIMEPERFISH && fishcount[iter.key()] != 0)
+            {
+                fishcount[iter.key()] = 1/fishcount[iter.key()];
+            }
+        }
+        for(QHash<QString, double>::iterator iter= fishcount.begin(); iter!=fishcount.end(); iter++)
+        {
+            retval[iter.key()] = QString::number(iter.value());
+        }
+
+        return retval;
+    } else
+    {
+        return TrollingStatistics::calculate(statistics);
+    }
 }

@@ -10,9 +10,11 @@ public:
     virtual QStringList getTextFields();
     virtual QStringList getNumericFields();
     virtual QString getName();
+    virtual QStringList getOperators();
 
 protected:
     virtual QHash<QString, QString> stats();
+    virtual QHash<QString, QString> calculate(const QList<QHash<QString, QString> >&);
 
 signals:
 
