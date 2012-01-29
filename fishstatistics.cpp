@@ -38,6 +38,7 @@
 #define COL_SPEED tr("Vetonopeus")
 
 #define OPERATOR_FISHPERTIME tr("Kalaa tunnissa")
+#define OPERATOR_TIMEPERFISH tr("Tuntia per kala")
 
 FishStatistics::FishStatistics(QObject *) :
     TrollingStatistics()
@@ -95,6 +96,7 @@ QStringList FishStatistics::getOperators()
 {
     QStringList retval = TrollingStatistics::getOperators();
     retval << OPERATOR_FISHPERTIME;
+    retval << OPERATOR_TIMEPERFISH;
     return retval;
 }
 
@@ -273,7 +275,8 @@ QHash<QString, QString> FishStatistics::stats()
 
 QHash<QString, QString> FishStatistics::calculate(const QList<QHash<QString, QString> >& statistics)
 {
-    if(getOperator() == OPERATOR_FISHPERTIME)
+    if(getOperator() == OPERATOR_FISHPERTIME ||
+       getOperator() == OPERATOR_TIMEPERFISH)
     {
         QHash<QString, QString> retval;
         QHash<QString, double> fishcount;
@@ -282,6 +285,10 @@ QHash<QString, QString> FishStatistics::calculate(const QList<QHash<QString, QSt
         for(QHash<QString, double>::iterator iter= count.begin(); iter!=count.end(); iter++)
         {
             fishcount[iter.key()] = count[iter.key()] / time[iter.key()];
+            if(getOperator() == OPERATOR_TIMEPERFISH)
+            {
+                fishcount[iter.key()] = 1/fishcount[iter.key()];
+            }
         }
         for(QHash<QString, double>::iterator iter= fishcount.begin(); iter!=fishcount.end(); iter++)
         {
