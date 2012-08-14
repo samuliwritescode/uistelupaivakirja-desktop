@@ -3,8 +3,9 @@
 
 #ifndef Q_OS_DARWIN
 #include <GL/glext.h>
+#else
+#include <GLUT/glut.h>
 #endif
-
 #include "glstatwidget.h"
 
 GLStatWidget::GLStatWidget(QGLWidget *parent) :
