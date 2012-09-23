@@ -117,5 +117,4 @@ RESOURCES += \
 
 macx:ICON = res/icon.icns
 win32:RC_FILE = res/icon.rc
-win32:QMAKE_CXXFLAGS += -fpermissive
-macx:QMAKE_CXXFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
+macx:QMAKE_CXXFLAGS += -isysroot /Developer/SDKs/MacOSX10.5.sdk

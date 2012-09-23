@@ -395,17 +395,20 @@ int Synchronizer::syncMobile()
         QStringList methodlist = Singletons::tripController()->getAlternatives(eMethod);
         foreach(QString string, specielist)
         {
-            dblayerMobile.storeObject(&Alternative("fish_species", string));
+            Alternative alt("fish_species", string);
+            dblayerMobile.storeObject(&alt);
         }
 
         foreach(QString string, getterlist)
         {
-            dblayerMobile.storeObject(&Alternative("fish_getter", string));
+            Alternative alt("fish_getter", string);
+            dblayerMobile.storeObject(&alt);
         }
 
         foreach(QString string, methodlist)
         {
-            dblayerMobile.storeObject(&Alternative("fish_method", string));
+            Alternative alt("fish_method", string);
+            dblayerMobile.storeObject(&alt);
         }
     }
     else
