@@ -4,7 +4,7 @@
 #ifndef Q_OS_DARWIN
 #include <GL/glext.h>
 #else
-#include <GL/glu.h>
+#include <glut.h>
 #endif
 #include "glstatwidget.h"
 
