@@ -247,7 +247,7 @@ void Trip::constructItems(const TrollingObjectItemList& p_items)
             fish->m_properties[iter.key()] = iter.value();
         }
 
-        Lure* lure = Singletons::model()->getLure(item["lure"].toInt());
+        Lure* lure = item["lure"].toInt() > 0?Singletons::model()->getLure(item["lure"].toInt()):NULL;
         if(lure)
             fish->setLure(lure);
 

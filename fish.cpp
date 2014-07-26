@@ -28,7 +28,7 @@ void Fish::setLure(Lure* p_lure)
 
 Lure* Fish::getLure()
 {
-    Lure* lure = Singletons::model()->getLure(getProperty("lure").toInt());
+    Lure* lure = getProperty("lure").toInt() > 0?Singletons::model()->getLure(getProperty("lure").toInt()):NULL;
     return lure;
 }
 

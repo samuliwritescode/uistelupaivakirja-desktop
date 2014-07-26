@@ -140,7 +140,11 @@ TrollingObject* TrollingModel::getTrollingObject(const QString& type, int id)
     {
         if(object->getType() == type && object->getId() == id)
         {
-            m_fasterHash[id] = object;
+            // Do not cache nonpersistent objects.
+            if (id >= 0) {
+                m_fasterHash[id] = object;
+            }
+
             return object;
         }
     }
